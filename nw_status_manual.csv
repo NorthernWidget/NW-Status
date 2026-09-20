@@ -1,0 +1,63 @@
+Row,Column,Value
+Apis_Library,Schema 1: library,MISSING (reads 2019 register map)
+Haar_Library,Schema 1: library,MISSING (default address 0x42; spec 0x48)
+Walrus_Library,Schema 1: library,partial: address 0x57 and Page 1 reads; no Page 0 schema check in begin()
+Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
+Liasis_Library,Schema 1: library,N/A until hardware carries an MCU
+Margay_Library,Schema 1: library,MISSING (no Page 0 read)
+Okapi_Library,Schema 1: library,MISSING (reads Schema 0 SN at EEPROM length-8)
+Okapi_Library,Notes,5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test
+MCP3421,Notes,camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag
+T9602_Library,Notes,tag v1.0.0 (2022) exists while library.properties says 0.0.0
+MaxBotix_Library,Notes,uncommitted Serial1 hack in src/ (deferred refactor; issue #4)
+TP-Downhole_Library,Notes,legacy; lineage tracked under Walrus
+Margay_Library,Notes,depends= should say NW_BME280
+Project-Apis,Schema 1: firmware,MISSING (2019 prototype map: status at 0x00; address register at 0x0C)
+Project-Haar,Schema 1: firmware,MISSING
+Project-Walrus,Schema 1: firmware,partial: Page 1 done on master; open #15 Page 0 init; #16 writable 0x1F
+Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
+Project-Liasis,Schema 1: firmware,N/A (no MCU; #2)
+Project-Margay,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
+Project-Okapi,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
+Project-Apis,Page 0 provisioned + tested,no
+Project-Haar,Page 0 provisioned + tested,no
+Project-Walrus,Page 0 provisioned + tested,no (#17 provisioning check; #18 hardware validation)
+Project-Libelle,Page 0 provisioned + tested,no
+Project-Liasis,Page 0 provisioned + tested,N/A
+Project-Margay,Page 0 provisioned + tested,no
+Project-Okapi,Page 0 provisioned + tested,no
+Project-Margay,KiCad verified vs Eagle,no (KiCad 7 import; BoM fields populated; not netlist-compared)
+Project-Okapi,KiCad verified vs Eagle,no (KiCad 10 import; power nets and no-connects fixed; not netlist-compared)
+Project-Apis,KiCad verified vs Eagle,N/A (no KiCad import yet)
+Project-Haar,KiCad verified vs Eagle,N/A (no KiCad import yet)
+Project-Walrus,KiCad verified vs Eagle,N/A (no KiCad import yet)
+Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
+Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
+Project-Apis,Next action,Firmware Page 0/1 rewrite; then library
+Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
+Project-Walrus,Next action,Finish #15-#18
+Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
+Project-Liasis,Next action,Decide on adding an MCU (#2)
+Project-Margay,Next action,June review fixes in KiCad -> v3 tag; provision Page 0
+Project-Okapi,Next action,Triage June review issues toward a buildable board -> ERC/DRC -> Gerbers -> v1.0 tag -> order
+Project-Okapi,Notes,Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs
+Project-Margay,Notes,hardware v3 release in progress
+MCP3421,Next action,Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0
+NW_BME280,Next action,Add .zenodo.json; review; tag v3.0.0
+DS3231_Logger,Next action,LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin()
+MaxBotix_Library,Next action,Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space
+T9602_Library,Next action,Fix version= and url=; keywords.txt; .zenodo.json; docs.yml; example; bool begin()
+Tally_Library,Next action,camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml
+TP-Downhole_Library,Next action,Legacy: keep buildable; no standardization planned
+MS5803,Next action,README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph=
+DS3231,Next action,CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already)
+VEML6030,Next action,Bare: library.properties and full checklist if kept
+VEML6075,Next action,Bare: library.properties and full checklist if kept
+TCA9534,Next action,Bare: library.properties and full checklist if kept
+MCP23018,Next action,Bare: library.properties and full checklist if kept
+MCP4725,Next action,Bare: library.properties and full checklist if kept
+Project-Tally,Schema 1: firmware,MISSING (fw 0.2.0 2019: 5-byte map; command bits at 0x00; address 0x33 hard-coded)
+Project-Tally,Page 0 provisioned + tested,no
+Project-Tally,KiCad verified vs Eagle,N/A (no KiCad import yet)
+Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row
+Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)

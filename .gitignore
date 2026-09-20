@@ -1,0 +1,4 @@
+# regenerable binary outputs
+*_icons.pdf
+*_icons.html
+__pycache__/
