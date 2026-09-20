@@ -1,0 +1,24 @@
+Library,Type,library.properties,Examples,keywords.txt,getHeader/getString,API case,Priority tier,Notes,Margay dep
+Apis_Library,Sensor,OK,OK (2),OK,Implemented,lowercase,1,"Most complete; ready for Core dependency wiring",
+DS3231,Component,OK,OK (10),OK,N/A (RTC),N/A,1,"Cleanest repo in the set",
+Margay_Library,Logger,OK,OK (3),OK,N/A,N/A,1,"depends= needs updating: BME → NW_BME280",Yes
+Haar_Library,Sensor,OK,MISSING,MISSING,Implemented,lowercase,1,"version=0.0.0; needs examples + keywords.txt",
+T9602_Library,Sensor,OK,MISSING,MISSING,Implemented,lowercase,1,"version=0.0.0; URL points to Haar repo (wrong)",
+Tally_Library,Sensor,OK (missing category),OK (1),OK,Implemented,CAPITAL G,1,"GetHeader/GetString need rename; URL uses underscore in org name",
+TP-Downhole_Library,Sensor,OK,OK (1),OK,Implemented,CAPITAL G,1,"GetHeader/GetString need rename",
+Walrus_Library,Sensor,OK (missing maintainer + blank URL),MISSING,MISSING,Implemented,lowercase,2,"Needs maintainer field, URL, examples, keywords.txt",
+MaxBotix_Library,Sensor,OK,MISSING,MISSING,Implemented,lowercase,2,"Header returns 'Distance [mm], ' — trailing space bug; needs examples + keywords.txt",
+MS5803,Sensor,OK (blank paragraph),OK (1),MISSING,NOT implemented,N/A,2,"Needs keywords.txt and sensor API implementation",
+BME_Library,Sensor,OK,OK (1),OK,Implemented,lowercase,2,"Renamed to NW_BME280; LM requirements now met; BLOCKED: GitHub repo still named BME_Library (URL mismatch in library.properties)",Yes
+VEML6075,Sensor,MISSING,OK (1),MISSING,NOT implemented,N/A,2,"Needs library.properties + keywords.txt + sensor API",
+DS3231_Logger,Component,OK (blank paragraph),MISSING,OK,N/A (RTC),N/A,2,"Needs examples",Yes
+MCP3421,Component,OK,OK (1),OK,NOT implemented,N/A,2,"Renamed to NW_MCP3421 (name conflict resolved); needs new tagged release + LM submission",Yes
+VEML6030,Sensor,MISSING,MISSING,MISSING,NOT implemented,N/A,3,"Essentially a stub; full work needed",
+TCA9534,Component,MISSING,MISSING,MISSING,N/A,N/A,3,"Bare repo",
+MCP23018,Component,MISSING,MISSING,MISSING,N/A,N/A,3,"Bare repo",
+MCP4725,Component,MISSING,MISSING,MISSING,N/A,N/A,3,"Bare repo",
+Monarch_Library,Sensor,MISSING,NOT in examples/ folder,MISSING,Partial (LW only),CAPITAL G,3,"BLOCKED: cross-contaminated with Dyson files; Monarch is successor to Dyson; rename undecided; no SW API",
+Dyson_Library,Sensor,MISSING,NOT in examples/ folder,MISSING,NOT implemented,N/A,3,"BLOCKED: contains only Monarch* source files — no Dyson-specific code; superseded by Monarch",
+Okapi_Library,Logger,WRONG (says Resnik_Library),MISSING,OK,N/A,N/A,3,"Wrong name + URL in library.properties; version=0.0.0; deferred",
+Resnik_Library,Logger,OK,MISSING,OK,N/A,N/A,3,"Deferred per repolist",
+Symbiont-LiDAR_Library,Sensor,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,N/A,3,"NOT CLONED LOCALLY — only Project-Symbiont-LiDAR backups present",
