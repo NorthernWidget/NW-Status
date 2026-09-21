@@ -27,7 +27,7 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 |
 | **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 |
 | **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 13 | ✅ 0 | 19 | ◐ 2 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | 19 | ◐ 2 |
 | **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 |
 | **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | 4 | ◐ 1 |
 | **Standalone libraries** | | | | | | | | | | |
@@ -173,7 +173,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **Walrus** | Finish #15-#18 |  |
 | **Libelle** | Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library |  |
 | **Liasis** | Decide on adding an MCU (#2) |  |
-| **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 · Bench-logger prerequisite: forward-migrate <BME.h> to <NW_BME280.h> and depends= (master builds only via the stale ~/Arduino/libraries copy); same in Okapi_Library and the Deployments sketches | depends= should say NW_BME280 · hardware v3 release in progress |
+| **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 · Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults | depends= should say NW_BME280 · hardware v3 release in progress |
 | **Okapi** | Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order | 5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test · Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs |
 | **Tally** | Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row · camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml | Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged) |
 | **Standalone libraries** | | |
