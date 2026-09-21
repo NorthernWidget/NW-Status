@@ -33,20 +33,20 @@ Project-Haar,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Walrus,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
 Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
-Project-Apis,Next action,Bench test firmware patch 1 + library on a provisioned board; then revisit how Apis runs (Andy's priority); Project-Apis #22 accelFail bug
+Project-Apis,Next action,Bench test firmware patch 1 + library on a provisioned board (same session as Walrus); then run model per #23 (v3HP manual; timing budget; single-vs-burst rule); #22 awaits the bench
 Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
 Project-Walrus,Next action,Finish #15-#18
 Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
 Project-Liasis,Next action,Decide on adding an MCU (#2)
 Project-Margay,Next action,June review fixes in KiCad -> v3 tag; provision Page 0
-Project-Okapi,Next action,Triage June review issues toward a buildable board -> ERC/DRC -> Gerbers -> v1.0 tag -> order
+Project-Okapi,Next action,Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order
 Project-Okapi,Notes,Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs
 Project-Margay,Notes,hardware v3 release in progress
 MCP3421,Next action,Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0
 NW_BME280,Next action,Add .zenodo.json; review; tag v3.0.0
 DS3231_Logger,Next action,LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin()
 MaxBotix_Library,Next action,Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space
-T9602_Library,Next action,Fix version= and url=; keywords.txt; .zenodo.json; docs.yml; example; bool begin()
+T9602_Library,Next action,Fix stale status bits (correctness; pulled forward 2026-09-22); then version= and url=; keywords.txt; .zenodo.json; docs.yml; example; bool begin()
 Tally_Library,Next action,camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml
 TP-Downhole_Library,Next action,Legacy: keep buildable; no standardization planned
 MS5803,Next action,README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph=
