@@ -204,7 +204,11 @@ def website_address(device):
 def spec_address(device):
     """(type, Schema 1 address text) from the spec's address registry row, or (None, None) if absent."""
     if not SPEC_README.exists(): return (None, None)
-    m = re.search(rf"^\| {re.escape(device)} \| ([^|]*) \| [^|]* \| ([^|]*) \|", SPEC_README.read_text(), re.M)
+    txt = SPEC_README.read_text()
+    i = txt.find("| Device | Type | Current address(es) |")          # the address registry table only
+    if i < 0: return (None, None)
+    txt = txt[i:txt.find("\n\n", i) if txt.find("\n\n", i) > 0 else len(txt)]
+    m = re.search(rf"^\| {re.escape(device)} \| ([^|]*) \| [^|]* \| ([^|]*) \|", txt, re.M)
     if not m: return (None, None)
     a = re.search(r"0x[0-9A-Fa-f]+", m.group(2))
     return (m.group(1).strip(), a.group(0) if a else m.group(2).strip().strip("`"))

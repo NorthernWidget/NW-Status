@@ -116,7 +116,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **Apis** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ 0x50 (spec 0x41) |
 | **Haar** | ✅ | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x42 (spec 0x48) |
 | **Walrus** | ❌ MISSING | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x4D (spec 0x57) |
-| **Libelle** | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x40 (spec 0x01E0) |
+| **Libelle** | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x40 (spec 0x4C) |
 | **Liasis** | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x4A (spec TBD) |
 | **Margay** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | — |
 | **Okapi** | ✅ | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | — |
