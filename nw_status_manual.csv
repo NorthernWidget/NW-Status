@@ -1,5 +1,5 @@
 Row,Column,Value
-Apis_Library,Schema 1: library,MISSING (reads 2019 register map)
+Apis_Library,Schema 1: library,done on master 2026-09-21 (unreleased; needs major version; untested on hardware)
 Haar_Library,Schema 1: library,MISSING (default address 0x42; spec 0x48)
 Walrus_Library,Schema 1: library,partial: address 0x57 and Page 1 reads; no Page 0 schema check in begin()
 Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
@@ -12,14 +12,14 @@ T9602_Library,Notes,tag v1.0.0 (2022) exists while library.properties says 0.0.0
 MaxBotix_Library,Notes,uncommitted Serial1 hack in src/ (deferred refactor; issue #4)
 TP-Downhole_Library,Notes,legacy; lineage tracked under Walrus
 Margay_Library,Notes,depends= should say NW_BME280
-Project-Apis,Schema 1: firmware,MISSING (2019 prototype map: status at 0x00; address register at 0x0C)
+Project-Apis,Schema 1: firmware,done on master 2026-09-21 (patch 1; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
 Project-Haar,Schema 1: firmware,MISSING
 Project-Walrus,Schema 1: firmware,partial: Page 1 done on master; open #15 Page 0 init; #16 writable 0x1F
 Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
 Project-Liasis,Schema 1: firmware,N/A (no MCU; #2)
 Project-Margay,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
 Project-Okapi,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
-Project-Apis,Page 0 provisioned + tested,no
+Project-Apis,Page 0 provisioned + tested,no (NW-Provision writes magic 0x4E as of ca3a64d)
 Project-Haar,Page 0 provisioned + tested,no
 Project-Walrus,Page 0 provisioned + tested,no (#17 provisioning check; #18 hardware validation)
 Project-Libelle,Page 0 provisioned + tested,no
@@ -33,7 +33,7 @@ Project-Haar,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Walrus,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
 Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
-Project-Apis,Next action,Firmware Page 0/1 rewrite; then library
+Project-Apis,Next action,Bench test firmware patch 1 + library on a provisioned board; then revisit how Apis runs (Andy's priority); Project-Apis #22 accelFail bug
 Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
 Project-Walrus,Next action,Finish #15-#18
 Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
