@@ -36,7 +36,7 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — |
 | **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
 | **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — |
-| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 1 | ✅ 0 | ◐ 11 | — | — |
+| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 1 | ✅ 0 | ◐ 12 | — | — |
 | **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — |
 | **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — |
 | **Bare repos** | | | | | | | | | | | |
@@ -153,7 +153,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
-| **T9602_Library** | Stale-bits fix + checklist files committed 2026-09-22 (11 commits; unpushed): set version= (proposal 1.1.0); regenerate library_reference.md (needs moxygen); hardware test; refresh the NorthernWidget-libraries bundle copy | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
+| **T9602_Library** | Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test; refresh the NorthernWidget-libraries bundle copy | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
 | **TP-Downhole_Library** | Legacy: keep buildable; no standardization planned | legacy; lineage tracked under Walrus |
 | **MS5803** | README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph= |  |
 | **Bare repos** | | |
