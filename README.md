@@ -19,34 +19,34 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 
 ### Where is everything
 
-| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
+| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | 17 | ◐ 5 | ◐ 1 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | 10 | ◐ 1 | ✅ 0 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 | ✅ 0 |
-| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
-| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 13 | ✅ 0 | 19 | ◐ 2 | ✅ 0 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 | ✅ 0 |
-| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | 4 | ◐ 1 | ✅ 0 |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 17 | ◐ 5 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 |
+| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 |
+| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 13 | ✅ 0 | ✅ 0 | 19 | ◐ 2 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | ✅ 0 | 22 | ◐ 1 |
+| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 |
 | **Standalone libraries** | | | | | | | | | | | |
-| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | — | — | — |
-| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | — | — | — |
-| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | — | — | — |
-| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | — | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | — | — | — |
-| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 1 | ◐ 1 | — | — | — |
-| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | — | — | — |
-| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | — | — | — |
+| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — |
+| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — |
+| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — |
+| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 1 | ✅ 0 | ◐ 11 | — | — |
+| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — |
+| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — |
 | **Bare repos** | | | | | | | | | | | |
-| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | — | — | — |
-| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | — | — | — |
-| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | — | — | — |
-| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | — | — | — |
-| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | — | — | — |
+| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
+| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
+| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
 
-All rows pass or not applicable (column hidden): `Unpushed commits`
+All rows pass or not applicable (column hidden): `HW: Unpushed commits`
 
 ### Release readiness (Schema 0 checklist)
 
@@ -67,7 +67,7 @@ All rows pass or not applicable (column hidden): `Unpushed commits`
 | **DS3231** | 1.2.0 | v1.2.0 | ✅ | — | — | ✅ | ✅ | ✅ | ✅ Timing | ✅ | ❌ no badge | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ flat layout | ❌ MISSING | AdvanceAlarm, AlarmInterrupt, AlarmPolling, DS3231_oscillator_test, DS3231_set, DS3231_test, echo_time, now, setEpoch, set_echo | ❌ MISSING |
 | **DS3231_Logger** | 0.1.0 | none | ❌ no tag | — | — | ✅ | ❌ blank | ✅ | ✅ Sensors | ❌ MISSING | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | none | ❌ MISSING |
 | **MaxBotix_Library** | 1.1.0 | v1.0.0 | ❌ NO (v1.0.0 vs 1.1.0) | — | — | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none | ❌ MISSING |
-| **T9602_Library** | 0.0.0 | v1.0.0 | ❌ NO (v1.0.0 vs 0.0.0) | — | — | ✅ | ❌ blank | ❌ WRONG (NorthernWidget-Skunkworks/Haar_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none | ❌ MISSING |
+| **T9602_Library** | 0.0.0 | v1.0.0 | ❌ NO (v1.0.0 vs 0.0.0) | — | — | ✅ | ✅ | ❌ WRONG (NorthernWidget/T9602_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | T9602_Demo | ✅ |
 | **TP-Downhole_Library** | 0.1.0 | none | ❌ no tag | — | — | ✅ | ❌ blank | ❌ WRONG (NorthernWidget/TP-DownHole) | ✅ Sensors | ✅ | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ✅ | ✅ | TP_Downhole_Demo | ❌ MISSING |
 | **MS5803** | 0.1.2 | none | ❌ no tag | — | — | ✅ | ❌ blank | ✅ | ✅ Sensors | ✅ | ❌ MISSING README | ❌ MISSING | ❌ MISSING | ❌ MISSING | ❌ MISSING | ✅ | ✅ | MS5803_Demo | ❌ MISSING |
 | **Bare repos** | | | | | | | | | | | | | | | | | | | |
@@ -96,7 +96,7 @@ All rows pass or not applicable (column hidden): `Unpushed commits`
 | **DS3231** | — | — | ✅ | ✅ | — | — |
 | **DS3231_Logger** | ◐ int | — | ✅ | ✅ | — | — |
 | **MaxBotix_Library** | ✅ | ❌ MISSING | ◐ unmarked aliases: GetHeader, GetRange, GetString | ❌ NO (3 PascalCase live) | ❌ | comma-space |
-| **T9602_Library** | ◐ void | ❌ MISSING | ✅ | ✅ | ✅ | comma |
+| **T9602_Library** | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | comma |
 | **TP-Downhole_Library** | ◐ uint8_t | ❌ MISSING | ❌ PascalCase only: GetBaud, GetByte, GetData, GetHeader … | ❌ NO (10 PascalCase live) | ❌ | comma-space |
 | **MS5803** | ◐ uint8_t | — | ✅ | ✅ | — | — |
 | **Bare repos** | | | | | | |
@@ -153,7 +153,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
-| **T9602_Library** | Fix stale status bits (correctness; pulled forward 2026-09-22); then version= and url=; keywords.txt; .zenodo.json; docs.yml; example; bool begin() | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
+| **T9602_Library** | Stale-bits fix + checklist files committed 2026-09-22 (11 commits; unpushed): set version= (proposal 1.1.0); regenerate library_reference.md (needs moxygen); hardware test; refresh the NorthernWidget-libraries bundle copy | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
 | **TP-Downhole_Library** | Legacy: keep buildable; no standardization planned | legacy; lineage tracked under Walrus |
 | **MS5803** | README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph= |  |
 | **Bare repos** | | |
