@@ -3,7 +3,7 @@
 NorthernWidget status table: scan repos + GitHub, write CSV, render Markdown.
 
   python3 nw_status.py scan      # -> nw_status_<today>.csv (auto columns + manual overrides)
-  python3 nw_status.py render    # latest nw_status_*.csv -> .md (+ _icons.html)
+  python3 nw_status.py render    # latest dated CSV -> README.md (between markers) + _icons.pdf
   python3 nw_status.py           # both
 
 The NW repositories are expected in the parent directory of this one, or in
@@ -444,7 +444,17 @@ def render(path):
     for title, items, band in VIEWS:
         cols = ["Row"] + [c for c in expand(items) if c != "Row"]
         md += [f"## {title}", "", md_view(rows, cols, band), ""]
-    out = path.with_suffix(".md"); out.write_text("\n".join(md)); print(f"Markdown written: {out}")
+    # The report lives in README.md between two markers, so the repository page opens on it.
+    readme = HERE / "README.md"
+    START, END = "<!-- nw_status:begin -->", "<!-- nw_status:end -->"
+    text = readme.read_text() if readme.exists() else ""
+    body = "\n".join(md).strip("\n")
+    if START in text and END in text:
+        pre, rest = text.split(START, 1); _, post = rest.split(END, 1)
+        text = f"{pre}{START}\n{body}\n{END}{post}"
+    else:
+        text = text.rstrip("\n") + f"\n\n{START}\n{body}\n{END}\n"
+    readme.write_text(text); print(f"Report written into: {readme}")
 
     # master table: HTML with group bands, row bands, hidden all-green columns -> PDF
     groups = []
