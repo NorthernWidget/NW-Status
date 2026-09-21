@@ -46,7 +46,7 @@ MCP3421,Next action,Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.c
 NW_BME280,Next action,Add .zenodo.json; review; tag v3.0.0
 DS3231_Logger,Next action,LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin()
 MaxBotix_Library,Next action,Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space
-T9602_Library,Next action,Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test; refresh the NorthernWidget-libraries bundle copy
+T9602_Library,Next action,Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test (bundle refresh is an end-of-overhaul step for all libraries)
 Tally_Library,Next action,camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml
 TP-Downhole_Library,Next action,Legacy: keep buildable; no standardization planned
 MS5803,Next action,README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph=

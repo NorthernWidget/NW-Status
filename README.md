@@ -153,7 +153,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
-| **T9602_Library** | Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test; refresh the NorthernWidget-libraries bundle copy | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
+| **T9602_Library** | Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test (bundle refresh is an end-of-overhaul step for all libraries) | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
 | **TP-Downhole_Library** | Legacy: keep buildable; no standardization planned | legacy; lineage tracked under Walrus |
 | **MS5803** | README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph= |  |
 | **Bare repos** | | |
