@@ -17,7 +17,10 @@ working tree, git, or the GitHub API at scan time; the CSV records the scan date
 
 Successor to archive/nw_library_audit_render.py and the May 2026 audits.
 """
-import csv, datetime, json, re, subprocess, sys, urllib.request
+import base64
+import csv
+import subprocess
+import json, datetime, json, re, subprocess, sys, urllib.request
 from pathlib import Path
 
 import os
@@ -67,6 +70,7 @@ LIB_COLS = ["Library", "Type", "Device", "GitHub", "version=", "Last tag", "vers
             "library.properties", "paragraph=", "url= ok", "category=", "depends=",
             "LICENSE", "README DOI badge", "CITATION.cff", ".zenodo.json", "keywords.txt",
             "doxygen_NW.cfg", "src/", "_Demo example", "Examples", "docs.yml",
+            "moxygen remnants", ".doxybook config", "README API link",
             "begin() -> bool", "getHeader/getString", "Raw-readings triad",
             "camelCase conversion", "PascalCase removed",
             "Header trailing space", "Header separator", "Arduino registry",
@@ -75,6 +79,7 @@ LIB_COLS = ["Library", "Type", "Device", "GitHub", "version=", "Last tag", "vers
 HW_COLS  = ["Device", "Repo", "GitHub", "Last tag", "Commits past tag", "Eagle .brd", "KiCad .kicad_pcb",
             "KiCad verified vs Eagle", "Spec appendix", "Schema 1: firmware",
             "Page 0 provisioned + tested", "Open issues", "Bug-labelled issues",
+            "Website API link", "Website links = repos", "Website I2C address",
             "Uncommitted files", "Unpushed commits", "Next action", "Notes"]
 
 # Combined table: one row per device (library + hardware) or per unpaired library.
@@ -173,6 +178,37 @@ def registry():
         print(f"registry fetch failed: {e}", file=sys.stderr)
         return None
 
+_WEBSITE = {}
+def website_section(device):
+    """The device's '## Device' section on docs.northernwidget.com (sensors.md / loggers.md), or None."""
+    if not _WEBSITE:
+        for page in ("sensors", "loggers"):
+            try:
+                b64 = subprocess.run(["gh", "api", f"repos/NorthernWidget/NorthernWidget.github.io/contents/_pages/{page}.md",
+                                      "-q", ".content"], capture_output=True, text=True, timeout=30).stdout
+                _WEBSITE[page] = base64.b64decode(b64).decode(errors="replace")
+            except Exception as e:
+                print(f"website fetch failed ({page}): {e}", file=sys.stderr); _WEBSITE[page] = ""
+    for txt in _WEBSITE.values():
+        m = re.search(rf"^## {re.escape(device)}\s*$(.*?)(?=^#|\Z)", txt, re.M | re.S)
+        if m: return m.group(1)
+    return None
+
+def website_address(device):
+    """Address the website's I2C reference table lists for the device, or None."""
+    for txt in _WEBSITE.values():
+        m = re.search(rf"^\| \[{re.escape(device)}\]\([^)]*\) \| `(0x[0-9A-Fa-f]+)`", txt, re.M)
+        if m: return m.group(1)
+    return None
+
+def spec_address(device):
+    """(type, Schema 1 address text) from the spec's address registry row, or (None, None) if absent."""
+    if not SPEC_README.exists(): return (None, None)
+    m = re.search(rf"^\| {re.escape(device)} \| ([^|]*) \| [^|]* \| ([^|]*) \|", SPEC_README.read_text(), re.M)
+    if not m: return (None, None)
+    a = re.search(r"0x[0-9A-Fa-f]+", m.group(2))
+    return (m.group(1).strip(), a.group(0) if a else m.group(2).strip().strip("`"))
+
 def spec_appendix(device):
     if not SPEC_README.exists(): return "?"
     txt = SPEC_README.read_text()
@@ -228,6 +264,17 @@ def scan_library(dirname, typ, device, reg):
     row["_Demo example"]  = demo[0] if demo else "MISSING"
     row["Examples"]       = ", ".join(exs) if exs else "none"
     row["docs.yml"]       = "OK" if (d / ".github/workflows/docs.yml").exists() else "MISSING"
+    rem = [n for n in ("build_docs.sh", "library_reference.md", ".README-intro.md", "README-intro.md") if (d / n).exists()]
+    row["moxygen remnants"] = "OK" if not rem else ", ".join(rem)
+    dbc = d / ".doxybook/config.json"
+    if not dbc.exists(): row[".doxybook config"] = "MISSING"
+    else:
+        try: base = json.loads(dbc.read_text()).get("baseUrl", "")
+        except Exception: base = "unparseable"
+        row[".doxybook config"] = "OK" if base == f"/{dirname}/" else f"baseUrl WRONG ({base})"
+    row["README API link"] = ("MISSING README" if not rd.exists() else
+                              "OK" if re.search(rf"(docs\.northernwidget\.com|northernwidget\.github\.io)/{re.escape(dirname)}/",
+                                                rd.read_text(errors="replace")) else "MISSING")
     hs = headers(d); text = read_all(hs) if hs else ""
     bt = begin_types(text)
     row["begin() -> bool"] = ("no begin()" if not bt else "OK" if bt == ["bool"] else ", ".join(bt))
@@ -276,6 +323,23 @@ def scan_hardware(dirname, device):
     row["Spec appendix"] = spec_appendix(device)
     row["Open issues"] = gh(f"repos/{slug}", ".open_issues_count") if slug else "?"
     row["Bug-labelled issues"] = gh(f"repos/{slug}/issues?labels=bug&state=open&per_page=100", "length") if slug else "?"
+    sec = website_section(device)
+    libdir = next((l[0] for l in LIBRARIES if l[2] == device), None)
+    libslug = slug_of(ROOT / libdir) if libdir and (ROOT / libdir).is_dir() else None
+    if sec is None:
+        row["Website API link"] = row["Website links = repos"] = "no entry"
+    else:
+        row["Website API link"] = ("OK" if libdir and re.search(
+            rf"(docs\.northernwidget\.com|northernwidget\.github\.io)/{re.escape(libdir)}/", sec) else "MISSING")
+        links = set(m.lower() for m in re.findall(r"github\.com/([\w.-]+/[\w.-]+)", sec))
+        want = set(x.lower() for x in (slug, libslug) if x)
+        stale = sorted(l for l in links if l not in want)
+        row["Website links = repos"] = "OK" if not stale else "stale: " + ", ".join(l.split("/")[0] + "/…" for l in stale)
+    site, (styp, spec) = website_address(device), spec_address(device)
+    row["Website I2C address"] = ("—" if styp and styp.startswith("Controller") else   # controllers are not on the site's table
+                                  "not listed" if site is None else
+                                  "OK" if site == spec else
+                                  f"{site} (not in spec)" if spec is None else f"{site} (spec {spec})")
     return row
 
 def scan():
@@ -336,10 +400,12 @@ def icon(col, v):
     if col in ZERO_IS_GOOD: return "✅" if v == "0" else "—" if v in ("", "—") else "?" if v == "?" else "◐"
     if col == "Header trailing space" and v == "yes": return "❌"
     if col == "category=": return "❌" if v == "MISSING" else "✅"
+    if col == "moxygen remnants": return "✅" if v == "OK" else "❌"
+    if col == "Website I2C address" and v not in ("OK", "—", "?"): return "❌"
     if v == "?": return "?"
     if v in ("", "—", "none") or v.startswith(("N/A", "no begin()")): return "—"
     if v in GOOD or v.startswith("OK") or v.endswith("_Demo"): return "✅"
-    if v.startswith(("MISSING", "NO", "no ", "no", "PascalCase", "blank", "WRONG", "latestdoi", "flat")): return "❌"
+    if v.startswith(("MISSING", "NO", "no ", "no", "PascalCase", "blank", "WRONG", "latestdoi", "flat", "stale", "baseUrl")): return "❌"
     return "◐"
 
 def read_csv(path):
@@ -361,7 +427,10 @@ GROUPS = [
     ("Release state",    ["version=", "Last tag", "version = tag", HW_PREFIX + "Last tag", HW_PREFIX + "Commits past tag"]),
     ("Library metadata", ["library.properties", "paragraph=", "url= ok", "category="]),
     ("Release files",    ["LICENSE", "README DOI badge", "CITATION.cff", ".zenodo.json", "keywords.txt",
-                          "doxygen_NW.cfg", "src/", "_Demo example", "Examples", "docs.yml"]),
+                          "doxygen_NW.cfg", "src/", "_Demo example", "Examples"]),
+    ("Docs conversion",  ["docs.yml", ".doxybook config", "moxygen remnants", "README API link",
+                          HW_PREFIX + "Website API link", HW_PREFIX + "Website links = repos",
+                          HW_PREFIX + "Website I2C address"]),
     ("Common API: signatures", ["begin() -> bool", "getHeader/getString", "Raw-readings triad"]),
     ("Common API: style",      ["camelCase conversion", "PascalCase removed", "Header trailing space", "Header separator"]),
     ("Schema 1 pipeline", [HW_PREFIX + "Spec appendix", HW_PREFIX + "Schema 1: firmware", "Schema 1: library",
@@ -377,6 +446,7 @@ VIEWS = [
     ("Where is everything",   ["Directory", "Activity"], None),
     ("Release readiness (Schema 0 checklist)", ["Release state", "Library metadata", "Release files"], None),
     ("Common sensor API",     ["Common API: signatures", "Common API: style"], None),
+    ("Docs conversion (moxygen -> Doxygen on Pages; website entries)", ["Docs conversion"], None),
     ("Schema 1 rollout",      ["Schema 1 pipeline"], "Devices"),
     ("Hardware design",       [HW_PREFIX + "Last tag", HW_PREFIX + "Commits past tag", "Hardware design"], "Devices"),
     ("Next actions",          ["Plan"], None),
