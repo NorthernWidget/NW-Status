@@ -61,3 +61,4 @@ Project-Tally,Page 0 provisioned + tested,no
 Project-Tally,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
+Margay_Library,Next action,Bench-logger prerequisite: forward-migrate <BME.h> to <NW_BME280.h> and depends= (master builds only via the stale ~/Arduino/libraries copy); same in Okapi_Library and the Deployments sketches

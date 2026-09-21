@@ -19,34 +19,34 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 
 ### Where is everything
 
-| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Devices** | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 17 | ◐ 5 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 |
-| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 |
-| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 13 | ✅ 0 | ✅ 0 | 19 | ◐ 2 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | ✅ 0 | 22 | ◐ 1 |
-| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 |
-| **Standalone libraries** | | | | | | | | | | | |
-| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — |
-| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
-| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — |
-| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — |
-| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 1 | ✅ 0 | ◐ 13 | — | — |
-| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — |
-| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — |
-| **Bare repos** | | | | | | | | | | | |
-| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
-| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
-| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
-| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
-| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | HW: Open issues | HW: Uncommitted files |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Devices** | | | | | | | | | | |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | 17 | ◐ 5 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | 10 | ◐ 1 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 |
+| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 |
+| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 13 | ✅ 0 | 19 | ◐ 2 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 |
+| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | 4 | ◐ 1 |
+| **Standalone libraries** | | | | | | | | | | |
+| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | — | — |
+| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | — | — |
+| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | — | — |
+| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | — | — |
+| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | — | — |
+| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | — | — |
+| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | — | — |
+| **Bare repos** | | | | | | | | | | |
+| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | — | — |
+| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | — | — |
+| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | — | — |
+| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | — | — |
+| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | — | — |
 
-All rows pass or not applicable (column hidden): `HW: Unpushed commits`
+All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpushed commits`
 
 ### Release readiness (Schema 0 checklist)
 
@@ -173,7 +173,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **Walrus** | Finish #15-#18 |  |
 | **Libelle** | Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library |  |
 | **Liasis** | Decide on adding an MCU (#2) |  |
-| **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 | depends= should say NW_BME280 · hardware v3 release in progress |
+| **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 · Bench-logger prerequisite: forward-migrate <BME.h> to <NW_BME280.h> and depends= (master builds only via the stale ~/Arduino/libraries copy); same in Okapi_Library and the Deployments sketches | depends= should say NW_BME280 · hardware v3 release in progress |
 | **Okapi** | Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order | 5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test · Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs |
 | **Tally** | Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row · camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml | Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged) |
 | **Standalone libraries** | | |
