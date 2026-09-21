@@ -29,3 +29,7 @@ Dated CSV and Markdown snapshots are committed so that the state on a given day 
 ## Archive
 
 `archive/` holds the May 2026 Library Manager readiness audits and their render script, which this tool supersedes.
+
+## License
+
+GPL-3.0, see [LICENSE.md](LICENSE.md). The dated CSV and Markdown reports are generated data about the NorthernWidget repositories, not creative works.
