@@ -185,7 +185,7 @@ All rows pass or not applicable (column hidden): `moxygen remnants`
 | **Standalone libraries** | | |
 | **MCP3421** | Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0 | camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag |
 | **NW_BME280** | Add .zenodo.json; review; tag v3.0.0 |  |
-| **NW_Core** | Step 1: Apis adopts NW_Readings; step 2: Apis holds NW_Device (harness byte-identical + AVR sizes each step); no GitHub remote yet; unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
+| **NW_Core** | Steps 0-2 done (Apis on Core; harness byte-identical); step 3: APIS_ERROR as alias of NW_ERROR and retire dead APIS_BIT_/APIS_CTRL_ macros; then Walrus firmware Block 0 before Walrus-on-Core; unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | Decide SoftwareSerial vs Serial1 (#4); then keywords.txt; .zenodo.json; docs.yml; example; drop trailing space | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
