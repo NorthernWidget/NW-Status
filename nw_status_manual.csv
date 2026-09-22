@@ -63,3 +63,5 @@ Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 eve
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
 Okapi_Library,Next action,DEFERRED (partial update; Andy 2026-09-22). Does not compile on master: Okapi.cpp uses MCP23018::Ports::B which MCP23018 never declared, and MCP23018.h #defines A/B; settle the MCP23018 API first; then bugs #3-#7; BME include migrated (unpushed)
+NW_Core,Next action,Step 1: Apis adopts NW_Readings; step 2: Apis holds NW_Device (harness byte-identical + AVR sizes each step); no GitHub remote yet; unversioned until the overhaul ends
+NW_Core,Notes,Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test

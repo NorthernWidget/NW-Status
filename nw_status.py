@@ -42,6 +42,7 @@ LIBRARIES = [
     ("Okapi_Library",       "Logger",    "Okapi"),
     ("MCP3421",             "Component", ""),
     ("NW_BME280",           "Sensor",    ""),
+    ("NW_Core",             "Core",      ""),
     ("DS3231",              "Component", ""),
     ("DS3231_Logger",       "Component", ""),
     ("MaxBotix_Library",    "Sensor",    ""),
