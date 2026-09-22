@@ -22,7 +22,7 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ◐ 3 | 18 | ◐ 5 | ◐ 7 |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ◐ 5 | 19 | ◐ 2 | ◐ 9 |
 | **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 | ✅ 0 |
 | **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 | ✅ 0 |
 | **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
@@ -51,7 +51,7 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | Row | version= | Last tag | version = tag | HW: Last tag | HW: Commits past tag | library.properties | paragraph= | url= ok | category= | LICENSE | README DOI badge | CITATION.cff | .zenodo.json | keywords.txt | doxygen_NW.cfg | src/ | _Demo example | Examples |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | | | | | | | | |
-| **Apis** | 0.1.0 | v0.1.0 | ✅ | v0.1.1 | 22 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Apis_Demo, Apis_Readings, Margay |
+| **Apis** | 0.1.0 | v0.1.0 | ✅ | v0.1.1 | 24 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Apis_Demo, Apis_Readings, Margay |
 | **Haar** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 9 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Haar_Demo, SerialDemo |
 | **Walrus** | 0.2.0 | v0.2.0 | ✅ | v0.3.0 | 15 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
 | **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 25 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
@@ -154,7 +154,7 @@ All rows pass or not applicable (column hidden): `moxygen remnants`
 
 | Row | HW: Last tag | HW: Commits past tag | HW: Eagle .brd | HW: KiCad .kicad_pcb | HW: KiCad verified vs Eagle | HW: Bug-labelled issues |
 |---|---|---|---|---|---|---|
-| **Apis** | v0.1.1 | 22 | 3 | 0 | — | 2 |
+| **Apis** | v0.1.1 | 24 | 3 | 0 | — | 2 |
 | **Haar** | v0.1.1 | 9 | 2 | 0 | — | 0 |
 | **Walrus** | v0.3.0 | 15 | 3 | 0 | — | 2 |
 | **Libelle** | v0.1.1 | 25 | 2 | 0 | — | 3 |
