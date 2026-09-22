@@ -19,34 +19,32 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 
 ### Where is everything
 
-| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | HW: Open issues | HW: Uncommitted files |
-|---|---|---|---|---|---|---|---|---|---|---|
-| **Devices** | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | 17 | ◐ 5 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | 10 | ◐ 1 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 |
-| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 |
-| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | 19 | ◐ 2 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 |
-| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | 4 | ◐ 1 |
-| **Standalone libraries** | | | | | | | | | | |
-| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | — | — |
-| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | — | — |
-| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | — | — |
-| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | — | — |
-| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | — | — |
-| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | — | — |
-| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | — | — |
-| **Bare repos** | | | | | | | | | | |
-| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | — | — |
-| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | — | — |
-| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | — | — |
-| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | — | — |
-| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | — | — |
-
-All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpushed commits`
+| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Devices** | | | | | | | | | | | | |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 17 | ◐ 5 | ✅ 0 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 | ✅ 0 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 | ✅ 0 |
+| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
+| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 | ✅ 0 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ◐ 3 | 19 | ◐ 2 | ✅ 0 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | ◐ 1 | 22 | ◐ 1 | ◐ 1 |
+| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 | ✅ 0 |
+| **Standalone libraries** | | | | | | | | | | | | |
+| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — | — |
+| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
+| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — | — |
+| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — | — |
+| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
+| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — | — |
+| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — | — |
+| **Bare repos** | | | | | | | | | | | | |
+| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
+| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
+| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
+| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
+| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
 
 ### Release readiness (Schema 0 checklist)
 
@@ -59,7 +57,7 @@ All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpush
 | **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 25 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
 | **Liasis** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 5 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Liasis_Demo |
 | **Margay** | 1.2.0 | v1.2.0 | ✅ | v2.2.2 | 95 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | Basic, HighSpeed_NoSleep, Laser_Ranging, SensorDemo_TP-Downhole |
-| **Okapi** | 0.7.0 | v0.6.0 | ❌ NO (v0.6.0 vs 0.7.0) | v0.6.0 | 4 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ✅ | ✅ | ✅ | ✅ | ◐ named doxygen_Okapi.cfg | ✅ | ✅ | Okapi_Demo |
+| **Okapi** | 0.7.0 | v0.6.0 | ❌ NO (v0.6.0 vs 0.7.0) | v0.6.0 | 5 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ✅ | ✅ | ✅ | ✅ | ◐ named doxygen_Okapi.cfg | ✅ | ✅ | Okapi_Demo |
 | **Tally** | 0.1.0 | none | ❌ no tag | v0.1 | 39 | ✅ | ✅ | ❌ WRONG (NorthernWidget_Skunkworks/Tally_Library) | ❌ MISSING | ✅ | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ✅ | ❌ MISSING | Tally_I2C_Read |
 | **Standalone libraries** | | | | | | | | | | | | | | | | | | |
 | **MCP3421** | 2.0.0 | v1.1.0 | ❌ NO (v1.1.0 vs 2.0.0) | — | — | ✅ | ✅ | ✅ | ✅ Signal Input/Output | ❌ MISSING | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ MISSING | VoltageRead |
@@ -160,7 +158,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **Libelle** | v0.1.1 | 25 | 2 | 0 | — | 3 |
 | **Liasis** | v0.1.1 | 5 | 1 | 0 | — | 0 |
 | **Margay** | v2.2.2 | 95 | 1 | 1 | ❌ no (KiCad 7 import; BoM fields populated; not netlist-compared) | 7 |
-| **Okapi** | v0.6.0 | 4 | 3 | 2 | ❌ no (KiCad 10 import; power nets and no-connects fixed; not netlist-compared) | 13 |
+| **Okapi** | v0.6.0 | 5 | 3 | 2 | ❌ no (KiCad 10 import; power nets and no-connects fixed; not netlist-compared) | 13 |
 | **Tally** | v0.1 | 39 | 3 | 0 | — | 1 |
 
 ### Next actions
@@ -174,7 +172,7 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 | **Libelle** | Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library |  |
 | **Liasis** | Decide on adding an MCU (#2) |  |
 | **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 · Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults | depends= should say NW_BME280 · hardware v3 release in progress |
-| **Okapi** | Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order | 5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test · Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs |
+| **Okapi** | Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order · Does NOT compile on master (verified 2026-09-22): Okapi.cpp uses MCP23018::Ports::B which MCP23018 never declared | 5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test · Prototype; current design is untagged Eagle v1.0 updates (2024-11-02) with CAM outputs |
 | **Tally** | Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row · camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml | Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged) |
 | **Standalone libraries** | | |
 | **MCP3421** | Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0 | camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag |
