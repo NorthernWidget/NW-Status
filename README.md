@@ -23,12 +23,12 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 |---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | |
 | **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | 19 | ◐ 2 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | 10 | ◐ 1 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 |
-| **Libelle** | Sensor | Libelle_Library | NorthernWidget/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 |
-| **Liasis** | Sensor | Liasis_Library | NorthernWidget/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget/Haar_Library | Project-Haar | NorthernWidget/Project-Haar | ❌ no | 3 | ✅ 0 | 10 | ◐ 1 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget/Project-Walrus | ❌ no | 0 | ✅ 0 | 7 | ✅ 0 |
+| **Libelle** | Sensor | Libelle_Library | NorthernWidget/Libelle_Library | Project-Libelle | NorthernWidget/Project-Libelle | ❌ no | 7 | ✅ 0 | 17 | ✅ 0 |
+| **Liasis** | Sensor | Liasis_Library | NorthernWidget/Liasis_Library | Project-Liasis | NorthernWidget/Project-Liasis | ❌ no | 5 | ✅ 0 | 2 | ✅ 0 |
 | **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | 19 | ◐ 2 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget/Okapi_Library | Project-Okapi | NorthernWidget/Project-Okapi | ❌ no | 8 | ✅ 0 | 22 | ◐ 1 |
 | **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | 4 | ◐ 1 |
 | **Standalone libraries** | | | | | | | | | | |
 | **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | — | — |
@@ -57,8 +57,8 @@ All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpush
 | **Apis** | 0.1.0 | v0.1.0 | ✅ | v0.1.1 | 24 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Apis_Demo, Apis_Readings, Margay |
 | **Haar** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 9 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Haar_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Haar_Demo, SerialDemo |
 | **Walrus** | 0.2.0 | v0.2.0 | ✅ | v0.3.0 | 15 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Walrus_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
-| **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 25 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Libelle_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
-| **Liasis** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 5 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Liasis_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Liasis_Demo |
+| **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.2.0 | 7 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Libelle_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
+| **Liasis** | 1.0.0 | v1.0.0 | ✅ | v0.2.0 | 2 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Liasis_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Liasis_Demo |
 | **Margay** | 1.2.0 | v1.2.0 | ✅ | v2.2.2 | 95 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | Basic, HighSpeed_NoSleep, Laser_Ranging, SensorDemo_TP-Downhole |
 | **Okapi** | 0.7.0 | v0.6.0 | ❌ NO (v0.6.0 vs 0.7.0) | v0.6.0 | 5 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Okapi_Library) | ✅ Data Storage | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Okapi_Demo |
 | **Tally** | 0.1.0 | none | ❌ no tag | v0.1 | 39 | ✅ | ✅ | ❌ WRONG (NorthernWidget_Skunkworks/Tally_Library) | ❌ MISSING | ✅ | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ✅ | ❌ MISSING | Tally_I2C_Read |
@@ -163,8 +163,8 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 | **Apis** | v0.1.1 | 24 | 3 | 0 | — | 2 |
 | **Haar** | v0.1.1 | 9 | 2 | 0 | — | 0 |
 | **Walrus** | v0.3.0 | 15 | 3 | 0 | — | 2 |
-| **Libelle** | v0.1.1 | 25 | 2 | 0 | — | 3 |
-| **Liasis** | v0.1.1 | 5 | 1 | 0 | — | 0 |
+| **Libelle** | v0.2.0 | 7 | 2 | 0 | — | 3 |
+| **Liasis** | v0.2.0 | 2 | 1 | 0 | — | 0 |
 | **Margay** | v2.2.2 | 95 | 1 | 1 | ❌ no (KiCad 7 import; BoM fields populated; not netlist-compared) | 7 |
 | **Okapi** | v0.6.0 | 5 | 3 | 2 | ❌ no (KiCad 10 import; power nets and no-connects fixed; not netlist-compared) | 13 |
 | **Tally** | v0.1 | 39 | 3 | 0 | — | 1 |
