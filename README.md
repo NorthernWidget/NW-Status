@@ -19,32 +19,34 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 
 ### Where is everything
 
-| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Devices** | | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 17 | ◐ 5 | ✅ 0 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 | ✅ 0 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 | ✅ 0 |
-| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
-| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ◐ 3 | 19 | ◐ 2 | ✅ 0 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | ◐ 1 | 22 | ◐ 1 | ◐ 1 |
-| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 | ✅ 0 |
-| **Standalone libraries** | | | | | | | | | | | | |
-| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — | — |
-| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — | — |
-| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — | — |
-| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — | — |
-| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — | — |
-| **Bare repos** | | | | | | | | | | | | |
-| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
-| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
-| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
+| Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Devices** | | | | | | | | | | | |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ◐ 3 | 17 | ◐ 5 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget-Skunkworks/Haar_Library | Project-Haar | NorthernWidget-Skunkworks/Project-Haar | ❌ no | 3 | ✅ 0 | ◐ 3 | 10 | ◐ 1 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget-Skunkworks/Walrus_Library | Project-Walrus | NorthernWidget-Skunkworks/Project-Walrus | ❌ no | 0 | ✅ 0 | ◐ 5 | 7 | ✅ 0 |
+| **Libelle** | Sensor | Libelle_Library | NorthernWidget-Skunkworks/Libelle_Library | Project-Libelle | NorthernWidget-Skunkworks/Project-Libelle | ❌ no | 7 | ✅ 0 | ◐ 2 | 17 | ✅ 0 |
+| **Liasis** | Sensor | Liasis_Library | NorthernWidget-Skunkworks/Liasis_Library | Project-Liasis | NorthernWidget-Skunkworks/Project-Liasis | ❌ no | 5 | ✅ 0 | ◐ 2 | 2 | ✅ 0 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ◐ 2 | 19 | ◐ 2 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget-Skunkworks/Okapi_Library | Project-Okapi | NorthernWidget-Skunkworks/Project-Okapi | ❌ no | 8 | ✅ 0 | ◐ 5 | 22 | ◐ 1 |
+| **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 |
+| **Standalone libraries** | | | | | | | | | | | |
+| **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — |
+| **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — |
+| **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ◐ 5 | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ◐ 5 | — | — |
+| **T9602_Library** | Sensor | T9602_Library | NorthernWidget-Skunkworks/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — |
+| **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — |
+| **Bare repos** | | | | | | | | | | | |
+| **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
+| **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **TCA9534** | Component | TCA9534 | NorthernWidget/TCA9534 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — |
+| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+| **MCP4725** | Component | MCP4725 | NorthernWidget-Skunkworks/MCP4725 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — |
+
+All rows pass or not applicable (column hidden): `HW: Unpushed commits`
 
 ### Release readiness (Schema 0 checklist)
 
@@ -57,14 +59,14 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 25 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
 | **Liasis** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 5 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Liasis_Demo |
 | **Margay** | 1.2.0 | v1.2.0 | ✅ | v2.2.2 | 95 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | Basic, HighSpeed_NoSleep, Laser_Ranging, SensorDemo_TP-Downhole |
-| **Okapi** | 0.7.0 | v0.6.0 | ❌ NO (v0.6.0 vs 0.7.0) | v0.6.0 | 5 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ✅ | ✅ | ✅ | ✅ | ◐ named doxygen_Okapi.cfg | ✅ | ✅ | Okapi_Demo |
+| **Okapi** | 0.7.0 | v0.6.0 | ❌ NO (v0.6.0 vs 0.7.0) | v0.6.0 | 5 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Okapi_Demo |
 | **Tally** | 0.1.0 | none | ❌ no tag | v0.1 | 39 | ✅ | ✅ | ❌ WRONG (NorthernWidget_Skunkworks/Tally_Library) | ❌ MISSING | ✅ | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ✅ | ❌ MISSING | Tally_I2C_Read |
 | **Standalone libraries** | | | | | | | | | | | | | | | | | | |
 | **MCP3421** | 2.0.0 | v1.1.0 | ❌ NO (v1.1.0 vs 2.0.0) | — | — | ✅ | ✅ | ✅ | ✅ Signal Input/Output | ❌ MISSING | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ MISSING | VoltageRead |
 | **NW_BME280** | 3.0.0 | v3.0.0-alpha.1 | ❌ NO (v3.0.0-alpha.1 vs 3.0.0) | — | — | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | BasicReadings |
 | **DS3231** | 1.2.0 | v1.2.0 | ✅ | — | — | ✅ | ✅ | ✅ | ✅ Timing | ✅ | ❌ no badge | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ flat layout | ❌ MISSING | AdvanceAlarm, AlarmInterrupt, AlarmPolling, DS3231_oscillator_test, DS3231_set, DS3231_test, echo_time, now, setEpoch, set_echo |
 | **DS3231_Logger** | 0.1.0 | none | ❌ no tag | — | — | ✅ | ❌ blank | ✅ | ✅ Sensors | ❌ MISSING | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | none |
-| **MaxBotix_Library** | 1.1.0 | v1.0.0 | ❌ NO (v1.0.0 vs 1.1.0) | — | — | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
+| **MaxBotix_Library** | 1.1.0 | v1.0.0 | ❌ NO (v1.0.0 vs 1.1.0) | — | — | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
 | **T9602_Library** | 0.0.0 | v1.0.0 | ❌ NO (v1.0.0 vs 0.0.0) | — | — | ✅ | ✅ | ❌ WRONG (NorthernWidget/T9602_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | T9602_Demo |
 | **TP-Downhole_Library** | 0.1.0 | none | ❌ no tag | — | — | ✅ | ❌ blank | ❌ WRONG (NorthernWidget/TP-DownHole) | ✅ Sensors | ✅ | ❌ no badge | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ✅ | ✅ | TP_Downhole_Demo |
 | **MS5803** | 0.1.2 | none | ❌ no tag | — | — | ✅ | ❌ blank | ✅ | ✅ Sensors | ✅ | ❌ MISSING README | ❌ MISSING | ❌ MISSING | ❌ MISSING | ❌ MISSING | ✅ | ✅ | MS5803_Demo |
@@ -108,32 +110,34 @@ All rows pass or not applicable (column hidden): `getHeader/getString`
 
 ### Docs conversion (moxygen -> Doxygen on Pages; website entries)
 
-| Row | docs.yml | .doxybook config | moxygen remnants | README API link | HW: Website API link | HW: Website links = repos | HW: Website I2C address |
-|---|---|---|---|---|---|---|---|
-| **Devices** | | | | | | | |
-| **Apis** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ 0x50 (spec 0x41) |
-| **Haar** | ✅ | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x42 (spec 0x48) |
-| **Walrus** | ❌ MISSING | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x4D (spec 0x57) |
-| **Libelle** | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x40 (spec 0x4C) |
-| **Liasis** | ✅ | ❌ MISSING | ✅ | ❌ MISSING | ❌ MISSING | ✅ | ❌ 0x4A (spec TBD) |
-| **Margay** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | — |
-| **Okapi** | ✅ | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | ❌ MISSING | ✅ | — |
-| **Tally** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | ❌ no entry | ❌ no entry | ❌ 0x33 (not in spec) |
-| **Standalone libraries** | | | | | | | |
-| **MCP3421** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **NW_BME280** | ✅ | ✅ | ✅ | ✅ | — | — | — |
-| **DS3231** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **DS3231_Logger** | ❌ MISSING | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | — | — | — |
-| **MaxBotix_Library** | ❌ MISSING | ❌ MISSING | ❌ build_docs.sh | ❌ MISSING | — | — | — |
-| **T9602_Library** | ✅ | ✅ | ✅ | ✅ | — | — | — |
-| **TP-Downhole_Library** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **MS5803** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING README | — | — | — |
-| **Bare repos** | | | | | | | |
-| **VEML6030** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **VEML6075** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **TCA9534** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING README | — | — | — |
-| **MCP23018** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
-| **MCP4725** | ❌ MISSING | ❌ MISSING | ✅ | ❌ MISSING | — | — | — |
+| Row | docs.yml | .doxybook config | README API link | HW: Website API link | HW: Website links = repos | HW: Website I2C address |
+|---|---|---|---|---|---|---|
+| **Devices** | | | | | | |
+| **Apis** | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ 0x50 (spec 0x41) |
+| **Haar** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x42 (spec 0x48) |
+| **Walrus** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x4D (spec 0x57) |
+| **Libelle** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x40 (spec 0x4C) |
+| **Liasis** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x4A (spec TBD) |
+| **Margay** | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| **Okapi** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | — |
+| **Tally** | ❌ MISSING | ❌ MISSING | ❌ MISSING | ❌ no entry | ❌ no entry | ❌ 0x33 (not in spec) |
+| **Standalone libraries** | | | | | | |
+| **MCP3421** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **NW_BME280** | ✅ | ✅ | ✅ | — | — | — |
+| **DS3231** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **DS3231_Logger** | ✅ | ✅ | ✅ | — | — | — |
+| **MaxBotix_Library** | ✅ | ✅ | ✅ | — | — | — |
+| **T9602_Library** | ✅ | ✅ | ✅ | — | — | — |
+| **TP-Downhole_Library** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **MS5803** | ❌ MISSING | ❌ MISSING | ❌ MISSING README | — | — | — |
+| **Bare repos** | | | | | | |
+| **VEML6030** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **VEML6075** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **TCA9534** | ❌ MISSING | ❌ MISSING | ❌ MISSING README | — | — | — |
+| **MCP23018** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| **MCP4725** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+
+All rows pass or not applicable (column hidden): `moxygen remnants`
 
 ### Schema 1 rollout
 
