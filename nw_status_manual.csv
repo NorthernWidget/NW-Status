@@ -1,5 +1,5 @@
 Row,Column,Value
-Apis_Library,Schema 1: library,done on master 2026-09-21 (unreleased; needs major version; untested on hardware)
+Apis_Library,Schema 1: library,series 4 on master 2026-09-22 (requires firmware patch 2; readings-requested word; one storage path; untested on hardware)
 Haar_Library,Schema 1: library,MISSING (default address 0x42; spec 0x48)
 Walrus_Library,Schema 1: library,partial: address 0x57 and Page 1 reads; no Page 0 schema check in begin()
 Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
@@ -12,7 +12,7 @@ T9602_Library,Notes,tag v1.0.0 (2022) exists while library.properties says 0.0.0
 MaxBotix_Library,Notes,uncommitted Serial1 hack in src/ (deferred refactor; issue #4)
 TP-Downhole_Library,Notes,legacy; lineage tracked under Walrus
 Margay_Library,Notes,depends= should say NW_BME280
-Project-Apis,Schema 1: firmware,done on master 2026-09-21 (patch 1; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
+Project-Apis,Schema 1: firmware,patch 2 on master 2026-09-22 (on-demand run model per #23; readings-requested word; STATUS-register readiness and busy polling; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
 Project-Haar,Schema 1: firmware,MISSING
 Project-Walrus,Schema 1: firmware,partial: Page 1 done on master; open #15 Page 0 init; #16 writable 0x1F
 Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
@@ -33,7 +33,7 @@ Project-Haar,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Walrus,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
 Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
-Project-Apis,Next action,Bench test firmware patch 1 + library on a provisioned board (same session as Walrus); then run model per #23 (v3HP manual; timing budget; single-vs-burst rule); #22 awaits the bench
+Project-Apis,Next action,Bench (needs boards): provision with NW-Provision; flash firmware patch 2; Apis_Library Margay example on a Margay; scope one getRange() (mode-pin finding, #23); then #24 for a board revision
 Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
 Project-Walrus,Next action,Finish #15-#18
 Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
