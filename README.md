@@ -111,6 +111,36 @@ All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpush
 
 All rows pass or not applicable (column hidden): `getHeader/getString`
 
+### Logger compile (NW-Compile-Tests)
+
+| Row | Compiles: Margay | Compiles: Okapi |
+|---|---|---|
+| **Devices** | | |
+| **Apis** | ✅ | ◐ FAIL |
+| **Haar** | ✅ | ◐ FAIL |
+| **Walrus** | ✅ | ◐ FAIL |
+| **Libelle** | ✅ | ◐ FAIL |
+| **Liasis** | ✅ | ◐ FAIL |
+| **Margay** | — | — |
+| **Okapi** | — | — |
+| **Tally** | ✅ | ◐ FAIL |
+| **Standalone libraries** | | |
+| **MCP3421** | — | — |
+| **NW_BME280** | ✅ | ◐ FAIL |
+| **NW_Core** | — | — |
+| **DS3231** | — | — |
+| **DS3231_Logger** | — | — |
+| **MaxBotix_Library** | ◐ FAIL | ◐ FAIL |
+| **T9602_Library** | ✅ | ◐ FAIL |
+| **TP-Downhole_Library** | — | — |
+| **MS5803** | — | — |
+| **Bare repos** | | |
+| **VEML6030** | — | — |
+| **VEML6075** | — | — |
+| **TCA9534** | — | — |
+| **MCP23018** | — | — |
+| **MCP4725** | — | — |
+
 ### Docs conversion (moxygen -> Doxygen on Pages)
 
 | Row | docs.yml | .doxybook config | _docs/ site config | README API link |

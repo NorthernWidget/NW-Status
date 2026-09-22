@@ -29,6 +29,7 @@ ROOT  = Path(os.environ.get("NW_WORKSPACE", HERE.parent))     # workspace holdin
 TODAY = datetime.date.today().isoformat()
 MANUAL = HERE / "nw_status_manual.csv"
 SPEC_README = ROOT / "NW-Device-Specification" / "README.md"
+COMPILE_RESULTS = ROOT / "NW-Compile-Tests" / "results.json"   # written by NW-Compile-Tests/compile.py
 
 # ── inventory ─────────────────────────────────────────────────────────────────
 # (local dir, type, paired device or "")   type: Sensor | Logger | Component
@@ -72,6 +73,7 @@ LIB_COLS = ["Library", "Type", "Device", "GitHub", "version=", "Last tag", "vers
             "LICENSE", "README DOI badge", "CITATION.cff", ".zenodo.json", "keywords.txt",
             "doxygen_NW.cfg", "src/", "_Demo example", "Examples", "docs.yml",
             "moxygen remnants", ".doxybook config", "_docs/ site config", "Pages enabled", "README API link",
+            "Compiles: Margay", "Compiles: Okapi",
             "begin() -> bool", "getHeader/getString", "Raw-readings triad",
             "camelCase conversion", "PascalCase removed",
             "Header trailing space", "Header separator", "Arduino registry",
@@ -178,6 +180,17 @@ def registry():
         print(f"registry fetch failed: {e}", file=sys.stderr)
         return None
 
+_COMPILE = None
+def compile_result(dirname, device, logger):
+    """OK / FAIL / — from NW-Compile-Tests/results.json for this library's sketch on the given logger."""
+    global _COMPILE
+    if _COMPILE is None:
+        try: _COMPILE = json.loads(COMPILE_RESULTS.read_text()).get("results", {})
+        except Exception: _COMPILE = {}
+    name = device or dirname.replace("_Library", "")
+    r = _COMPILE.get(f"{name}_{logger}")
+    return "—" if r is None else ("OK" if r.get("ok") else "FAIL")
+
 def spec_appendix(device):
     if not SPEC_README.exists(): return "?"
     txt = SPEC_README.read_text()
@@ -248,6 +261,8 @@ def scan_library(dirname, typ, device, reg):
         try: base = json.loads(dbc.read_text()).get("baseUrl", "")
         except Exception: base = "unparseable"
         row[".doxybook config"] = "OK" if base == f"/{dirname}/" else f"baseUrl WRONG ({base})"
+    row["Compiles: Margay"] = compile_result(dirname, device, "Margay")
+    row["Compiles: Okapi"]  = compile_result(dirname, device, "Okapi")
     row["README API link"] = ("MISSING README" if not rd.exists() else
                               "OK" if re.search(rf"(docs\.northernwidget\.com|northernwidget\.github\.io)/{re.escape(dirname)}/",
                                                 rd.read_text(errors="replace")) else "MISSING")
@@ -387,6 +402,7 @@ GROUPS = [
     ("Release files",    ["LICENSE", "README DOI badge", "CITATION.cff", ".zenodo.json", "keywords.txt",
                           "doxygen_NW.cfg", "src/", "_Demo example", "Examples"]),
     ("Docs conversion",  ["docs.yml", ".doxybook config", "_docs/ site config", "Pages enabled", "moxygen remnants", "README API link"]),
+    ("Logger compile",   ["Compiles: Margay", "Compiles: Okapi"]),
     ("Common API: signatures", ["begin() -> bool", "getHeader/getString", "Raw-readings triad"]),
     ("Common API: style",      ["camelCase conversion", "PascalCase removed", "Header trailing space", "Header separator"]),
     ("Schema 1 pipeline", [HW_PREFIX + "Spec appendix", HW_PREFIX + "Schema 1: firmware", "Schema 1: library",
@@ -402,6 +418,7 @@ VIEWS = [
     ("Where is everything",   ["Directory", "Activity"], None),
     ("Release readiness (Schema 0 checklist)", ["Release state", "Library metadata", "Release files"], None),
     ("Common sensor API",     ["Common API: signatures", "Common API: style"], None),
+    ("Logger compile (NW-Compile-Tests)", ["Logger compile"], None),
     ("Docs conversion (moxygen -> Doxygen on Pages)", ["Docs conversion"], None),
     ("Schema 1 rollout",      ["Schema 1 pipeline"], "Devices"),
     ("Hardware design",       [HW_PREFIX + "Last tag", HW_PREFIX + "Commits past tag", "Hardware design"], "Devices"),
