@@ -62,4 +62,4 @@ Project-Tally,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
-Okapi_Library,Next action,Does NOT compile on master (verified 2026-09-22): Okapi.cpp uses MCP23018::Ports::B which MCP23018 never declared, and MCP23018.h #defines A/B; settle the MCP23018 API first; then bugs #3-#7; BME include migrated (unpushed)
+Okapi_Library,Next action,DEFERRED (partial update; Andy 2026-09-22). Does not compile on master: Okapi.cpp uses MCP23018::Ports::B which MCP23018 never declared, and MCP23018.h #defines A/B; settle the MCP23018 API first; then bugs #3-#7; BME include migrated (unpushed)
