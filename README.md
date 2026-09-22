@@ -108,34 +108,34 @@ All rows pass or not applicable (column hidden): `HW: Unpushed commits`
 
 All rows pass or not applicable (column hidden): `getHeader/getString`
 
-### Docs conversion (moxygen -> Doxygen on Pages; website entries)
+### Docs conversion (moxygen -> Doxygen on Pages)
 
-| Row | docs.yml | .doxybook config | README API link | HW: Website API link | HW: Website links = repos | HW: Website I2C address |
-|---|---|---|---|---|---|---|
-| **Devices** | | | | | | |
-| **Apis** | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ 0x50 (spec 0x41) |
-| **Haar** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x42 (spec 0x48) |
-| **Walrus** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x4D (spec 0x57) |
-| **Libelle** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x40 (spec 0x4C) |
-| **Liasis** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ❌ 0x4A (spec TBD) |
-| **Margay** | ✅ | ✅ | ✅ | ✅ | ✅ | — |
-| **Okapi** | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | — |
-| **Tally** | ❌ MISSING | ❌ MISSING | ❌ MISSING | ❌ no entry | ❌ no entry | ❌ 0x33 (not in spec) |
-| **Standalone libraries** | | | | | | |
-| **MCP3421** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **NW_BME280** | ✅ | ✅ | ✅ | — | — | — |
-| **DS3231** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **DS3231_Logger** | ✅ | ✅ | ✅ | — | — | — |
-| **MaxBotix_Library** | ✅ | ✅ | ✅ | — | — | — |
-| **T9602_Library** | ✅ | ✅ | ✅ | — | — | — |
-| **TP-Downhole_Library** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **MS5803** | ❌ MISSING | ❌ MISSING | ❌ MISSING README | — | — | — |
-| **Bare repos** | | | | | | |
-| **VEML6030** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **VEML6075** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **TCA9534** | ❌ MISSING | ❌ MISSING | ❌ MISSING README | — | — | — |
-| **MCP23018** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
-| **MCP4725** | ❌ MISSING | ❌ MISSING | ❌ MISSING | — | — | — |
+| Row | docs.yml | .doxybook config | README API link |
+|---|---|---|---|
+| **Devices** | | | |
+| **Apis** | ✅ | ✅ | ✅ |
+| **Haar** | ✅ | ✅ | ✅ |
+| **Walrus** | ✅ | ✅ | ✅ |
+| **Libelle** | ✅ | ✅ | ✅ |
+| **Liasis** | ✅ | ✅ | ✅ |
+| **Margay** | ✅ | ✅ | ✅ |
+| **Okapi** | ✅ | ✅ | ✅ |
+| **Tally** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **Standalone libraries** | | | |
+| **MCP3421** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **NW_BME280** | ✅ | ✅ | ✅ |
+| **DS3231** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **DS3231_Logger** | ✅ | ✅ | ✅ |
+| **MaxBotix_Library** | ✅ | ✅ | ✅ |
+| **T9602_Library** | ✅ | ✅ | ✅ |
+| **TP-Downhole_Library** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **MS5803** | ❌ MISSING | ❌ MISSING | ❌ MISSING README |
+| **Bare repos** | | | |
+| **VEML6030** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **VEML6075** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **TCA9534** | ❌ MISSING | ❌ MISSING | ❌ MISSING README |
+| **MCP23018** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
+| **MCP4725** | ❌ MISSING | ❌ MISSING | ❌ MISSING |
 
 All rows pass or not applicable (column hidden): `moxygen remnants`
 
