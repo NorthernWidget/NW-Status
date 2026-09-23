@@ -14,7 +14,7 @@ Last edited 2026-09-23.
 | 4 | Project-Apis issue hygiene: #16 (32-byte map), #17 (on-demand trigger), #18 (signal strength) delivered by Schema 1; #22 (accelFail inversion) to check against patch 2 | [Project-Apis issues](https://github.com/NorthernWidget/Project-Apis/issues) | Andy's word to comment/close | |
 | 5 | Spec README em-dashes (99) to spaced en-dashes | [NW-Device-Specification #2](https://github.com/NorthernWidget/NW-Device-Specification/issues/2) | Andy's decision | mechanical, one commit |
 | 6 | Cleanup: Apis_Library `stash@{0}` (superseded header edit); branches `backup-before-swp-filter` (T9602_Library), `backup-before-rebase` (DS3231_Logger), `backup-default-address-on-stale-Dev_I2C` (Tally_Library) | local clones | Andy's authorisation to delete | all superseded by pushed history |
-| 7 | Tally onto NW_Core (firmware Block 0 first) | NW-Status README, NW_Core row | Andy's decision on the proposed Tally appendix | T9602 and Libelle done 2026-09-23, same recipe as Walrus and Haar; Libelle firmware still owes per-chip faults |
+| 7 | Tally onto NW_Core (firmware Block 0 first) | NW-Status README, NW_Core row | Andy's decision on the proposed Tally appendix | T9602 and Libelle done 2026-09-23, same recipe as Walrus and Haar |
 | 8 | Project-Okapi Serial_Ctrl needs a DS3231 header (DS3231_Logger migration) | Project-Okapi | none | |
 
 ## Waiting for the bench
