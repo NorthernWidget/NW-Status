@@ -15,7 +15,7 @@ Margay_Library,Notes,depends= should say NW_BME280
 Project-Apis,Schema 1: firmware,patch 2 on master 2026-09-22 (on-demand run model per #23; readings-requested word; STATUS-register readiness and busy polling; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
 Project-Haar,Schema 1: firmware,"done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; data at 0x28-0x35 in 0.01 units; writable rule, 0x1F persisted; 32-byte page reads; on-demand trigger, chip select, counter, live and latched faults incl. SHT31 checksum and LPS35HW timeout; address 0x42 -> 0x48); untested on hardware"
 Project-Walrus,Schema 1: firmware,"Block 0 done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; writable rule, 0x1F persisted; 32-byte page reads; trigger or timer, chip select, counter, live and latched faults; batch word accepted, no effect); untested on hardware (#18)"
-Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
+Project-Libelle,Schema 1: firmware,"done on master 2026-09-23 (patch 1, Libelle_Driver_ShortWave: Page 0 from EEPROM; data at 0x28-0x3D; writable rule, 0x1F persisted; 32-byte page reads; trigger or timer, chip select, counter, unit faults; addresses 0x4C UP / 0x0C DOWN); per-chip faults not yet; untested on hardware"
 Project-Liasis,Schema 1: firmware,N/A (no MCU; #2)
 Project-Margay,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
 Project-Okapi,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
@@ -36,7 +36,7 @@ Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Apis,Next action,Bench (needs boards): provision with NW-Provision; flash firmware patch 2; Apis_Library Margay example on a Margay; scope one getRange() (mode-pin finding, #23); then #24 for a board revision
 Project-Haar,Next action,Provision Page 0 with NW-Provision; bench-validate firmware patch 1 with Haar_Library on NW_Core (address change 0x42 -> 0x48 breaks old sketches)
 Project-Walrus,Next action,#17 provisioning check and #18 bench validation of firmware patch 1 with Walrus_Library on NW_Core
-Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
+Project-Libelle,Next action,Libelle_Library onto NW_Core (harness first; the ADXL343 at 0x1D on the same bus needs a second device in the stub); capture chip acknowledges in the firmware for per-chip faults; bench
 Project-Liasis,Next action,Decide on adding an MCU (#2)
 Project-Margay,Next action,June review fixes in KiCad -> v3 tag; provision Page 0
 Project-Okapi,Next action,Parallel thread: decide manufacturing source (KiCad-10 import vs Eagle) -> fix #15-#28 there -> ERC/DRC -> Gerbers -> v1.0 tag -> order
@@ -59,9 +59,10 @@ MCP4725,Next action,Bare: library.properties and full checklist if kept
 Project-Tally,Schema 1: firmware,MISSING (fw 0.2.0 2019: 5-byte map; command bits at 0x00; address 0x33 hard-coded)
 Project-Tally,Page 0 provisioned + tested,no
 Project-Tally,KiCad verified vs Eagle,N/A (no KiCad import yet)
-Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row
+Project-Tally,Next action,"Andy to decide the proposed Tally appendix (spec README, 2026-09-23: monotonic uint32 count latched by the trigger, cap voltage at each latch, NOCAP as Config bit 0, address 0x54 inside the Okapi FRAM range); then firmware Block 0 on the ATtiny841 and the library onto Core"
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
 Okapi_Library,Next action,Compiles again (2026-09-23, MCP23018::Port::B); bugs #3-#7 next; the deferred partial-update review; Note column as in Margay
-NW_Core,Next action,"Core-candidates scan done 2026-09-23; moved: shared harness support + runner, NW_Fault::print/note with per-library chip names, NW_ReadingsConfig, nwScaled/NW_Error.h, takeReadings; Apis Component now chip bits; next: Libelle / T9602 / Tally onto Core (firmware Block 0 first where missing); unversioned until the overhaul ends"
+NW_Core,Next action,"Apis, Walrus, Haar, T9602 on Core; Libelle firmware done, library next; Tally after its appendix; unversioned until the overhaul ends"
 NW_Core,Notes,"Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs and NW_TestSupport.h/run_library.sh live in extras/test; kept per library by decision: the forwarders (11a.6), field-named accessors, header/row text, demos"
+T9602_Library,Schema 1: library,"N/A (not an NW device); on NW_Core's readings layer 2026-09-23 (N readings with statistics, reading interface, harness on the shared stubs)"
