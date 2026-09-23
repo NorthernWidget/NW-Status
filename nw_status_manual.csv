@@ -54,7 +54,7 @@ DS3231,Next action,CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in regi
 VEML6030,Next action,Bare: library.properties and full checklist if kept
 VEML6075,Next action,Bare: library.properties and full checklist if kept
 TCA9534,Next action,Bare: library.properties and full checklist if kept
-MCP23018,Next action,PRIORITY (Andy 2026-09-23): settle the API – enum class Ports (drop the A/B macros), camelCase; then Okapi_Library adapts (every Okapi sketch in NW-Tests fails on MCP23018::Ports)
+MCP23018,Next action,Rewritten 2026-09-23 (src/ layout; pinMode/digitalWrite/digitalRead/setInterrupt; MCP23018::Port; four fixes; harness on NW_Core stubs; unpushed): LICENSE check; CITATION/.zenodo; docs.yml + _docs + doxybook; still under NorthernWidget-Skunkworks
 MCP4725,Next action,Bare: library.properties and full checklist if kept
 Project-Tally,Schema 1: firmware,MISSING (fw 0.2.0 2019: 5-byte map; command bits at 0x00; address 0x33 hard-coded)
 Project-Tally,Page 0 provisioned + tested,no
@@ -62,6 +62,6 @@ Project-Tally,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 event count; address 'T' 0x54); confirm MCU; NW-Provision + NW-Registry entries; snapshot issue row
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
-Okapi_Library,Next action,DEFERRED (partial update; Andy 2026-09-22). Does not compile on master: Okapi.cpp uses MCP23018::Ports::B which MCP23018 never declared, and MCP23018.h #defines A/B; settle the MCP23018 API first; then bugs #3-#7; BME include migrated (unpushed)
+Okapi_Library,Next action,Compiles again (2026-09-23, MCP23018::Port::B); bugs #3-#7 next; the deferred partial-update review; Note column as in Margay
 NW_Core,Next action,Steps 0-2 done (Apis on Core; harness byte-identical); step 3: APIS_ERROR as alias of NW_ERROR and retire dead APIS_BIT_/APIS_CTRL_ macros; then Walrus firmware Block 0 before Walrus-on-Core; unversioned until the overhaul ends
 NW_Core,Notes,Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test
