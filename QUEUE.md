@@ -2,7 +2,27 @@
 
 Work that is decided or open but not yet started, with what blocks it. One line per item; the linked issue holds the detail. Kept here so the list survives sessions; NW-Status/README.md carries the per-repository state.
 
-Last edited 2026-09-23.
+Last edited 2026-09-24.
+
+## Next session (firmed up 2026-09-24 at the pause)
+
+Verify first, in this order, before any edit: (1) read the resumption frame in memory, (2) `git status` in every repository below (all should be clean, all unpushed), (3) `python3 NW-Tests/compile.py` expects 16 of 18 (MaxBotix is the known failure) and `python3 NW-Tests/harness.py` expects 7 of 7.
+
+**A. Housekeeping (Andy's word on each; minutes each)**
+1. Push the fourteen unpushed repositories: NW_Core, Apis/Walrus/Haar/Libelle_Library, Project-Apis/Walrus/Haar/Libelle, Margay_Library, Okapi_Library, NW-Device-Specification, NW-Tests, NW-Status, NW-Provision. One `CLAUDE_ALLOW=push` command per repository.
+2. Create the GitHub repository for NW_Logger (NorthernWidget, public, like NW_Core) and push it; add it to the NW-Status rows and the compile CI's clone list.
+3. Drop the two superseded stashes in Project-Haar and Project-Libelle, and the Apis_Library stash and the two backup branches of item 6.
+
+**B. The two parked design questions (a "nice and big" session)**
+4. NW_Logger's shape (item 10): five virtual hooks and a begin() in six pieces came out of the extraction; decide whether a flatter base reads better (fewer hooks with the board handing the base a struct of its pins and rails, or the rails and bus switch as hooks so that sleepNow/turnOffSDcard/turnOnSDcard move too). The 1.9 kB is the cost of the vtable and is accepted; the question is the reading.
+5. Okapi Page 2 Block 1 (power): which rail is the LiPo, what the solar and backup fields are; then fillPages() and the appendix stop being hypothetical. Item 2's Okapi bugs (#3 to #7) belong to the same sitting.
+
+**C. Bench (hardware; the first hardware since the overhaul)**
+6. NW-Provision writes Page 0 and Page 1 on a Margay v3.0 and Page 0 on one Apis, Walrus, Haar and Libelle (B1); then each sensor on that Margay with the NW-Tests sketch; a card's log and sta files decoded by `codering decode`.
+7. Apis firmware patch 5 on hardware: the zero ring, the generation, the magnet tap after reflashing (agent C's byte-order change); B2 and B3 while the bench is set up.
+
+**D. Then, in queue order:** 1 MaxBotix on NW_Core, 7 Tally, 13 versions (with the first tags), 12 fast logging, 3, 4, 5, 8; NW-Build steps 4 and 7 to 12; the check row.
+
 
 ## Desk work (no hardware needed)
 
