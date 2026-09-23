@@ -29,7 +29,7 @@ ROOT  = Path(os.environ.get("NW_WORKSPACE", HERE.parent))     # workspace holdin
 TODAY = datetime.date.today().isoformat()
 MANUAL = HERE / "nw_status_manual.csv"
 SPEC_README = ROOT / "NW-Device-Specification" / "README.md"
-COMPILE_RESULTS = ROOT / "NW-Compile-Tests" / "results.json"   # written by NW-Compile-Tests/compile.py
+COMPILE_RESULTS = ROOT / "NW-Tests" / "results.json"   # written by NW-Tests/compile.py
 
 # ── inventory ─────────────────────────────────────────────────────────────────
 # (local dir, type, paired device or "")   type: Sensor | Logger | Component
@@ -182,7 +182,7 @@ def registry():
 
 _COMPILE = None
 def compile_result(dirname, device, logger):
-    """OK / FAIL / — from NW-Compile-Tests/results.json for this library's sketch on the given logger."""
+    """OK / FAIL / — from NW-Tests/results.json for this library's sketch on the given logger."""
     global _COMPILE
     if _COMPILE is None:
         try: _COMPILE = json.loads(COMPILE_RESULTS.read_text()).get("results", {})
@@ -418,7 +418,7 @@ VIEWS = [
     ("Where is everything",   ["Directory", "Activity"], None),
     ("Release readiness (Schema 0 checklist)", ["Release state", "Library metadata", "Release files"], None),
     ("Common sensor API",     ["Common API: signatures", "Common API: style"], None),
-    ("Logger compile (NW-Compile-Tests)", ["Logger compile"], None),
+    ("Logger compile (NW-Tests)", ["Logger compile"], None),
     ("Docs conversion (moxygen -> Doxygen on Pages)", ["Docs conversion"], None),
     ("Schema 1 rollout",      ["Schema 1 pipeline"], "Devices"),
     ("Hardware design",       [HW_PREFIX + "Last tag", HW_PREFIX + "Commits past tag", "Hardware design"], "Devices"),

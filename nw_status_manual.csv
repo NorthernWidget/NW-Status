@@ -54,7 +54,7 @@ DS3231,Next action,CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in regi
 VEML6030,Next action,Bare: library.properties and full checklist if kept
 VEML6075,Next action,Bare: library.properties and full checklist if kept
 TCA9534,Next action,Bare: library.properties and full checklist if kept
-MCP23018,Next action,PRIORITY (Andy 2026-09-23): settle the API – enum class Ports (drop the A/B macros), camelCase; then Okapi_Library adapts (every Okapi sketch in NW-Compile-Tests fails on MCP23018::Ports)
+MCP23018,Next action,PRIORITY (Andy 2026-09-23): settle the API – enum class Ports (drop the A/B macros), camelCase; then Okapi_Library adapts (every Okapi sketch in NW-Tests fails on MCP23018::Ports)
 MCP4725,Next action,Bare: library.properties and full checklist if kept
 Project-Tally,Schema 1: firmware,MISSING (fw 0.2.0 2019: 5-byte map; command bits at 0x00; address 0x33 hard-coded)
 Project-Tally,Page 0 provisioned + tested,no

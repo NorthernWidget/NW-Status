@@ -111,7 +111,7 @@ All rows pass or not applicable (column hidden): `Unpushed commits`, `HW: Unpush
 
 All rows pass or not applicable (column hidden): `getHeader/getString`
 
-### Logger compile (NW-Compile-Tests)
+### Logger compile (NW-Tests)
 
 | Row | Compiles: Margay | Compiles: Okapi |
 |---|---|---|
