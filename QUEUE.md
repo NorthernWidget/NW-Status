@@ -16,6 +16,8 @@ Last edited 2026-09-23.
 | 6 | Cleanup: Apis_Library `stash@{0}` (superseded header edit); branches `backup-before-swp-filter` (T9602_Library), `backup-before-rebase` (DS3231_Logger), `backup-default-address-on-stale-Dev_I2C` (Tally_Library) | local clones | Andy's authorisation to delete | all superseded by pushed history |
 | 7 | Tally onto NW_Core (firmware Block 0 first) | NW-Status README, NW_Core row | Andy's decision on the proposed Tally appendix | T9602 and Libelle done 2026-09-23, same recipe as Walrus and Haar |
 | 8 | Project-Okapi Serial_Ctrl needs a DS3231 header (DS3231_Logger migration) | Project-Okapi | none | |
+| 9 | Review how Margay (and therefore Okapi) writes files to the SD card overall: open/close per row, folder layout, the header path, the SdFat version, error handling | Margay_Library, Okapi_Library | none (Andy 2026-09-23: "make a note of a task") | feeds the report sink (#7) and any status-file writing |
+| 10 | A shared logger core for Margay and Okapi? Andy raised it 2026-09-23; the only earlier design is the logger-side templates in LIBRARY-DESIGN (collectReadings, report-all; Margay_Library #27), not a shared class | Margay_Library, Okapi_Library, NW_Core | Andy's decision after item 9's review | |
 
 ## Waiting for the bench
 
