@@ -218,7 +218,7 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 | **NW_Core** | Steps 0-2 done (Apis on Core; harness byte-identical); step 3: APIS_ERROR as alias of NW_ERROR and retire dead APIS_BIT_/APIS_CTRL_ macros; then Walrus firmware Block 0 before Walrus-on-Core; unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
-| **MaxBotix_Library** | PRIORITY (Andy 2026-09-23): take the serial port from the sketch (Stream&: Serial1 on Margay/Okapi | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
+| **MaxBotix_Library** | TABLED until Haar and Walrus are done (Andy 2026-09-23); design saved (Apis-form surface on NW_Core's common layer; sketch-owned Stream port). Idea to weigh then: an ATtiny on MaxBotix-Helper making it a Schema 1 device like Apis | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
 | **T9602_Library** | Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test (bundle refresh is an end-of-overhaul step for all libraries) | tag v1.0.0 (2022) exists while library.properties says 0.0.0 |
 | **TP-Downhole_Library** | Legacy: keep buildable; no standardization planned | legacy; lineage tracked under Walrus |
 | **MS5803** | README; CITATION.cff; .zenodo.json; keywords.txt; doxygen_NW.cfg; docs.yml; paragraph= |  |

@@ -45,7 +45,7 @@ Project-Margay,Notes,hardware v3 release in progress
 MCP3421,Next action,Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0
 NW_BME280,Next action,Add .zenodo.json; review; tag v3.0.0
 DS3231_Logger,Next action,LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin()
-MaxBotix_Library,Next action,PRIORITY (Andy 2026-09-23): take the serial port from the sketch (Stream&: Serial1 on Margay/Okapi, SoftwareSerial on an Uno) – SoftwareSerial in the library collides with Margay_Library PCINT ISR (__vector_4); finish or replace the uncommitted Serial1 hack; NW_Readings for the averaging
+MaxBotix_Library,Next action,TABLED until Haar and Walrus are done (Andy 2026-09-23); design saved (Apis-form surface on NW_Core's common layer; sketch-owned Stream port). Idea to weigh then: an ATtiny on MaxBotix-Helper making it a Schema 1 device like Apis
 T9602_Library,Next action,Stale-bits fix + checklist files + Pages docs committed 2026-09-22 (12 commits; unpushed): set version= (last release 1.0.0; proposal 1.1.0); hardware test (bundle refresh is an end-of-overhaul step for all libraries)
 Tally_Library,Next action,camelCase rename with aliases; category=; url=; CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml
 TP-Downhole_Library,Next action,Legacy: keep buildable; no standardization planned
