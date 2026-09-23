@@ -15,7 +15,7 @@ Verify first, in this order, before any edit: (1) read the resumption frame in m
 
 **B. The two parked design questions (a "nice and big" session)**
 4. NW_Logger's shape (item 10): five virtual hooks and a begin() in six pieces came out of the extraction; decide whether a flatter base reads better (fewer hooks with the board handing the base a struct of its pins and rails, or the rails and bus switch as hooks so that sleepNow/turnOffSDcard/turnOnSDcard move too). The 1.9 kB is the cost of the vtable and is accepted; the question is the reading.
-5. Okapi Page 2 Block 1 (power): which rail is the LiPo, what the solar and backup fields are; then fillPages() and the appendix stop being hypothetical. Item 2's Okapi bugs (#3 to #7) belong to the same sitting.
+5. Okapi Page 2 Block 1 (power): the model is given (Andy 2026-09-24) – alkaline primary cells, as on the Margay; a Li-Ion or other rechargeable battery; and a solar panel attached to it. The Margay's power model is a subset of the Okapi's, so the fields are one set with the Margay reporting the primary cells alone. Write the block and the appendix from that, and fillPages() stops being hypothetical. Item 2's Okapi bugs (#3 to #7) belong to the same sitting.
 
 **C. Bench (hardware; the first hardware since the overhaul)**
 6. NW-Provision writes Page 0 and Page 1 on a Margay v3.0 and Page 0 on one Apis, Walrus, Haar and Libelle (B1); then each sensor on that Margay with the NW-Tests sketch; a card's log and sta files decoded by `codering decode`.
