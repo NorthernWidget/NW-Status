@@ -261,3 +261,7 @@ Dated CSV snapshots are committed so that the state on a given day can be recove
 ## License
 
 GPL-3.0, see [LICENSE.md](LICENSE.md). The dated CSV and Markdown reports are generated data about the NorthernWidget repositories, not creative works.
+
+## Queue
+
+Held and not-yet-started work, with blockers: [QUEUE.md](QUEUE.md).
