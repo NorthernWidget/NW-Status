@@ -1,7 +1,7 @@
 Row,Column,Value
 Apis_Library,Schema 1: library,series 4 on master 2026-09-22 (requires firmware patch 2; readings-requested word; one storage path; untested on hardware)
-Haar_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, default address 0x48, triggered reading per getString(), faults, harness with baseline); untested on hardware"
-Walrus_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, triggered reading per getString(), faults, harness with baseline); untested on hardware (#18)"
+Haar_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, default address 0x48, chip-group components, N readings with statistics, reading interface, faults, harness with baseline); untested on hardware"
+Walrus_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, chip-group components, N readings with statistics, reading interface, faults, harness with baseline); untested on hardware (#18)"
 Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
 Liasis_Library,Schema 1: library,N/A until hardware carries an MCU
 Margay_Library,Schema 1: library,MISSING (no Page 0 read)
@@ -63,5 +63,5 @@ Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 eve
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
 Okapi_Library,Next action,Compiles again (2026-09-23, MCP23018::Port::B); bugs #3-#7 next; the deferred partial-update review; Note column as in Margay
-NW_Core,Next action,"Steps 0-3 done; Walrus and Haar (firmware Block 0 + library on Core) done 2026-09-23; next: decide the NW_Readings triad for every library (LIBRARY-DESIGN open item 6), then Libelle/T9602/Tally onto Core; unversioned until the overhaul ends"
+NW_Core,Next action,"Apis, Walrus, Haar all on Core with the triad and N-with-statistics (item 6 decided 2026-09-23); next: Libelle / T9602 / Tally onto Core (firmware Block 0 first where missing); unversioned until the overhaul ends"
 NW_Core,Notes,Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test
