@@ -30,7 +30,7 @@ Last edited 2026-09-23.
 | B1 | Bench Apis, Walrus, Haar, T9602 on Margay after NW-Provision writes Page 0 | Project-Apis #23, Project-Walrus #17/#18, Project-Haar | boards in hand; Haar's address moved 0x42 → 0x48 |
 | B2 | Apis mode pin pull-down | [Project-Apis #24](https://github.com/NorthernWidget/Project-Apis/issues/24) | board revision |
 | B3 | LiDAR power-up and acquisition timings; set firmware and library timeouts from them | [Project-Apis #25](https://github.com/NorthernWidget/Project-Apis/issues/25) | bench |
-| B4 | Status file: the device rows DONE 2026-09-23 (NW_Core daca228 NW_Sensor + boot report; the four libraries; Margay 5ebe30f watch(), statusRow(), reportRows() with the reset rule; NW-Tests sketches watch). Remaining: the logger's own rows (a Margay code vocabulary: SD failure, clock set, battery low, button start), the scheduled "check" row, the decoder (11), Okapi's copy | Margay_Library | Andy's word on the logger vocabulary | hardware-untested |
+| B4 | Status file DONE 2026-09-23 through the device rows and the logger's own: Margay is a Schema 1 device (spec 026fb26; NW_Core NW_Pages df6652a; Margay 'Margay is a Schema 1 device' commit) and watches itself. Remaining: NW-Provision writes Margay's Page 1 (divider, thermistor constants, thresholds by model); the scheduled "check" row (off unless wanted); the decoder (11); Okapi's copy with the UART page serving | NW-Provision, Margay_Library, Okapi | Andy's word on the check row | hardware-untested |
 
 ## Decided, for the record
 
