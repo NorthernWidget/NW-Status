@@ -22,9 +22,9 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 19 | ◐ 2 | ✅ 0 |
-| **Haar** | Sensor | Haar_Library | NorthernWidget/Haar_Library | Project-Haar | NorthernWidget/Project-Haar | ❌ no | 3 | ✅ 0 | ◐ 2 | 10 | ✅ 0 | ✅ 0 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget/Project-Walrus | ❌ no | 0 | ✅ 0 | ◐ 2 | 7 | ✅ 0 | ✅ 0 |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ◐ 2 | ◐ 3 | 19 | ◐ 2 | ✅ 0 |
+| **Haar** | Sensor | Haar_Library | NorthernWidget/Haar_Library | Project-Haar | NorthernWidget/Project-Haar | ❌ no | 3 | ✅ 0 | ◐ 7 | 10 | ✅ 0 | ✅ 0 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget/Project-Walrus | ❌ no | 0 | ✅ 0 | ◐ 7 | 7 | ✅ 0 | ✅ 0 |
 | **Libelle** | Sensor | Libelle_Library | NorthernWidget/Libelle_Library | Project-Libelle | NorthernWidget/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
 | **Liasis** | Sensor | Liasis_Library | NorthernWidget/Liasis_Library | Project-Liasis | NorthernWidget/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 | ✅ 0 |
 | **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ✅ 0 | 19 | ◐ 2 | ✅ 0 |
@@ -33,10 +33,10 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | **Standalone libraries** | | | | | | | | | | | | |
 | **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — | — |
 | **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **NW_Core** | Core | NW_Core | NorthernWidget/NW_Core | — | — | ❌ no | 0 | ✅ 0 | ◐ 2 | — | — | — |
+| **NW_Core** | Core | NW_Core | NorthernWidget/NW_Core | — | — | ❌ no | 0 | ✅ 0 | ◐ 6 | — | — | — |
 | **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — | — |
 | **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/MaxBotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/MaxBotix_Library | — | — | ❌ no | 4 | ◐ 3 | ✅ 0 | — | — | — |
 | **T9602_Library** | Sensor | T9602_Library | NorthernWidget/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
 | **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — | — |
 | **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — | — |
@@ -215,7 +215,7 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 | **Standalone libraries** | | |
 | **MCP3421** | Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0 | camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag |
 | **NW_BME280** | Add .zenodo.json; review; tag v3.0.0 |  |
-| **NW_Core** | Apis, Walrus, Haar all on Core with the triad and N-with-statistics (item 6 decided 2026-09-23); next: Libelle / T9602 / Tally onto Core (firmware Block 0 first where missing); unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
+| **NW_Core** | Core-candidates scan done 2026-09-23; moved: shared harness support + runner, NW_Fault::print/note with per-library chip names, NW_ReadingsConfig, nwScaled/NW_Error.h, takeReadings; Apis Component now chip bits; next: Libelle / T9602 / Tally onto Core (firmware Block 0 first where missing); unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs and NW_TestSupport.h/run_library.sh live in extras/test; kept per library by decision: the forwarders (11a.6), field-named accessors, header/row text, demos |
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | TABLED until Haar and Walrus are done (Andy 2026-09-23); design saved (Apis-form surface on NW_Core's common layer; sketch-owned Stream port). Idea to weigh then: an ATtiny on MaxBotix-Helper making it a Schema 1 device like Apis | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |
