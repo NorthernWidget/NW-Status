@@ -26,7 +26,7 @@ Last edited 2026-09-23.
 | B1 | Bench Apis, Walrus, Haar, T9602 on Margay after NW-Provision writes Page 0 | Project-Apis #23, Project-Walrus #17/#18, Project-Haar | boards in hand; Haar's address moved 0x42 → 0x48 |
 | B2 | Apis mode pin pull-down | [Project-Apis #24](https://github.com/NorthernWidget/Project-Apis/issues/24) | board revision |
 | B3 | LiDAR power-up and acquisition timings; set firmware and library timeouts from them | [Project-Apis #25](https://github.com/NorthernWidget/Project-Apis/issues/25) | bench |
-| B4 | Failure sink for logged faults (Caveat 2): where a logger records device faults beyond the Note column | [Margay_Library #7](https://github.com/NorthernWidget/Margay_Library/issues/7) | after base Apis works with base Margay on the bench |
+| B4 | Status file (Andy 2026-09-23): the logger writes its timestamp and the device's `printStatus()` line to a separate status log whenever `reportKind()` is not zero, and at boot; the device side exists in NW_Core and every library on it | [Margay_Library #7](https://github.com/NorthernWidget/Margay_Library/issues/7) | after the SD-writing review (item 9) and the bench |
 
 ## Decided, for the record
 
