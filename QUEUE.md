@@ -9,7 +9,7 @@ Last edited 2026-09-24.
 Verify first, in this order, before any edit: (1) read the resumption frame in memory, (2) `git status` in every repository below (all should be clean, all unpushed), (3) `python3 NW-Tests/compile.py` expects 16 of 18 (MaxBotix is the known failure) and `python3 NW-Tests/harness.py` expects 7 of 7.
 
 **A. Housekeeping (Andy's word on each; minutes each)**
-1. Push the fourteen unpushed repositories: NW_Core, Apis/Walrus/Haar/Libelle_Library, Project-Apis/Walrus/Haar/Libelle, Margay_Library, Okapi_Library, NW-Device-Specification, NW-Tests, NW-Status, NW-Provision. One `CLAUDE_ALLOW=push` command per repository.
+1. ~~Push the fourteen unpushed repositories~~ DONE 2026-09-24 (Andy: "push all"): fifteen repositories pushed, one command each – NW_Core, Apis/Walrus/Haar/Libelle_Library, Project-Apis/Walrus/Haar/Libelle, Margay_Library, Okapi_Library, NW-Device-Specification, NW-Tests, NW-Status, NW-Provision. All fast-forward. Harnesses 7 of 7 and sketches 16 of 18 (MaxBotix pre-existing) were re-run first and are unchanged.
 2. Create the GitHub repository for NW_Logger (NorthernWidget, public, like NW_Core) and push it; add it to the NW-Status rows and the compile CI's clone list.
 3. Drop the two superseded stashes in Project-Haar and Project-Libelle, and the Apis_Library stash and the two backup branches of item 6.
 
