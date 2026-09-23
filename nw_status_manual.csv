@@ -1,6 +1,6 @@
 Row,Column,Value
 Apis_Library,Schema 1: library,series 4 on master 2026-09-22 (requires firmware patch 2; readings-requested word; one storage path; untested on hardware)
-Haar_Library,Schema 1: library,MISSING (default address 0x42; spec 0x48)
+Haar_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, default address 0x48, triggered reading per getString(), faults, harness with baseline); untested on hardware"
 Walrus_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() gates with min patch 1, triggered reading per getString(), faults, harness with baseline); untested on hardware (#18)"
 Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
 Liasis_Library,Schema 1: library,N/A until hardware carries an MCU
@@ -13,7 +13,7 @@ MaxBotix_Library,Notes,uncommitted Serial1 hack in src/ (deferred refactor; issu
 TP-Downhole_Library,Notes,legacy; lineage tracked under Walrus
 Margay_Library,Notes,depends= should say NW_BME280
 Project-Apis,Schema 1: firmware,patch 2 on master 2026-09-22 (on-demand run model per #23; readings-requested word; STATUS-register readiness and busy polling; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
-Project-Haar,Schema 1: firmware,MISSING
+Project-Haar,Schema 1: firmware,"done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; data at 0x28-0x35 in 0.01 units; writable rule, 0x1F persisted; 32-byte page reads; on-demand trigger, chip select, counter, live and latched faults incl. SHT31 checksum and LPS35HW timeout; address 0x42 -> 0x48); untested on hardware"
 Project-Walrus,Schema 1: firmware,"Block 0 done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; writable rule, 0x1F persisted; 32-byte page reads; trigger or timer, chip select, counter, live and latched faults; batch word accepted, no effect); untested on hardware (#18)"
 Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
 Project-Liasis,Schema 1: firmware,N/A (no MCU; #2)
@@ -34,7 +34,7 @@ Project-Walrus,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
 Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Apis,Next action,Bench (needs boards): provision with NW-Provision; flash firmware patch 2; Apis_Library Margay example on a Margay; scope one getRange() (mode-pin finding, #23); then #24 for a board revision
-Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
+Project-Haar,Next action,Provision Page 0 with NW-Provision; bench-validate firmware patch 1 with Haar_Library on NW_Core (address change 0x42 -> 0x48 breaks old sketches)
 Project-Walrus,Next action,#17 provisioning check and #18 bench validation of firmware patch 1 with Walrus_Library on NW_Core
 Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
 Project-Liasis,Next action,Decide on adding an MCU (#2)
@@ -63,5 +63,5 @@ Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 eve
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
 Okapi_Library,Next action,Compiles again (2026-09-23, MCP23018::Port::B); bugs #3-#7 next; the deferred partial-update review; Note column as in Margay
-NW_Core,Next action,"Steps 0-3 done; Walrus firmware Block 0 and Walrus_Library on Core done 2026-09-23; next: Haar (firmware Block 0, then library on Core); unversioned until the overhaul ends"
+NW_Core,Next action,"Steps 0-3 done; Walrus and Haar (firmware Block 0 + library on Core) done 2026-09-23; next: decide the NW_Readings triad for every library (LIBRARY-DESIGN open item 6), then Libelle/T9602/Tally onto Core; unversioned until the overhaul ends"
 NW_Core,Notes,Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test
