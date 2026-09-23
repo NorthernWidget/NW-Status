@@ -5,7 +5,7 @@ Walrus_Library,Schema 1: library,"done on master 2026-09-23 (NW_Core: begin() ga
 Libelle_Library,Schema 1: library,MISSING (v2.0.0 planned; Project-Libelle #23)
 Liasis_Library,Schema 1: library,N/A until hardware carries an MCU
 Margay_Library,Schema 1: library,MISSING (no Page 0 read)
-Okapi_Library,Schema 1: library,MISSING (reads Schema 0 SN at EEPROM length-8)
+Okapi_Library,Schema 1: library,on NW_Logger 2026-09-23: Page 0 read (Schema 0 fallback); Pages 2-3 per the hypothetical appendix; status file; untested on hardware
 Okapi_Library,Notes,5 library bugs filed 2026-06-02 (#3-#7); snapshot tag waits on hardware test
 MCP3421,Notes,camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag
 T9602_Library,Notes,tag v1.0.0 (2022) exists while library.properties says 0.0.0
