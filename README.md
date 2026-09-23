@@ -22,25 +22,25 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | Row | Type | Library | GitHub | HW: Repo | HW: GitHub | Arduino registry | Open issues | Uncommitted files | Unpushed commits | HW: Open issues | HW: Uncommitted files | HW: Unpushed commits |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | | |
-| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ✅ 0 | 19 | ◐ 2 | ✅ 0 |
+| **Apis** | Sensor | Apis_Library | NorthernWidget/Apis_Library | Project-Apis | NorthernWidget/Project-Apis | ✅ | 3 | ✅ 0 | ◐ 5 | 19 | ◐ 2 | ◐ 3 |
 | **Haar** | Sensor | Haar_Library | NorthernWidget/Haar_Library | Project-Haar | NorthernWidget/Project-Haar | ❌ no | 3 | ✅ 0 | ✅ 0 | 10 | ◐ 1 | ✅ 0 |
-| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 | ✅ 0 |
+| **Walrus** | Sensor | Walrus_Library | NorthernWidget/Walrus_Library | Project-Walrus | NorthernWidget/Project-Walrus | ❌ no | 0 | ✅ 0 | ✅ 0 | 7 | ✅ 0 | ◐ 4 |
 | **Libelle** | Sensor | Libelle_Library | NorthernWidget/Libelle_Library | Project-Libelle | NorthernWidget/Project-Libelle | ❌ no | 7 | ✅ 0 | ✅ 0 | 17 | ✅ 0 | ✅ 0 |
 | **Liasis** | Sensor | Liasis_Library | NorthernWidget/Liasis_Library | Project-Liasis | NorthernWidget/Project-Liasis | ❌ no | 5 | ✅ 0 | ✅ 0 | 2 | ✅ 0 | ✅ 0 |
-| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ✅ 0 | 19 | ◐ 2 | ✅ 0 |
-| **Okapi** | Logger | Okapi_Library | NorthernWidget/Okapi_Library | Project-Okapi | NorthernWidget/Project-Okapi | ❌ no | 8 | ✅ 0 | ◐ 1 | 22 | ◐ 1 | ◐ 1 |
+| **Margay** | Logger | Margay_Library | NorthernWidget/Margay_Library | Project-Margay | NorthernWidget/Project-Margay | ❌ no | 14 | ✅ 0 | ◐ 1 | 19 | ◐ 2 | ✅ 0 |
+| **Okapi** | Logger | Okapi_Library | NorthernWidget/Okapi_Library | Project-Okapi | NorthernWidget/Project-Okapi | ❌ no | 8 | ✅ 0 | ◐ 2 | 22 | ◐ 1 | ◐ 1 |
 | **Tally** | Sensor | Tally_Library | NorthernWidget-Skunkworks/Tally_Library | Project-Tally | NorthernWidget-Skunkworks/Project-Tally | ❌ no | 1 | ✅ 0 | ✅ 0 | 4 | ◐ 1 | ✅ 0 |
 | **Standalone libraries** | | | | | | | | | | | | |
 | **MCP3421** | Component | MCP3421 | NorthernWidget/MCP3421 | — | — | ❌ no | 2 | ✅ 0 | ✅ 0 | — | — | — |
 | **NW_BME280** | Sensor | NW_BME280 | NorthernWidget/NW_BME280 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
-| **NW_Core** | Core | NW_Core | NorthernWidget/NW_Core | — | — | ❌ no | 0 | ✅ 0 | ◐ 1 | — | — | — |
+| **NW_Core** | Core | NW_Core | NorthernWidget/NW_Core | — | — | ❌ no | 0 | ✅ 0 | ◐ 4 | — | — | — |
 | **DS3231** | Component | DS3231 | NorthernWidget/DS3231 | — | — | ✅ | 12 | ◐ 1 | ✅ 0 | — | — | — |
 | **DS3231_Logger** | Component | DS3231_Logger | NorthernWidget/DS3231_Logger | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
-| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ✅ 0 | — | — | — |
+| **MaxBotix_Library** | Sensor | MaxBotix_Library | NorthernWidget/Maxbotix_Library | — | — | ❌ no | 3 | ◐ 3 | ◐ 1 | — | — | — |
 | **T9602_Library** | Sensor | T9602_Library | NorthernWidget/T9602_Library | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
 | **TP-Downhole_Library** | Sensor | TP-Downhole_Library | NorthernWidget/TP-Downhole_Library | — | — | ❌ no | 5 | ◐ 1 | ✅ 0 | — | — | — |
 | **MS5803** | Component | MS5803 | NorthernWidget/MS5803 | — | — | ❌ no | 6 | ◐ 1 | ✅ 0 | — | — | — |
-| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ◐ 5 | — | — | — |
+| **MCP23018** | Component | MCP23018 | NorthernWidget-Skunkworks/MCP23018 | — | — | ❌ no | 0 | ✅ 0 | ◐ 6 | — | — | — |
 | **Bare repos** | | | | | | | | | | | | |
 | **VEML6030** | Component | VEML6030 | NorthernWidget/VEML6030 | — | — | ❌ no | 1 | ✅ 0 | ✅ 0 | — | — | — |
 | **VEML6075** | Component | VEML6075 | NorthernWidget/VEML6075 | — | — | ❌ no | 0 | ✅ 0 | ✅ 0 | — | — | — |
@@ -52,9 +52,9 @@ Open items that are not per-row: spec appendices still print `Magic=0x00` (spec 
 | Row | version= | Last tag | version = tag | HW: Last tag | HW: Commits past tag | library.properties | paragraph= | url= ok | category= | LICENSE | README DOI badge | CITATION.cff | .zenodo.json | keywords.txt | doxygen_NW.cfg | src/ | _Demo example | Examples |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Devices** | | | | | | | | | | | | | | | | | | |
-| **Apis** | 0.1.0 | v0.1.0 | ✅ | v0.1.1 | 24 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Apis_Demo, Apis_Readings, Margay |
+| **Apis** | 0.1.0 | v0.1.0 | ✅ | v0.1.1 | 27 | ✅ | ✅ | ✅ | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Apis_Demo, Apis_Readings, Margay |
 | **Haar** | 1.0.0 | v1.0.0 | ✅ | v0.1.1 | 9 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Haar_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Haar_Demo, SerialDemo |
-| **Walrus** | 0.2.0 | v0.2.0 | ✅ | v0.3.0 | 15 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Walrus_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
+| **Walrus** | 0.2.0 | v0.2.0 | ✅ | v0.3.0 | 19 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Walrus_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ❌ MISSING | ✅ | ✅ | ❌ MISSING | none |
 | **Libelle** | 1.0.0 | v1.0.0 | ✅ | v0.2.0 | 7 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Libelle_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | LibelleMargayDemo, LibelleSWDemo, Libelle_Demo |
 | **Liasis** | 1.0.0 | v1.0.0 | ✅ | v0.2.0 | 2 | ✅ | ✅ | ❌ WRONG (NorthernWidget-Skunkworks/Liasis_Library) | ✅ Sensors | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Liasis_Demo |
 | **Margay** | 1.2.0 | v1.2.0 | ✅ | v2.2.2 | 95 | ✅ | ✅ | ✅ | ✅ Data Storage | ✅ | ❌ latestdoi (deprecated) | ✅ | ❌ MISSING | ✅ | ✅ | ✅ | ❌ MISSING | Basic, HighSpeed_NoSleep, Laser_Ranging, SensorDemo_TP-Downhole |
@@ -177,7 +177,7 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 |---|---|---|---|---|
 | **Apis** | ✅ | ◐ patch 2 on master 2026-09-22 (on-demand run model per #23; readings-requested word; STATUS-register readiness and busy polling; compiled for ATtiny1634; untested on hardware; sleep bit deferred) | ◐ series 4 on master 2026-09-22 (requires firmware patch 2; readings-requested word; one storage path; untested on hardware) | ❌ no (NW-Provision writes magic 0x4E as of ca3a64d) |
 | **Haar** | ✅ | ❌ MISSING | ❌ MISSING (default address 0x42; spec 0x48) | ❌ no |
-| **Walrus** | ✅ | ◐ partial: Page 1 done on master; open #15 Page 0 init; #16 writable 0x1F | ◐ partial: address 0x57 and Page 1 reads; no Page 0 schema check in begin() | ❌ no (#17 provisioning check; #18 hardware validation) |
+| **Walrus** | ✅ | ◐ Block 0 done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; writable rule, 0x1F persisted; 32-byte page reads; trigger or timer, chip select, counter, live and latched faults; batch word accepted, no effect); untested on hardware (#18) | ◐ partial: address 0x57 and Page 1 reads; no Page 0 schema check in begin() | ❌ no (#17 provisioning check; #18 hardware validation) |
 | **Libelle** | ✅ | ❌ MISSING (v0.3 with ATtiny1634 planned; #22) | ❌ MISSING (v2.0.0 planned; Project-Libelle #23) | ❌ no |
 | **Liasis** | ✅ | — | — | — |
 | **Margay** | ✅ | — | ❌ MISSING (no Page 0 read) | ❌ no |
@@ -188,9 +188,9 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 
 | Row | HW: Last tag | HW: Commits past tag | HW: Eagle .brd | HW: KiCad .kicad_pcb | HW: KiCad verified vs Eagle | HW: Bug-labelled issues |
 |---|---|---|---|---|---|---|
-| **Apis** | v0.1.1 | 24 | 3 | 0 | — | 2 |
+| **Apis** | v0.1.1 | 27 | 3 | 0 | — | 2 |
 | **Haar** | v0.1.1 | 9 | 2 | 0 | — | 0 |
-| **Walrus** | v0.3.0 | 15 | 3 | 0 | — | 2 |
+| **Walrus** | v0.3.0 | 19 | 3 | 0 | — | 2 |
 | **Libelle** | v0.2.0 | 7 | 2 | 0 | — | 3 |
 | **Liasis** | v0.2.0 | 2 | 1 | 0 | — | 0 |
 | **Margay** | v2.2.2 | 95 | 1 | 1 | ❌ no (KiCad 7 import; BoM fields populated; not netlist-compared) | 7 |
@@ -204,7 +204,7 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 | **Devices** | | |
 | **Apis** | Bench (needs boards): provision with NW-Provision; flash firmware patch 2; Apis_Library Margay example on a Margay; scope one getRange() (mode-pin finding |  |
 | **Haar** | Firmware Page 0/1 rewrite; then library |  |
-| **Walrus** | Finish #15-#18 |  |
+| **Walrus** | Walrus_Library onto NW_Core (begin() gates, takeReading, faults); then #17 provisioning check and #18 bench validation |  |
 | **Libelle** | Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library |  |
 | **Liasis** | Decide on adding an MCU (#2) |  |
 | **Margay** | June review fixes in KiCad -> v3 tag; provision Page 0 · Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults | depends= should say NW_BME280 · hardware v3 release in progress |
@@ -213,7 +213,7 @@ All rows pass or not applicable (column hidden): `Pages enabled`, `moxygen remna
 | **Standalone libraries** | | |
 | **MCP3421** | Add [[deprecated]] PascalCase aliases; LICENSE; doxygen_NW.cfg; docs.yml; NW_MCP3421_Demo; bool begin(); then review and tag v2.0.0 | camelCase rename on master since 2026-09-20 push; needs [[deprecated]] aliases before v2.0.0 tag |
 | **NW_BME280** | Add .zenodo.json; review; tag v3.0.0 |  |
-| **NW_Core** | Steps 0-2 done (Apis on Core; harness byte-identical); step 3: APIS_ERROR as alias of NW_ERROR and retire dead APIS_BIT_/APIS_CTRL_ macros; then Walrus firmware Block 0 before Walrus-on-Core; unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
+| **NW_Core** | Steps 0-3 done (Apis on Core, harness byte-identical; APIS_ERROR aliases NW_ERROR, dead macros gone); Walrus firmware Block 0 done 2026-09-23; next: Walrus_Library onto Core, then Haar; unversioned until the overhaul ends | Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test |
 | **DS3231** | CITATION.cff; .zenodo.json; doxygen_NW.cfg; docs.yml (in registry already) |  |
 | **DS3231_Logger** | LICENSE; CITATION.cff; .zenodo.json; docs.yml; example; paragraph=; bool begin() |  |
 | **MaxBotix_Library** | TABLED until Haar and Walrus are done (Andy 2026-09-23); design saved (Apis-form surface on NW_Core's common layer; sketch-owned Stream port). Idea to weigh then: an ATtiny on MaxBotix-Helper making it a Schema 1 device like Apis | uncommitted Serial1 hack in src/ (deferred refactor; issue #4) |

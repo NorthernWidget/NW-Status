@@ -14,7 +14,7 @@ TP-Downhole_Library,Notes,legacy; lineage tracked under Walrus
 Margay_Library,Notes,depends= should say NW_BME280
 Project-Apis,Schema 1: firmware,patch 2 on master 2026-09-22 (on-demand run model per #23; readings-requested word; STATUS-register readiness and busy polling; compiled for ATtiny1634; untested on hardware; sleep bit deferred)
 Project-Haar,Schema 1: firmware,MISSING
-Project-Walrus,Schema 1: firmware,partial: Page 1 done on master; open #15 Page 0 init; #16 writable 0x1F
+Project-Walrus,Schema 1: firmware,"Block 0 done on master 2026-09-23 (patch 1: Page 0 from EEPROM with CRC; writable rule, 0x1F persisted; 32-byte page reads; trigger or timer, chip select, counter, live and latched faults; batch word accepted, no effect); untested on hardware (#18)"
 Project-Libelle,Schema 1: firmware,MISSING (v0.3 with ATtiny1634 planned; #22)
 Project-Liasis,Schema 1: firmware,N/A (no MCU; #2)
 Project-Margay,Schema 1: firmware,N/A (controller; Page 0 via NW-Provision)
@@ -35,7 +35,7 @@ Project-Libelle,KiCad verified vs Eagle,N/A (no KiCad import yet; #17)
 Project-Liasis,KiCad verified vs Eagle,N/A (no KiCad import yet)
 Project-Apis,Next action,Bench (needs boards): provision with NW-Provision; flash firmware patch 2; Apis_Library Margay example on a Margay; scope one getRange() (mode-pin finding, #23); then #24 for a board revision
 Project-Haar,Next action,Firmware Page 0/1 rewrite; then library
-Project-Walrus,Next action,Finish #15-#18
+Project-Walrus,Next action,"Walrus_Library onto NW_Core (begin() gates, takeReading, faults); then #17 provisioning check and #18 bench validation"
 Project-Libelle,Next action,Hardware v0.3 (#20 MCU; #21 fab) gates firmware and library
 Project-Liasis,Next action,Decide on adding an MCU (#2)
 Project-Margay,Next action,June review fixes in KiCad -> v3 tag; provision Page 0
@@ -63,5 +63,5 @@ Project-Tally,Next action,Add spec appendix (latch trigger; monotonic uint32 eve
 Project-Tally,Notes,Absent from spec / provisioning / registry / snapshot issue until 2026-09-20; library I2C support only on Dev_I2C branch (7 commits unmerged)
 Margay_Library,Next action,Tracking list Margay_Library #32: (1) BME.h -> NW_BME280.h + depends= [build break]; (2) Page 0 read (serial moves to Block 2) + spec fix; (3) sketch addresses; (4) #27/#31; (5) #7 faults
 Okapi_Library,Next action,Compiles again (2026-09-23, MCP23018::Port::B); bugs #3-#7 next; the deferred partial-update review; Note column as in Margay
-NW_Core,Next action,Steps 0-2 done (Apis on Core; harness byte-identical); step 3: APIS_ERROR as alias of NW_ERROR and retire dead APIS_BIT_/APIS_CTRL_ macros; then Walrus firmware Block 0 before Walrus-on-Core; unversioned until the overhaul ends
+NW_Core,Next action,"Steps 0-3 done (Apis on Core, harness byte-identical; APIS_ERROR aliases NW_ERROR, dead macros gone); Walrus firmware Block 0 done 2026-09-23; next: Walrus_Library onto Core, then Haar; unversioned until the overhaul ends"
 NW_Core,Notes,Created 2026-09-23 from Apis series 4 per LIBRARY-DESIGN section 11; shared harness stubs live in extras/test
