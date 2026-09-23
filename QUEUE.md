@@ -34,6 +34,7 @@ Last edited 2026-09-23.
 
 ## Decided, for the record
 
+- Pages renumbered before any release (2026-09-23): 0x00-0x3F stored (Page 0 identity, Page 1 calibration, one 64-byte EEPROM image in bus order), Pages 2-5 served data with Block 0 at 0x40 and data from 0x48, Pages 6-7 reserved. Spec 4c3b18d and 65a8f68; NW_Core d2e4252; every firmware, library, harness, NW-Provision and Margay follow. No housekeeping page: Margay cuts the sensor rail every sleep, so a sensor keeps nothing between readings.
 - Every sensor library carries the reading interface and N readings with statistics; statistics (`NW_Readings`) and batch mechanics (`NW_Device::beginBatch`, `takeReadings`, `batchFaulted`) live in NW_Core (2026-09-23).
 - Apis stays on the Garmin LiDAR-Lite v3HP; Benewake and radar notes live in the private repositories Project-Benewake and Project-Radar (2026-09-23).
 - NW_Core stays unversioned and unregistered until the overhaul ends.
