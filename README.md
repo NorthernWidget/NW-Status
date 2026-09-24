@@ -242,6 +242,18 @@ python3 nw_status.py render    # render the latest dated CSV into this README an
 
 The NW repositories are expected in the parent directory of this one, or in `$NW_WORKSPACE` if set. Rendering the PDF needs Google Chrome; without it the Markdown and the intermediate HTML are still produced. GitHub queries use the `gh` CLI.
 
+## Where the testing lives
+
+Two repositories beside this one carry the tests the table reports on.
+[NW-Tests](https://github.com/NorthernWidget/NW-Tests) compiles every sensor
+library inside a Margay and an Okapi sketch and runs each library's desktop
+harness. [NW-Sim](https://github.com/NorthernWidget/NW-Sim) (private) runs a
+logger's firmware on a simulated ATmega1284P with the board hung off it – clock,
+card, on-board sensors, rails and bus switch – and, since 2026-09-24, a sensor's
+**own** firmware on a simulated ATtiny1634 answering the logger's library over a
+simulated two-wire bus. Neither replaces the bench; both replace finding out on
+the bench.
+
 ## What is scanned and what is hand-maintained
 
 Almost every cell is derived from the working tree, git, the GitHub API, or the NW-Device-Specification text at scan time: required files, `library.properties` fields, tags, `begin()` return type, the common-API facets (including casing in two steps: camelCase conversion, then PascalCase removed), open and bug-labelled issues, uncommitted and unpushed state, design-file formats.
