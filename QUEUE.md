@@ -24,34 +24,27 @@ Andy asked three questions on 2026-09-28: does the MS5803 carry its own version 
 
 **Proving it without hardware:** `nw_sim`'s `ms5803` part is hardwired to the 05BA today. Parameterising it by variant, then provisioning a simulated 14BA and checking the firmware reads it correctly, is the test that would demonstrate the whole path.
 
-## Three defects in the MS5803 library's conversion tables (found 2026-09-28)
+## The MS5803 library's conversion tables, fixed 2026-09-28
 
-Found while answering the variant question, and **not yet fixed, because a fix changes the numbers every deployed TP-DownHole has produced**. That is Andy's decision, not mine. The Walrus is not affected: its firmware carries `#define`d constants and does not use this library.
+Found while answering the variant question, and fixed on Andy's word the same day ("memcpy error is sneaky. Check and fix. Double check the others and fix as well."). MS5803 commits 04c85b6, 014e2b3 and a3f4807, unpushed. **The Walrus is not affected**: its firmware carries `#define`d constants and does not use this library. The consumer that is affected is TP-Downhole_Library, through `MS5803 Downhole(ADDRESS_LOW, 2)`.
 
-`MS5803/extras/test/compensation_check.py` (9f025ab) is the evidence. It compares every `ConvTempN` in `src/MS5803.cpp` with what its datasheet requires, reproduces each variant's worked example, and reports the cost of the truncated copy across temperature. It exits non-zero today. Run it after any fix.
+**Two instruments now stand behind the arithmetic**, and neither existed before. `extras/test/run.sh` compiles the real library against local Arduino and Wire stubs and runs every datasheet's worked example through it, plus forty-eight cases across the rated -40 to +85 °C. `extras/test/compensation_check.py` reads `ConvTable` out of the source and compares it with the six datasheets entry by entry. Every fix below was shown to bite by putting the defect back one at a time.
 
-**The defect.** `MS5803::begin()` selects a variant's sixteen conversion constants and copies them with `memcpy(ConvCoef, ConvTempN, 16)`. On AVR `int` is two bytes, so `ConvTempN` is 32 bytes and the copy moves **eight of the sixteen values**. Verified by compiling the two `sizeof` assertions with the Arduino avr-gcc for the target. `ConvCoef` belongs to a global object, so the missing entries read as zero, and every one of them is a second-order temperature term: the `OFF2` and `SENS2` divisors, the very-low-temperature additions, and the whole above-20 °C branch.
+**Five defects, all fixed:**
 
-**What it costs.** Error in the reported pressure at a true 1013.25 mbar, computed with each datasheet's typical coefficients, correct constants against the eight that are actually copied:
+1. **`memcpy(ConvCoef, ConvTempN, 16)` moved eight of sixteen entries.** On AVR an `int` is two bytes, so the table is 32 bytes. The missing eight read as zero, and every one of them is a second-order temperature term. Correct above 20 °C and wrong below it: **43.5 mbar at 5 °C and 77.3 mbar at 0 °C on the 02BA**, which is 44 and 79 cm of water. This is the one that had live consequences.
+2. **01BA entry 10 was 0** where the flow chart divides SENS2 by 2³, **and entry 12 was 3** where it multiplies the very-low-temperature term by 2. Both sat above the truncation, so neither had ever been reached.
+3. **07BA entry 4 was 2500** where the 0.01 mbar LSB requires 10000, so a 07BA reported a quarter of the pressure. Live at every temperature, and it survived the truncation.
+4. **30BA had seventeen initialisers**, from a duplicated `10`, shifting every entry after it; its entry 4 was 10 where the 0.1 mbar LSB requires 1000.
+5. **The final pressure divisor was hardcoded at 32768**, and the 30BA needs 2¹³; **the 01BA's above-45 °C term used `(TEMP + 1500)²`** where its own flow chart says `(TEMP - 4500)²`.
 
-| Variant | 25 °C | 10 °C | 5 °C | 0 °C | -10 °C | -20 °C |
-|---|---|---|---|---|---|---|
-| 01BA | 0.0 | 9.5 | 21.6 | 39.0 | 91.2 | 172.3 |
-| 02BA | 0.0 | 19.3 | 43.5 | 77.3 | 174.1 | 311.1 |
-| 05BA | 0.0 | 1.5 | 3.3 | 5.9 | 13.4 | 24.5 |
-| 07BA | 0.0 | 1.4 | 3.2 | 5.7 | 12.9 | 23.5 |
-| 14BA | -0.1 | 8.5 | 19.1 | 34.0 | 76.6 | 137.2 |
-| 30BA | -0.2 | 33.1 | 74.4 | 132.2 | 297.5 | 530.9 |
+No 07BA or 30BA is known to be fitted to anything, so 3, 4 and part of 5 were latent.
 
-All in mbar; 1 mbar is about 1.02 cm of water. A TP-DownHole is built on the 02BA (`MS5803 Downhole(ADDRESS_LOW, 2)`), so its error is 44 cm of water at 5 °C and 79 cm at 0 °C. Above 20 °C the reading is correct, which is why bench testing at room temperature would never show it. 
+**Checked and found not to be a defect:** the int32 overflow in `61 * (TEMP - 2000)²` on the 02BA cannot occur within the rated range, because the first-order temperature at a reported -40 °C is about -29.7 °C. The arithmetic was moved to 64 bits and the `pow()` divisions to shifts anyway, as hardening; every case gives the same answer before and after, and the object is 94 bytes smaller for an ATmega328P.
 
-**The second defect: a 07BA reports a quarter of the pressure it measured.** `ConvTemp4` carries 2500 in entry 4 where the datasheet's 0.01 mbar LSB requires 10000. This one is not temperature-dependent and it survives the truncated copy, since entry 4 is among the eight that do arrive. I missed it by eye and the check caught it.
+**A trap recorded, because it nearly cost the whole exercise.** The first version of `compensation_check.py` transcribed its second-order reference **from the library**, so it agreed with the code by construction and reported "matches the datasheet" for the two wrong 01BA entries. The datasheets' worked examples all sit within half a degree of 20 °C, where the second-order terms are zero, so they could not catch it either. The reference is now read from each datasheet's flow chart, variant by variant. **A reference transcribed from the thing it checks is not a check**, and a test suite that only exercises one operating point is not coverage.
 
-**The third defect: the 30BA entry is malformed.** `ConvTemp6` is declared with seventeen initialisers rather than sixteen, from a duplicated `10`, which shifts every entry after it; its entry 4 is 10 where the datasheet's 0.1 mbar LSB requires 1000. Separately, the final pressure divisor is hardcoded at 32768 in both the library and the Walrus firmware, and the 30BA datasheet calls for 2¹³.
-
-**No 07BA or 30BA is known to be fitted to anything**, so those two are latent. Every variant reproduces its datasheet's worked example once its table is right, which is what says the arithmetic itself is sound and the defects are all in the tables and the copy.
-
-**What a fix needs, in order:** (1) a host harness for the library, since it has none and the arithmetic is the whole product; (2) the harness recording today's output as a baseline, so the change in every deployed variant is visible rather than asserted; (3) `sizeof(ConvTempN)` in place of the literal 16, `ConvTemp6` rebuilt, and the final shift taken from the table; (4) Andy's decision on the archived data, which is the part no code can settle.
+**Still Andy's to decide:** what to do about data already logged by a TP-DownHole below 20 °C. The correction is computable after the fact from the logged temperature, since the error depends only on it.
 
 ## Next session (firmed up 2026-09-24 at the pause)
 
