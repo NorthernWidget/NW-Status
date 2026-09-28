@@ -24,6 +24,30 @@ Andy asked three questions on 2026-09-28: does the MS5803 carry its own version 
 
 **Proving it without hardware:** `nw_sim`'s `ms5803` part is hardwired to the 05BA today. Parameterising it by variant, then provisioning a simulated 14BA and checking the firmware reads it correctly, is the test that would demonstrate the whole path.
 
+## Walrus Page 1 and the raw readings (Andy, 2026-09-28)
+
+**There is no runtime default today.** `COEF0`-`COEF15` in `Walrus_I2C_5BA.ino` are `#define`s: the 05BA block is live and the 02BA and 14BA blocks sit commented out below it. The variant a board carries is fixed by which firmware was flashed onto it, and "the compiled-in default" means whichever block happened to be uncommented at the time. Falling back to it on an unprovisioned board would assert the 05BA about a board nobody checked, which is the silent-bad-data mode the whole exercise is meant to close. **Andy's ruling, and it is the right one: serve raw readings rather than translate.**
+
+**Serve D1 and D2 on every reading**, in Page 2 Block 3 (`0x58`-`0x5F`), `uint32` little-endian each. Block 3 is wholly reserved today and eight bytes is exactly the fit. Both values already exist as locals in the firmware's `getMeasurements()`, so this costs a pair of register writes. Serving them always, rather than only when the variant is unknown, is what makes every reading checkable after the fact and lets a mis-provisioned board be recovered rather than discarded.
+
+**When Page 1 is blank, do not compensate at all.** The pressure and MS5803 temperature registers carry the `-9999` sentinel and a fault is latched; Block 3 carries the truth. The analysis layer compensates once the deployment record says what the part was. With no fallback table in the firmware there is no path by which a confidently wrong pressure can be served.
+
+**The temperature needs the variant too, which was worth measuring rather than assuming.** First-order `TEMP` uses only C5 and C6 and is identical in all six datasheets, so it looked safe to serve regardless. It is not: the variant-specific `T2` correction is what follows, in °C.
+
+| reported °C | 01BA | 02BA | 05BA | 07BA | 14BA | 30BA |
+|---|---|---|---|---|---|---|
+| -40 | 10.15 | 10.23 | 8.22 | 8.22 | 7.89 | 7.02 |
+| -20 | 5.00 | 5.04 | 3.98 | 3.99 | 3.81 | 3.36 |
+| 0 | 1.41 | 1.42 | 1.08 | 1.08 | 1.02 | 0.90 |
+| 20 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| 85 | 0.00 | 0.00 | 0.00 | 0.00 | 1.89 | 1.62 |
+
+`T2` reaches 10 °C at the cold end, and the spread between variants is 3.2 °C there, so compensating with the wrong variant's `T2` is a degrees-level temperature error. Both quantities go to the sentinel when the variant is unknown.
+
+**Page 1 itself stays one byte at `0x20`**, the range code as the BA number (1, 2, 5, 7, 14, 30; `0xFF` blank), for the reasons already recorded: it is the first byte of the page, as Margay's battery divider is; the encoding is what `MS5803(address, MaxPressure)` already takes; and the rest of the page stays free for a per-unit pressure calibration. An unrecognised non-blank value is a fault, because guessing there is the same failure as the fallback table. **Open: the MS5803-01BA07 is a seventh order code sharing the 01BA's arithmetic exactly, so the encoding must either distinguish the two or say plainly that it treats them as one.**
+
+**Offered, not folded in: serve the PROM as well.** The firmware already reads all eight words into `coefficient[8]`. Sixteen bytes would let a controller compensate entirely on its own, and the free space on Page 2 is exactly sixteen bytes (`0x4E`-`0x4F`, `0x52`-`0x57`, and Block 3), which is all of it and collides with the raw pair. The alternative is to store the PROM in Page 1 at provisioning, which also buys a check: if the chip's PROM ever differs from what was stored, the part was swapped or the bus is bad. Andy's call, and it is a separate decision from the range byte.
+
 ## The MS5803 library's conversion tables, fixed 2026-09-28
 
 Found while answering the variant question, and fixed on Andy's word the same day ("memcpy error is sneaky. Check and fix. Double check the others and fix as well."). MS5803 commits 04c85b6, 014e2b3 and a3f4807, unpushed. **The Walrus is not affected**: its firmware carries `#define`d constants and does not use this library. The consumer that is affected is TP-Downhole_Library, through `MS5803 Downhole(ADDRESS_LOW, 2)`.
