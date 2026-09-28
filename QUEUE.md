@@ -64,6 +64,32 @@ Three places where it does bite:
 
 **Offered, not folded in: serve the PROM as well.** The firmware already reads all eight words into `coefficient[8]`. Sixteen bytes would let a controller compensate entirely on its own, and the free space on Page 2 is exactly sixteen bytes (`0x4E`-`0x4F`, `0x52`-`0x57`, and Block 3), which is all of it and collides with the raw pair. The alternative is to store the PROM in Page 1 at provisioning, which also buys a check: if the chip's PROM ever differs from what was stored, the part was swapped or the bus is bad. Andy's call, and it is a separate decision from the range byte.
 
+## Returning data from a sensor that cannot scale it (Andy, 2026-09-28)
+
+**A return type cannot be overloaded in C++**, so `getPressure()` cannot be a `float` on a provisioned board and a `uint32_t` on an unprovisioned one. That is the wrong place to look anyway: the binding constraint is the header, not the getter. A logger calls `getHeader()` once in `setup()` and `getString()` every loop, so the column set must be fixed for the life of the file. **The decision belongs at `begin()`, once, and never per reading.**
+
+**The mechanism already exists and needs no new machinery.** `setPressureStats(bool)` and `_pressureCfg.columns()` already make the column set a construction-time choice, and Libelle already ships raw-count columns (`UVA`, `White`, `IR_S`) beside physical ones. So:
+
+1. **`begin()` reads Page 1 and decides.** Variant known: the Walrus is a pressure sensor, the header carries `Pressure [mBar]`, and `getPressure()` returns a `float`. Variant unknown: the header carries the counts columns instead, and `getPressure()` returns `NW_ERROR`.
+2. **Two names, not an overload.** `getPressure()` returns `float` mBar; `getPressureCounts()` returns `uint32_t` and is always valid. Different quantities get different names, which is the rule already set for the library's own API.
+3. **Serve and store the counts always**, whatever the provisioning state, so a mis-provisioned unit's data is recoverable rather than lost.
+
+**What it touches, end to end:** the firmware gains two registers, a status bit and a report kind, and a patch increment against `WALRUS_FW_MIN_PATCH`. NW_Core is untouched, since `NW_Readings` already instantiates `uint32_t` and `readData()` is byte-oriented. The library gains one readings ring, two getters, a branch in `getHeader()`/`getString()`, and one flag set in `begin()`. **The logger is untouched**: it only ever calls `getHeader()` and `getString()`. Codering decodes the status file and is untouched today. The analysis layer takes the counts with unit `[1]` and the variant from the deployment record.
+
+**The general rule this should become, because it is not a Walrus problem.** A physical unit is a claim the library makes only when it holds the constant that licenses the claim. The device serves counts; the library serves units when it can; the status bit and the Report register say why a physical column is absent. That covers any per-unit calibration that might be missing - a thermistor's coefficients, a blank Page 1 - not just the MS5803 variant.
+
+## The Apis accelerometer is already abstracted (Andy, 2026-09-28)
+
+Andy suggested reducing accelerometer use to roll and pitch rather than exposing axes. **Apis_Library already does exactly that**, and the earlier claim in this session that it exposes `getAccelX/Y/Z()` was wrong: there are zero such getters in `Apis.h` or `Apis.cpp`. The g vector is formed as three `float` locals inside the orientation update, checked for the all-axes-equal-minus-one I2C failure signature, and immediately reduced to `_pitch` and `_roll` in degrees against the stored zero. Only `getPitch()` and `getRoll()` and their statistics leave the library.
+
+Three things are inconsistent and are worth deciding together:
+
+- **`getDistance()` returns `int16_t` centimetres.** That is a physical quantity outside the `float` convention every other measurement getter follows. `getDistanceMean()` beside it returns the unrounded `float`, so the integer form is a rounding, not a raw value.
+- **`getAccelerometerTemperature()` returns `int16_t` in the LIS3DH's relative digits**, with no absolute reference. The type is defensible for counts; the name claims a temperature it does not deliver.
+- **`standard-names.csv` carries `rangefinder~apis_accelerometer__x/y/z_component_of_acceleration`** for values the library never serves. They describe the firmware's registers, which is legitimate, though the table should say so rather than read as library columns.
+
+The firmware should keep serving the raw axes: they are what a zero is recomputed from, and Page 1 stores the zero in axis form.
+
 ## The MS5803 library's conversion tables, fixed 2026-09-28
 
 Found while answering the variant question, and fixed on Andy's word the same day ("memcpy error is sneaky. Check and fix. Double check the others and fix as well."). MS5803 commits 04c85b6, 014e2b3 and a3f4807, unpushed. **The Walrus is not affected**: its firmware carries `#define`d constants and does not use this library. The consumer that is affected is TP-Downhole_Library, through `MS5803 Downhole(ADDRESS_LOW, 2)`.
