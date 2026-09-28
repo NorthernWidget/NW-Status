@@ -24,9 +24,11 @@ Andy asked three questions on 2026-09-28: does the MS5803 carry its own version 
 
 **Proving it without hardware:** `nw_sim`'s `ms5803` part is hardwired to the 05BA today. Parameterising it by variant, then provisioning a simulated 14BA and checking the firmware reads it correctly, is the test that would demonstrate the whole path.
 
-## The MS5803 library computes the wrong pressure below 20 °C (found 2026-09-28)
+## Three defects in the MS5803 library's conversion tables (found 2026-09-28)
 
-Found while answering the variant question, verified, and **not yet fixed, because a fix changes the numbers every deployed TP-DownHole has produced**. That is Andy's decision, not mine. The Walrus is not affected: its firmware carries `#define`d constants and does not use this library.
+Found while answering the variant question, and **not yet fixed, because a fix changes the numbers every deployed TP-DownHole has produced**. That is Andy's decision, not mine. The Walrus is not affected: its firmware carries `#define`d constants and does not use this library.
+
+`MS5803/extras/test/compensation_check.py` (9f025ab) is the evidence. It compares every `ConvTempN` in `src/MS5803.cpp` with what its datasheet requires, reproduces each variant's worked example, and reports the cost of the truncated copy across temperature. It exits non-zero today. Run it after any fix.
 
 **The defect.** `MS5803::begin()` selects a variant's sixteen conversion constants and copies them with `memcpy(ConvCoef, ConvTempN, 16)`. On AVR `int` is two bytes, so `ConvTempN` is 32 bytes and the copy moves **eight of the sixteen values**. Verified by compiling the two `sizeof` assertions with the Arduino avr-gcc for the target. `ConvCoef` belongs to a global object, so the missing entries read as zero, and every one of them is a second-order temperature term: the `OFF2` and `SENS2` divisors, the very-low-temperature additions, and the whole above-20 °C branch.
 
@@ -41,9 +43,13 @@ Found while answering the variant question, verified, and **not yet fixed, becau
 | 14BA | -0.1 | 8.5 | 19.1 | 34.0 | 76.6 | 137.2 |
 | 30BA | -0.2 | 33.1 | 74.4 | 132.2 | 297.5 | 530.9 |
 
-All in mbar; 1 mbar is about 1.02 cm of water. A TP-DownHole is built on the 02BA (`MS5803 Downhole(ADDRESS_LOW, 2)`), so its error is 44 cm of water at 5 °C and 79 cm at 0 °C. Above 20 °C the reading is correct, which is why bench testing at room temperature would never show it. The script is `ms5803_all.py` in the session scratchpad and should move into the repository with the fix.
+All in mbar; 1 mbar is about 1.02 cm of water. A TP-DownHole is built on the 02BA (`MS5803 Downhole(ADDRESS_LOW, 2)`), so its error is 44 cm of water at 5 °C and 79 cm at 0 °C. Above 20 °C the reading is correct, which is why bench testing at room temperature would never show it. 
 
-**Two more defects in the same table, both in the 30BA entry:** `ConvTemp6` is declared with seventeen initialisers rather than sixteen, from a duplicated `10`, which shifts every entry after it; and `ConvCoef[4]` is 10 where the datasheet's 0.1 mbar LSB requires 1000. Separately, the final pressure divisor is hardcoded at 32768 in both the library and the Walrus firmware, and the 30BA datasheet calls for 2¹³. **No 30BA is known to be fitted to anything**, so these are latent.
+**The second defect: a 07BA reports a quarter of the pressure it measured.** `ConvTemp4` carries 2500 in entry 4 where the datasheet's 0.01 mbar LSB requires 10000. This one is not temperature-dependent and it survives the truncated copy, since entry 4 is among the eight that do arrive. I missed it by eye and the check caught it.
+
+**The third defect: the 30BA entry is malformed.** `ConvTemp6` is declared with seventeen initialisers rather than sixteen, from a duplicated `10`, which shifts every entry after it; its entry 4 is 10 where the datasheet's 0.1 mbar LSB requires 1000. Separately, the final pressure divisor is hardcoded at 32768 in both the library and the Walrus firmware, and the 30BA datasheet calls for 2¹³.
+
+**No 07BA or 30BA is known to be fitted to anything**, so those two are latent. Every variant reproduces its datasheet's worked example once its table is right, which is what says the arithmetic itself is sound and the defects are all in the tables and the copy.
 
 **What a fix needs, in order:** (1) a host harness for the library, since it has none and the arithmetic is the whole product; (2) the harness recording today's output as a baseline, so the change in every deployed variant is visible rather than asserted; (3) `sizeof(ConvTempN)` in place of the literal 16, `ConvTemp6` rebuilt, and the final shift taken from the table; (4) Andy's decision on the archived data, which is the part no code can settle.
 
