@@ -4,6 +4,18 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-09-24.
 
+## START HERE after the 2026-09-28 compaction
+
+**The MS5803 variant question, raised by Andy 2026-09-28.** Any MS5803 variant can be soldered onto a Walrus board - 01, 02, 05, 07, 14 or 30 BA, all seven datasheets are in `MS5803/docs/` - and a function to read it should look the same whatever is fitted. Three questions to answer, in order:
+
+1. **Does the part carry its own version, readably?** Its PROM holds six factory coefficients plus word 0 (factory configuration) and word 7 (CRC). Word 0 is the one to investigate: nothing in the 05BA datasheet says it encodes the variant, but nothing examined so far rules it out either. If it does, the firmware can detect the variant and no provisioning is needed at all.
+2. **Are all variants accessed the same way in firmware?** The command set is identical (reset 0x1E, PROM 0xA0, convert 0x40/0x50, ADC read 0x00). What differs is the compensation: the Walrus firmware carries three commented-out `COEF0`-`COEF15` blocks, and the **exponents themselves change between variants**, not only the coefficient values. So reading is uniform and *interpreting* is not.
+3. **Should an EEPROM bit record the variant?** Page 1 is the calibration page, NW-Provision already writes it, and the variant is a property of the built unit - known at assembly, fixed for its life. That is exactly what Page 1 is for. Cost: every coefficient set lives in flash, and the provisioner must be told which board got which part.
+
+**Why this matters:** the wrong coefficient set produces a confidently wrong pressure with no fault raised - the silent-bad-data failure mode. And `nw_sim` can prove the answer without hardware, by provisioning a simulated -14BA and checking the firmware reads it correctly.
+
+**Consequence already identified:** if the variant moves into Page 1, the firmware function returns to `acquireMS5803()` rather than `acquireMS5803_05BA()`, because the variant then no longer affects the interface. Andy's granularity rule survives; the design moves the variant out of the name. LIBRARY-DESIGN.md section 13 currently says `acquireMS5803_05BA` and would need revising.
+
 ## Next session (firmed up 2026-09-24 at the pause)
 
 Verify first, in this order, before any edit: (1) read the resumption frame in memory, (2) `git status` in every repository below (all should be clean, all unpushed), (3) `python3 NW-Tests/compile.py` expects 16 of 18 (MaxBotix is the known failure) and `python3 NW-Tests/harness.py` expects 7 of 7.
