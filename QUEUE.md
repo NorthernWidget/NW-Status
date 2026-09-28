@@ -2,19 +2,50 @@
 
 Work that is decided or open but not yet started, with what blocks it. One line per item; the linked issue holds the detail. Kept here so the list survives sessions; NW-Status/README.md carries the per-repository state.
 
-Last edited 2026-09-24.
+Last edited 2026-09-28.
 
-## START HERE after the 2026-09-28 compaction
+## The MS5803 variant question, answered 2026-09-28
 
-**The MS5803 variant question, raised by Andy 2026-09-28.** Any MS5803 variant can be soldered onto a Walrus board - 01, 02, 05, 07, 14 or 30 BA, all seven datasheets are in `MS5803/docs/` - and a function to read it should look the same whatever is fitted. Three questions to answer, in order:
+Andy asked three questions on 2026-09-28: does the MS5803 carry its own version readably, are all variants accessed the same way in firmware, and should an EEPROM bit record the variant. All six datasheets in `MS5803/docs/` were read to answer them, and the findings are recorded in the Walrus appendix of the specification (NW-Device-Specification d5a9e15).
 
-1. **Does the part carry its own version, readably?** Its PROM holds six factory coefficients plus word 0 (factory configuration) and word 7 (CRC). Word 0 is the one to investigate: nothing in the 05BA datasheet says it encodes the variant, but nothing examined so far rules it out either. If it does, the firmware can detect the variant and no provisioning is needed at all.
-2. **Are all variants accessed the same way in firmware?** The command set is identical (reset 0x1E, PROM 0xA0, convert 0x40/0x50, ADC read 0x00). What differs is the compensation: the Walrus firmware carries three commented-out `COEF0`-`COEF15` blocks, and the **exponents themselves change between variants**, not only the coefficient values. So reading is uniform and *interpreting* is not.
-3. **Should an EEPROM bit record the variant?** Page 1 is the calibration page, NW-Provision already writes it, and the variant is a property of the built unit - known at assembly, fixed for its life. That is exactly what Page 1 is for. Cost: every coefficient set lives in flash, and the provisioner must be told which board got which part.
+**1. No. The part cannot be asked what it is.** Its PROM holds eight 16-bit words, and word 0 – the one candidate – is documented as "16 bit reserved for manufacturer" in all six datasheets. No variant field is documented anywhere in that memory. Furthermore the coefficients cannot be used to infer it: the typical C1 values run 29,112 (30BA), 32,428 (05BA), 40,127 (01BA), 46,128 (07BA), 46,372 (02BA), and 46,546 (14BA), which is neither ordered by range nor separable once part-to-part spread is added. Probing word 0 on the bench across several variants would say whether it happens to hold something, though an undocumented field is not a thing to build on.
 
-**Why this matters:** the wrong coefficient set produces a confidently wrong pressure with no fault raised - the silent-bad-data failure mode. And `nw_sim` can prove the answer without hardware, by provisioning a simulated -14BA and checking the firmware reads it correctly.
+**2. Reading is uniform. Interpreting is not.** The command tables are byte-identical across the datasheets compared: reset `0x1E`, convert D1 `0x40`–`0x48`, convert D2 `0x50`–`0x58`, ADC read `0x00`, PROM read `0xA0`–`0xAE`. Four things change with the variant: (1) the first-order exponents in `OFF` and `SENS`; (2) the second-order compensation, in its coefficients and in its branch structure – the 01BA alone carries a SENS2 term above 45 °C, and the 14BA and 30BA alone carry a high-temperature `OFF2`; (3) the final pressure shift, 2¹³ for the 30BA against 2¹⁵ for the other five; and (4) the LSB of the compensated result, 0.01 mbar for the 01BA, 02BA, 05BA and 07BA against 0.1 mbar for the 14BA and 30BA.
 
-**Consequence already identified:** if the variant moves into Page 1, the firmware function returns to `acquireMS5803()` rather than `acquireMS5803_05BA()`, because the variant then no longer affects the interface. Andy's granularity rule survives; the design moves the variant out of the name. LIBRARY-DESIGN.md section 13 currently says `acquireMS5803_05BA` and would need revising.
+**The Walrus firmware's 05BA constants are correct.** All sixteen of `COEF0`–`COEF15` in `Walrus_I2C_5BA.ino` were checked against ENG_DS_MS5803-05BA_B3 and every one matches, including the three zeros that correctly disable the above-20 °C branch. `COEF4` is what keeps the served register in microbar whatever part is fitted: the firmware divides `_pressure_actual` by `COEF4/100` to reach mbar, then multiplies by 1000. The commented-out 02BA and 14BA blocks are likewise correct. The firmware carries no 01BA, 07BA or 30BA block, and fitting any of those three would need more than constants: the 01BA needs the above-45 °C branch the firmware does not have, and the 30BA needs the final shift changed from 2¹⁵ to 2¹³.
+
+**3. Yes, and it is Andy's call.** The variant is a property of the built unit: known at assembly, fixed for its life, and invisible to the firmware. That is what Page 1 is for, and the Walrus has no Page 1 today, so this would create one. The cost is real and should be priced before it is chosen:
+
+- every coefficient set the product supports lives in flash, sixteen values each, plus the 01BA branch and the 30BA shift;
+- NW-Provision must be told which board got which part, and a wrong entry is as silent as a wrongly flashed firmware;
+- the firmware stops selecting at compile time, so `Walrus_I2C_5BA` becomes one firmware for every Walrus.
+
+**The consequence for naming:** if the variant moves into Page 1, the firmware function is `acquireMS5803()` rather than `acquireMS5803_05BA()`, because the variant no longer affects the interface. Andy's granularity rule survives untouched; the design moves the variant out of the name. LIBRARY-DESIGN.md section 13 says `acquireMS5803_05BA` and would be revised with the decision.
+
+**Proving it without hardware:** `nw_sim`'s `ms5803` part is hardwired to the 05BA today. Parameterising it by variant, then provisioning a simulated 14BA and checking the firmware reads it correctly, is the test that would demonstrate the whole path.
+
+## The MS5803 library computes the wrong pressure below 20 °C (found 2026-09-28)
+
+Found while answering the variant question, verified, and **not yet fixed, because a fix changes the numbers every deployed TP-DownHole has produced**. That is Andy's decision, not mine. The Walrus is not affected: its firmware carries `#define`d constants and does not use this library.
+
+**The defect.** `MS5803::begin()` selects a variant's sixteen conversion constants and copies them with `memcpy(ConvCoef, ConvTempN, 16)`. On AVR `int` is two bytes, so `ConvTempN` is 32 bytes and the copy moves **eight of the sixteen values**. Verified by compiling the two `sizeof` assertions with the Arduino avr-gcc for the target. `ConvCoef` belongs to a global object, so the missing entries read as zero, and every one of them is a second-order temperature term: the `OFF2` and `SENS2` divisors, the very-low-temperature additions, and the whole above-20 °C branch.
+
+**What it costs.** Error in the reported pressure at a true 1013.25 mbar, computed with each datasheet's typical coefficients, correct constants against the eight that are actually copied:
+
+| Variant | 25 °C | 10 °C | 5 °C | 0 °C | -10 °C | -20 °C |
+|---|---|---|---|---|---|---|
+| 01BA | 0.0 | 9.5 | 21.6 | 39.0 | 91.2 | 172.3 |
+| 02BA | 0.0 | 19.3 | 43.5 | 77.3 | 174.1 | 311.1 |
+| 05BA | 0.0 | 1.5 | 3.3 | 5.9 | 13.4 | 24.5 |
+| 07BA | 0.0 | 1.4 | 3.2 | 5.7 | 12.9 | 23.5 |
+| 14BA | -0.1 | 8.5 | 19.1 | 34.0 | 76.6 | 137.2 |
+| 30BA | -0.2 | 33.1 | 74.4 | 132.2 | 297.5 | 530.9 |
+
+All in mbar; 1 mbar is about 1.02 cm of water. A TP-DownHole is built on the 02BA (`MS5803 Downhole(ADDRESS_LOW, 2)`), so its error is 44 cm of water at 5 °C and 79 cm at 0 °C. Above 20 °C the reading is correct, which is why bench testing at room temperature would never show it. The script is `ms5803_all.py` in the session scratchpad and should move into the repository with the fix.
+
+**Two more defects in the same table, both in the 30BA entry:** `ConvTemp6` is declared with seventeen initialisers rather than sixteen, from a duplicated `10`, which shifts every entry after it; and `ConvCoef[4]` is 10 where the datasheet's 0.1 mbar LSB requires 1000. Separately, the final pressure divisor is hardcoded at 32768 in both the library and the Walrus firmware, and the 30BA datasheet calls for 2¹³. **No 30BA is known to be fitted to anything**, so these are latent.
+
+**What a fix needs, in order:** (1) a host harness for the library, since it has none and the arithmetic is the whole product; (2) the harness recording today's output as a baseline, so the change in every deployed variant is visible rather than asserted; (3) `sizeof(ConvTempN)` in place of the literal 16, `ConvTemp6` rebuilt, and the final shift taken from the table; (4) Andy's decision on the archived data, which is the part no code can settle.
 
 ## Next session (firmed up 2026-09-24 at the pause)
 
