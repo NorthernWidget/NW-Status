@@ -110,9 +110,9 @@ Items 1, 2, 3 and 8 are done and pushed or committed. What follows is checked, n
 
 **4. Header conversion: ready for four devices of five.** Walrus was unblocked by the `mbar` decision and Apis by the temperature change. Haar and Margay were always ready. **Libelle has no names at all** - a grep for `libelle` in `standard-names.csv` returns zero - so its `R`, `P`, `Vis` and `PyroT` columns have nothing to convert to, and its `UVA`, `UVB`, `White`, `IR_S` and `IR_M` want the `adc_output` form. Four or five rows.
 
-**5. The two reference libraries disagree on function naming.** Walrus has **five** positional getters - `getTemperature(0)` is the MCP9808 and `getTemperature(1)` the MS5803, through Mean, Std, Sterr and Median - where Apis names its quantities outright. A template cannot ship two idioms for the same job, and Apis's is the one that matches the rule.
+**5. DONE 2026-09-29.** The library names the primary sensor by its quantity and every other one by its chip: `getTemperature()` is the MCP9808, `getMS5803Temperature()` the die, and the five positional `uint8_t Location` getters are gone rather than corrected, because their numbering was the reverse of the `Component` enum and the fault checks in the same header. The rule is recorded in LIBRARY-DESIGN.md with the two clauses the devices forced: a chip's own diagnostic never takes the unqualified name even when it is the only one of its kind (Apis), and never a positional selector. Haar was checked in the body rather than from its enum name and was already correct.
 
-**6. `acquireMS5803_05BA` is superseded**, in two places in LIBRARY-DESIGN.md section 13. Its justification is that a -14BA returns different numbers from identical raw words, which is true of the raw words and false of the register, since `COEF4` normalises the served value to microbar whatever part is fitted.
+**6. DONE 2026-09-29.** `acquireMS5803()`, not `acquireMS5803_05BA`: the variant selects a table of constants and changes no command, no signature and no returned value, so it belongs in Page 1 rather than in a function name. `acquireLidarLiteV3HP` keeps its suffix, and the contrast is the test - the v3 and v3HP differ in register conventions.
 
 **7. `getPressureADC()` and `getTemperatureADC()` do not exist** in Walrus_Library. Agreed in principle; nothing written.
 
