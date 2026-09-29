@@ -64,6 +64,26 @@ Three places where it does bite:
 
 **Offered, not folded in: serve the PROM as well.** The firmware already reads all eight words into `coefficient[8]`. Sixteen bytes would let a controller compensate entirely on its own, and the free space on Page 2 is exactly sixteen bytes (`0x4E`-`0x4F`, `0x52`-`0x57`, and Block 3), which is all of it and collides with the raw pair. The alternative is to store the PROM in Page 1 at provisioning, which also buys a check: if the chip's PROM ever differs from what was stored, the part was swapped or the bus is bad. Andy's call, and it is a separate decision from the range byte.
 
+## Converting the hand-typed headers: what 1-3 unblocked, and what it did not (2026-09-29)
+
+The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so the mechanism is in place: all four sensor libraries already carry `depends=NW_Core`, and so do Margay and Okapi. Coverage and blockers, checked column by column against each `getHeader()`.
+
+| Library | Columns | Named | Blocker |
+|---|---|---|---|
+| **Haar** | 12 | all 12 | none beyond the UCUM sweep |
+| **Margay** | 6 leading | all 6 | `Time [UTC]` becomes `time [ISO8601]` |
+| **Walrus** | 9 | all 9 | **the pressure unit disagrees with the name** |
+| **Apis** | 10 | 9 of 10 | **`AccelT [C]` is `int16_t` digits, not Celsius** |
+| **Libelle** | 9 | **0** | needs four or five rows written |
+
+**The Walrus decision.** `submersible-sensor~walrus_water__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
+
+**The Apis blocker is the typing item, not a naming one.** `AccelT [C]` prints the LIS3DH's raw digits under a Celsius label, so it is already wrong; putting `rangefinder~apis_accelerometer__anomaly_of_temperature [Cel]` on it would make an authoritative name vouch for a wrong number. The float-difference change comes first.
+
+**Two sweeps the generated header does for free.** Every library prints `[C]` where UCUM's code is `Cel`, and `[mBar]` where it is `mbar`. Nothing has to be retyped: `NW_HDR_*` already carries the correct code, which is the point of generating it.
+
+**The consequence worth planning for: the header grows 4.1 times.** Walrus's nine columns go from 153 bytes to 621, and the longest single cell is 82 bytes (`submersible-sensor~walrus_pressure-sensor__standard_deviation_of_temperature [Cel]`). A logger carrying several sensors reaches roughly two kilobytes. `getHeader()` returns an Arduino `String` built by concatenation, and two kilobytes of that fragments the heap on a 16 kB ATmega1284P. **All four sensor libraries already have `printHeader(Print&)`, which streams**, so the conversion should go through it and leave `getHeader()` to the small cases. That makes this a change of interface as well as of strings, which is the part a string-swap plan would miss.
+
 ## The template: what Walrus and Apis still owe every other device (checked 2026-09-29)
 
 Walrus and Apis are the two reference devices, so anything unfinished in them is unfinished for Haar, Libelle, Tally, Margay and Okapi too. Every line below was checked against the code on 2026-09-29, not recalled.
