@@ -102,6 +102,52 @@ The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so
 
 **The consequence worth planning for: the header grows 4.1 times.** Walrus's nine columns go from 153 bytes to 621, and the longest single cell is 82 bytes (`submersible-sensor~walrus_pressure-sensor__standard_deviation_of_temperature [Cel]`). A logger carrying several sensors reaches roughly two kilobytes. `getHeader()` returns an Arduino `String` built by concatenation, and two kilobytes of that fragments the heap on a 16 kB ATmega1284P. **All four sensor libraries already have `printHeader(Print&)`, which streams**, so the conversion should go through it and leave `getHeader()` to the small cases. That makes this a change of interface as well as of strings, which is the part a string-swap plan would miss.
 
+## The template: what remains (re-verified against the code 2026-09-29, evening)
+
+Items 1, 2, 3 and 8 are done and pushed or committed. What follows is checked, not recalled; the count beside each is what a grep returned today.
+
+**Done today.** (1) All 28 names, now 34, are `accepted` and `NW_Core/src/NW_StandardNames.h` is generated from them, with `NW-Tests/names_check.py` failing if the two drift. (2) Burst aggregation is a CSDMS prefix operator, driven by an `aggregations` column, so no aggregate name is ever typed. (3) Raw output is named `<chip>__adc_output` with unit `1`, and the rule is written into CSDMS-NAMES.md. (8) The last typing violation is gone: `getDistance()` returns a `float`, and the accelerometer temperature is a `float` change in degrees with the raw digits still reachable under the ADC name.
+
+**4. Header conversion: ready for four devices of five.** Walrus was unblocked by the `mbar` decision and Apis by the temperature change. Haar and Margay were always ready. **Libelle has no names at all** - a grep for `libelle` in `standard-names.csv` returns zero - so its `R`, `P`, `Vis` and `PyroT` columns have nothing to convert to, and its `UVA`, `UVB`, `White`, `IR_S` and `IR_M` want the `adc_output` form. Four or five rows.
+
+**5. The two reference libraries disagree on function naming.** Walrus has **five** positional getters - `getTemperature(0)` is the MCP9808 and `getTemperature(1)` the MS5803, through Mean, Std, Sterr and Median - where Apis names its quantities outright. A template cannot ship two idioms for the same job, and Apis's is the one that matches the rule.
+
+**6. `acquireMS5803_05BA` is superseded**, in two places in LIBRARY-DESIGN.md section 13. Its justification is that a -14BA returns different numbers from identical raw words, which is true of the raw words and false of the register, since `COEF4` normalises the served value to microbar whatever part is fitted.
+
+**7. `getPressureADC()` and `getTemperatureADC()` do not exist** in Walrus_Library. Agreed in principle; nothing written.
+
+**9. The per-chip acquire pattern is in no firmware.** A grep for `acquire[A-Z]` across the Walrus and Apis firmware returns zero. LIBRARY-DESIGN.md section 13 specifies it and both still use one monolithic path.
+
+**10. Page 1's variant byte and the raw registers are designed and unimplemented.** Five appendices still say "No Page 1". This carries the status-bit and report-kind contract that stops the library averaging a `-9999` as a pressure, a device-specific report kind in the Walrus appendix, and a firmware patch increment against `WALRUS_FW_MIN_PATCH`.
+
+**11. Apis is wired into NW-Sim and no test covers it.** `src/boards/apis_sensor.c` builds its LiDAR and LIS3DH; no test script mentions Apis. The path has never been proven end to end.
+
+**12. The MS5803 fixes have not reached the Walrus firmware.** It carries four `COEF` blocks of its own, one live and three commented out. The live 05BA block is correct, but the 01BA and 30BA rows the library now has right do not exist there, and nothing checks the firmware's constants against the datasheets the way `compensation_check.py` checks the library's.
+
+**13. simavr's source tree is absent from this machine.** `build/nw_sim` is statically linked and carries the patched simavr, so the two integration tests are real; the two conformance suites compile against simavr directly and skip with exit 77, which reads like a pass in a tail and did fool me once today. The README's two lines restore it. Worth making the skip loud.
+
+**14. `zero_generation` may belong in the status file** rather than the data file: it is provenance, and DATA-FORMAT.md puts provenance there.
+
+## Converting the hand-typed headers: what 1-3 unblocked, and what it did not (2026-09-29)
+
+The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so the mechanism is in place: all four sensor libraries already carry `depends=NW_Core`, and so do Margay and Okapi. Coverage and blockers, checked column by column against each `getHeader()`.
+
+| Library | Columns | Named | Blocker |
+|---|---|---|---|
+| **Haar** | 12 | all 12 | none beyond the UCUM sweep |
+| **Margay** | 6 leading | all 6 | `Time [UTC]` becomes `time [ISO8601]` |
+| **Walrus** | 9 | all 9 | **the pressure unit disagrees with the name** |
+| **Apis** | 10 | 9 of 10 | **`AccelT [C]` is `int16_t` digits, not Celsius** |
+| **Libelle** | 9 | **0** | needs four or five rows written |
+
+**The Walrus decision.** `submersible-sensor~walrus_water__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
+
+**The Apis blocker is the typing item, not a naming one.** `AccelT [C]` prints the LIS3DH's raw digits under a Celsius label, so it is already wrong; putting `rangefinder~apis_accelerometer__anomaly_of_temperature [Cel]` on it would make an authoritative name vouch for a wrong number. The float-difference change comes first.
+
+**Two sweeps the generated header does for free.** Every library prints `[C]` where UCUM's code is `Cel`, and `[mBar]` where it is `mbar`. Nothing has to be retyped: `NW_HDR_*` already carries the correct code, which is the point of generating it.
+
+**The consequence worth planning for: the header grows 4.1 times.** Walrus's nine columns go from 153 bytes to 621, and the longest single cell is 82 bytes (`submersible-sensor~walrus_pressure-sensor__standard_deviation_of_temperature [Cel]`). A logger carrying several sensors reaches roughly two kilobytes. `getHeader()` returns an Arduino `String` built by concatenation, and two kilobytes of that fragments the heap on a 16 kB ATmega1284P. **All four sensor libraries already have `printHeader(Print&)`, which streams**, so the conversion should go through it and leave `getHeader()` to the small cases. That makes this a change of interface as well as of strings, which is the part a string-swap plan would miss.
+
 ## The template: what Walrus and Apis still owe every other device (checked 2026-09-29)
 
 Walrus and Apis are the two reference devices, so anything unfinished in them is unfinished for Haar, Libelle, Tally, Margay and Okapi too. Every line below was checked against the code on 2026-09-29, not recalled.
