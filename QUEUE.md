@@ -64,6 +64,34 @@ Three places where it does bite:
 
 **Offered, not folded in: serve the PROM as well.** The firmware already reads all eight words into `coefficient[8]`. Sixteen bytes would let a controller compensate entirely on its own, and the free space on Page 2 is exactly sixteen bytes (`0x4E`-`0x4F`, `0x52`-`0x57`, and Block 3), which is all of it and collides with the raw pair. The alternative is to store the PROM in Page 1 at provisioning, which also buys a check: if the chip's PROM ever differs from what was stored, the part was swapped or the bus is bad. Andy's call, and it is a separate decision from the range byte.
 
+## The template: what Walrus and Apis still owe every other device (checked 2026-09-29)
+
+Walrus and Apis are the two reference devices, so anything unfinished in them is unfinished for Haar, Libelle, Tally, Margay and Okapi too. Every line below was checked against the code on 2026-09-29, not recalled.
+
+### CSDMS naming: nothing has reached a library yet
+
+1. **All 28 names are still `proposed`, and that is the whole gate.** `generate_names.py` emits only `accepted` rows, so `NW_StandardNames.h` does not exist anywhere in the workspace. Nothing downstream can begin until Andy accepts the list. This is deliberate - the review gate is enforced rather than promised - and it is now the single blocking item.
+2. **Statistics have no names at all.** Zero of the 28 rows mention std, sterr, mean or median, yet every library's header already emits them (`Pressure std [mBar]`, `Distance sterr [cm]`). Worse, our own two documents disagree on where aggregation belongs: CSDMS-NAMES.md puts it in the quantity with the registry's `mean_of_` operator (32 names), and DATA-FORMAT.md puts it in the status file's `cell_methods` instead. One decision settles both.
+3. **Raw and ADC columns have no rule.** CSDMS-NAMES.md says raw instrument output gets no standard name; DATA-FORMAT.md requires `<standard_name> [<unit>]` on every column with the brackets always present. `submersible-sensor~walrus_pressure-sensor__adc_output` is grammar-valid and would close the gap.
+4. **Every header string is still hand-typed**: Walrus `Pressure [mBar]`, Apis `Distance [cm]`, Haar `Pressure Atmos [mBar]`, Libelle `R_u [deg]`. Libelle's raw columns carry no bracket at all, which the proposed format forbids.
+
+### Function naming: the two references disagree with each other
+
+5. **Walrus selects a chip by magic number and Apis does not.** `getTemperature(0)` is the MCP9808 and `getTemperature(1)` is the MS5803, and the same positional argument runs through Mean, Std, Sterr and Median. Apis names its quantities outright - `getPitch()`, `getRoll()`, `getDistance()` - with no positional argument anywhere. **A template cannot ship two idioms for the same job.** Apis's is the one that matches the naming rule already set, so Walrus needs named getters.
+6. **`acquireMS5803_05BA` in LIBRARY-DESIGN.md section 13 is superseded.** Its stated justification is that a -14BA returns different numbers from identical raw words, which is true of the raw words and false of the register: `COEF4` makes the served value microbar whatever part is fitted. Under the Page 1 design it returns to `acquireMS5803()`.
+7. **`getPressureADC()` and `getTemperatureADC()` do not exist.** Agreed in principle 2026-09-28, nothing written.
+
+### Function typing: one violation left, and it is in Apis
+
+8. `getDistance()` is now a `float` (0a124b7), so the only measurement getters still outside the rule are **`getAccelerometerTemperature()` and `getZeroTemperature()`, both `int16_t`**. The agreed shape is a `float` carrying degrees Celsius relative to the stored zero, and the getter name should say it is a change, matching the renamed `rangefinder~apis_accelerometer__anomaly_of_temperature`. Everything else across both libraries now follows the rule: `float` for a physical quantity, `uint16_t` for how many readings, `uint8_t` for a bitfield or code.
+
+### The template as a whole
+
+9. **The per-chip acquire pattern is in no firmware.** `grep acquire[A-Z]` across the Walrus and Apis firmware returns nothing; LIBRARY-DESIGN.md section 13 specifies it and both still use one monolithic path.
+10. **Page 1's variant byte and the raw registers are designed and unimplemented**, including the status-bit and report-kind contract that stops the library averaging a `-9999` as a pressure, and a device-specific report kind in the Walrus appendix. Both imply a firmware patch increment against `WALRUS_FW_MIN_PATCH`.
+11. **Apis is wired into NW-Sim but no test covers it.** `src/boards/apis_sensor.c` builds its LiDAR and LIS3DH, and `tests/in_the_loop.sh` is Walrus-only, so the Apis path has never been proven end to end.
+12. **The MS5803 library's fixes have not reached the Walrus firmware**, which carries its own `#define`d constants. The firmware's 05BA block is correct, but the 01BA and 30BA rows the library now has right do not exist there at all, and nothing checks the firmware's constants against the datasheets the way `compensation_check.py` now checks the library's.
+
 ## Three API decisions (Andy, 2026-09-28)
 
 **1. Type by the quantity, not by the source.** Andy put the choice as: always return the same type, or stay honest to the source. **Honest to the quantity.** A physical quantity returns `float`; an integer type means the value has no unit. The argument against following the source: `getDistance()` is not honest to it either - `getDistanceMean()` beside it returns the unrounded `float`, so the `int16_t` is a lossy view of a number the library already holds as a float, and a caller handed an `int16_t` cannot recover the fraction while a caller handed a `float` can always round. Furthermore the source's integer-ness is not stable: centimetres today, millimetres on the next rangefinder, and a burst mean is fractional whatever the part does. Keeping `float` uniform also keeps the `NW_ERROR` sentinel, the statistics and `getString()` behaving identically across every measurement. Integers stay for what genuinely has no unit: `uint16_t` for how many readings, `uint8_t` for a bitfield or code, and the raw device output. **That leaves the raw-versus-physical split as the only place a return type varies, which is the architecture we want.**
