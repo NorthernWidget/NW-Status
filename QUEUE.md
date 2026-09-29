@@ -64,6 +64,24 @@ Three places where it does bite:
 
 **Offered, not folded in: serve the PROM as well.** The firmware already reads all eight words into `coefficient[8]`. Sixteen bytes would let a controller compensate entirely on its own, and the free space on Page 2 is exactly sixteen bytes (`0x4E`-`0x4F`, `0x52`-`0x57`, and Block 3), which is all of it and collides with the raw pair. The alternative is to store the PROM in Page 1 at provisioning, which also buys a check: if the chip's PROM ever differs from what was stored, the part was swapped or the bus is bad. Andy's call, and it is a separate decision from the range byte.
 
+## The accelerometer's three layers (Andy, 2026-09-28, revisited 2026-09-29)
+
+Andy's words: "getAccelX/Y/Z likely has a converter to a real acceleration, so we are probably not using it for a physical quantity because we are using it for an orientation. If so, there could be a different architecture or naming convention that is needed. I would suggest abstracting accelerometer usage as an accelerometer and reducing it all to roll/pitch and/or another representation of the g vector."
+
+**His reading was right, and my first answer was half of it.** I reported that the library already reduces to pitch and roll, which is true. What I did not check then is that **nothing anywhere converts the axes to a physical acceleration**: `Apis.cpp:145` takes `gx, gy, gz` straight from the register words, and the angles are `atan(-gx/gz)` and `atan(gy/sqrt(gx^2+gz^2))`, which are ratios, so the scale cancels and no conversion was ever needed. A grep for any scaling constant in the library returns nothing.
+
+That leaves three layers, and only two of them exist:
+
+| Layer | What it is | Where it lives | Vocabulary | State |
+|---|---|---|---|---|
+| **Reading** | raw axis words, 12-bit left-justified | firmware Page 2 Block 2, `0x50`-`0x55` | none | **no names** - would be `..._accelerometer__adc_output` |
+| **Physical** | the g vector, X/Y/Z in m/s2 | **nowhere** | names 11-13 | **named but nothing computes it** |
+| **Use** | orientation: pitch and roll against the stored zero | `getPitch()`, `getRoll()` | names 14-15 | working |
+
+**The middle layer is one constant away.** The firmware sets `CTRL_REG4 = 0x88`, which is FS=00 with high resolution, and LIS3DH Table 4 gives that configuration a sensitivity of **1 mg/digit**. So a digit is 0.001 g, or 0.00980665 m/s2, and the library could serve the g vector for the cost of one multiply. Doing it would make names 11-13 real and would give Andy the "other representation of the g vector" he asked for; the alternative is to mark those three names as register-level and not serve them. **A vocabulary should not promise a column nobody fills**, so one or the other is owed.
+
+**A naming question that follows, and it is Andy's.** He approved `rangefinder~apis_accelerometer__pitch_angle` on 2026-09-28. Under his own "abstract the accelerometer away" framing, pitch and roll are the attitude of the *Apis housing*, not of the chip, which would make them `rangefinder~apis__pitch_angle`. The accelerometer attribution is right for the g-vector components and for the chip's temperature, which are properties of the instrument; it is arguably wrong for the derived angles. Recorded rather than changed.
+
 ## Converting the hand-typed headers: what 1-3 unblocked, and what it did not (2026-09-29)
 
 The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so the mechanism is in place: all four sensor libraries already carry `depends=NW_Core`, and so do Margay and Okapi. Coverage and blockers, checked column by column against each `getHeader()`.
