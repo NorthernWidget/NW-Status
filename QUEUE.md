@@ -94,7 +94,7 @@ The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so
 | **Apis** | 10 | 9 of 10 | **`AccelT [C]` is `int16_t` digits, not Celsius** |
 | **Libelle** | 9 | **0** | needs four or five rows written |
 
-**The Walrus decision.** `submersible-sensor~walrus_water__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
+**The Walrus decision.** `submersible-sensor~walrus_fluid__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
 
 **The Apis blocker is the typing item, not a naming one.** `AccelT [C]` prints the LIS3DH's raw digits under a Celsius label, so it is already wrong; putting `rangefinder~apis_accelerometer__anomaly_of_temperature [Cel]` on it would make an authoritative name vouch for a wrong number. The float-difference change comes first.
 
@@ -140,7 +140,7 @@ The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so
 | **Apis** | 10 | 9 of 10 | **`AccelT [C]` is `int16_t` digits, not Celsius** |
 | **Libelle** | 9 | **0** | needs four or five rows written |
 
-**The Walrus decision.** `submersible-sensor~walrus_water__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
+**The Walrus decision.** `submersible-sensor~walrus_fluid__pressure` carries unit `ubar`, which is the *register's* unit; `getPressure()` divides by 1000 and the column is written in mBar. Converting as things stand would label mBar values `[ubar]`. Either the name's unit becomes `mbar`, or the library serves microbar and the column becomes an integer - which has its own merit, since microbar is what the device computes and a float round-trip is what makes the served value one count low about 3 % of the time. One decision, and it is Andy's.
 
 **The Apis blocker is the typing item, not a naming one.** `AccelT [C]` prints the LIS3DH's raw digits under a Celsius label, so it is already wrong; putting `rangefinder~apis_accelerometer__anomaly_of_temperature [Cel]` on it would make an authoritative name vouch for a wrong number. The float-difference change comes first.
 
