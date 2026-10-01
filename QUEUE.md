@@ -166,10 +166,10 @@ Walrus and Apis are the two reference devices, so anything unfinished in them is
 | 8 | done | `getAccelerometerTemperatureChange()` returns float; the int16_t getters are the `...ADC()` pair, which is right for a raw word |
 | 9 | Walrus done | `acquireMS5803()` and `acquireMCP9808()` in the Walrus firmware, driven by a chip table; Apis still has one path |
 | 10 | done | Page 1 model byte at 0x20, Block 3 at 0x58, report kind 16 as a notice, `WALRUS_FW_MIN_PATCH` 2 |
-| 11 | open | `grep -c Apis NW-Sim/tests/in_the_loop.sh` returns 0 |
+| 11 | done 2026-10-01 | `tests/in_the_loop.sh` runs Walrus and Apis, each with a recorded baseline; the Apis row logs 250.00 cm and a signal strength of 128 |
 | 12 | done | the firmware's `setMS5803Model()` covers all six variants and `compensation_check.py` checks it against the datasheets |
 
-What the template still owes is therefore narrower than it was: the header strings in four libraries, the per-chip acquisition in the Apis firmware, and an in-the-loop test that covers Apis. Walrus is the worked example for all three.
+What the template still owes is therefore narrower than it was: the header strings in four libraries (Apis 16 cells, Haar 12, Libelle 11, T9602 5), and the per-chip acquisition in the Apis firmware. Walrus is the worked example for both. Item 11 closed on 2026-10-01, and closing it cost two fixes in the simulator rather than in any device: the ATtiny1634 TWI slave model's interrupt flags, and the LiDAR model's auto-increment. Libelle still has no names at all, which means rows have to be written before it can be converted.
 
 ### CSDMS naming: nothing has reached a library yet
 
