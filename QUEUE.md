@@ -152,6 +152,25 @@ The vocabulary is accepted and `NW_Core/src/NW_StandardNames.h` is generated, so
 
 Walrus and Apis are the two reference devices, so anything unfinished in them is unfinished for Haar, Libelle, Tally, Margay and Okapi too. Every line below was checked against the code on 2026-09-29, not recalled.
 
+**Status pass, 2026-10-01.** Nine of the twelve are done and two more are done for Walrus. The twelve entries below are left as they were written, because each states a problem worth keeping in its original words; this table says where each one now stands, and every line of it was checked against the code today.
+
+| # | State | Evidence |
+|---|---|---|
+| 1 | done | 36 of 36 rows accepted; `NW_StandardNames.h` generated and included from `NW_Core.h` |
+| 2 | done | `aggregations` column; `mean_of_`, `standard_deviation_of_`, `standard_error_of_`, `median_of_` emitted per row |
+| 3 | done | `adc_output` accepted for Walrus (two rows) and Apis (three) |
+| 4 | Walrus done | 0 hand-typed cells in Walrus_Library; Apis 12, Haar 12, Libelle 11, T9602 5 |
+| 5 | done | no `uint8_t Location` remains in Walrus_I2C.h; the getters are named |
+| 6 | done | decided as `acquireMS5803()`, and LIBRARY-DESIGN.md records why |
+| 7 | done | `getPressureADC()` and `getTemperatureADC()` exist, with `setADCColumns()` |
+| 8 | done | `getAccelerometerTemperatureChange()` returns float; the int16_t getters are the `...ADC()` pair, which is right for a raw word |
+| 9 | Walrus done | `acquireMS5803()` and `acquireMCP9808()` in the Walrus firmware, driven by a chip table; Apis still has one path |
+| 10 | done | Page 1 model byte at 0x20, Block 3 at 0x58, report kind 16 as a notice, `WALRUS_FW_MIN_PATCH` 2 |
+| 11 | open | `grep -c Apis NW-Sim/tests/in_the_loop.sh` returns 0 |
+| 12 | done | the firmware's `setMS5803Model()` covers all six variants and `compensation_check.py` checks it against the datasheets |
+
+What the template still owes is therefore narrower than it was: the header strings in four libraries, the per-chip acquisition in the Apis firmware, and an in-the-loop test that covers Apis. Walrus is the worked example for all three.
+
 ### CSDMS naming: nothing has reached a library yet
 
 1. **All 28 names are still `proposed`, and that is the whole gate.** `generate_names.py` emits only `accepted` rows, so `NW_StandardNames.h` does not exist anywhere in the workspace. Nothing downstream can begin until Andy accepts the list. This is deliberate - the review gate is enforced rather than promised - and it is now the single blocking item.
