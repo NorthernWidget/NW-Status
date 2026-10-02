@@ -2,7 +2,7 @@
 
 Work that is decided or open but not yet started, with what blocks it. One line per item; the linked issue holds the detail. Kept here so the list survives sessions; NW-Status/README.md carries the per-repository state.
 
-Last edited 2026-09-28.
+Last edited 2026-10-02.
 
 ## The MS5803 variant question, answered 2026-09-28
 
@@ -315,6 +315,7 @@ NEXT, in order: (0) restore the ATtiny1634 hardware TWI slave module, which unbl
 
 | # | Item | Where | Blocker | Notes |
 |---|------|-------|---------|-------|
+| 16 | Retire `String` per LIBRARY-DESIGN.md section 15: four families, the bounded/short-lived/loud rule, and the two uses that keep their `String` (`Okapi::readStr`, the boot-time signatures). Andy agreed the retirement and the non-dogmatic rule 2026-10-02. Families B and C ship in one release because `Logger.note(sensor.beginFailure())` makes the report words public; four of the eight libraries are pre-1.0, so four major numbers are spent, not eight | [LIBRARY-DESIGN.md section 15](https://github.com/NorthernWidget/NW-Device-Specification/blob/master/LIBRARY-DESIGN.md) | the four buffer lengths (`Note` and `HWVersion` are policy, not arithmetic); the release bumps are Andy's word | section 14 step 1 comes first and defuses the danger: `printDataRow()` returns a byte count, which is the error signal `String` never had |
 | 1 | MaxBotix rebuild on NW_Core (Apis-form surface, sketch-owned serial port); weigh the ATtiny-on-Helper option first | [MaxBotix_Library #5](https://github.com/NorthernWidget/MaxBotix_Library/issues/5) | none – Walrus and Haar are done | working tree holds an uncommitted Serial1 experiment |
 | 2 | Okapi library bugs: radio never powered off (#3), WDHold/Sw_Bus_Prime both on pin 23 (#4), PowerState not initialised (#5), setExtInt-before-begin ordering (#6), getVoltage leaves bus EXTERNAL (#7) | [Okapi_Library issues](https://github.com/NorthernWidget/Okapi_Library/issues) | Andy: Okapi is its own chain, done all together, not piecemeal (2026-09-23) | verify by compile; add a harness with the fixes |
 | 3 | Batch abandonment: keep the Apis firmware's 2 s device-side timer (since patch 4 reported as notice kind 10, batch abandoned), or hold the batch until the next batch word | [Project-Apis #25](https://github.com/NorthernWidget/Project-Apis/issues/25) item 5 | Andy's decision (batch semantics are settled) | affects Apis only; nothing on Walrus or Haar is powered per batch |
