@@ -4,6 +4,109 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## The other libraries: what each one still owes (audited 2026-10-03)
+
+Every NW library checked in the source rather than from memory: `String` in code
+with comments and literals stripped, the streaming pair, the `NW_Sensor`
+contract, a host harness, the standard names, and the release files. Four
+libraries are finished and are not listed (Apis, Walrus, Haar, Libelle). The
+loggers and NW_Core are finished on the interface and owe only release files.
+
+### Group 1: the three sensors that have not joined the interface
+
+Each needs **a host harness written first**: none has one, and byte-identical
+output is what has made every one of these conversions safe.
+
+**Liasis_Library** - the smallest, and the one to do first.
+- 7 `String` uses in code (`getString()`, `getHeader()`), 127 lines of `.cpp`.
+- Harness: stub the ADS1115-style ADC it reads at `0x4A`.
+- It has no MCU, so it can never be Schema 1 and a logger will not watch it
+  whatever happens: this is family B alone, and its columns reach a file only if
+  `NW_PlainSensor` is agreed.
+- `begin()` already returns `bool`.
+- **Three standard names do not exist yet** (`IR_Long [mV]`, `IR_Long [C]`,
+  `PyrgT [C]`): `standard-names.csv` has rows for apis, margay, walrus, haar,
+  okapi, tally and time, and none for Liasis. Writing and accepting them is
+  Andy's.
+- `Liasis::TempConvert()` carries the same Steinhart-Hart and B-parameter pair
+  that became `Margay::Thermistor`. A duplicate worth collapsing, separately.
+
+**Tally_Library** - two classes and the whole Schema 0 checklist.
+- 13 `String` uses across `Tally` (direct counting) and `Tally_I2C` (0x33), and
+  the names are the older PascalCase `GetString`/`GetHeader`.
+- `begin()` returns `uint8_t` in both classes; the convention is `bool`.
+- Two defects to fix in the conversion rather than preserve: `Tally_I2C::
+  GetString()` returns `"-9999"` with **no trailing comma** on timeout, where
+  every other path ends with one, so a timed-out row runs its next column into
+  the sentinel; and `GetHeader(bool Debug_)` *sets* the flag that decides whether
+  the row carries one column or two, so the row depends on the header having been
+  called first with the right argument.
+- Missing: harness, `CITATION.cff`, `.zenodo.json`, `docs.yml`, `_docs/`,
+  `.doxybook/config.json`. It has `keywords.txt`.
+- Its two standard names exist already.
+- Still in NorthernWidget-Skunkworks, where the five Schema 1 libraries were
+  transferred to the main organisation on 2026-09-23 under the rule "whatever is
+  ready for Schema 1 is main-org ready".
+
+**MaxBotix_Library** - blocked on Andy, and not by style.
+- 22 `String` uses, and **the library does not link**: `SoftwareSerial` and
+  `NW_Logger` both define `ISR(PCINT0_vect)`, so no logger sketch can link
+  SoftwareSerial on any board model. The conversion to the hardware `Serial1`
+  already in that working tree is the fix; three call sites still reach for
+  `softSerial` (`Maxbotix.cpp:101`, `104`, `222`).
+- Deliberately NOT reformatted, because that working tree is Andy's.
+- Missing: `.zenodo.json`, `keywords.txt`, a harness, any `examples/`.
+- `version_check.py` fails: 1.1.0 against 1.0.0.
+- Andy's preferred direction (2026-10-03) is an Apis-like bridge board carrying
+  an accelerometer for orientation (Project-MB), which would make it a Schema 1
+  device and earn it discovery and a Report register.
+
+### Group 2: chip drivers and support libraries never brought to the standard
+
+**MCP3421** - the battery ADC every Margay uses. `begin()` returns `int` where
+the convention is `bool`; no `docs.yml`, `_docs/`, `.doxybook/config.json` or
+Demo example; not reformatted. Those are the four items that have blocked its
+v2.0.0 tag since May.
+
+**MCP23018** - the Okapi's port expander. In better shape than the rest: it has
+a host harness that passes and `begin()` returns `bool`, and the `#define A`/
+`#define B` macros that used to poison `MCP23018::Port::B` are **gone** - it is an
+`enum class Port` now, so that trap is closed. Owes `CITATION.cff`,
+`.zenodo.json`, `docs.yml`, `_docs/`, `.doxybook/`, and the reformat. Version
+0.0.0, untagged.
+
+**MCP4725** (the Okapi's DAC) and **TCA9534** - bare repositories: flat layout
+with no `src/`, no `library.properties`, no `keywords.txt`, no examples. By the
+NW standard they are not Arduino libraries at all. MCP4725 is used by Okapi;
+**TCA9534 is used by nothing in the workspace**. One decision each: bring to the
+standard, fold into Okapi_Library, or retire.
+
+**MS5803** - finished as a library and missing its release files: no
+`CITATION.cff`, no `.zenodo.json` (both need the concept DOI), no `docs.yml`,
+`_docs/` or `.doxybook/`, and the dead `.travis.yml` never replaced. Version is
+0.1.2. `getPressure(precision)` still has no default argument.
+
+**DS3231_Logger** - the loggers' clock, reformatted and given a harness today.
+Keeps `String getTime(int mode)` deliberately: section 15 allows it (bounded,
+short-lived, consumed at once) and no logger calls it any more. Owes
+`.zenodo.json` and an `examples/` directory, which it has never had.
+`version_check.py` fails: 0.1.0 against 1.0.0.
+
+### Group 3: release files for the libraries that are otherwise finished
+
+`NW_Core` owes `CITATION.cff` and `.zenodo.json`. `NW_Logger` owes those plus
+`docs.yml`, `_docs/` and `.doxybook/`, and has no `examples/` (arguably right for
+a core a board library inherits, which is a decision rather than an oversight).
+`Margay_Library` and `NW_BME280` owe `.zenodo.json`. Every one of these needs the
+concept DOI, so they are Andy's word before they are work.
+
+### Group 4: retired or archived, recorded so nobody reopens them
+
+`TP-Downhole_Library` is retired; its four defects are in issue #6 and are not to
+be fixed. `ALog`, `Logger`, `Logger_with_Atlas`, `NWlibs-old`, `Resnik_Library`
+(and its `.doxygen_working` copy), `DS3231_Logger_NWcore` and `DS3231` are
+archives or duplicates of live repositories.
+
 ## The queue, in order (rebuilt and verified 2026-10-03)
 
 Sections 14, 15 and 16 of LIBRARY-DESIGN.md are built: a logger streams every
