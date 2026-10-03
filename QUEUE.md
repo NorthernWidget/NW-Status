@@ -41,16 +41,30 @@ header, so a sketch including only the conversion compiles for an
 while a Margay watching the same library's sensor class compiles at **56294**.
 
 The work, in order:
-1. `NW_Thermistor`, two headers: `NW_Thermistor.h` (the calibration struct and
-   one inline conversion, no dependency beyond Arduino) and
-   `NW_ThermistorSensor.h` (an `NW_PlainSensor` over it, including `NW_Core`).
-   **Needs a GitHub remote, which is Andy's to authorise**; the local repository
-   and its release files do not.
-2. Delete the copies and depend on it: `Margay_Library` (one), `Okapi_Library`
-   (one), `Libelle_Library` (one), `Liasis_Library` (two overloads). Each proven
-   by its harness and by the NW-Sim transcripts, where the Margay's own
-   thermistor column appears.
-3. The six `Deployments/Margay` sketches, per deployment rather than now.
+1. **DONE 2026-10-03**: `NW_Thermistor` exists locally, header-only and
+   dependency-free, with its demo, its `keywords.txt`, its `.clang-format` and a
+   harness that checks the conversion against the published Steinhart-Hart
+   equation rather than against itself. Its demo compiles on a bare
+   `arduino:avr:uno` at 5144 bytes with nothing else installed.
+   **It has no GitHub remote: that is Andy's to authorise**, as are the release
+   files that need a concept DOI.
+
+   Reading the three existing copies first found the thing that mattered:
+   **Margay and Libelle put the reference resistor to ground, Liasis puts it to
+   Vcc**, and those give reciprocal resistances about it, so one shared formula
+   would have been silently wrong on one of our own boards. The wiring is a
+   parameter now, named as Andy asked - where the reference resistor is - with
+   each value drawing its circuit.
+2. `NW_ThermistorSensor.h`, the `NW_PlainSensor` a logger watches. **Waits on
+   two of the decisions below**: where the voltage comes from for a board whose
+   ADC is not the MCU's, and what the column is called.
+3. Delete the copies and depend on it: `Margay_Library` (one, reference to
+   ground), `Libelle_Library` (one, reference to ground), `Liasis_Library` (two
+   overloads, reference to Vcc). **`Okapi_Library` has none**: its only
+   thermistor lines are commented-out legacy, which the earlier audit counted by
+   mistake. Each proven by its harness and by the NW-Sim transcripts, where the
+   Margay's own thermistor column appears.
+4. The six `Deployments/Margay` sketches, per deployment rather than now.
 
 **Still to be decided before step 3**, and each is Andy's:
 
