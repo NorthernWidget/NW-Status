@@ -4,6 +4,48 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## A standard thermistor as an NW_PlainSensor (Andy, 2026-10-03)
+
+**The idea.** A thermistor on a voltage divider is the commonest field sensor
+there is, and it has no identity page, no I2C address and nothing to discover: it
+is the natural second `NW_PlainSensor`. A sketch would say
+`Logger.watch(soilTemp)` and get a calibrated temperature column.
+
+**It would absorb a duplication rather than add code.** The calibration struct
+already exists and already covers both forms Andy asked about:
+`Margay::Thermistor { a, b, c, d, seriesResistance, r25 }`, where
+`tempConvert()` evaluates a Steinhart-Hart part or a B-parameter one (recorded
+in Margay_Library 5e959f3 after Andy asked whether the struct could serve a
+simple B value). Two copies of that arithmetic exist today:
+
+- `Margay::tempConvert()` with the struct, used for the board's own thermistor
+  on `ThermSense_Pin` and calibrated from Page 1 at 0x22 to 0x31.
+- `Liasis::TempConvert()`, twice over: an eight-argument Steinhart-Hart form and
+  a five-argument B-parameter form, with the coefficients passed loose.
+
+Moving `Thermistor` and the conversion into NW_Core and building
+`NW_Thermistor : public NW_PlainSensor` on top of them leaves one copy, and
+Liasis stops carrying its own.
+
+**What has to be decided before it is written**, and each is Andy's:
+
+1. **Where the voltage comes from.** A logger's own analog pin (`analogRead`,
+   which is what the Margay does) or an external ADC channel (Liasis's ADS1115,
+   the Okapi's pair). A pin number serves the first; the second needs the
+   reading passed in or a small ADC interface. Supporting only the first is a
+   real library that covers the common case; supporting both is the general one.
+2. **Where the reference voltage comes from.** The divider's ratio depends on it,
+   and a logger knows its own rail where a sensor library cannot.
+3. **Its standard name.** A generic thermistor has no platform to qualify with,
+   where every accepted name so far is platform-qualified
+   (`data-logger~margay_board__temperature` and the rest). Either the sketch
+   names the deployment (`soil`, `air`, `water`), which the vocabulary has no
+   mechanism for today, or the library emits an unqualified
+   `thermistor__temperature` and the analysis layer qualifies it.
+4. **Whether the Margay's own on-board thermistor becomes one of these**, which
+   would make the logger's own column come through the same path as a user's
+   rather than through `readOnBoard()`.
+
 ## The other libraries: what each one still owes (audited 2026-10-03)
 
 Every NW library checked in the source rather than from memory: `String` in code
