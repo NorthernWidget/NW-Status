@@ -27,26 +27,30 @@ Moving `Thermistor` and the conversion into NW_Core and building
 `NW_Thermistor : public NW_PlainSensor` on top of them leaves one copy, and
 Liasis stops carrying its own.
 
-**DECIDED 2026-10-03** (Andy, after the structural question): the **conversion**
-goes into `NW_Core`, because four live libraries and six deployment sketches
-carry a copy and that count is the only criterion `NW_Core` has ever used; the
-**sensor** goes into its own library, `NW_Thermistor`, because a new calibration
-form or ADC backend should not move the version everything depends on. Written up
-as LIBRARY-DESIGN.md section 18, with the rule that keeps `NW_Core` from becoming
-a parts bin: count the copies, and never hold a part's register map.
+**DECIDED 2026-10-03.** Everything in `NW_Thermistor`: the arithmetic AND the
+sensor, in **two headers, header-only**, which is what lets one library serve
+both audiences. Not `NW_Core`, because a part's own physics belongs with the
+part, as `MS5803_Compensation` sits in `MS5803` (a library that depends on
+nothing) and the Walrus firmware depends on `MS5803` to get it.
+
+Andy's objection to a minimal library - that it could not then serve an end user
+on a bare Arduino - is removable, and both halves were compiled to show it:
+Arduino compiles every `.cpp` under `src/` and never parses an unincluded
+header, so a sketch including only the conversion compiles for an
+`arduino:avr:uno` at **4056 bytes with `NW_Core` nowhere on the library path**,
+while a Margay watching the same library's sensor class compiles at **56294**.
 
 The work, in order:
-1. `Thermistor` and the conversion into `NW_Core`, as a struct and one function
-   with no bus. Acceptance test: a **byte-identical `.hex`** for a sketch that
-   does not use it, and for the Margay, which does.
-2. Delete the copies and call it: `Margay_Library` (one), `Libelle_Library`
-   (one), `Liasis_Library` (two overloads). Each proven by its harness and by
-   the Margay transcripts, where the on-board thermistor column appears.
-3. `NW_Thermistor` as an `NW_PlainSensor`, in a new repository with the standard
-   release files, reading its voltage through a small interface so a Margay pin,
-   an Okapi channel and an ADS1115 all serve it. **Needs a GitHub remote, which
-   is Andy's to authorise.**
-4. The six `Deployments/Margay` sketches, per deployment rather than now.
+1. `NW_Thermistor`, two headers: `NW_Thermistor.h` (the calibration struct and
+   one inline conversion, no dependency beyond Arduino) and
+   `NW_ThermistorSensor.h` (an `NW_PlainSensor` over it, including `NW_Core`).
+   **Needs a GitHub remote, which is Andy's to authorise**; the local repository
+   and its release files do not.
+2. Delete the copies and depend on it: `Margay_Library` (one), `Okapi_Library`
+   (one), `Libelle_Library` (one), `Liasis_Library` (two overloads). Each proven
+   by its harness and by the NW-Sim transcripts, where the Margay's own
+   thermistor column appears.
+3. The six `Deployments/Margay` sketches, per deployment rather than now.
 
 **Still to be decided before step 3**, and each is Andy's:
 
