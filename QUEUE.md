@@ -4,6 +4,14 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## Held items added 2026-10-03
+
+**`NW_PlainSensor`: let a non-Schema-1 sensor reach a data file** (Andy, 2026-10-03). A non-NW sensor has no schema and therefore cannot be detected, which is settled: `discover()` already ignores one, because a device with no valid Page 0 never matches a candidate name. What is not settled is whether a sketch may still `watch()` one by name. Under the old String path a sketch's `update()` could return any sensor's row, so a T9602, Liasis, MaxBotix or Tally did reach the card; nothing non-Schema-1 can now. The proposal is a base class in NW_Core carrying no-op reports and a status row with blanks where Page 0 would be, leaving a library to supply `name()`, `defaultAddress()`, `wake()` and `acquire()`: about ten lines each for T9602 and NW_BME280, which already stream. Andy's preferred direction for MaxBotix is the other one, an Apis-like bridge board that makes it a Schema 1 device and carries an accelerometer for orientation (Project-MB), which earns discovery and a Report register as well.
+
+**Analyse splitting `begin()` from `energize()` on the logger, with its value** (Andy, 2026-10-03). Discovery needs the sensor rail and the TWI peripheral, and both arrive inside `beginBoard()`: `Wire.begin()` comes from `_rtc.begin()` (`DS3231_Logger.cpp:27`), so before `begin()` the bus is dead twice over. `begin(candidates, n)` keeps the order right today, and a named `energize()` would let a bench tool ask what is plugged in without the rest: `BusScan` currently runs the card self-test (writing `HWTest.txt`), the clock test, the battery test and the LED report before it can answer, and needs a card in the slot to look clean.
+
+The analysis has to cover the ordering question Andy raised rather than only the seam: **some diagnostics belong at boot and others belong after the sensors are known.** A bus test of an address list means nothing before discovery has produced one, and discovery is itself a stronger test of what it found. So the split is not simply two halves of the present `begin()`; it is a decision about which self-tests run before the sensors are known, which run after, and whether the simplest answer is to run the diagnostics once, after detection. Sketch the shape before writing any of it.
+
 ## Sections 15 and 16 are built; one decision is held (2026-10-03)
 
 `LIBRARY-DESIGN.md` sections 14, 15 and 16 are all built. A logger streams every
