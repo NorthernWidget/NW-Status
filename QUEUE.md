@@ -4,6 +4,38 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## The queue, in order (rebuilt and verified 2026-10-03)
+
+Sections 14, 15 and 16 of LIBRARY-DESIGN.md are built: a logger streams every
+row and header, carries no `String` anywhere (neither Margay nor Okapi links the
+class), and can be told what is attached by the bus. What is left, in the order
+to take it.
+
+**Andy's word, no code (or one line of it):**
+
+1. **Three version numbers.** `version_check.py` fails on T9602 (`library.properties` 0.0.0 against `CITATION.cff` 1.0.0 and tag v1.0.0), MaxBotix (1.1.0 against 1.0.0) and DS3231_Logger (0.1.0 against 1.0.0). Thirteen of sixteen libraries are consistent.
+2. **MS5803's release files.** No `CITATION.cff` and no `.zenodo.json` (both need the concept DOI), version is 0.1.2, the docs workflow has never replaced the dead `.travis.yml`, and `getPressure(precision)` still has no default argument.
+3. **Issues done in code and not closed.** Margay_Library #33 (stream the header rather than build it) is done. Project-Walrus #15, #16 and #17 are done or obsolete; #18, hardware validation, is genuinely open.
+4. **Whether Walrus_Library is reformatted** to Apis_Library's conventions. Not to be started without asking: it would cost the blame history of Bobby's file.
+
+**Design decisions held above (both Andy's to shape):** `NW_PlainSensor`, and the `begin()`/`energize()` split with its ordering question. Note that Okapi_Library #6 is the same family: `setExtInt()` must be called before `begin()` and silently misaligns the CSV when it is not.
+
+**Code, ready to start:**
+
+5. **The three sensor libraries onto streaming**, in order Liasis, Tally, MaxBotix, per section 15's "The rest of the table". Deferred by Andy 2026-10-03 ("save the sensors for later"). Each needs a host harness written FIRST: none of the three has one.
+6. **The hand-typed header cells onto standard names.** Apis and Walrus use `NW_StandardNames.h`; nothing else does. Haar has 12 hand-typed cells, Libelle 11, T9602 5, Margay 3, Okapi 1, NW_BME280 1. **The vocabulary is the gate, not the code:** all 36 rows of `standard-names.csv` are accepted, but they cover apis (14), margay (7), walrus (5), haar (4), okapi (3) and tally (2). Haar needs more and **Libelle and T9602 have none at all**, so rows must be written and accepted before their headers can convert.
+7. **An Okapi board in NW-Sim.** Okapi is compile-only: no transcript has ever executed a line of it, where the Margay has six. Its bus needs three parts the simulator does not model, each from its datasheet: the MCP23018 at 0x20, two ADS1115s at 0x48 and 0x49, and the MCP4725 at 0x62. The backhaul is the code this would cover.
+8. **Okapi_Library bugs #3 to #7.** Spot-checked 2026-10-03 and three are confirmed still live: #3, `FeatherEN` is only ever written HIGH, so the radio is never powered down after a backhaul; #5, `_powerState` is 0 until `sleepNow()` first sets it, and 0 means main power, so the first boot on the backup battery backhauls anyway; #7, `getVoltage()` leaves the I2C bus EXTERNAL whatever state it was called in, where `NW_Logger::farmGateI2C()` exists to put it back. #4 and #6 not re-checked.
+9. **Margay_Library's remaining tracking items** (#32): the many-readings sink (#27), aligned columns on the monitor (#31, Okapi #8), and folding the sensors' Block 0 faults into `SensorError` (#7). Items 1 and 2 of that list are done.
+
+**Bench, one hardware session:**
+
+10. **The Walrus firmware's new MS5803 path**, which is the only thing in this whole arc that no instrument here can reach. Narrow check: one reading from a provisioned board against the previous firmware's served Block 1.
+11. **Apis**: #23 the run model, #25 the LiDAR power-up and acquisition timings, and the `ACQ_COMMAND` question (the v3HP manual says write 0x04 to register 0x00; the firmware writes 0x01). #24, the mode-pin pull-down, is a board revision.
+12. **Project-Walrus #18**, hardware validation of the Schema 1 register map.
+
+**Parallel thread, any time:** Okapi hardware. The blocker is the decision between Eagle and the KiCad 10 import as the manufacturing source; then Project-Okapi #15 to #28 in that tool.
+
 ## Held items added 2026-10-03
 
 **`NW_PlainSensor`: let a non-Schema-1 sensor reach a data file** (Andy, 2026-10-03). A non-NW sensor has no schema and therefore cannot be detected, which is settled: `discover()` already ignores one, because a device with no valid Page 0 never matches a candidate name. What is not settled is whether a sketch may still `watch()` one by name. Under the old String path a sketch's `update()` could return any sensor's row, so a T9602, Liasis, MaxBotix or Tally did reach the card; nothing non-Schema-1 can now. The proposal is a base class in NW_Core carrying no-op reports and a status row with blanks where Page 0 would be, leaving a library to supply `name()`, `defaultAddress()`, `wake()` and `acquire()`: about ten lines each for T9602 and NW_BME280, which already stream. Andy's preferred direction for MaxBotix is the other one, an Apis-like bridge board that makes it a Schema 1 device and carries an accelerometer for orientation (Project-MB), which earns discovery and a Report register as well.
