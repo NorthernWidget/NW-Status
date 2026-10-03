@@ -4,6 +4,36 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## Sections 15 and 16 are built; one decision is held (2026-10-03)
+
+`LIBRARY-DESIGN.md` sections 14, 15 and 16 are all built. A logger streams every
+row and header straight into the open file, carries no `String` anywhere in that
+path, and can be told what is attached by the bus instead of by its sketch:
+`scan(Print&)` reports a bus, `begin(candidates, n)` watches what the bus holds,
+and `nw sensors` generates the candidate table from the libraries the workspace
+has. `NW-Sim` runs a programmed sketch and a discovered one over the same
+modelled bus and diffs their transcripts, which are byte-identical.
+
+Six libraries lost `getString()` and `getHeader()`: Walrus, Apis, Haar, Libelle,
+T9602 and NW_BME280. `NW_Core` then lost `NW_StringPrint.h`,
+`NW_Report::note()`, `NW_Report::kindWord()` and `NW_Device::beginFailure()`. A
+sensor-only build no longer links the `String` class at all, which is 1932 bytes
+of flash on `Haar_Demo`.
+
+**Held, and it is Andy's call: may a non-Schema-1 sensor implement
+`NW_Sensor`?** `watch()` takes an `NW_Sensor`, whose contract assumes Page 0
+identity and the Schema 1 Report register, so five libraries cannot be watched
+and their columns never reach the card: T9602 and NW_BME280 (both streaming
+already), and Liasis, MaxBotix and Tally (still `String`). The proposal is a
+library-side `NW_Report` that the library latches from its own observations, and
+a status row with blanks where Page 0 would have been. One specification
+decision comes with it: how that row reads.
+
+Two libraries also still owe section 15 their `String` pair, both outside the
+scope set for this phase: **MaxBotix**, which does not compile at all
+(`softSerial` is not declared, `Maxbotix.cpp:101`), and **Tally**
+(`GetString`/`GetHeader`).
+
 ## The MS5803 variant question, answered 2026-09-28
 
 Andy asked three questions on 2026-09-28: does the MS5803 carry its own version readably, are all variants accessed the same way in firmware, and should an EEPROM bit record the variant. All six datasheets in `MS5803/docs/` were read to answer them, and the findings are recorded in the Walrus appendix of the specification (NW-Device-Specification d5a9e15).
