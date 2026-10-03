@@ -27,7 +27,28 @@ Moving `Thermistor` and the conversion into NW_Core and building
 `NW_Thermistor : public NW_PlainSensor` on top of them leaves one copy, and
 Liasis stops carrying its own.
 
-**What has to be decided before it is written**, and each is Andy's:
+**DECIDED 2026-10-03** (Andy, after the structural question): the **conversion**
+goes into `NW_Core`, because four live libraries and six deployment sketches
+carry a copy and that count is the only criterion `NW_Core` has ever used; the
+**sensor** goes into its own library, `NW_Thermistor`, because a new calibration
+form or ADC backend should not move the version everything depends on. Written up
+as LIBRARY-DESIGN.md section 18, with the rule that keeps `NW_Core` from becoming
+a parts bin: count the copies, and never hold a part's register map.
+
+The work, in order:
+1. `Thermistor` and the conversion into `NW_Core`, as a struct and one function
+   with no bus. Acceptance test: a **byte-identical `.hex`** for a sketch that
+   does not use it, and for the Margay, which does.
+2. Delete the copies and call it: `Margay_Library` (one), `Libelle_Library`
+   (one), `Liasis_Library` (two overloads). Each proven by its harness and by
+   the Margay transcripts, where the on-board thermistor column appears.
+3. `NW_Thermistor` as an `NW_PlainSensor`, in a new repository with the standard
+   release files, reading its voltage through a small interface so a Margay pin,
+   an Okapi channel and an ADS1115 all serve it. **Needs a GitHub remote, which
+   is Andy's to authorise.**
+4. The six `Deployments/Margay` sketches, per deployment rather than now.
+
+**Still to be decided before step 3**, and each is Andy's:
 
 1. **Where the voltage comes from.** A logger's own analog pin (`analogRead`,
    which is what the Margay does) or an external ADC channel (Liasis's ADS1115,
@@ -36,12 +57,13 @@ Liasis stops carrying its own.
    real library that covers the common case; supporting both is the general one.
 2. **Where the reference voltage comes from.** The divider's ratio depends on it,
    and a logger knows its own rail where a sensor library cannot.
-3. **Its standard name.** A generic thermistor has no platform to qualify with,
-   where every accepted name so far is platform-qualified
-   (`data-logger~margay_board__temperature` and the rest). Either the sketch
-   names the deployment (`soil`, `air`, `water`), which the vocabulary has no
-   mechanism for today, or the library emits an unqualified
-   `thermistor__temperature` and the analysis layer qualifies it.
+3. **Its standard name**, which is the one genuinely new thing here. A generic
+   thermistor has no platform to qualify with, where all 36 accepted names are
+   platform-qualified (`data-logger~margay_board__temperature` and the rest).
+   Either the sketch names the deployment (`soil`, `air`, `water`) and
+   `NW_Thermistor` becomes the first library whose column name comes from the
+   sketch, or it emits an unqualified `thermistor__temperature` and the analysis
+   layer qualifies it. A vocabulary row is needed either way.
 4. **Whether the Margay's own on-board thermistor becomes one of these**, which
    would make the logger's own column come through the same path as a user's
    rather than through `readOnBoard()`.
