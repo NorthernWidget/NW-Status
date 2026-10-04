@@ -4,6 +4,44 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## The bench is now the critical path: what one session would prove (2026-10-04)
+
+Andy, 2026-10-04: "we are now getting very close to the benchtop tests being the
+place to be." Agreed, and the list of what only silicon can answer has grown by
+four items in a day, every one of them in the path of every row a logger writes.
+
+**Long-standing:**
+1. **The Walrus firmware's MS5803 path.** Its compensation moved into the
+   MS5803 library on 2026-10-02 and every instrument behind that change is
+   simulated or host-side. Narrow check: one reading from a provisioned board
+   against the previous firmware's served Block 1.
+2. **Apis**: #23 the run model, #25 the LiDAR power-up and acquisition timings,
+   and `ACQ_COMMAND` - the v3HP manual says write `0x04` to register `0x00`,
+   the firmware writes `0x01`.
+3. **Project-Walrus #18**, hardware validation of the Schema 1 register map.
+
+**New on 2026-10-03, and all of it in the row path:**
+4. **The clock.** `DS3231_Logger` now reads and formats as two calls, and
+   `formatTime()` is a new implementation of all four time formats. Four
+   transcripts are byte-identical and a new host harness covers every format,
+   but **a real DS3231's BCD registers have never been through the new
+   `readTime()`**, and its output is the first column of every row of every file.
+5. **The boot clock stamp.** `Serial.readString()` became `nwParseTimeStamp()`
+   over a fixed buffer, and a malformed stamp is now refused where it used to
+   set the clock to the year 2000 in silence. **No transcript sends a stamp**:
+   the only proof is the host harness, and setting a logger's clock from a
+   terminal is a bench action by nature.
+6. **`scan()` and `discover()` on a real bus.** The simulator has no cable, no
+   pull-up values and no device that answers slowly. `Margay_Library/examples/
+   BusScan` is the sketch; the question is what a real bus reports.
+7. **A T9602 watched as an `NW_PlainSensor`**, its columns reaching a real card
+   for the first time, and its status row with the dashes where a Page 0 would be.
+
+Worth knowing before the session: the loggers' firmware is **2290 bytes of flash
+smaller** than the last version run on silicon and links no `String` at all, so
+this is not a small delta from the last known-good board. NW-Provision has been
+verified as a dry run only.
+
 ## A standard thermistor as an NW_PlainSensor (Andy, 2026-10-03)
 
 **The idea.** A thermistor on a voltage divider is the commonest field sensor
