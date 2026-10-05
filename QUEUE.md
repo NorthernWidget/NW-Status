@@ -4,6 +4,76 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## Firmware identity across a flash, and a revision counter (Andy, 2026-10-05)
+
+Andy asked whether EEPROM could always be preserved and then just the firmware
+version updated after a flash, keeping the serial number, and whether a reserved
+byte could count how many firmware revisions a board has seen.
+
+**The first half is already the design, and it is better than asked for: nothing
+needs rewriting after a flash.** Specification README, "The served copy of
+Page 0": a device serves Page 0 from SRAM, not from EEPROM. At boot the firmware
+copies the stored image into its register array and then **rewrites the three
+things that belong to the firmware rather than to the board** - the patch at
+`0x0A`, the build commit at `0x18-0x1B` and the build flags at `0x1C` - and
+recomputes the CRC at `0x1E` over the served bytes. EEPROM keeps zeros there and
+the firmware never writes them back.
+
+Verified built, not just specified: `Project-Apis/Firmware/Apis_LiDAR_Firmware`,
+`Project-Walrus/Firmware/Walrus_I2C_5BA` and `Project-Haar/Firmware/Haar_Firmware`
+all parse `FW_COMMIT`, set the dirty bit and recompute the CRC. So flash new
+firmware and the device reports its new version and commit at once, with the
+serial number untouched and **no post-flash EEPROM write at all**.
+
+What remains of the first half is only the mechanical problem: an ISP flash
+erases EEPROM unless EESAVE is programmed. Two things to do about it:
+1. **Program EESAVE once per board** (Burn Bootloader with the default "EEPROM
+   retained" menu entry, or avrdude directly). One action per board, forever.
+2. **Have `nw upload` read the high fuse and refuse an ISP upload when EESAVE is
+   unprogrammed.** That turns a silent EEPROM wipe into a refusal, which is the
+   difference between losing an afternoon and losing nothing.
+
+**The counter fits in bytes that are already free, through machinery that already
+runs.** Page 0 Block 1 allocates `0x0E` and `0x0F` as Reserved, `0x00`; `0x1C`
+bit 0 is the dirty-build flag and bits 1-7 are free. Since the firmware already
+rewrites three served bytes and recomputes the CRC, serving a fourth is an
+extension of a loop rather than a new mechanism.
+
+The shape: the firmware keeps its last-seen build commit and the counter in **its
+own EEPROM area, below `EEPROM[length-64]`**, as the specification requires of
+everything that is not Page 0 or Page 1. At boot it compares the four stored
+bytes against the `FW_COMMIT` it was built with; on a difference it increments
+the counter, stores the new commit, and serves the counter at `0x0E`.
+
+Three properties worth having, beyond the count itself:
+- **The counter diagnoses its own loss.** A board you know has been flashed
+  repeatedly, reading 0 at `0x0E`, has had its EEPROM wiped. That is a direct
+  answer to the EESAVE hazard rather than a nice-to-have.
+- **A notice on the boot where the change was noticed**, latched in the Report
+  register as a device-specific kind, which a logger then writes into the status
+  file's boot row by itself. The data record would show when a board's firmware
+  changed, with no one having to write it down.
+- No tool has to cooperate: it works however the board was flashed, because the
+  device notices for itself.
+
+Costs and limits, stated rather than discovered later:
+- **A blank `FW_COMMIT` cannot be compared.** An Arduino IDE build leaves those
+  bytes zero, so the counter advances only for builds made through NW-Build. That
+  is an argument for using the wrapper on anything that reaches a real board.
+- It increments on the **first boot after** a flash, not at flash time, so a read
+  taken between the two shows the old value.
+- It counts firmware **changes**, including a rollback, which is what "revisions
+  this board has seen" should mean. Reflashing the same commit is invisible, and
+  undetectably so.
+- A firmware patch increment on every device that implements it. Keep it
+  **informational** and no library needs to raise its `begin()` minimum patch.
+- A specification change: Block 1's `0x0E`, a report kind, and the served-copy
+  paragraph.
+
+**Andy's decisions:** whether to do it at all; one byte saturating at 255 or two
+bytes little-endian at `0x0E-0x0F`; and whether the notice is worth its report
+kind.
+
 ## The bench is now the critical path: what one session would prove (2026-10-04)
 
 Andy, 2026-10-04: "we are now getting very close to the benchtop tests being the
