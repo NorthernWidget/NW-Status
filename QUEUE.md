@@ -4,6 +4,61 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## DS3231 or DS3231_Logger, long term (studied 2026-10-07)
+
+Andy asked which of the two to keep: `DS3231` is his, a public library; `DS3231_Logger` is Bobby Schulz's, which the loggers use because it is lighter.
+
+### What each one is, measured
+
+| | `DS3231` (Andy) | `DS3231_Logger` (Bobby) |
+|---|---|---|
+| lines | 1152 | 379 |
+| commits, last | 193, 2025-12-22 | 29, 2026-10-03 |
+| releases | **12 tags to v1.2.0** | none, `version=0.1.0` |
+| outside contributors | yes: David, "Iowa Dave" | none |
+| examples | 10 | **0** |
+| standard files | `CITATION.cff`, `CONTRIBUTING.md`, `Documentation/`, `tests/`, `keywords.txt` | `keywords.txt`, and a host harness since 2026-10-03 |
+| layout | flat (pre-`src/`, the old Arduino style) | `src/` |
+| `version_check.py` | consistent | **FAILS**: 0.1.0 against `CITATION.cff` 1.0.0 |
+
+**The weight, measured rather than assumed.** Two sketches doing the same logger-shaped work (set the clock, read it, format a timestamp, read the temperature, set and clear a relative alarm) on `NorthernWidget:avr:NW1284p`:
+
+| | flash | SRAM |
+|---|---|---|
+| `DS3231_Logger` | 8172 | 466 |
+| `DS3231` | 8864 | 458 |
+
+**692 bytes of flash less, 8 bytes of SRAM more.** "Lighter" is true, and it is 0.5 % of a Margay's flash on a board whose heaviest sketch sits at 64 %. It is not on its own a reason.
+
+### `setAlarm(seconds)` is the real difference, and it is correct
+
+Relative alarms are what `DS3231_Logger` has and `DS3231` does not: "wake me in N seconds", with the carry done by hand across seconds, minutes, hours and the day of the month.
+
+**It was swept rather than read.** The arithmetic was ported line for line into Python and run over every 37 minutes of 2026 against twelve intervals, 170,472 cases: **zero failures at every interval up to and including 24 hours.** Failures appear only above that (19 at 25 hours, 468 at 48), which is exactly what its own comment says it cannot do. A suspected month-end bug was specifically looked for and **is not there**: the DS3231's A1 alarm has no month register, so there is nothing to carry, and wrapping the day to the 1st is right.
+
+So the case against it is not correctness of that function. It is:
+- `setAlarm()` and `clearAlarm()` are declared `int` and **return nothing** - undefined behaviour, the same shape as the `Okapi::readStr()` defect. No caller checks them, so nothing is wrong today.
+- Above 24 hours it is **silently wrong** where it should refuse. The comment is not an error return.
+- Its leap-year test runs on a **two-digit year**, so the `%100` and `%400` branches are decorative. Correct until 2100 by accident rather than by design.
+- Two defects in its time formats were found and fixed on 2026-10-03, both reads of values never written.
+
+### The recommendation
+
+**Converge on `DS3231`, and move the relative alarm to where it belongs.** The reasoning is maintenance and correctness by construction, not size:
+
+1. **Retiring `DS3231` is not an option**: it is a published library with releases and outside contributors. Retiring `DS3231_Logger` costs only us.
+2. `DS3231` already has everything else the loggers need, including the `oscillatorCheck()` that `clockTest()` wants and `checkIfAlarm()`.
+3. The relative alarm is **simpler and more general on `DS3231`**: `DateTime(RTClib::now().unixtime() + n)` carries months, years and leap years by construction, with no 24-hour ceiling and no hand-written carry. That is 40 lines of arithmetic deleted rather than maintained.
+4. Two libraries for one chip means two places to fix a chip bug, and the second one has no releases, no examples and a failing version check.
+
+**The honest counter-argument**, which is not negligible: `DS3231_Logger` is 379 lines we wholly control, now with a harness, doing exactly what the logger needs. `DS3231` is 1152 lines with community contributions and a general-purpose API (`getHour(bool& h12, bool& PM)` is not a logger's idiom), so its churn becomes ours. Pinning the version in `depends=` is the mitigation.
+
+**The cheaper alternative**, if the migration is not worth it: keep `DS3231_Logger` and fix its three defects in an afternoon - return values, an error above 24 hours, and an honest leap-year test. That is the right call if the loggers' flash ever gets tight.
+
+**Either way, a relative-alarm helper contributed upstream to `DS3231` would benefit its community as well as us**, and is the piece of work with value beyond this workspace.
+
+**Not before the bench**: this is firmware on the board being tested.
+
 ## Firmware identity across a flash, and a revision counter (Andy, 2026-10-05)
 
 Andy asked whether EEPROM could always be preserved and then just the firmware
