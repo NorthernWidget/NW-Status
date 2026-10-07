@@ -4,6 +4,85 @@ Work that is decided or open but not yet started, with what blocks it. One line 
 
 Last edited 2026-10-03.
 
+## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
+
+Decided: the two libraries become one, and `DS3231` is the survivor. The study
+below has the reasoning. **No edit or commit may be made in `DS3231` without
+Andy's word** (his instruction, 2026-10-07); everything here is a read.
+
+### Gate 0: the licences do not match, and this is not ours alone to fix
+
+| | licence | authors |
+|---|---|---|
+| `DS3231` | **public domain** (Unlicense: "free and unencumbered software released into the public domain") | Ayars, Wickert, Nürnberg, Sparks, "Open-Source Hardware Community"; DOI 10.5281/zenodo.2008621 |
+| `DS3231_Logger` | **GNU GPL v3** (`LICENSE.md`) | Bobby Schulz, Northern Widget LLC, 2018 |
+
+**GPL-3.0 code cannot be merged into a public-domain library** unless its
+copyright holder dedicates it to the public domain. That is **Bobby's call for
+his code**, not Andy's, and mine for the commits I have made to that repository
+(given freely). The alternative is to write the contribution fresh against the
+DS3231 API rather than move his lines, which avoids the question entirely and may
+be the faster path given how small the pieces are.
+
+Settle this before any code moves. Discovering it late would mean unwinding a
+merge in a library with outside contributors and a minted DOI.
+
+### What `DS3231` lacks that a logger needs
+
+1. **`begin()` does not exist at all.** There is no way to ask whether the chip
+   answered. The NW standard requires `begin()` returning `bool` on an I2C
+   acknowledge, and `NW_Logger::clockTest()` needs exactly that.
+2. **A relative alarm.** `setAlarm(seconds)` is `DS3231_Logger`'s one real
+   feature. On `DS3231` it is three lines rather than forty, because
+   `DateTime(RTClib::now().unixtime() + n)` carries months, years and leap years
+   by construction and has no 24-hour ceiling. This is the piece worth
+   contributing upstream: its community gains a feature it does not have.
+3. **A timestamp formatter.** `formatTime(buf, n, mode)` and `printTime(Print&)`
+   have no counterpart; `DS3231` returns a `DateTime` and leaves formatting to
+   the caller. Either contribute a formatter or keep it logger-side, which is a
+   question of whether a general-purpose RTC library should own a Northern
+   Widget column format. Probably not: it belongs in the adapter.
+
+Not needed: `readTime()` and `getValue(n)`. `RTClib::now()` returning a
+`DateTime` is the better shape, and the adapter changes rather than the library.
+
+### What it lacks against our own standard, and the caveat
+
+Missing: `.zenodo.json`, `doxygen_NW.cfg`, the `src/` layout, `docs.yml`,
+`_docs/`, `.doxybook/config.json`. Present and good: `CITATION.cff` with a real
+concept DOI, `keywords.txt`, ten examples, `CONTRIBUTING.md`, a `tests/`
+directory, twelve releases.
+
+**The caveat matters.** `DS3231` is a community library with outside
+contributors and its own conventions, not an NW-internal one. Imposing the NW
+checklist on it is a choice with consequences for other people's workflow, and
+is Andy's to make as its maintainer rather than ours to assume. The `src/` move
+is transparent to users (`#include <DS3231.h>` is unchanged); the docs machinery
+is not, since it would start publishing to a Pages site.
+
+### What the merge must prove
+
+- **The NW-Sim transcripts byte-identical.** The timestamp is the first column
+  of every row of every file, so this is the test that matters most.
+- **`DS3231_Logger`'s host harness reproduced**: all four time formats over four
+  times of day, the day-of-year arithmetic including a leap February, the
+  truncation case.
+- **The relative alarm swept against `datetime`**, as the study did on 2026-10-07
+  (170,472 cases, zero failures up to 24 hours), re-run against the new
+  implementation and **extended past 24 hours**, which `unixtime()` should make
+  correct where the hand-written carry is not.
+
+### The order
+
+1. The licence decision, with Bobby.
+2. Contribute upstream, one pull request each: `begin()`, then the relative
+   alarm. **A pull request is an outward action and needs Andy's word.**
+3. The logger-side adapter, proven by the transcripts.
+4. Archive `DS3231_Logger` rather than delete it, and change `depends=` in
+   `Margay_Library`, `Okapi_Library` and `NW_Logger`.
+
+Not before the bench: this is firmware on the board being tested.
+
 ## DS3231 or DS3231_Logger, long term (studied 2026-10-07)
 
 Andy asked which of the two to keep: `DS3231` is his, a public library; `DS3231_Logger` is Bobby Schulz's, which the loggers use because it is lighter.
