@@ -32,11 +32,12 @@ merge in a library with outside contributors and a minted DOI.
 1. **`begin()` does not exist at all.** There is no way to ask whether the chip
    answered. The NW standard requires `begin()` returning `bool` on an I2C
    acknowledge, and `NW_Logger::clockTest()` needs exactly that.
-2. **A relative alarm.** `setAlarm(seconds)` is `DS3231_Logger`'s one real
-   feature. On `DS3231` it is three lines rather than forty, because
-   `DateTime(RTClib::now().unixtime() + n)` carries months, years and leap years
-   by construction and has no 24-hour ceiling. This is the piece worth
-   contributing upstream: its community gains a feature it does not have.
+2. **An absolute alarm at a given time**: `setAlarmAt(const DateTime&)`. That is
+   the piece worth contributing upstream, and it carries no policy. The schedule
+   - `((now.unixtime() / interval) + 1) * interval` - belongs in `NW_Logger`,
+   because when to wake is a logging decision. **Not** a relative alarm: Andy's
+   requirement (2026-10-08) is that alarms be absolute only, and the measurement
+   above shows what the relative one does to a file's timestamps.
 3. **A timestamp formatter.** `formatTime(buf, n, mode)` and `printTime(Print&)`
    have no counterpart; `DS3231` returns a `DateTime` and leaves formatting to
    the caller. Either contribute a formatter or keep it logger-side, which is a
@@ -67,10 +68,14 @@ is not, since it would start publishing to a Pages site.
 - **`DS3231_Logger`'s host harness reproduced**: all four time formats over four
   times of day, the day-of-year arithmetic including a leap February, the
   truncation case.
-- **The relative alarm swept against `datetime`**, as the study did on 2026-10-07
-  (170,472 cases, zero failures up to 24 hours), re-run against the new
-  implementation and **extended past 24 hours**, which `unixtime()` should make
-  correct where the hand-written carry is not.
+- **The absolute alarm swept against a schedule rather than against `now + N`.**
+  The 2026-10-07 sweep's oracle was `datetime + timedelta(interval)`, which built
+  the relative semantics into the test; the new oracle is "the next multiple of
+  the interval after now", and the property to assert is that **consecutive wakes
+  land on the grid whatever the awake time between them**, which is the thing
+  that was never tested.
+- **A transcript at an interval other than 60 s.** Twenty-six sketches use 60, so
+  the absolute path is all the transcripts have ever covered.
 
 ### The order
 
@@ -109,7 +114,74 @@ Andy asked which of the two to keep: `DS3231` is his, a public library; `DS3231_
 
 **692 bytes of flash less, 8 bytes of SRAM more.** "Lighter" is true, and it is 0.5 % of a Margay's flash on a board whose heaviest sketch sits at 64 %. It is not on its own a reason.
 
-### `setAlarm(seconds)` is the real difference, and it is correct
+### CORRECTED 2026-10-08: the alarm must be absolute, and ours is not
+
+Andy: alarms have been a problem in prior designs, and **we need alarms only to be
+absolute.** That is right, and it overturns the finding below rather than refining
+it.
+
+**What the code actually does.** `setAlarm(unsigned int Seconds)` has two paths
+that are nothing alike:
+
+- `Seconds == 60` writes `0x80` into the three Alarm 2 registers, which sets
+  `A2M4:A2M3:A2M2 = 111`: the datasheet's "alarm once per minute, when seconds =
+  00". That is **absolute**, and it is why every NW-Sim transcript lands exactly
+  on `:00`.
+- **Every other interval** computes `now + N` and writes that into Alarm 1. That
+  is **relative**, and `now` is the time *after* the previous cycle's work.
+
+**Measured in our firmware**, a Margay at a 5 s interval (NW-Sim, boot at
+00:00:00):
+
+```
+00:00:03  00:00:08  00:00:13  00:00:18  00:00:23  00:00:28  ...
+```
+
+Exactly 5 s apart, and **3 seconds off the clock's grid for ever**: the boot
+latency became the phase and nothing corrects it. The same firmware at 60 s lands
+on `:00`, through the other path.
+
+So the defect is twofold. The **phase is arbitrary**, set by however long boot
+took, and visible in every row of every file. And the phase **slips by one second
+whenever a cycle's work crosses a second boundary**, never back, so over a
+deployment the offset creeps upward unpredictably. In the simulator the work fits
+inside a second and the creep is zero; on a board with a card write and a slow
+sensor it will not always.
+
+**Note which intervals are tested.** Twenty-six of our sketches use 60, so the
+transcripts exercise only the absolute path. The relative path - 5, 150, 300, 900
+in deployments - has never appeared in a transcript.
+
+### What it should be: absolute, aligned to the schedule
+
+```c++
+uint32_t next = ((now.unixtime() / interval) + 1) * interval;
+setAlarmAt(DateTime(next));
+```
+
+Three lines, and better on four counts than the forty it replaces: it lands on the
+grid for any interval dividing 86400 (5, 10, 15, 60, 300, 900, 1800, 3600), so
+rows fall on round times and line up across loggers; it cannot drift, because it
+is computed from the schedule and not from now; it **self-recovers** if a cycle
+overruns the interval, because the next slot is always ahead of `now`; and it has
+no 24-hour ceiling.
+
+**The division of labour this implies**, which is the better upstream
+contribution: `DS3231` gains `setAlarmAt(const DateTime&)` - purely absolute, no
+policy - and the alignment lives in `NW_Logger`, where a logging schedule is a
+logging decision. Not a relative alarm, which is what the superseded
+recommendation below proposed.
+
+### What the 2026-10-07 study got wrong
+
+It swept 170,472 cases and reported `setAlarm(seconds)` correct. It is correct at
+computing `now + N`, which is the wrong quantity. **The sweep's expected values
+came from `datetime + timedelta(seconds=interval)`**, so the test's oracle had the
+relative semantics built into it: an implementation was validated against its own
+intent and the intent was never questioned. The arithmetic is sound and the
+function should not exist.
+
+### The superseded finding: `setAlarm(seconds)` computes `now + N` correctly
 
 Relative alarms are what `DS3231_Logger` has and `DS3231` does not: "wake me in N seconds", with the carry done by hand across seconds, minutes, hours and the day of the month.
 
@@ -127,7 +199,7 @@ So the case against it is not correctness of that function. It is:
 
 1. **Retiring `DS3231` is not an option**: it is a published library with releases and outside contributors. Retiring `DS3231_Logger` costs only us.
 2. `DS3231` already has everything else the loggers need, including the `oscillatorCheck()` that `clockTest()` wants and `checkIfAlarm()`.
-3. The relative alarm is **simpler and more general on `DS3231`**: `DateTime(RTClib::now().unixtime() + n)` carries months, years and leap years by construction, with no 24-hour ceiling and no hand-written carry. That is 40 lines of arithmetic deleted rather than maintained.
+3. The alarm is **simpler and correct on `DS3231`**: an absolute `setAlarmAt(DateTime)` plus `((unixtime() / interval) + 1) * interval` in the logger carries months, years and leap years by construction, lands on the clock's grid, cannot drift, self-recovers from an overrun, and has no 24-hour ceiling. That is 40 lines of arithmetic deleted rather than maintained, and it is what Andy's requirement asks for (2026-10-08: alarms must be absolute).
 4. Two libraries for one chip means two places to fix a chip bug, and the second one has no releases, no examples and a failing version check.
 
 **The honest counter-argument**, which is not negligible: `DS3231_Logger` is 379 lines we wholly control, now with a harness, doing exactly what the logger needs. `DS3231` is 1152 lines with community contributions and a general-purpose API (`getHour(bool& h12, bool& PM)` is not a logger's idiom), so its churn becomes ours. Pinning the version in `depends=` is the mitigation.
