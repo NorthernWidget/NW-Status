@@ -172,6 +172,58 @@ policy - and the alignment lives in `NW_Logger`, where a logging schedule is a
 logging decision. Not a relative alarm, which is what the superseded
 recommendation below proposed.
 
+### Best of both worlds, measured (Andy, 2026-10-08)
+
+Andy asked whether an approach exists that keeps the alarm in the future and also
+does not drift. It is the grid above, and the reason is worth stating in one line:
+**compute from `now` so the result is always ahead, but snap that result to the
+schedule so it cannot drift.** The three candidates differ only in which half they
+do. Bobby's `now + N` anchors to now and snaps to nothing: future, drifting.
+ALog's accumulator anchors to the previous alarm and snaps to the schedule:
+drift-free, and able to land in the past. The grid does both.
+
+| Scheme | Anchored to | Snapped to | Always future | Drifts |
+|---|---|---|---|---|
+| Bobby's `now + N` | now | nothing | yes | yes |
+| ALog's accumulator | the previous alarm | the schedule | no | no |
+| the grid | now | the schedule | yes | no |
+
+Both properties are mechanical rather than statistical. It is always in the
+future because integer division floors, so `((s / step) + 1) * step > s` for
+every `s`; there is no input that returns a past time. It never drifts because
+the value is always a multiple of `step`, a function of the clock and the
+schedule and never of when the last cycle ended. A cycle that overruns loses its
+slot and resumes on the grid rather than pushing every later wake sideways.
+
+**Swept 2026-10-08** (`studies/alarm_grid_sweep.py`): 92,000 wakes over all 23
+valid steps from 1 s to 3600 s, with injected awake times from 0 s to more than a
+full interval. Zero not strictly in the future, zero off the grid. A 900 s step
+armed 3 s late at 14:45 wakes at 15:00:00; armed 950 s late it wakes at 15:15:00.
+
+**Each check was shown to measure its own property** (`--falsify`), because two
+passing checks on the preferred scheme prove nothing on their own. Run against
+the schemes the grid replaces, `now + N` puts 80,683 of 92,000 wakes off the grid
+and none in the past, and `previous + N` puts 16,204 in the past and none off the
+grid. The table above is therefore measured in all three rows.
+
+Two additions the sweep brought out:
+
+1. **A guard, because arming is not instantaneous.** At 14:59:59 with a 900 s
+   step the next grid point is one second away. Reading the clock, computing and
+   writing four alarm registers takes a millisecond or two, though a bus retry or
+   an SD flush in between can carry the instant past; a DS3231 date-matched alarm
+   that has just gone by does not fire again until next month. Require a minimum
+   lead and take the following slot when it is not met: `if (next - s <
+   NW_ALARM_GUARD_SECONDS) next += step;`. ALog reached the same defence
+   empirically, as the `- 1` padding in its alarm arithmetic.
+2. **A phase, for two modulo operations.** Shifting the grid before and after the
+   snap lets two loggers share a telemetry window without colliding: phase 0
+   fires at :00, :15, :30 and :45, phase 450 at :07:30, :22:30 and :37:30.
+   Without it the phase is fixed by midnight and cannot be staggered.
+
+No arithmetic defends against a lost interrupt, so keep ALog's backup alarm
+whichever scheme sets the primary.
+
 ### What the 2026-10-07 study got wrong
 
 It swept 170,472 cases and reported `setAlarm(seconds)` correct. It is correct at
