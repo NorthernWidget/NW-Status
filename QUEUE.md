@@ -640,6 +640,47 @@ hardware decides what is possible.
 Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
 and swept on the host whenever.
 
+## Page 1's reader has no test, and old-layout boards must be re-provisioned (2026-10-09)
+
+Two gaps left by the Page 1 reorganisation, both worth closing before anyone
+trusts the page.
+
+**The library's read of Page 1 is unverified.** NW-Provision asserts the written
+bytes offset by offset and those tests bite, but nothing observes the values the
+firmware reads back. The NW-Sim transcript was the obvious candidate and it does
+not cover them: it prints `Bat = 4.01V 73.44%`, which exercises the divider at
+0x20, and never prints the low threshold, the warning percentage, the no-battery
+level or the watchdog period. Proven rather than assumed - pointing
+`batVoltageError` back at the old 0x32 leaves every transcript byte-identical,
+because the field reads 0 and nothing looks at it.
+
+So the reader is verified by inspection against the specification and by both
+sides being changed from it together. Two ways to do better: print the thresholds
+at boot, which puts them in the transcript at the cost of a baseline re-record;
+or give Margay a host harness, which it does not have, where NW_Logger and the
+sensor libraries do.
+
+**Any board already provisioned with the old layout will be misread.** The
+battery low threshold was at 0x32 and is now at 0x22, where the old page carries
+the first bytes of the thermistor's A coefficient, so a stale board yields a
+nonsense threshold rather than a blank-page fallback. `page1Blank()` catches an
+unwritten page and cannot catch an out-of-date one, because Page 1 has no version
+marker.
+
+Three ways out, and the choice is Andy's:
+
+1. **Re-provision every board that has Page 1 written.** The values are all
+   per-model, so nothing is lost - but the registry records identity only, so
+   there is no list of which boards have been written.
+2. **Add a layout version byte** to Page 1, at the top of Block 3 say, so a
+   library can refuse a page it does not understand. One byte against a class of
+   silent misreads, and it makes the next reorganisation safe too.
+3. **Accept it**, on the grounds that few boards are provisioned and a wrong
+   threshold shows up as a battery warning rather than lost data.
+
+Option 2 is the one that stops this recurring, and it is cheapest now while the
+page is already being rewritten.
+
 ## Okapi's watchdog is not being fed (found 2026-10-09)
 
 While setting `wdtSeconds` from the datasheet, Okapi's watchdog turned out not to
