@@ -640,7 +640,167 @@ hardware decides what is possible.
 Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
 and swept on the host whenever.
 
-## Message codes, and an LED vocabulary per board (Andy, 2026-10-09)
+## Logger messages and the LED vocabulary, settled (Andy, 2026-10-09)
+
+Settled across one working session. **This supersedes the chip-addressed proposal
+below**, which forced logger messages into the sensor Report register's
+device-specific kind range and generated a cascade of renumbering to make them
+fit. Andy: "You pulled our entire work into an incompatible format." The logger's
+runtime is its own set of things, separate from a sensor device's chip status.
+
+### The messages
+
+One flat list in the logger's own namespace. The compiler assigns the numbers,
+severity is a column in a table rather than a bit pattern, and nothing renumbers
+when a message is added.
+
+| # | Message | Category |
+|---|---|---|
+| 0 | READY | fine |
+| 1 | LOG_STARTED | fine |
+| 2 | NEW_FILE | fine |
+| 3 | INTERVAL_LENGTHENED | fine |
+| 4 | INTERVAL_SHORTENED | fine |
+| 5 | BATTERY_LOW | caught |
+| 6 | ROW_NOT_WRITTEN | caught |
+| 7 | NOTE_TRUNCATED | caught |
+| 8 | CYCLE_OVERRAN | caught |
+| 9 | BACKUP_WOKE | caught |
+| 10 | CLOCK_NOT_SET | actively bad |
+| 11 | CARD_MISSING | actively bad |
+| 12 | NO_SCHEDULE | actively bad |
+
+Three to add, for conditions the logger already diagnoses and never shows:
+`BME_MISSING` (caught - it still logs), `CARD_WRITE_FAILED` and `SENSOR_MISSING`
+(both actively bad).
+
+The categories are Andy's, in a stoplight sense, and they are about **the action
+required**: fine means none, caught means act at the next visit, actively bad
+means it is not logging as asked. An interval change is **fine** whichever
+direction it goes, because adaptive sampling was configured to do that - the
+severity belongs to the cause, not to the event, so a lengthening forced by a
+cycle that outgrew its interval reports `CYCLE_OVERRAN` instead.
+
+### The two LEDs: what the hardware actually offers
+
+Verified in `Local-Project-Margay/Hardware/Margay.sch`. D2 and D3 are **both** the
+same RGB part (Cree CLVBA-FKA, common anode), though only four of the six
+channels reach the MCU:
+
+| LED | Channel | Pin | Driven by |
+|---|---|---|---|
+| D3 | red / green / blue | 13 / 15 / 14 | MCU, all three PWM-capable |
+| D2 | green | 20 | MCU - this is `AuxLED` |
+| D2 | red / blue | - | **FT231X CBUS1 and CBUS2**, the USB bridge |
+
+So there is one full RGB plus one green, not two RGBs, and no firmware change can
+reach D2's other two channels. Furthermore D2 is already busy whenever a cable is
+attached, since the bridge lights its red and blue on serial traffic.
+
+The division of labour that follows:
+
+- **Aux (D2 green): powered and running.** Steady from the first instruction of
+  `begin()` until the verdict. It says the one thing the status LED cannot say
+  yet, which is that the board is alive rather than dead, and the self-tests can
+  take seconds.
+- **Status (D3): state.** The boot verdict, and a short blue blip per row
+  written. Blue already means "all well" through the chirp, so a per-row blip is
+  the same statement in miniature and belongs in the same colour on the same LED.
+
+### The patterns
+
+**A fixed three-second window**, so the instruction is one sentence: *watch the
+status LED for three seconds after the aux light goes out.* Every fault pattern
+repeats for whole cycles inside it, which is what rescues a glance that arrives
+late.
+
+| Pattern | Colour | Means | Cycle | In 3 s |
+|---|---|---|---|---|
+| 60/60 continuous | red | **card** missing or unwritable | 120 ms | 25x |
+| 250/100/100/100 | red | **clock not set** | 550 ms | 5x |
+| 100/300 x8, last gap dropped | red | **sensor missing** | 2900 ms | 1x |
+| 500/500 x3 | amber | battery low | 3000 ms | 1x |
+| 1000/300/100/100/100 | blue | READY | 1600 ms | once, then the window ends |
+
+Three come from ALog with its provenance: `LEDgood()` is the chirp,
+`LEDwarn()` the card flutter, and `LEDtimeWrong()` the syncopation. The last of
+those is the best thing in the set and its comment says why - "Syncopated pattern
+to show that the clock has probably reset to January 1st, 2000" - because the
+form carries the meaning. A broken clock gets a broken rhythm and there is
+nothing to memorise. The missing-sensor pips are Andy's, on the same principle:
+calling out and hearing nothing back.
+
+**Design rules, after a false start.** The first version of this ranked faults by
+a count of 1-4 flashes, which Andy rejected: "this becomes a look-up table with
+everything given equal weight." It also pinned the timings to IEC 60073's
+flashing bands (slow 0.4-0.8 Hz, normal 1.4-2.8 Hz), which rank *many
+simultaneous lamps on a control panel* so an operator can read priority while
+scanning. One LED showing one message to one person has nothing to rank against,
+so those bands solve a problem we do not have. Keep IEC for colour, where
+red/amber/green are genuinely overlearned; drop it for timing. What replaces it:
+
+1. The patterns are told apart by **contrast within the set** - rhythm structure
+   and element length - not by absolute rate. Battery's elements need only be the
+   longest.
+2. Each is read as a **shape**, with no counting and no chart.
+3. **Iconic** where possible.
+4. **Short and repeating**, never long and once. Duration is not a severity
+   lever; colour and rhythm already carry severity and persistence is uniform.
+
+Two perceptual figures the set is built on: a gap of **200 ms or more** makes each
+flash read as a discrete event where below about 100 ms they fuse into flicker,
+and above roughly 4-5 Hz counting fails and it reads as "a flashing light"
+regardless of duty cycle. Hence the card flutter is deliberately uncountable and
+the sensor pips deliberately are not.
+
+**Card at 60/60 rather than ALog's 40/40, on Andy's call** ("better safe"). At
+8.3 Hz instead of 12.5 it sits further from the 15-25 Hz band that carries the
+highest photosensitive-epilepsy risk, where response peaks at 16 Hz. Neither rate
+is in that band and a single indicator fails the *area* threshold those guidelines
+require alongside frequency, so this is caution rather than a fix. If 60/60 reads
+dim rather than fluttering, raise the duty to 90/30 at the same rate rather than
+speeding it up.
+
+### What the field sees: nothing
+
+No pattern plays after boot except the per-row blue blip. An interval change at
+three in the morning has no observer, so in-field messages go to the Note column
+and the serial line alone. This retires `note()`'s 300 ms orange flash, which
+fires on every note written and is the only in-field LED signal today.
+
+### Three defects this turned up, all verified in the code
+
+1. **`_sdTestFailed`, `_clockError` and `_bmeError` are diagnosed and never
+   shown.** The first two are set in `NW_Logger.cpp` and referenced nowhere else
+   at all; `_bmeError` reaches the Report register and the status flags but never
+   the LED.
+2. **The chirp is unconditional.** `_newLog = true` is set regardless of the
+   self-tests (`Margay.cpp:223`) and `run()` calls `blinkGood()` with no error
+   check (`:497`), so a board with a dead clock shows the fault colour and then
+   the happy chirp anyway. Under the new scheme the chirp is the *verdict* and
+   plays only on a clean boot - tests passed **and** a row on the card.
+3. **Okapi never sets `_batError` or `_batWarning`.** Only `Margay.cpp:234-237`
+   does, so Okapi's battery path is untested rather than miscalibrated.
+
+### The order of work
+
+1. The message list and its table (`NW_Message`, severity, word). Pure data.
+2. `signal()` renders from the table; Margay's renderer is the five patterns
+   above. Already a virtual seam.
+3. Replace `ledReport()`'s colour blocks with the verdict, and move the aux-off
+   to immediately before it so there is no dark gap while the first row is
+   written. What remains of `ledReport()` is its serial output, so it should be
+   named like a print function.
+4. Retire `note()`'s orange flash.
+5. Okapi's renderer, which needs its schematic - `Okapi.cpp` only ever touches
+   `AuxLED` and the shared RGB today.
+
+**Gated on the bench:** the battery messages, which wait on the four battery
+readings in the bench section. A Margay on USB with no cells reads 3.29 V against
+a 3.3 V threshold and real cells reach 3.42 V, so no level separates them.
+
+
+## SUPERSEDED 2026-10-09: message codes in the sensor Report register's kind range
 
 Andy: the LED report colours should be easier to understand, the new Okapi has
 several LEDs and can say more, and the message codes should generalise so each
