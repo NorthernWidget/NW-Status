@@ -640,6 +640,35 @@ hardware decides what is possible.
 Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
 and swept on the host whenever.
 
+## Andy to insert: absolute alarms into DS3231 (2026-10-09)
+
+**Written and waiting at `DS3231/PROPOSED-absolute-alarms.md`** - untracked, and
+nothing in that repository was modified. Andy edits and inserts it himself.
+
+The file holds `setAlarmAt(const DateTime&)` and `setAlarm2At(const DateTime&)`
+with the two mask constants, each function arming its own alarm in the order that
+cannot leave a half-written one live: disable, write, clear the flag, enable. It
+also records why the daily mask rather than the date mask (a missed alarm waits a
+day instead of a month, and no alarm can be armed for a date its month lacks),
+and why the two mask constants look unrelated - `setA1Time` takes its bits from
+the low nibble and `setA2Time` from the high one, so they were read off the
+library's own code rather than the datasheet table.
+
+**What the logger still owes on its side**, once the clock functions exist:
+
+1. `dateTimeAt(uint32_t secondsIntoDay)` - build a `DateTime` for a time of day on
+   today's or tomorrow's date. Does not exist yet, and it is the one piece of
+   arithmetic the caller needs that `NW_Schedule.h` does not provide.
+2. Replace `_rtc.setAlarm(_logInterval)` at `NW_Logger.cpp:492`, `:509` and `:532`
+   with the leapfrog pair.
+3. The read-back after arming, which re-arms if the clock passed `next` while the
+   registers were being written.
+4. Read A1F and A2F before clearing them, so a wake by the backup is recorded as
+   `BACKUP_WOKE` rather than passing as an ordinary row.
+
+Note that `DS3231`'s working tree already carries Andy's uncommitted change to
+`CITATION.cff`, untouched.
+
 ## Page 1's reader has no test (2026-10-09)
 
 **NW-Provision asserts the written bytes offset by offset and those tests bite,
