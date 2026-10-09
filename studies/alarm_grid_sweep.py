@@ -26,6 +26,13 @@ GUARD = 2  # seconds of lead a wake needs, so the alarm is armed before it passe
 STEPS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60, 120, 180, 240, 300, 360,
          600, 720, 900, 1200, 1800, 3600]
 
+# The legible schedule: divisors of 60 applied to seconds, minutes dividing the
+# hour, and hours dividing the day. The backup alarm is checked over all of them,
+# including the long steps a log interval would not normally use.
+LEGIBLE = sorted(set([s for s in range(1, 61) if 60 % s == 0]
+                     + [60 * m for m in range(1, 61) if 3600 % (60 * m) == 0]
+                     + [3600 * h for h in range(1, 25) if 24 % h == 0]))
+
 
 def next_wake(secondsIntoDay, step, guard=GUARD, phase=0):
     """The next scheduled wake, or None when step cannot divide the day."""
@@ -61,6 +68,47 @@ def sweep(seed=7, per_step=4000):
     return total, not_future, off_grid
 
 
+def backup_wake(next_, step):
+    """A2 = the first grid point on a whole minute strictly after A1.
+
+    Alarm 2 carries hours and minutes only and matches at seconds = 00, so it can
+    be placed on a whole minute and nowhere else. For every legible step a whole
+    minute is itself a grid point, which is what lets the backup land on the grid.
+
+    Returns None at a step of a whole day or more, where the backup is not
+    expressible: alarm 2 carries no date, so one cycle later is the same time of
+    day and the backup collapses onto the primary. The watchdog ceiling
+    (step < NW_WDT_SECONDS / 2) already excludes those steps for a logger.
+    """
+    if step >= DAY:
+        return None
+    a2 = next_ + step                      # one cycle after the primary
+    if a2 % 60:
+        a2 = ((a2 // 60) + 1) * 60         # a sub-minute step: the next whole minute
+    return a2 % DAY                        # a time of day: the alarm carries no date
+
+
+def backup_check():
+    """The three properties the backup plan claims, over every legible step."""
+    off_grid = not_after = beyond_step = 0
+    minute_off_grid = [s for s in LEGIBLE if 60 % s and s % 60]
+    no_backup = [s for s in LEGIBLE if backup_wake(0, s) is None]
+    for step in LEGIBLE:
+        if step in no_backup:
+            continue
+        for k in range(0, DAY, max(step, 60)):
+            a1 = k - (k % step)
+            a2 = backup_wake(a1, step)
+            if a2 % step:
+                off_grid += 1
+            ahead = (a2 - a1) % DAY        # modular: the backup may cross midnight
+            if ahead == 0:
+                not_after += 1
+            if ahead > max(step, 60):
+                beyond_step += 1
+    return minute_off_grid, no_backup, off_grid, not_after, beyond_step
+
+
 def relative(secondsIntoDay, step, guard=GUARD, phase=0):
     """Bobby's scheme: always ahead of now, never on the grid."""
     return (secondsIntoDay + step) % DAY
@@ -90,6 +138,25 @@ def falsify():
 
 
 if __name__ == "__main__":
+    if "--backup" in sys.argv:
+        minute_off_grid, no_backup, off_grid, not_after, beyond = backup_check()
+        print("the backup alarm, over all %d legible steps:" % len(LEGIBLE))
+        print("  steps where a whole minute is not a grid point: %s"
+              % (minute_off_grid if minute_off_grid else "none"))
+        print("  steps with no expressible backup (a day or more):  %s"
+              % (no_backup if no_backup else "none"))
+        print("  backups off the grid:                %d" % off_grid)
+        print("  backups not strictly after A1:       %d" % not_after)
+        print("  backups further out than one cycle:  %d" % beyond)
+        print()
+        print("  ALog's fixed +2 min, for comparison, at a 900 s step:")
+        a1 = 15 * 3600
+        print("    A1 %s  A2 %s  on grid %s"
+              % (hms(a1), hms(a1 + 120), "yes" if (a1 + 120) % 900 == 0 else "no"))
+        print("  A2 = A1 + one cycle, same step:")
+        print("    A1 %s  A2 %s  on grid %s"
+              % (hms(a1), hms(backup_wake(a1, 900)), "yes" if backup_wake(a1, 900) % 900 == 0 else "no"))
+        raise SystemExit(1 if (minute_off_grid or off_grid or not_after or beyond) else 0)
     if "--falsify" in sys.argv:
         print("the same sweep, against the two schemes the grid replaces:")
         falsify()

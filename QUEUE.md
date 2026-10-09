@@ -224,6 +224,97 @@ Two additions the sweep brought out:
 No arithmetic defends against a lost interrupt, so keep ALog's backup alarm
 whichever scheme sets the primary.
 
+### Where to read the clock, and the backup alarm (Andy, 2026-10-09)
+
+Andy asked whether to read the clock again at the end of a cycle and use that
+reading to set the next wake. **That is already where it happens**:
+`NW_Logger.cpp:501` arms the alarm after `addDataPoint()` and `afterLogEvent()`,
+and `DS3231_Logger::setAlarm()` reads the clock itself. The placement is right and
+it is also what makes `now + N` drift, because every interval becomes
+`step + cycle`. At a 60 s interval with a 2 s cycle the file slips 2787 s in a day
+and loses 46 rows; at 900 s it slips 192 s. The grid makes the same late read
+free, as the result is snapped either way, so **keep the placement and change only
+the arithmetic**. The late read then earns something: the exposure shrinks from a
+whole cycle to the few I2C transactions between reading the clock and arming.
+
+The cycle duration is the one number in that table nobody has measured. Measure it
+at the bench.
+
+**The backup alarm: A2 = A1 plus one cycle** (Andy's proposal, adopted over ALog's
+A2 = A1 + 2 minutes, which is `ALog.cpp:999`, mask `100`). A2 carries hours and
+minutes only and matches at seconds = 00, so it can be placed on a whole minute
+and nowhere else; for every step in the legible set a whole minute is itself a
+grid point (verified across all 30 steps, no exceptions). So the rule is **A2 is
+the first grid point on a whole minute strictly after A1**, which is `A1 + step`
+exactly for every step at or above 30 s and lands at most 58 s later below that.
+It beats the fixed two minutes on three counts: (1) the rescue row lands on the
+grid, so it is indistinguishable from a normal row rather than needing
+explanation, (2) the margin scales with the schedule, so there is no constant to
+choose, and (3) the rescue wake is a normal wake, so no special case enters the
+code or the file.
+
+Three conditions come with it, all three checked by
+`studies/alarm_grid_sweep.py --backup`. A2 arrives two steps after the last
+`resetWDT()`, so the watchdog resets the board first unless `2 * step` stays
+inside the watchdog period: the validation rule already proposed above,
+`step < NW_WDT_SECONDS / 2`, is the same inequality, and the two constraints turn
+out to be one. Furthermore `step` must exceed the cycle duration, or A2 fires
+inside the cycle that armed it and doubles the row. **At a step of a whole day
+the backup is not expressible at all**: alarm 2 carries no date, so one cycle
+later is the same time of day and the backup collapses onto the primary. The
+watchdog ceiling already excludes every step that large, though the function must
+refuse rather than silently alias.
+
+The cost against ALog's version, stated plainly: this one loses the missed row,
+ALog's recovers it two minutes late at an off-grid timestamp. One gap against one
+ragged row. At the 6-, 12- and 24-hour steps the gap is long, which argues for a
+cap (`A2 = min(next + step, next + N minutes)`), though that puts back both the
+constant and the off-grid row. The recommendation is to keep it uncapped and let
+the Note column record the gap.
+
+**The three layers, each catching what the one before it cannot:**
+
+1. **A1, the primary**, mask `1000` (match hour, minute and second), at the next
+   grid point. Not the date mask `0000` of the 2026-10-08 sample code: with the
+   grid the next wake is always inside 24 hours, so the date field adds nothing
+   and costs a month when an alarm instant is missed, and an alarm armed for the
+   31st in a 30-day month never fires at all. ALog uses `1000`.
+2. **A2, the backup**, mask `100` (match hour and minute), at the first
+   whole-minute grid point after A1. Catches a lost interrupt, a failed arming,
+   and a cycle that died before re-arming.
+3. **The TPL5010**, fed by `resetWDT()` at every wake. Catches an MCU hang or a
+   bus lockup, which no alarm can.
+
+A fourth defence is already in the code and stays: `NW_Logger.cpp:522`,
+`if (!digitalRead(RTCInt))` re-arms when the interrupt pin is found still low,
+which catches a flag that was never cleared.
+
+**The order at the end of a cycle**, with the read-back that removes the guess:
+
+```c
+readTime();                       //Fresh, immediately before arming
+next = nextGridPoint(now, step);
+backup = nextWholeMinuteGridPoint(next, step);
+setAlarm1At(next);                //Off, clear A1F, write, on
+setAlarm2At(backup);              //Off, clear A2F, write, on
+readTime();                       //Did now pass next while we were writing?
+                                  //If so, recompute and re-arm: two passes at most
+resetWDT();
+sleepNow();
+```
+
+That read-back makes the guard an optimisation rather than a correctness
+requirement, because nothing has to be assumed about how long arming takes. It
+costs three more I2C bytes and a bounded loop.
+
+**Read A1F and A2F before clearing them.** A2F set with A1F clear means the
+primary was missed. The two-minute backup announces itself through its ragged
+timestamp; this one does not, because the rescued row sits on the grid and looks
+ordinary, so the flag is the only evidence that a wake was lost. Latch it as a
+notice through `NW_Pages::latchNotice()` and it reaches the Note column, which
+turns a silent gap into a recorded event. **Open: the device-specific notice kind
+(16-31) for a logger woken by its backup alarm.** Andy picks the number.
+
 ### What the 2026-10-07 study got wrong
 
 It swept 170,472 cases and reported `setAlarm(seconds)` correct. It is correct at
