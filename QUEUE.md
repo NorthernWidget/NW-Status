@@ -658,6 +658,12 @@ each time: the LED at deployment, the Note column in the data file, and the
 serial line. That is the part worth getting right, because a colour nobody can
 read and a note nobody can match to it are two problems rather than one.
 
+**Gated on the bench**: the battery messages (`NO_BATTERY`, `BATTERY_LOW`) wait on
+the four battery readings in the bench section, because a Margay on USB with no
+cells reads 3.29 V against a 3.3 V threshold and no level can separate that from
+real cells at 3.42 V. The discriminator is a differential reading across
+`BatSwitch`, and it needs its numbers first.
+
 Four codes exist so far, and **their numbers are provisional, awaiting Andy**:
 
 | Code | Value | Means | Kind |
@@ -892,6 +898,56 @@ with comments and literals stripped, the streaming pair, the `NW_Sensor`
 contract, a host harness, the standard names, and the release files. Four
 libraries are finished and are not listed (Apis, Walrus, Haar, Libelle). The
 loggers and NW_Core are finished on the interface and owe only release files.
+
+### Battery present or absent: four readings, and they gate the battery messages
+
+**Why it is on the bench list.** On USB with no cells a Margay reports a low-battery
+error, which is the most common way anyone engages with the board. The cause is
+measured, not guessed: the logs from serial 4D03-4157-0001-0000 on Andy's Desktop
+read a dead-flat **3.29-3.30 V** across logs 00001-00003 against `batVoltageError
+= 3.3`, so it trips by one hundredth of a volt. Logs 00004-00010 are the control -
+the same board, the same room at 17-23 C, the same short bench sessions, three of
+them with the clock still unset - and they read 4.7-7.8 V with cells in. Log 00003
+moves 0.01 V over 94 rows where log 00004 moves 3.06 V over 108, which is a
+regulated back-feed against cells under load. Furthermore the board cannot have
+been running *from* 3.29 V: a 3V3 regulator at that input is in dropout and the
+ADC reference would go with it, yet the BME values in those logs are sane.
+
+**A threshold cannot separate them.** Log 00014 reaches 3.42 V on real cells, so a
+genuine low-battery state and the USB artefact are 0.13 V apart.
+
+**The reading comes from `VBAT_SW`, not from the cells** (verified in
+`Local-Project-Margay/Hardware/Margay.sch`): `VBAT+` to U8 (TPS22916 load switch,
+enabled by `BatSwitch`) to `VBAT_SW`, then R22 10k to `BAT_SENSE` (ADC2) and R23
+10k to ground. `VBAT_SW` also lands on U9 (TPS2104 OR-ing mux) whose output is
+`VMAIN`, which is the back-feed path. **`VUSB` never reaches an MCU pin**, so USB
+presence cannot be read in software.
+
+**The test, four readings.** Needs a small sketch that drives `BatSwitch` and
+prints `getBatVoltage()`, since `powerOB()` is not public.
+
+| # | Cells | `BatSwitch` | Expect |
+|---|---|---|---|
+| 1 | out | enabled | ~3.29 V, the back-feed level |
+| 2 | out | disabled | ~3.29 V, unchanged |
+| 3 | in | enabled | the cell stack, 4.5 V and up |
+| 4 | in | disabled | ~3.29 V |
+
+Readings 1 and 2 equal, with 3 and 4 differing, prove the differential test: **the
+same reading in both switch states means no battery.** Record all four numbers;
+they are what the discriminator is written against.
+
+**Gate.** These four readings are a **prerequisite** for every battery-message
+change discussed on 2026-10-09: the `NO_BATTERY` message in the fine category,
+any change to `batVoltageError` or to where `_batError` is set, and the amber
+flash count that carries `BATTERY_LOW`. Writing the discriminator before the
+numbers exist would be fitting code to a circuit explanation rather than to the
+circuit - and the first explanation, that the node would read ~0 V, was already
+wrong. Andy's reading of the circuit was right and the data settled it.
+
+**Okapi needs the same four readings separately**, because it never sets
+`_batError` or `_batWarning` at all - only `Margay.cpp:234-237` does - so its
+battery path is untested rather than merely miscalibrated.
 
 ### Group 1: the three sensors that have not joined the interface
 
