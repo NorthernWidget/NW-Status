@@ -426,6 +426,78 @@ cannot: the first arming after a boot, where there is no old backup to hold
 (the watchdog covers it), and a cycle that overran so far that the old backup has
 already fired, which is the `!digitalRead(RTCInt)` case above.
 
+### The guard's floor, and what it costs (Andy, 2026-10-09)
+
+Andy asked whether the guard raises the minimum interval to 3 s. It does not: the
+floor is the guard itself, **2 s**, because the push is on a strict comparison and
+a 2 s step clears it exactly. Three numbers answer the question properly, and only
+the first is settled:
+
+1. **The hard floor is 2 s**, from the guard.
+2. **The regular floor is about 20 s.** The guard pushes a wake whenever a cycle
+   ends within the guard of the next grid point, which is exactly one arrival
+   phase in `step` - measured, one of 900 phases at a 15-minute interval and one
+   of 3 at a 3-second interval. Below roughly 20 s the schedule starts dropping
+   slots at a rate anyone would notice, though it stays on the grid throughout.
+3. **The practical floor is the cycle duration**, through `step > cycle`, and that
+   number has never been measured. A card write alone may exceed a second. Measure
+   it at the bench; it is the one that will bind.
+
+**A defect the question found.** Below the guard the code was doing something
+worse than refusing: at a 1 s step every wake is pushed, so the logger would keep
+a 2 s cadence while the sketch asked for 1 s - silently, at half the requested
+rate. `nwScheduleHolds()` now refuses a step under the guard.
+
+### An alarm firing inside a cycle: the warning (Andy, 2026-10-09)
+
+Andy: the leapfrog ordering means an alarm can fire during a logging cycle if the
+increments are set too short, which calls for a loud warning and a safe way to
+re-increment.
+
+**The re-incrementing is already safe, and that is the grid's doing.** The next
+wake is computed from the clock at the end of the cycle, so it is the first grid
+point still ahead whatever happened: an overrun skips its slot and the schedule
+continues unbroken. There is no recovery path to write, no state to repair, and
+no catch-up burst. What an overrun must not do is pass unrecorded.
+
+**Detection, where the mechanism acts.** `nwCycleOverran(start, end, step)` takes
+the two clock reads a cycle already makes. The tempting test is the alarm flag,
+and it is the wrong one: a flag says only whether an alarm happened to be armed
+inside that window, where the two times say what the schedule cares about. The
+flags are still worth reading for a different fact - A2F set with A1F clear means
+the primary was missed - so both go in the Note column, as separate notices.
+
+**The warning, at the two times it can be seen.** Nobody watches an LED in a
+streambed, so the warning has to exist twice:
+
+- **At deployment, on the LED.** The logger's vocabulary is already colour-coded
+  in `ledReport()`: red solid for an on-board failure, orange for a sensor, cyan
+  for the clock, purple for a missing card, and a fast ten-flash for a battery
+  error. The proposal is **cyan at the fast ten-flash**, which extends the
+  existing mnemonic rather than inventing one: cyan is already the clock's
+  colour, solid means the clock is not set, and flashing means the schedule
+  cannot be kept. It fires on each overrun, so a chronic one shows as a
+  continuous danger flash and a single one shows as a single flash.
+- **In the field, in the file.** A notice latched through
+  `NW_Pages::latchNotice()` reaches the Note column, and that is the only record
+  the data carries. **Open: two device-specific notice kinds (16-31) for a
+  logger** - one for "cycle overran its interval" and one for "woken by the
+  backup alarm". Both are notices rather than faults: the row is good, a slot was
+  lost. Andy picks the numbers.
+
+**The validation can measure itself rather than trusting a constant.** A logger
+knows how long its own cycle took, so from the second cycle onward it can check
+the interval it was given against the duration it actually needs, and warn with
+the real number instead of a compile-time guess. That is strictly better than a
+`#define` nobody updates, and it costs two `millis()` reads.
+
+**Open, and a policy question rather than an arithmetic one:** on a chronic
+overrun, does the logger hold the configured interval and keep skipping slots, or
+lengthen the interval to one it can keep? The recommendation is to hold the
+configured interval and flash, because silently logging at a rate the sketch did
+not ask for is the failure mode that hides itself - the same failure as the guard
+at a 1 s step. Andy decides.
+
 ### What the 2026-10-07 study got wrong
 
 It swept 170,472 cases and reported `setAlarm(seconds)` correct. It is correct at
