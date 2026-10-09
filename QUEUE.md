@@ -195,6 +195,11 @@ the value is always a multiple of `step`, a function of the clock and the
 schedule and never of when the last cycle ended. A cycle that overruns loses its
 slot and resumes on the grid rather than pushing every later wake sideways.
 
+**Built 2026-10-09 as `NW_Logger/src/NW_Schedule.h`**, header-only and free of
+the clock and the alarm registers, with the guard's derivation in the code rather
+than in a chosen constant; `NW_Logger/extras/test` sweeps it. The Python study
+below stays as the design record.
+
 **Swept 2026-10-08** (`studies/alarm_grid_sweep.py`): 92,000 wakes over all 23
 valid steps from 1 s to 3600 s, with injected awake times from 0 s to more than a
 full interval. Zero not strictly in the future, zero off the grid. A 900 s step
@@ -258,7 +263,8 @@ Three conditions come with it, all three checked by
 `resetWDT()`, so the watchdog resets the board first unless `2 * step` stays
 inside the watchdog period: the validation rule already proposed above,
 `step < NW_WDT_SECONDS / 2`, is the same inequality, and the two constraints turn
-out to be one. Furthermore `step` must exceed the cycle duration, or A2 fires
+out to be one. **Withdrawn 2026-10-09: see the correction below. The backup is
+armed whatever the watchdog does.** Furthermore `step` must exceed the cycle duration, or A2 fires
 inside the cycle that armed it and doubles the row. **At a step of a whole day
 the backup is not expressible at all**: alarm 2 carries no date, so one cycle
 later is the same time of day and the backup collapses onto the primary. The
@@ -314,6 +320,111 @@ ordinary, so the flag is the only evidence that a wake was lost. Latch it as a
 notice through `NW_Pages::latchNotice()` and it reaches the Note column, which
 turns a silent gap into a recorded event. **Open: the device-specific notice kind
 (16-31) for a logger woken by its backup alarm.** Andy picks the number.
+
+### CORRECTED 2026-10-09: the backup is armed whatever the watchdog does
+
+Andy: a one-hour cycle with a watchdog a little over an hour should still carry
+its backup at two hours, because if the watchdog has failed the backup is all
+that is left. **That is right, and it withdraws the `2 * step < NW_WDT_SECONDS`
+condition written above.** Arming alarm 2 costs 2.5 ms of bus traffic per cycle.
+Where the watchdog fires first the backup is redundant and harmless, as the reset
+re-arms everything on the grid; where the watchdog has failed - a wrong resistor,
+a dead part, a DONE pin stuck high - the backup is the only recovery, and a
+condition that refuses to arm it buys nothing and gives that up.
+
+What survives is the condition that was always the real one: `step + cycle <
+NW_WDT_SECONDS`, because the watchdog is fed once per wake and an interval longer
+than its period resets the board instead of logging. The `/ 2` in the earlier
+rule was mine, not derived, and Andy's configuration is a legitimate one it would
+have refused.
+
+**One thing not conceded**, because the argument points the other way: coverage
+of a failed watchdog favours a *shorter* backup, not a longer one. A backup two
+minutes out also survives a dead watchdog, and rescues 58 minutes sooner at an
+hourly interval. So that is not what justifies one cycle. What justifies one
+cycle is grid alignment, the absence of a constant to choose, and the protection
+property below.
+
+### Why one cycle, and not a whole minute (Andy, 2026-10-09)
+
+Andy: what if the logger fires at 59 seconds and its log takes longer than a
+second - the backup would interrupt it; one full cycle seems safer. **One full
+cycle is what the rule gives**, and the whole-minute rounding is what guarantees
+it rather than what threatens it: `backup = next + step`, rounded **up** to a
+whole minute only when it does not already land on one. Rounding up can only move
+the backup later, by at most 58 s at the sub-minute steps, so the backup is never
+earlier than one full cycle. Checked over 19,907 backups across every step, with
+zero earlier than one cycle; rounding **down** instead puts 15,840 of them
+earlier, which is the failure Andy describes and is what the check catches.
+
+The case he names therefore survives only where one cycle is itself shorter than
+a cycle takes - a 1 s step at 23:59:59 puts the backup 1 s later - and that
+configuration is refused by `nwScheduleHolds()` rather than patched, because the
+primary would be firing inside the cycle too.
+
+### `if (!digitalRead(RTCInt))`, described (NW_Logger.cpp:522)
+
+```c++
+if (!digitalRead(RTCInt)) {       //Catch alarm if not reset properly
+  Serial.println("Reset Alarm");  //DEBUG!
+  _rtc.setAlarm(logInterval);     //Turn alarm back on
+}
+```
+
+`RTCInt` is the clock's INT/SQW pin, active low, held at INPUT_PULLUP
+(`NW_Logger.cpp:136`). The DS3231 pulls it low when an enabled alarm matches and
+**holds it low until that alarm's flag is cleared** by a write to the status
+register. So a low reading means an alarm has fired and its flag is still set.
+
+**That state is fatal to an edge-triggered design, which is what this is**: the
+interrupt is attached FALLING (`NW_Logger.cpp:127`), and a pin already low cannot
+fall again. Every later alarm would match, find the pin low, and produce no edge
+at all; the logger would sleep until the watchdog reset it. The line is a level
+check compensating for an edge trigger, and it recovers the one state the edge
+cannot see.
+
+It is reached when a wake came from somewhere else - the log button, the external
+counter - and `run()` never entered the `_logEvent` branch that clears the flag,
+or when the alarm fired while the logger was awake and the edge went unseen. Keep
+it. In the ordering below it is the fourth layer, and the only one that defends
+against a flag left set.
+
+### The order of arming: something is always placed (Andy, 2026-10-09)
+
+Andy asked for the climber's rule: never come off the old protection before the
+new piece is placed and clipped. ALog's order does come off it - `turnOffAlarm(1)`
+and `turnOffAlarm(2)` together, then both set, then both enabled
+(`ALog.cpp:989-1009`) - so there is a window of some 6 ms in which no alarm is
+armed. A reset or a bus fault there leaves the board asleep with nothing but the
+watchdog.
+
+The two alarms are independent: separate registers (0x07-0x0A and 0x0B-0x0D),
+separate enables (A1IE, A2IE) and separate flags (A1F, A2F). So they can
+leapfrog, and **A2 = A1 + one cycle is what makes the leapfrog possible.** Waking
+at grid point G, the backup armed by the previous cycle stands at G + step -
+which is exactly the instant the new primary is about to be written to. It is
+live protection for the whole of that write. ALog's fixed two minutes has no such
+property: a backup at G_prev + 120 s is already in the past by the time the
+logger wakes at G, so there is nothing to stay clipped to.
+
+The order, with the piece that is holding named at each step:
+
+1. Wake at G; log the row. Both alarms untouched. **Held by: A2 at G + step.**
+2. Read the clock. `next = nwNextWake(now, step)`, normally G + step.
+3. Re-arm alarm 1: A1IE off, write the four A1 registers, clear A1F, A1IE on.
+   **Held by: A2, whose instant is the one being written.** Clear the flag after
+   the write and before the enable, so a part-written value that matched is wiped
+   rather than armed - ALog clears first, which leaves that gap.
+4. Re-arm alarm 2: A2IE off, write the three A2 registers, clear A2F, A2IE on.
+   **Held by: A1, armed in step 3.**
+5. Read the clock back. If it has reached `next`, the instant passed while we
+   wrote: recompute from step 2. Two passes at most.
+6. Feed the watchdog. Sleep.
+
+At no point are both alarms disabled. Two moments have no alarm protection and
+cannot: the first arming after a boot, where there is no old backup to hold
+(the watchdog covers it), and a cycle that overran so far that the old backup has
+already fired, which is the `!digitalRead(RTCInt)` case above.
 
 ### What the 2026-10-07 study got wrong
 
