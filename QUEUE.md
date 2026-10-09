@@ -536,6 +536,61 @@ So the case against it is not correctness of that function. It is:
 
 **Not before the bench**: this is firmware on the board being tested.
 
+## Message codes, and an LED vocabulary per board (Andy, 2026-10-09)
+
+Andy: the LED report colours should be easier to understand, the new Okapi has
+several LEDs and can say more, and the message codes should generalise so each
+board builds its own patterns from one related set.
+
+**The seam is built** (`NW_Logger::signal(uint8_t code)`, `de98d69`): NW_Logger
+decides what has to be said and the board decides how to say it, beside the
+`beginBoard()`, `addDataPoint()` and `afterLogEvent()` seams already there.
+Margay keeps the single RGB LED pattern as the default; Okapi overrides it. What
+remains is the vocabulary itself.
+
+**One code space, three renderings.** The codes are NW-Device-Specification's
+report kinds, so a message reaches the user three ways and says the same thing
+each time: the LED at deployment, the Note column in the data file, and the
+serial line. That is the part worth getting right, because a colour nobody can
+read and a note nobody can match to it are two problems rather than one.
+
+Four codes exist so far, and **their numbers are provisional, awaiting Andy**:
+
+| Code | Value | Means | Kind |
+|---|---|---|---|
+| `NW_LOGGER_INTERVAL_LENGTHENED` | 16 | A cycle outgrew its interval; a longer one is being kept | Notice |
+| `NW_LOGGER_CYCLE_OVERRAN` | 17 | A cycle ran past its own interval and a slot was lost | Notice |
+| `NW_LOGGER_BACKUP_WOKE` | 18 | Alarm 2 woke the logger, so the primary was missed | Notice |
+| `NW_LOGGER_NO_SCHEDULE` | 19 | No interval holds this cycle inside the watchdog | Fault |
+
+### What to do, in order
+
+1. **Audit the colours that exist.** `ledReport()` says red solid for an on-board
+   failure, orange for a sensor, cyan for the clock, purple for a missing card,
+   a red ten-flash for a battery error and a gold ten-flash for a battery
+   warning. Three of those six are a colour a user has to look up, and the two
+   flashing ones differ only in hue. Andy's point stands.
+2. **Give the six existing conditions codes**, so they join the same space as
+   the four above. Several map onto universal kinds the spec already defines
+   rather than needing device-specific ones: a missing card and a failed
+   self-test are kind 5, a battery fault is kind 8, and the clock error belongs
+   with kind 6. Resolve each against the spec rather than inventing a parallel
+   list.
+3. **Separate severity from identity in the pattern.** A user should read the
+   severity without a chart: steady means a warning and the logger is running,
+   fast means a fault and it is not. The identity can stay a colour, which is
+   what a chart is for. That is one rule rather than six arbitrary pairings.
+4. **Count Okapi's LEDs and write its renderer.** Several LEDs allow severity and
+   identity to be shown at once - one LED for severity and another for the
+   subsystem - which is the whole gain Andy is pointing at. Needs the schematic;
+   `Okapi.cpp` only ever uses `AuxLED` and the shared RGB today.
+5. **Keep the two in step.** A code's word in the Note column
+   (`NW_Report::printNote()`) and its pattern on the LED come from one table, so
+   a new message cannot reach one and miss the other.
+
+**Not before the bench for the renderer**, which is board hardware. Steps 1 to 3
+are a table and can be done any time.
+
 ## Firmware identity across a flash, and a revision counter (Andy, 2026-10-05)
 
 Andy asked whether EEPROM could always be preserved and then just the firmware
