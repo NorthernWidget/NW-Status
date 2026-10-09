@@ -640,6 +640,129 @@ hardware decides what is possible.
 Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
 and swept on the host whenever.
 
+## Plan: adaptive logging in NW_Logger (Andy, 2026-10-09)
+
+### Andy's motivation
+
+"This could be used, for example, to take river stage (water level) measurements
+more frequently when we see stage changing more rapidly, and therefore to better
+capture transitions and extremes."
+
+Two things follow from that sentence, and they shape everything below. The target
+is **transitions and extremes** - the rising limb and the peak - which is exactly
+the part of a hydrograph a fixed interval interpolates across and the part a
+paper is written about. And the trigger is **rate**, not level: a stage of 2 m is
+not interesting, a stage climbing 40 cm an hour is.
+
+The corollary Andy set when choosing to auto-lengthen a cycle that outgrew its
+interval holds here too: the logger may change its own schedule, and it must
+**log the activity and warn the user** rather than doing it silently.
+
+### Where it belongs: NW_Logger
+
+Both loggers inherit `NW_Logger`, so the copies are two. Furthermore a logging
+schedule is the logger's own decision, which is why the grid arithmetic already
+sits in `NW_Logger/src/NW_Schedule.h`. Putting it in a sensor library would have
+every sensor reimplement it and leave a two-sensor logger with two opinions about
+when to wake; `NW_Core` is wrong by its own rule, since a sensor never schedules
+a logger.
+
+The one thing the logger cannot know is which variable drives the rate, so that
+arrives through a seam the sketch fills.
+
+### The shape: sample on change, not on time
+
+The parameter a hydrologist can name is a **resolution**: one sample per
+centimetre of stage. The interval follows from it and the measured rate:
+
+```
+interval = resolution / |d(value)/dt|
+```
+
+snapped down to a step the schedule holds. One number in the units of the thing
+being measured, rather than a table of rate thresholds nobody can defend. At 1 cm
+on the ladder below: 1 cm/h holds hourly, 5 cm/h takes 5 minutes, 20 cm/h takes a
+minute, and 300 cm/h - a flash flood - takes 5 seconds.
+
+**The configured interval is the slowest, not the normal.** The sketch says "at
+least every fifteen minutes"; adaptive sampling only ever shortens from there,
+down to a floor the sketch also sets. That matches how the schedule is actually
+specified in the field, and it means relaxation has somewhere definite to return
+to rather than wandering.
+
+```c++
+  Logger.run(900);                   //the baseline: at least every 15 minutes
+  Logger.sampleOnChange(1.0, 60);    //1 cm per sample, never faster than 60 s
+  ...
+  Logger.trackValue(stage_cm);       //in the sketch, once per row
+```
+
+Three calls, two numbers, both physical.
+
+### Use a nested ladder, not the whole legible set
+
+Changing the interval changes the grid, and two grids stay coherent only where
+the coarser step is a multiple of the finer: rows then land on a subset of the
+same instants and the series reads as one record at varying density. Inside the
+legible set 20 s and 30 s are **not** nested, so switching between them moves the
+record onto a different family of times.
+
+- **1, 5, 15, 30, 60, 300, 900, 1800, 3600 s** - nine steps, fully nested (every
+  coarser step a multiple of every finer one, checked), every value one a
+  hydrologist already uses. **Recommended.**
+- 1, 2, 4, 12, 60, 120, 240, 720, 3600, 7200, 14400, 28800, 86400 s - thirteen
+  steps, the longest fully nested ladder the legible set contains, at the cost of
+  intervals nobody asks for in minutes.
+
+### Shorten fast, lengthen slowly
+
+A rising limb is the thing that must not be missed, so a rate calling for a
+shorter interval takes effect at the **next wake**. Relaxing waits for several
+consecutive slow cycles, or the record oscillates between two steps across the
+noise in one difference.
+
+### The mechanical floor always wins
+
+An adaptive interval is chosen only from steps `nwScheduleHolds()` admits, so it
+can never drop below the measured cycle duration, below the arming guard, or
+outside the watchdog. Rate asks; the hardware decides what is possible.
+
+### What to build, in order
+
+1. **`nwPrevLegibleStep(before)`** in `NW_Schedule.h`, the downward counterpart of
+   `nwNextLegibleStep()`, plus the ladder as a declared sequence rather than the
+   whole legible set. Pure arithmetic, sweepable on the host.
+2. **`trackValue(float)`** and **`sampleOnChange(resolution, fastest)`** on
+   `NW_Logger`. The logger keeps the last tracked value and the time it was
+   taken, both of which it already has.
+3. **The rate**, from the tracked history, and the interval from the rate.
+4. **The decision inside `keepInterval()`**, beside the mechanical lengthening
+   that is already there, so one function owns every change to the schedule.
+5. **`INTERVAL_CHANGED`** into the Note column and the serial line at every
+   change. No new data column is needed: every row carries its timestamp, so the
+   sampling density is recoverable from the file itself.
+
+### Open, and these are Andy's
+
+1. **The ladder.** The conventional nine, or the longest nested thirteen.
+2. **The resolution and its units.** One sample per centimetre of stage is the
+   example; the real number is a judgement about what resolution the science
+   needs on a limb.
+3. **How many slow cycles before relaxing.** Three is the obvious starting point
+   and nothing more than that.
+4. **How the rate is measured, which is the one with real science in it.** Two
+   points are the simplest and the noisiest: with 1 cm resolution and a sensor
+   whose noise is a few millimetres, a still pond would trigger shortening. The
+   candidates are a median of the last few differences, a minimum change that
+   must be exceeded before the rate counts at all, or a short regression. This
+   decides whether the feature is useful or merely busy, and it is a measurement
+   question rather than a software one.
+
+### Not before the bench
+
+It changes what `run()` does between readings, and it rests on the cycle duration
+being known.
+
 ## Andy to insert: absolute alarms into DS3231 (2026-10-09)
 
 **Written and waiting at `DS3231/PROPOSED-absolute-alarms.md`** - untracked, and
