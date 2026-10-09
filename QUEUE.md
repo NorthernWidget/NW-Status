@@ -536,6 +536,110 @@ So the case against it is not correctness of that function. It is:
 
 **Not before the bench**: this is firmware on the board being tested.
 
+## The schedule's open items, and an adaptive logging interval (2026-10-09)
+
+Four items. The first three close what the schedule work left open; the fourth is
+new, and it is the one with science in it.
+
+### 1. Fix the four message-code numbers
+
+`NW_Logger.h` defines `NW_LOGGER_INTERVAL_LENGTHENED` 16,
+`NW_LOGGER_CYCLE_OVERRAN` 17, `NW_LOGGER_BACKUP_WOKE` 18 and
+`NW_LOGGER_NO_SCHEDULE` 19, marked provisional in the file. They sit in
+NW-Device-Specification's device-specific range (16-31). Settle them together
+with step 2 of the LED item above, because several of `ledReport()`'s six
+existing conditions map onto **universal** kinds the specification already
+defines - a missing card and a failed self-test are kind 5, a battery fault is
+kind 8 - and should not be given device-specific numbers by accident.
+
+### 2. Read the TPL5010's period and set `wdtSeconds`
+
+`NW_Logger::wdtSeconds` is 0, which means the watchdog condition in
+`nwScheduleHolds()` is not applied at all. R10 is 100 kΩ on the DELAY pin
+(verified in `Local-Project-Margay/Hardware/Margay.sch`); the period comes off
+the TPL5010 datasheet's resistor curve, which is one lookup. Until it is set, a
+logging interval longer than the watchdog period is admitted and the board will
+reset mid-cycle. Guessing is worse than leaving it open: too short refuses an
+hourly logger for nothing, too long lets the reset happen anyway.
+
+### 3. Insert the alarm-register half into DS3231
+
+The logger side is built and tested; the clock side is not, and `DS3231` stays
+untouched until Andy inserts it himself. Three pieces, all printed in this
+session: `setAlarmAt(const DateTime&)` with the hour-minute-second mask `1000`
+(not the date mask - a missed date-matched alarm waits a month, and one armed for
+the 31st in a 30-day month never fires), the matching `setAlarm2At()` for the
+backup, and the leapfrog arming order in which alarm 1 and alarm 2 are re-armed
+one at a time so one is always live. Within each alarm the flag is cleared
+**after** the registers are written and **before** the enable, so a part-written
+value that matched is wiped rather than armed.
+
+### 4. A general method to alter the logging interval
+
+Andy's case: river stage sampled more often while it is changing quickly, so the
+rise and the peak are captured rather than interpolated. The mechanical half of
+this already exists - `run()` lengthens an interval a cycle has outgrown - and
+what it needs is the same mechanism driven by the signal instead of by the
+hardware, and able to move down as well as up.
+
+**Sample on change, not on time.** The parameter a hydrologist can actually name
+is a resolution: one sample per centimetre of stage. The interval follows from
+it and the rate:
+
+```
+interval = resolution / |dStage/dt|
+```
+
+snapped down to a step the schedule holds. One number, in units of the thing
+being measured, instead of a table of rate thresholds. At a 1 cm resolution on
+the ladder below: 1 cm/h holds the hourly interval, 5 cm/h takes 5 minutes,
+20 cm/h takes 1 minute, and 300 cm/h - a flash flood - takes 5 seconds.
+
+**Use a nested ladder, not the full legible set.** Changing the interval changes
+the grid, and the grids stay coherent only where the coarser step is a multiple
+of the finer: rows then land on a subset of the same points and the series reads
+as one record at varying density. Inside the legible set, 20 s and 30 s are not
+nested, so switching between them moves the record onto a different family of
+times. Two candidates:
+
+- **1, 5, 15, 30, 60, 300, 900, 1800, 3600 s** - nine steps, fully nested (every
+  coarser step a multiple of every finer one, checked), and every one a number a
+  hydrologist already uses. **Recommended.**
+- **1, 2, 4, 12, 60, 120, 240, 720, 3600, 7200, 14400, 28800, 86400 s** - thirteen
+  steps, the longest fully nested ladder the legible set contains, at the cost of
+  intervals nobody asks for in minutes.
+
+**Shorten fast, lengthen slowly.** A rising limb is the thing that must not be
+missed, so a rate that calls for a shorter interval takes effect at the next
+wake. Relaxing waits for several consecutive slow cycles, or the record
+oscillates between two steps across the noise in one difference. **The number of
+slow cycles before relaxing is a parameter for Andy**, not one to pick here;
+three is the obvious starting point.
+
+**The mechanical floor always wins.** An adaptive interval is chosen only from
+steps `nwScheduleHolds()` admits, so it can never drop below the measured cycle
+duration, below the arming guard, or outside the watchdog. Rate asks; the
+hardware decides what is possible.
+
+**What to build**, in order:
+
+1. `nwPrevLegibleStep(before)` in `NW_Schedule.h`, the downward counterpart of
+   `nwNextLegibleStep()`, plus the ladder as a declared sequence rather than the
+   whole legible set.
+2. `trackValue(float)` on `NW_Logger`, called by the sketch with the variable
+   that should drive the rate - the logger cannot know which of its columns
+   matters, and a sketch always does.
+3. The rate from the last two tracked values and their timestamps, which the
+   logger already has.
+4. `NW_LOGGER_INTERVAL_SHORTENED` beside the lengthened code, so every change is
+   a notice in the Note column and a serial line. **No new data column is
+   needed**: every row carries its timestamp, so the sampling density is
+   recoverable from the file itself.
+
+**Not before the bench**, because it changes what `run()` does between readings.
+Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
+and swept on the host whenever.
+
 ## Message codes, and an LED vocabulary per board (Andy, 2026-10-09)
 
 Andy: the LED report colours should be easier to understand, the new Okapi has
