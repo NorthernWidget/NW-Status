@@ -640,6 +640,39 @@ hardware decides what is possible.
 Items 1 and 2 of the build list are pure arithmetic and a seam, and can be built
 and swept on the host whenever.
 
+## Okapi's watchdog is not being fed (found 2026-10-09)
+
+While setting `wdtSeconds` from the datasheet, Okapi's watchdog turned out not to
+be connected to the firmware at all. Three facts, all from `Okapi.sch`:
+
+1. **`DONE` is on the I/O expander, not the MCU.** Net `WD_DONE` runs from the
+   TPL5111's DONE pin to `MS1 GPIOA3` and to `J9 ADC3`. No U1 pin is on that net.
+2. **`WDHold` is never overridden.** `Okapi.cpp:23` has `// WDHold = 255;`
+   commented out, so it keeps `NW_Logger.h`'s default of 23 and `resetWDT()`
+   pulses pin 23 - an unrelated pin on this board.
+3. **The TPL5111 is enabled whenever powered**: its EN pin sits on `3V3_CORE`.
+
+So the part is running, nothing answers it, and its `DRVN` output is a power
+enable rather than a reset - a TPL5111 gates the supply where the TPL5010 pulls
+RSTn. What that does to a running Okapi needs checking at the bench before it is
+called harmless.
+
+**Two ways to resolve it**, and the choice is Andy's:
+
+- **Drive DONE through the expander.** `resetWDT()` becomes virtual, or takes a
+  board hook, since the pulse is an I2C write on this board and a `digitalWrite`
+  on Margay. That is the fix if the watchdog is wanted.
+- **Declare it absent**: `WDHold = 255`, which makes `resetWDT()` a no-op and
+  stops pulsing an unrelated pin. That is the honest state of the board today and
+  is a one-line change.
+
+Either way `wdtSeconds` can then be set: JP8 selects R20 at 130k for **3943 s**
+(66 minutes, which is the figure remembered for these boards) or R62 at 330k,
+which is **outside the part's 170k maximum** and so undefined. The second jumper
+position should probably be a different value.
+
+**Not before the bench**, since it changes power sequencing on a prototype.
+
 ## Logger messages and the LED vocabulary, settled (Andy, 2026-10-09)
 
 Settled across one working session. **This supersedes the chip-addressed proposal
