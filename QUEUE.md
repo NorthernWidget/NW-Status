@@ -1129,16 +1129,51 @@ fires on every note written and is the only in-field LED signal today.
 
 ### The order of work
 
-1. The message list and its table (`NW_Message`, severity, word). Pure data.
-2. `signal()` renders from the table; Margay's renderer is the five patterns
-   above. Already a virtual seam.
-3. Replace `ledReport()`'s colour blocks with the verdict, and move the aux-off
-   to immediately before it so there is no dark gap while the first row is
-   written. What remains of `ledReport()` is its serial output, so it should be
-   named like a print function.
-4. Retire `note()`'s orange flash.
-5. Okapi's renderer, which needs its schematic - `Okapi.cpp` only ever touches
-   `AuxLED` and the shared RGB today.
+1. **DONE 2026-10-20** (`NW_Logger` 4eebddd). `NW_Message.h`: sixteen messages,
+   the band a table column, words and table in PROGMEM.
+2. **DONE 2026-10-20**, same commit. `signal()` renders the five patterns inside
+   one three-second window; `raise()` records to the Note column, the serial line
+   and the cycle's set; `showVerdict()` shows the highest band raised and answers
+   READY when nothing is wrong.
+3. **The boot verdict**, in two halves.
+   (a) Replace `ledReport()`'s colour blocks with `showVerdict()`, move the
+   aux-off to immediately before it so there is no dark gap while the first row
+   is written, and rename what is left - it is a serial print function.
+   (b) **The bigger half: the hardware conditions must `raise()`.** Today both
+   boards run an `else if` chain of chip-addressed latches
+   (`Margay.cpp:227-233`, `Okapi.cpp:103-108`), which reports only the **first**
+   condition found - a board with no card and a dead clock says only "no card".
+   Raising them all fixes that by construction. Other call sites to migrate:
+   `RowNotWritten` (`Margay.cpp:494`, `Okapi.cpp:245`), `NewLogFile`
+   (`NW_Logger.cpp:390`), `LoggingStarted` (the `0xF0` latches), and `ClockSet`
+   (`NW_Logger.cpp:99`), which needs a seventeenth message.
+4. **DONE 2026-10-20**, same commit. `note()`'s 300 ms orange flash is retired.
+5. **Okapi's renderer.** Its hardware is far richer than Margay's, read off
+   `Okapi.sch`: **three RGB LEDs** (D4, D5, D7 - D7's anode is on
+   `3V3_FEATHER`, so it belongs to the cell module) and **eight single LEDs**
+   (D10-D14, D16-D18) on **U45, a PCA9634 I2C driver at 0x52** (A6, A4 and A1
+   high, the rest grounded) with individual PWM and a hardware `!LED_EN`
+   blanking line.
+
+   That buys the thing Andy hoped for: **spatial, parallel presentation** - one
+   LED per subsystem, all lit at once, so two simultaneous faults are both
+   visible and nothing has to be counted or queued. One caveat decides the
+   design: the bar is behind I2C, so it cannot show an I2C failure, which is
+   exactly when a user most wants an indicator. Keep one MCU-direct RGB for the
+   "the bus is dead" case and put the per-subsystem detail on the bar.
+
+### The decision inside step 3, for Andy
+
+**Does a logger still populate its own Report register?** Margay and Okapi are
+Schema 1 devices that serve their own pages, and Okapi backhauls them, so
+something may read that byte. Two ways:
+
+- **Derive it from the message table** - add a `code` column, so one table
+  decides the word, the band and the served byte. One source of truth, and the
+  `else if` defect cannot come back. **Recommended.**
+- **Drop it for loggers**, on the grounds that the specification's own entry for
+  a controller is identity-only and a logger's observations now live in the
+  message set. Simpler, though it silently changes what a backhauled page says.
 
 **Gated on the bench:** the battery messages, which wait on the four battery
 readings in the bench section. A Margay on USB with no cells reads 3.29 V against
