@@ -2,7 +2,37 @@
 
 Work that is decided or open but not yet started, with what blocks it. One line per item; the linked issue holds the detail. Kept here so the list survives sessions; NW-Status/README.md carries the per-repository state.
 
-Last edited 2026-10-03.
+Last edited 2026-10-20.
+
+## ON ANDY'S DESK
+
+The short list of what is waiting on him, so none of it has to be remembered.
+Each line points at the section that holds the detail.
+
+1. **Insert the absolute alarms into DS3231.** Written and waiting at
+   `DS3231/PROPOSED-absolute-alarms.md`, untracked, nothing in that repository
+   modified. Two functions and their mask constants, plus the four pieces the
+   logger owes afterwards. → "Andy to insert: absolute alarms into DS3231"
+2. **Four decisions inside adaptive logging**, filed as NW_Logger#1. The one
+   carrying real science is how the rate is measured: two points are simplest and
+   noisiest, and at a centimetre resolution against a few millimetres of sensor
+   noise a still pond would trigger shortening. → "Plan: adaptive logging in
+   NW_Logger"
+3. **Choose between Project-Margay#60 and #61 for v4.** #60 raises the watchdog
+   ceiling from 36 to 66 minutes with a bigger resistor; #61 removes the ceiling
+   by wiring WAKE to PA7. They are alternatives, and #61 is the one that also
+   buys a third rescue layer behind the two alarms.
+4. **Twenty standard-name rows** - Libelle 9, Okapi about 6, Liasis 3, T9602 2.
+   Haar needs none. → "The other libraries: what each one still owes"
+5. **Three version numbers** (T9602, MaxBotix, DS3231_Logger), MS5803's release
+   files and concept DOI, and whether to close Margay #33 and Project-Walrus
+   #15/#16/#17.
+6. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
+   commits across six repositories.
+
+Waiting on the bench rather than on him: the four battery readings, the cycle
+duration, Okapi's unfed watchdog, and the older list under "The bench is now the
+critical path".
 
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
