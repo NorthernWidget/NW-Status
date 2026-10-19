@@ -16,18 +16,18 @@ these messages into the sensor Report register's number space.
 
 `NW_Logger` commit **4eebddd**, steps 1, 2 and 4 of the plan.
 
-- **`NW_Logger/src/NW_Message.h`** — one flat list of sixteen messages covering
+- **`NW_Logger/src/NW_Message.h`** – one flat list of sixteen messages covering
   everything a logger says about itself, hardware and runtime alike. The band
   (`NW_BAND_FINE`, `NW_BAND_CAUGHT`, `NW_BAND_BAD`) is a **column in a table**,
   never a pattern in the number, so the compiler assigns the values and nothing
   renumbers when a message is added. Words and table are in PROGMEM, so the list
   costs no RAM. Accessors: `nwMessageBand()`, `nwMessageWord()`.
-- **`raise(message)`** — records into the Note column, the serial line and a
+- **`raise(message)`** – records into the Note column, the serial line and a
   `uint16_t` bitmask of this cycle's messages. It does **not** flash.
-- **`worstMessage()`** — the highest band raised, answering `NW_MSG_READY` when
+- **`worstMessage()`** – the highest band raised, answering `NW_MSG_READY` when
   the worst is merely FINE, so a clean boot earns the chirp.
-- **`showVerdict()`** — `signal(worstMessage())`.
-- **`signal(message)`** — virtual, the board's renderer. The default carries five
+- **`showVerdict()`** – `signal(worstMessage())`.
+- **`signal(message)`** – virtual, the board's renderer. The default carries five
   patterns inside one three-second window, so a user is told once how long to
   look: ALog's long-short-short chirp for READY, its 60/60 flutter for the card,
   its 250/100/100/100 syncopation for the clock, eight 100/300 pips for a missing
@@ -43,8 +43,8 @@ these messages into the sensor Report register's number space.
 ### Step 3(a): the boot verdict
 
 In `NW_Logger::ledReport()` (`NW_Logger.cpp:140`): replace the colour blocks with
-`showVerdict()`. Move `digitalWrite(AuxLED, HIGH)` — currently the first line of
-that function — to immediately before the verdict, which is **after** the first
+`showVerdict()`. Move `digitalWrite(AuxLED, HIGH)` – currently the first line of
+that function – to immediately before the verdict, which is **after** the first
 row is written, or there is a dark gap of a few hundred milliseconds while
 `initLogFile()` and `addDataPoint()` run. The verdict then means "tests passed
 **and** a row reached the card", which is the only claim a user wants.
@@ -60,23 +60,23 @@ colour and then the happy chirp anyway. The verdict replaces it.
 
 **The bigger half, and it fixes a defect rather than changing a cosmetic.** Both
 boards run an `else if` chain of chip-addressed latches, so only the **first**
-condition found is reported — a board with no card and a dead clock says only
+condition found is reported – a board with no card and a dead clock says only
 "no card":
 
-- `Margay_Library/src/Margay.cpp:227-233` — `_sdCardMissing` 0x01,
+- `Margay_Library/src/Margay.cpp:227-233` – `_sdCardMissing` 0x01,
   `_sdTestFailed` 0x05, `_clockError` 0x21, `_bmeError` 0x41, `_sensorError`
   0x61, `_batError` 0x84, then `latchNotice(0xF0)`
-- `Okapi_Library/src/Okapi.cpp:103-108` — the same chain without the battery
+- `Okapi_Library/src/Okapi.cpp:103-108` – the same chain without the battery
 
 Raising each as a message fixes it by construction. Also migrate:
 
-- `Margay.cpp:252` — `latchNotice(0x90)` BatteryWarning → `NW_MSG_BATTERY_LOW`
+- `Margay.cpp:252` – `latchNotice(0x90)` BatteryWarning → `NW_MSG_BATTERY_LOW`
   (**bench-gated**, see below)
-- `Margay.cpp:494` and `Okapi.cpp:245` — `latchNotice(0xF2)` RowNotWritten
-- `NW_Logger.cpp:390` — `latchNotice(0xF1)` NewLogFile
-- `NW_Logger.cpp:99` — `latchNotice(0x30)` ClockSet. **Needs a seventeenth
+- `Margay.cpp:494` and `Okapi.cpp:245` – `latchNotice(0xF2)` RowNotWritten
+- `NW_Logger.cpp:390` – `latchNotice(0xF1)` NewLogFile
+- `NW_Logger.cpp:99` – `latchNotice(0x30)` ClockSet. **Needs a seventeenth
   message**, `NW_MSG_CLOCK_SET`, band FINE.
-- `NW_Logger.cpp:74` — `latchFault(0xE3)` Page 0 invalid. This one is genuinely
+- `NW_Logger.cpp:74` – `latchFault(0xE3)` Page 0 invalid. This one is genuinely
   about the logger's identity page; decide with the question below.
 
 ### Step 5: Okapi's renderer
@@ -103,7 +103,7 @@ is exactly when a user most wants an indicator. Keep one MCU-direct RGB for the
 Schema 1 devices that serve their own pages, and Okapi backhauls them, so
 something may read that byte. Two ways, and 3(b) needs the answer:
 
-1. **Derive it from the message table** — add a `code` column, so one table
+1. **Derive it from the message table** – add a `code` column, so one table
    decides the word, the band and the served byte. One source of truth, and the
    `else if` defect cannot return. **Recommended.**
 2. **Drop it for loggers**, since the specification's own entry for a controller
@@ -112,8 +112,8 @@ something may read that byte. Two ways, and 3(b) needs the answer:
 
 **Bench-gated: the battery messages.** A Margay on USB with no cells reads a flat
 3.29 V against a 3.3 V threshold, and real cells reach 3.42 V, so no level
-separates them. The discriminator is differential — the same reading with
-`BatSwitch` enabled and disabled means no battery — and it needs the four
+separates them. The discriminator is differential – the same reading with
+`BatSwitch` enabled and disabled means no battery – and it needs the four
 readings listed in `QUEUE.md` under "Battery present or absent". Until then,
 `NW_MSG_BATTERY_LOW` should not be wired to the existing `_batError`.
 
@@ -140,7 +140,7 @@ conversion in `MaxBotix_Library`. Leave it alone.
 - **Never** push, tag, release, bump a version, submit to a registry or close an
   issue without Andy saying so in the current message. Local commits are
   encouraged and are the rollback mechanism; everything downstream of one is
-  gated. Nothing has been pushed since 2026-10-09 — about thirty local commits
+  gated. Nothing has been pushed since 2026-10-09 – about thirty local commits
   across six repositories.
 - **`DS3231` is read-only.** Andy inserts the alarm functions himself; they are
   at `DS3231/PROPOSED-absolute-alarms.md`, untracked. His uncommitted
@@ -148,7 +148,7 @@ conversion in `MaxBotix_Library`. Leave it alone.
 - Run `python3 NW-Tests/style_check.py <repo>` before every commit touching
   `.ino/.cpp/.h`, and gate the commit on it. A hook enforces it.
 - House style: one statement per line, 2-space indent, attached braces, `if (`.
-  Match the file's comment form — `//x` in NW_Logger's own sources.
+  Match the file's comment form – `//x` in NW_Logger's own sources.
 - Commit messages end with the `Co-Authored-By:` and `Claude-Session:` trailers
   used throughout this history; GitHub comments and issue bodies end with the
   Claude Code line.
