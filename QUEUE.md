@@ -605,6 +605,25 @@ Recommended: **(b) for v4**, and amend #60 to say so. Route (a) is the one worth
 having for boards that already exist, and it is the most firmware work of the
 three.
 
+**FILED 2026-10-20 as Project-Margay#61**, labelled v4, with both halves: the one
+trace to PA7 and the firmware that makes it work. The firmware half is the part
+worth re-reading rather than re-deriving:
+
+- The WAKE handler sets a flag and nothing else. Feeding DONE from the interrupt
+  would let a board spinning with interrupts enabled satisfy the watchdog forever,
+  defeating the one failure it exists for.
+- **The clock decides whether to log, not the wake source.** Store the armed grid
+  point as a full timestamp and compare. A heartbeat with nothing due writes no
+  row; a heartbeat that finds the instant already past writes it, so the watchdog
+  becomes a third rescue layer behind the two alarms with no special case.
+- The liveness check earns the feed and may refuse it: read the clock, re-arm the
+  alarms if they are not where the schedule says, check the card answers. Any
+  failure withholds DONE on purpose, which turns the reset into a repair path for
+  a card that has stopped responding.
+
+#60 is left open and unamended: the two are alternatives, and #61 says so in its
+own body.
+
 
 ## The schedule's open items, and an adaptive logging interval (2026-10-09)
 
