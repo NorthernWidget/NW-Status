@@ -541,6 +541,16 @@ So the case against it is not correctness of that function. It is:
 Four items. The first three close what the schedule work left open; the fourth is
 new, and it is the one with science in it.
 
+**Status, 2026-10-19.** Item 1 is **superseded**: the answer was not a numbering
+at all but the flat message list in "Logger messages and the LED vocabulary,
+settled", which Andy approved. `NW_Logger.h` still carries the four provisional
+codes 16-19, so replacing them with that list is unbuilt work. Item 2 is **done**
+- Margay carries 2160 s from the datasheet (`Margay_Library` c50ae85), Okapi
+stays 0 because its watchdog is not fed, and Page 1 holds the value at 0x30 so a
+reworked resistor can be recorded against a board. Item 3 is **written and
+waiting for Andy** at `DS3231/PROPOSED-absolute-alarms.md`. Item 4 is **planned
+and filed** as NorthernWidget/NW_Logger#1.
+
 ### 1. Fix the four message-code numbers
 
 `NW_Logger.h` defines `NW_LOGGER_INTERVAL_LENGTHENED` 16,
@@ -552,7 +562,17 @@ existing conditions map onto **universal** kinds the specification already
 defines - a missing card and a failed self-test are kind 5, a battery fault is
 kind 8 - and should not be given device-specific numbers by accident.
 
-### 2. Read the TPL5010's period and set `wdtSeconds`
+### 2. Read the TPL5010's period and set `wdtSeconds` - DONE 2026-10-09
+
+**Margay: 2160 s, 36 minutes**, from R10 = 100 kΩ through Equation 1 of the
+TPL5010 datasheet (SNAS651A, Table 1's `T > 1000 s` coefficients), checked against
+the datasheet's own worked example and its 170 kΩ endpoint. Not the hour it was
+remembered as - that is **Okapi's** 130 kΩ at 3943 s, jumper-selected at JP8,
+whose other position puts 330 kΩ outside the part's 170 kΩ maximum. The
+consequence: with a 2 s cycle the longest interval a Margay can keep is 1800 s,
+and 3600 s is refused. Project-Margay#60 asks for 130 kΩ on v4.
+
+The text below is what the item said before it was answered.
 
 `NW_Logger::wdtSeconds` is 0, which means the watchdog condition in
 `nwScheduleHolds()` is not applied at all. R10 is 100 kΩ on the DELAY pin
