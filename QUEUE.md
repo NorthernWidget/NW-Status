@@ -536,6 +536,76 @@ So the case against it is not correctness of that function. It is:
 
 **Not before the bench**: this is firmware on the board being tested.
 
+## Three to-dos (Andy, 2026-10-19)
+
+### 1. Build the LED vocabulary - the easy advance
+
+Settled on 2026-10-09 and ready: the flat thirteen-message list with the three
+severity categories, the two-LED split, and the five patterns in a three-second
+window. `NW_Logger.h` still carries the four provisional codes 16-19 that the
+list replaces, so nothing is blocked. The order of work is in "Logger messages
+and the LED vocabulary, settled": the message table, `signal()` rendering from
+it, the boot verdict in place of `ledReport()`'s colour blocks, retiring
+`note()`'s orange flash, and Okapi's renderer last because it needs its
+schematic. Three messages are to be added for conditions already diagnosed and
+never shown: `BME_MISSING`, `CARD_WRITE_FAILED` and `SENSOR_MISSING`. The battery
+messages wait on the bench.
+
+### 2. DS3231 absolute alarms - Andy's
+
+At `DS3231/PROPOSED-absolute-alarms.md`, untracked. The logger owes four pieces
+once it lands, listed under "Andy to insert".
+
+### 3. Decouple the logging interval from the watchdog (Andy's idea)
+
+Andy: "could the logger wake up with the WDT and check if it has passed its last
+supposed wake time? If it has or if wake time is unclear: reset the works. If
+not: back to sleep? Though I think the WDT probably is directly tied to HW
+reset..."
+
+**The caveat is right, and the hardware is worse than that.** The TPL5010 has
+three outputs and Margay wires two of them (verified in `Margay.sch`): `RSTN`
+goes to the net `RST` and therefore to `U1 RESET`, the ISP header and the reset
+button; `DONE` goes to `WD_HOLD` and `U1 PC7`, which is pin 23 and matches
+`WDHold`. **`WAKE` appears in no net at all.** The part is a *system timer with*
+a watchdog, and this board uses only the watchdog half - so the timer cannot wake
+the MCU, and the only thing it can do is pull a hardware reset.
+
+Three routes, and the second changes what v4 should ask for.
+
+**(a) Make the reset the wake. No hardware change.** The grid already makes this
+nearly free: `nwNextWake()` is computed from the clock, so after a reset the
+logger re-arms on the same grid and loses nothing but its RAM. Two pieces are
+missing. The firmware never reads **`MCUSR`**, so it cannot tell a watchdog reset
+(`EXTRF`, since RSTn is an external reset) from a true power-up (`PORF`) - and
+that distinction is what the scheme turns on. And `initLogFile()` takes the
+**first unused** file number, so every boot opens a new `logNNNNN.csv` and
+`staNNNNN.csv` pair: a reset every 36 minutes would leave about forty pairs a
+day. So this route needs the reset cause read early and a resume-into-the-existing-file
+path. The reset button shares the `RST` net, so a press is indistinguishable from
+a watchdog reset - which is arguably the right behaviour anyway.
+
+**(b) Wire `WAKE` on v4. One trace.** Then Andy's scheme works exactly as he
+described: the timer wakes the MCU on an interrupt-capable pin, the firmware feeds
+`DONE`, checks the clock against the schedule, and sleeps again unless a wake was
+missed. No resets, no file churn, and **the logging interval stops being bounded
+by the watchdog at all**.
+
+**This supersedes Project-Margay#60**, which asks for R10 at 130 kΩ to raise the
+ceiling from 36 to 66 minutes. Wiring `WAKE` removes the ceiling instead of
+raising it, and leaves the resistor free to be chosen for how often the board
+should check on itself rather than for how slowly it may log. Issue #60 should be
+amended rather than closed, because the two changes are alternatives and the
+reasoning belongs together.
+
+**(c) Leave it: the bigger resistor only.** #60 as filed. Raises the ceiling and
+keeps it.
+
+Recommended: **(b) for v4**, and amend #60 to say so. Route (a) is the one worth
+having for boards that already exist, and it is the most firmware work of the
+three.
+
+
 ## The schedule's open items, and an adaptive logging interval (2026-10-09)
 
 Four items. The first three close what the schedule work left open; the fourth is
