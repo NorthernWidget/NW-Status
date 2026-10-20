@@ -27,7 +27,10 @@ Each line points at the section that holds the detail.
 5. **Three version numbers** (T9602, MaxBotix, DS3231_Logger), MS5803's release
    files and concept DOI, and whether to close Margay #33 and Project-Walrus
    #15/#16/#17.
-6. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
+6. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
+   `NewLogFile` in a later pair's. Isolated in its own commits so it reverts
+   alone. → `ITEM1-HANDOFF.md`, "Waiting on Andy"
+7. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
    commits across six repositories.
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
@@ -1135,7 +1138,13 @@ fires on every note written and is the only in-field LED signal today.
    one three-second window; `raise()` records to the Note column, the serial line
    and the cycle's set; `showVerdict()` shows the highest band raised and answers
    READY when nothing is wrong.
-3. **The boot verdict**, in two halves.
+3. **DONE 2026-10-20** (`NW_Logger` 61d3af0, 12a13a7, a51aee7; both boards). Both
+   halves: the verdict from `run()` with the aux-off beside it and
+   `printReadyToLog()` as what remained of `ledReport()`; and every self-test
+   raising at its branch, plus the four notice latches. `margay_missing` is the
+   case that observes a raise end to end and was shown to bite. The served-byte
+   latch chains stay, commented, pending the decision below. **The boot verdict**,
+   as planned, in two halves:
    (a) Replace `ledReport()`'s colour blocks with `showVerdict()`, move the
    aux-off to immediately before it so there is no dark gap while the first row
    is written, and rename what is left - it is a serial print function.
@@ -1148,7 +1157,11 @@ fires on every note written and is the only in-field LED signal today.
    (`NW_Logger.cpp:390`), `LoggingStarted` (the `0xF0` latches), and `ClockSet`
    (`NW_Logger.cpp:99`), which needs a seventeenth message.
 4. **DONE 2026-10-20**, same commit. `note()`'s 300 ms orange flash is retired.
-5. **Okapi's renderer.** Its hardware is far richer than Margay's, read off
+5. **Okapi's renderer – sized, not started; see `ITEM1-HANDOFF.md`.** D5 is the
+   status RGB on the same pins as Margay, D4 the aux like Margay's D2, and the bar
+   a PCA9634 at 0x52 with `!OE` on D0, for which no driver exists. Two decisions
+   are Andy's: which eight subsystems get a bar LED, and whether the bar shows
+   anything in the field. Its hardware is far richer than Margay's, read off
    `Okapi.sch`: **three RGB LEDs** (D4, D5, D7 - D7's anode is on
    `3V3_FEATHER`, so it belongs to the cell module) and **eight single LEDs**
    (D10-D14, D16-D18) on **U45, a PCA9634 I2C driver at 0x52** (A6, A4 and A1

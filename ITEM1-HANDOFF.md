@@ -14,90 +14,76 @@ these messages into the sensor Report register's number space.
 
 ## Done, and verified
 
-`NW_Logger` commit **4eebddd**, steps 1, 2 and 4 of the plan.
+Picked up 2026-10-20 by Fable 5.1, same day. Steps 1, 2, 3(a), 3(b) and 4 are
+built and committed; HEADs `NW_Logger` a51aee7, `Margay_Library` 6a168ca,
+`Okapi_Library` da69d00, `NW-Sim` 37345c4.
 
-- **`NW_Logger/src/NW_Message.h`** – one flat list of sixteen messages covering
-  everything a logger says about itself, hardware and runtime alike. The band
-  (`NW_BAND_FINE`, `NW_BAND_CAUGHT`, `NW_BAND_BAD`) is a **column in a table**,
-  never a pattern in the number, so the compiler assigns the values and nothing
-  renumbers when a message is added. Words and table are in PROGMEM, so the list
-  costs no RAM. Accessors: `nwMessageBand()`, `nwMessageWord()`.
-- **`raise(message)`** – records into the Note column, the serial line and a
-  `uint16_t` bitmask of this cycle's messages. It does **not** flash.
-- **`worstMessage()`** – the highest band raised, answering `NW_MSG_READY` when
-  the worst is merely FINE, so a clean boot earns the chirp.
-- **`showVerdict()`** – `signal(worstMessage())`.
-- **`signal(message)`** – virtual, the board's renderer. The default carries five
-  patterns inside one three-second window, so a user is told once how long to
-  look: ALog's long-short-short chirp for READY, its 60/60 flutter for the card,
-  its 250/100/100/100 syncopation for the clock, eight 100/300 pips for a missing
-  sensor, 500/500 x3 amber for the battery, and solid red for NO_SCHEDULE.
-  Anything else renders nothing, which is most of them.
-- `note()`'s 300 ms orange flash is gone. It fired on every note written and had
-  no observer in the field.
-- The three logger messages that were being latched into `_pages` (the sensor
-  Report register) no longer are.
+- **`NW_Logger/src/NW_Message.h`** – eighteen messages now: the sixteen, plus
+  `CLOCK_SET` (FINE; the stamp over the serial line had nowhere else to go) and
+  `CARD_UNREADABLE` (BAD; a card that is inserted and will not mount, which set
+  only the aggregate `_onBoardError` and reported nothing). The set is a
+  `uint32_t` with a `static_assert` holding the list to 32.
+- **A recursion bug in the code the first handoff called done.** `raise()` on a
+  full Note buffer called `raise(NW_MSG_NOTE_TRUNCATED)`, which printed into the
+  same full buffer, truncated again, and recursed without bound. Found by reading
+  the body – the host harness does not link `NW_Logger.cpp`. A full buffer now
+  sets the bit directly.
+- **The boot verdict.** `ledReport()`'s colour blocks and the unconditional
+  `blinkGood()` are gone. `run()` turns the aux LED off and calls `showVerdict()`
+  once the first row is on the card; `printReadyToLog()` is the one Serial line
+  that remained. Boot is two seconds faster, which moved the first row's
+  timestamp from :03 to :01 in the transcripts and nothing else.
+- **The self-tests raise where they detect**, at the branch and not on the flag
+  – because the flags aggregate (`_sdTestFailed` is set by a missing card, an
+  unmountable card and a failed write test alike). Seven sites in
+  `NW_Logger.cpp`, `BME_MISSING` in each board. The write test raises once after
+  its loop, not per mismatched byte.
+- **The four notice latches raise too**: `LOG_STARTED` and `ROW_NOT_WRITTEN` in
+  each board, `NEW_FILE` and `CLOCK_SET` in `NW_Logger.cpp`. The chip-addressed
+  `_pages.latch*()` calls stay beside them, commented as pending the decision
+  below.
+- **`margay_missing`**, a seventh NW-Sim case: `Programmed_Margay` with no Apis on
+  the bus. Its transcript shows `Fail At: 41`, `Note: SensorMissing`, and a first
+  row whose Note field reads `SensorMissing;LoggingStarted;NotAnswering`. Shown
+  to bite: removing the one `raise()` fails the case. Nothing had exercised a
+  raise before it.
 
-## What remains
+## What remains: step 5, Okapi's renderer
 
-### Step 3(a): the boot verdict
+Sized from `Okapi.sch`, not started. It is a new I2C driver on a prototype board,
+so it is proposed here rather than built.
 
-In `NW_Logger::ledReport()` (`NW_Logger.cpp:140`): replace the colour blocks with
-`showVerdict()`. Move `digitalWrite(AuxLED, HIGH)` – currently the first line of
-that function – to immediately before the verdict, which is **after** the first
-row is written, or there is a dark gap of a few hundred milliseconds while
-`initLogFile()` and `addDataPoint()` run. The verdict then means "tests passed
-**and** a row reached the card", which is the only claim a user wants.
+- **D5 is the status RGB on pins 13/14/15 – the same map as Margay**, which is
+  why `Okapi.cpp` never sets `RedLED`/`GreenLED`/`BlueLED` and inherits
+  `NW_Logger`'s defaults correctly. `signal()` already renders on it.
+- **D4 is Okapi's aux, exactly like Margay's D2**: green on `IC1 PC4` (D20,
+  `ALIVE_LED`), red and blue on the FT231X's CBUS1/CBUS2.
+- **D7** sits on `3V3_FEATHER` and belongs to the cell module.
+- **The bar**: eight LEDs (D10–D14, D16–D18) on **U45, a PCA9634** at I2C address
+  **0x52** (A6, A4, A1 high), on `SDA_OB`/`SCL`, with `!OE` on `IC1 PB0` = D0
+  (`!LED_EN`, active low). **No PCA9634 driver exists anywhere in the
+  workspace**; `Okapi.cpp`'s only `0x52` is a Page 2 offset.
 
-What is left of `ledReport()` is its serial output, so rename it accordingly.
+The design that follows: one bar LED per subsystem, lit together at the verdict,
+so two faults are both visible and nothing is counted; the RGB on D5 keeps the
+patterns and is the only indicator that can report an I2C failure, since the bar
+is behind the bus. A minimal driver is MODE1 init, LEDOUT0/LEDOUT1 for on/off per
+channel, `!LED_EN` low to enable – perhaps eighty lines, testable on the host with
+the Wire stub.
 
-Note that `blinkGood()` at `NW_Logger.cpp:497` is called unconditionally from
-`run()`'s `_newLog` branch, because `_newLog = true` is set regardless of the
-self-tests (`Margay.cpp`). So today a board with a dead clock shows the fault
-colour and then the happy chirp anyway. The verdict replaces it.
-
-### Step 3(b): the hardware conditions must raise()
-
-**The bigger half, and it fixes a defect rather than changing a cosmetic.** Both
-boards run an `else if` chain of chip-addressed latches, so only the **first**
-condition found is reported – a board with no card and a dead clock says only
-"no card":
-
-- `Margay_Library/src/Margay.cpp:227-233` – `_sdCardMissing` 0x01,
-  `_sdTestFailed` 0x05, `_clockError` 0x21, `_bmeError` 0x41, `_sensorError`
-  0x61, `_batError` 0x84, then `latchNotice(0xF0)`
-- `Okapi_Library/src/Okapi.cpp:103-108` – the same chain without the battery
-
-Raising each as a message fixes it by construction. Also migrate:
-
-- `Margay.cpp:252` – `latchNotice(0x90)` BatteryWarning → `NW_MSG_BATTERY_LOW`
-  (**bench-gated**, see below)
-- `Margay.cpp:494` and `Okapi.cpp:245` – `latchNotice(0xF2)` RowNotWritten
-- `NW_Logger.cpp:390` – `latchNotice(0xF1)` NewLogFile
-- `NW_Logger.cpp:99` – `latchNotice(0x30)` ClockSet. **Needs a seventeenth
-  message**, `NW_MSG_CLOCK_SET`, band FINE.
-- `NW_Logger.cpp:74` – `latchFault(0xE3)` Page 0 invalid. This one is genuinely
-  about the logger's identity page; decide with the question below.
-
-### Step 5: Okapi's renderer
-
-Read off `Project-Okapi/Hardware/Okapi.sch`, so this is no longer blocked:
-
-- **Three RGB LEDs**: D4 (R39/R36/R37), D5 (R42/R43/R44), D7 (R81/R82/R83). D7's
-  anode is on `3V3_FEATHER`, so it belongs to the cell module rather than to the
-  MCU.
-- **Eight single LEDs**: D10-D14 and D16-D18, cathodes to **U45 = PCA9634**, an
-  8-channel I2C LED driver at **0x52** (A6, A4 and A1 to 3V3_CORE; A0, A2, A3, A5
-  to GND), on `SDA_OB`/`SCL`, with a hardware blanking line on `!LED_EN`.
-
-That allows what Margay cannot do: **one LED per subsystem, lit at once.**
-Presentation becomes parallel instead of a three-second queue, two simultaneous
-faults are both visible, and nothing has to be counted. One constraint decides
-the design: **the bar is behind I2C and so cannot report an I2C failure**, which
-is exactly when a user most wants an indicator. Keep one MCU-direct RGB for the
-"the bus is dead" case and put the per-subsystem detail on the bar.
+**Two decisions inside it, Andy's:** which eight subsystems get a bar LED (card,
+clock, sensor bus, BME, battery, watchdog, cell module, ... – pick eight), and
+whether the bar shows anything in the field. The design says nothing in the
+field, but a bar invites a standing display, and that costs current.
 
 ## Waiting on Andy
+
+**One visible change to veto if unwanted:** every first data row now carries
+`LoggingStarted` in its Note column, and a later file pair carries `NewLogFile`.
+The status file's boot row said this already. It follows the approved design –
+every message reaches the Note column – and is isolated in its own commits
+(`Margay_Library` 6a168ca, `Okapi_Library` da69d00, `NW-Sim` 4770412), so it can
+be reverted alone.
 
 **Does a logger still populate its own Report register?** Margay and Okapi are
 Schema 1 devices that serve their own pages, and Okapi backhauls them, so
@@ -124,13 +110,20 @@ cd ~/Dropbox/NorthernWidget/github
 python3 NW-Tests/style_check.py NW_Logger          # must print "style: OK"
 sh NW_Logger/extras/test/run.sh                    # "OK: output identical to baseline"
 python3 NW-Tests/compile.py                        # 19 of 21; MaxBotix_* is the known pair
-bash NW-Sim/tests/run.sh                           # 6 OK, including "both ways"
+bash NW-Sim/tests/run.sh                           # 7 OK: six cases, margay_missing, and "both ways"
 cd NW-Provision && PYTHONPATH=src python3 -m pytest -q   # 131 passed
 ```
 
 The formatter is Arduino's own, at
 `/usr/local/bin/arduino-ide_2.3.3_Linux_64bit/resources/app/lib/backend/resources/clang-format`.
 There is also an `nw-verify` skill with the full sequence and its expected counts.
+
+**`set -e` is silently ineffective in the Bash tool's own shell** (tested: `set -e;
+false; echo X` prints X). A chained script that relies on it to stop at a failing
+check does not stop. Gate explicitly with `|| exit 1`, and read a check's verdict
+before the step it guards runs – a baseline re-record and four commits went in
+past a failing gate on 2026-10-20, and only a commit message was wrong, but only
+by luck.
 
 MaxBotix fails for a reason that predates this work: Andy's uncommitted `Serial1`
 conversion in `MaxBotix_Library`. Leave it alone.
