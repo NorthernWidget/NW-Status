@@ -33,10 +33,16 @@ Each line points at the section that holds the detail.
 7. **Should an explicit sketch value beat Page 1?** `begin()` reads Page 1 and
    overwrote a `wdtSeconds` the sketch had set before it. Today the last writer
    wins. → `ITEM1-HANDOFF.md`, "Tested, and what the tests found"
-8. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
+8. **Should `NoSchedule` be raised once, or every cycle?** With no interval that
+   holds, `keepInterval()` finds none on every cycle and raises it each time, so
+   the Note column repeats the word on every row and the serial line says it once
+   a cycle. True each time, and loud. Once at the first cycle would be quieter;
+   every cycle keeps the record honest about a board that is still in that state.
+   → `ITEM1-HANDOFF.md`, "Tested, and what the tests found"
+9. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
    `NewLogFile` in a later pair's. Isolated in its own commits so it reverts
    alone. → `ITEM1-HANDOFF.md`, "Waiting on Andy"
-9. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
+10. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
    commits across six repositories.
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
