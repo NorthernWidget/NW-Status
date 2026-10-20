@@ -83,6 +83,52 @@ One fact from the review bears on the Report-register decision below: dropping
 the served byte also empties the logger's `Code` column in its own status-file
 boot row, not only the backhauled page.
 
+## Tested, and what the tests found (2026-10-20, later still)
+
+Andy asked for unit tests covering the capabilities and a safe sequence. What now
+exists, each shown to fail without the code it guards:
+
+- **The verdict's choice is pure and tested.** `nwWorstMessage(set)` lives in
+  `NW_Message.h`; the host harness tries thirteen sets, and the line that
+  matters – "no card AND clock not set → CardMissing" – flips to ClockNotSet
+  when the band comparison is broken. (`NW_Logger` 57696d5)
+- **The LED story is a tested artefact.** The Margay board model traces its four
+  LED pins with millisecond timestamps (`NW-Sim` 6c49312); run.sh lifts them into
+  a `.leds` file per case and diffs it like the transcript (b7a37af). So the boot
+  sequence a person sees – aux out, then the status LED's rhythm, after the first
+  row is on the card – is asserted: in `margay_basic` the aux goes out at 1992 ms
+  and blue comes on at 1993, then 1000/300/100/100/100 to the millisecond, then a
+  20 ms blip on every row.
+- **Three boots the firmware must report**, each a case: `margay_nocard` (red
+  flutter, 60/60, rows still reaching the monitor, the Note not accumulating),
+  `margay_blank` (Page0Invalid, amber), `margay_overrun` (NoSchedule, solid red
+  for exactly 3000 ms). The runner gained `nocard` and `nostored` words. Nineteen
+  OK in all: nine transcripts, nine LED stories, and "both ways".
+
+**What the LED trace found on its first recording:** red never moved after boot in
+any case, while a bare sketch toggling the same pin reported every edge. The cause
+was in `LED_Color()`, Bobby's, for years: `255 - (red * lum) / 0xFF` in `int`,
+which is 16 bits here, so full brightness overflows to a level of 257 and
+`analogWrite()` takes its PWM path – Timer1's red sticks, Timer2's green and blue
+run at 1/255 duty. `blinkGood()` was bright only because it wrote the pin
+directly, and the old green all-clear was the dim "green light" Andy described.
+**Every new verdict goes through `LED_Color()`, so on hardware they would have
+been dim or invisible.** Fixed in 32 bits (`NW_Logger` acd7714); the trace now
+shows levels.
+
+**A precedence fact, for Andy:** `begin()` reads Page 1, so a sketch that sets
+`wdtSeconds` *before* `begin()` has it overwritten by the stored 2110 s. The
+overrun sketch sets it after. Whether an explicit sketch value should win over
+Page 1 is a design question; today Page 1 wins unless the sketch writes last.
+
+**A design note:** with no schedule that holds, `NoSchedule` is raised on every
+cycle and the asked interval is kept, so the Note column repeats it each row. True
+each time, and noisy. Andy may prefer it once.
+
+**Still untestable on the host:** `signal()`'s dispatch and `raise()`'s Note
+append live in `NW_Logger.cpp`, which no host harness links. The LED trace and the
+transcripts cover them end to end instead.
+
 ## What remains: step 5, Okapi's renderer
 
 Sized from `Okapi.sch`, not started. It is a new I2C driver on a prototype board,
@@ -148,8 +194,8 @@ readings listed in `QUEUE.md` under "Battery present or absent". Until then,
 cd ~/Dropbox/NorthernWidget/github
 python3 NW-Tests/style_check.py NW_Logger          # must print "style: OK"
 sh NW_Logger/extras/test/run.sh                    # "OK: output identical to baseline"
-python3 NW-Tests/compile.py                        # 19 of 21; MaxBotix_* is the known pair
-bash NW-Sim/tests/run.sh                           # 7 OK: six cases, margay_missing, and "both ways"
+python3 NW-Tests/compile.py                        # 20 of 22; MaxBotix_* is the known pair
+bash NW-Sim/tests/run.sh                           # 19 OK: nine transcripts, nine LED stories, "both ways"
 cd NW-Provision && PYTHONPATH=src python3 -m pytest -q   # 131 passed
 ```
 

@@ -30,10 +30,13 @@ Each line points at the section that holds the detail.
 6. **The order within BAD** – card, NO_SCHEDULE, sensor, clock – is mine, set on
    the reviewer's argument that with no card the LED is the only channel left.
    Overrule it in `NW_Message.h` and the harness will show the new order.
-7. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
+7. **Should an explicit sketch value beat Page 1?** `begin()` reads Page 1 and
+   overwrote a `wdtSeconds` the sketch had set before it. Today the last writer
+   wins. → `ITEM1-HANDOFF.md`, "Tested, and what the tests found"
+8. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
    `NewLogFile` in a later pair's. Isolated in its own commits so it reverts
    alone. → `ITEM1-HANDOFF.md`, "Waiting on Andy"
-8. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
+9. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
    commits across six repositories.
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
