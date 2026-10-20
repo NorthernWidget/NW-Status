@@ -1067,6 +1067,19 @@ The division of labour that follows:
   written. Blue already means "all well" through the chirp, so a per-row blip is
   the same statement in miniature and belongs in the same colour on the same LED.
 
+### Okapi's grid: five design notes (2026-10-20)
+
+Okapi's eight extra LEDs are a 3×3 grid with the top-middle cell empty, fixed
+colours in three stoplight columns, on a PCA9634 at 0x52. Five agent studies in
+`studies/okapi-leds/` (README first) converge on three steady columns, one lit
+cell per column for the 3 s window, with D5 playing Margay's rhythm unchanged.
+Glyphs, motion, tapes, fills, bar graphs, brightness and count were each argued
+for and rejected. Still Andy's to decide: (1) which messages go in which column
+(A card, B power, C time and sensing is the proposal); (2) the field - nothing,
+a button-press verdict on S3, or a display during the first upload, which needs
+the first push moved to the boot row; (3) whether the worst column's cell blinks
+in lockstep with D5.
+
 ### The patterns
 
 **A fixed three-second window**, so the instruction is one sentence: *watch the
