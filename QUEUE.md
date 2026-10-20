@@ -27,10 +27,13 @@ Each line points at the section that holds the detail.
 5. **Three version numbers** (T9602, MaxBotix, DS3231_Logger), MS5803's release
    files and concept DOI, and whether to close Margay #33 and Project-Walrus
    #15/#16/#17.
-6. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
+6. **The order within BAD** – card, NO_SCHEDULE, sensor, clock – is mine, set on
+   the reviewer's argument that with no card the LED is the only channel left.
+   Overrule it in `NW_Message.h` and the harness will show the new order.
+7. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
    `NewLogFile` in a later pair's. Isolated in its own commits so it reverts
    alone. → `ITEM1-HANDOFF.md`, "Waiting on Andy"
-7. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
+8. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
    commits across six repositories.
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
@@ -1138,7 +1141,9 @@ fires on every note written and is the only in-field LED signal today.
    one three-second window; `raise()` records to the Note column, the serial line
    and the cycle's set; `showVerdict()` shows the highest band raised and answers
    READY when nothing is wrong.
-3. **DONE 2026-10-20** (`NW_Logger` 61d3af0, 12a13a7, a51aee7; both boards). Both
+3. **DONE 2026-10-20, then reviewed and six findings fixed** – see
+   `ITEM1-HANDOFF.md`, "Reviewed, and the findings fixed". (`NW_Logger` 61d3af0,
+   12a13a7, a51aee7, then 546d5af through 4d8d525; both boards). Both
    halves: the verdict from `run()` with the aux-off beside it and
    `printReadyToLog()` as what remained of `ledReport()`; and every self-test
    raising at its branch, plus the four notice latches. `margay_missing` is the

@@ -48,6 +48,41 @@ built and committed; HEADs `NW_Logger` a51aee7, `Margay_Library` 6a168ca,
   to bite: removing the one `raise()` fails the case. Nothing had exercised a
   raise before it.
 
+## Reviewed, and the findings fixed (2026-10-20, later)
+
+An independent review of the design and the code found the shape sound and six
+things wrong with my implementation of it, all verified against the code and all
+fixed in the same session. `NW_Logger` 546d5af, 3745cfc, 6e35db0, 3edaa52,
+ada0d6a, 4d8d525; `NW_Core` da46f8a; `Margay_Library` 7db9ee8; `Okapi_Library`
+f366d8f. Seven NW-Sim transcripts stayed byte-identical throughout, which is the
+correct result for healthy simulated boards.
+
+1. **A CAUGHT-only boot showed nothing.** `signal()` returned for any message
+   without a pattern of its own, so a dead BME280 – which still logs – left the
+   status LED dark after the aux went out. The default now renders by band:
+   amber slow for CAUGHT, solid red for BAD, nothing for FINE.
+2. **`NO_SCHEDULE` could not reach the verdict.** `keepInterval()` ran only from
+   the alarm branch; the first row was written unmeasured. The first cycle is now
+   timed, and the alarm re-armed only if that lengthened the interval.
+3. **No card: no rows on the terminal, and the Note buffer grew without bound.**
+   `logRow()` returned before the echo and the clear. Both now happen regardless.
+4. **The per-row blip** the design asked for is in: 20 ms of blue when a row
+   reaches the card. **The message set is cleared per cycle**, as documented.
+5. **The card outranks the clock.** `worstMessage()` shows the first message of
+   the highest band, so the order within BAD is a rule; it is now card, then
+   `NO_SCHEDULE`, then sensor, then clock – ordered by how little the data file
+   can tell you – and the comment claiming order was not relied on is gone. The
+   harness prints the whole table, so a reorder that moves the enum and not the
+   table shows as a word beside the wrong value.
+6. **Two conditions gained words**: `ONBOARD_MISSING` (the battery ADC on
+   BUILD_B/C, after which `batTest()` read 0 V in silence) and `PAGE0_INVALID`
+   (a fresh flash). Twenty messages. And `Serial.begin()` now precedes the BME280
+   init on both boards, so its failure line can reach a terminal.
+
+One fact from the review bears on the Report-register decision below: dropping
+the served byte also empties the logger's `Code` column in its own status-file
+boot row, not only the backhauled page.
+
 ## What remains: step 5, Okapi's renderer
 
 Sized from `Okapi.sch`, not started. It is a new I2C driver on a prototype board,
@@ -77,6 +112,10 @@ whether the bar shows anything in the field. The design says nothing in the
 field, but a bar invites a standing display, and that costs current.
 
 ## Waiting on Andy
+
+**The BAD order is mine to be overruled:** card, `NO_SCHEDULE`, sensor, clock. The
+card first is the reviewer's argument and I agree with it; where `NO_SCHEDULE`
+sits is a judgement.
 
 **One visible change to veto if unwanted:** every first data row now carries
 `LoggingStarted` in its Note column, and a later file pair carries `NewLogFile`.
