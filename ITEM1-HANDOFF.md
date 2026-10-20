@@ -129,10 +129,14 @@ each time, and noisy. Andy may prefer it once.
 append live in `NW_Logger.cpp`, which no host harness links. The LED trace and the
 transcripts cover them end to end instead.
 
-## What remains: step 5, Okapi's renderer
+## What remains: step 5, Okapi's renderer — THE NEXT ACTION
 
-Sized from `Okapi.sch`, not started. It is a new I2C driver on a prototype board,
-so it is proposed here rather than built.
+Andy, 2026-10-20: "we have a spatial pattern to creating flashes on Okapi. I
+suggest that we find ways to make use of it." Sized from `Okapi.sch`, not started.
+It is a new I2C driver on a prototype board, so the order is: Andy's two decisions
+below, then a minimal PCA9634 driver host-tested with the Wire stub, then an
+Okapi override of `signal()`, then — if the simulator gains an Okapi board model,
+which it does not have — an LED trace of the bar as there is now for Margay.
 
 - **D5 is the status RGB on pins 13/14/15 – the same map as Margay**, which is
   why `Okapi.cpp` never sets `RedLED`/`GreenLED`/`BlueLED` and inherits
