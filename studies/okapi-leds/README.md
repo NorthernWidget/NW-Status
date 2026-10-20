@@ -64,3 +64,29 @@ arrows); motion for the verdict (one bit, direction); timelines, tapes and fills
 (no measured quantity worth three levels, and Okapi has no battery percentage);
 brightness (unreadable in sun, and PWM needs the 2.5 mA oscillator); count (the
 hole breaks subitising).
+
+## Second round (2026-10-21): does each light earn its place?
+
+Andy's question on the first design: "Are you using the extra LEDs because
+they add information, or because they are there?" Three more studies answer it.
+
+| Note | Angle | Verdict |
+|---|---|---|
+| `6-cognitive-science.md` | alarm fatigue, redundancy, dark board, glance capacity | no fine cells; no second light blinking with the first; dark grid when healthy; lamp test is the price of dark-means-fine |
+| `7-standards-and-practice.md` | IEC 60073, MIL-STD-411F, ISA 18.2, IALA E-110, FAA 25.1322, PLC/storage/network/battery-pack practice | fine-beside-fault splits by observer (monitor dark, technician lit); lamp test yes; one synchronised rate at most; press-to-show is the field convention; rhythm over count |
+| `8-margay-audit.md` | every Margay LED decision from queue, code, tests and traces | Margay's LED is a pointer to the file: one worst message, as a shape, in 3 s, to a person who is there. What it cannot say: a second fault, and bus-dead versus clock-dead |
+
+The design that follows: D5 and aux identical to Margay; all eight cells lit
+while aux says busy (lamp test); in the verdict window only fault cells lit,
+steady, no green, nothing blinking; dark otherwise. The grid's two gains are
+the hidden second fault and the bus-versus-clock case, where B1, C1 and C2
+light together.
+
+Housekeeping the audit found: the queue's message table is stale against
+`NW_Message.h` (13 of 20); `NW_Logger.h` still documents `note()` as "an
+orange pulse on the LED" and `ORANGE` is unused; the first row's blip plays
+94 ms before aux-off; the chirp is ALog's 1000/300/100/100/100, not Margay's
+2021 651/300/100/200/100, and nobody recorded choosing. "Blue because of
+red/green deficiency" is Andy's (this session, 2026-10-09: "population
+stereotypes: blue good, not green (red/green colorblind)") and is not yet in
+the queue.
