@@ -1077,10 +1077,10 @@ The division of labour that follows:
   Weighed against IEC and kept. Cyan would also work and is reserved.
 - **Margay shows every message, in sequence.** 3 s per segment, 1 s dark
   between, worst to least, one pass, then dark. The 1 s gap exceeds the
-  longest in-pattern dark (500 ms) so it reads as a separator. Proposed
-  refinement, not yet decided: one segment per distinct rhythm, so the
-  shared amber plays once however many CAUGHT messages are raised (longest
-  sequence then 5 segments, 19 s). FINE messages stay file-only; the chirp
+  longest in-pattern dark (500 ms) so it reads as a separator. **One segment
+  per distinct rhythm** (Andy, 2026-10-21): in practice this collapses only
+  the amber, since the three card messages are mutually exclusive; longest
+  sequence 5 segments, 19 s. FINE messages stay file-only; the chirp
   plays only when nothing else is raised.
 - **Okapi: all eight cells lit while booting** (lamp test, while aux says
   busy). **In the verdict, every fault band present lights its cell**, steady,
