@@ -129,6 +129,32 @@ each time, and noisy. Andy may prefer it once.
 append live in `NW_Logger.cpp`, which no host harness links. The LED trace and the
 transcripts cover them end to end instead.
 
+## 2026-10-21: the sequence is built; step 5 is decided and queued behind the watchdog
+
+Andy's question of the day, on the first grid design: "Are you using the extra
+LEDs because they add information, or because they are there?" Eight studies in
+`studies/okapi-leds/` (README first) answered it. What changed:
+
+- **Margay's verdict now plays every distinct rhythm raised**, worst to least,
+  3 s each with 1 s dark between, and **the amber segment counts first**: one
+  100 ms blip per CAUGHT message, 200 ms apart, 300 ms dark, then 500/500 x3.
+  Built in NW_Logger 8f1c53e (pure helpers, 2^20 sets checked) and 2c26197
+  (renderer). `signal()` now switches on `nwMessageRhythm()` and takes the
+  CAUGHT count. Okapi inherits it: nothing overrides `signal()`.
+- **Blue stays for READY**, weighed against IEC 60073 and kept for red/green
+  deficiency. The 20 ms blip stays.
+- **Step 5 is now the minimal grid**: all eight cells lit while aux says busy
+  (lamp test), fault bands lit steady for the D5 sequence, no green cells,
+  nothing on the grid blinks, dark otherwise. The lockstep blink, the rising
+  green line, glyphs, motion, bars and brightness were each argued for and
+  rejected on evidence. **It waits behind Okapi's unfed watchdog.**
+- A missing card also raises ROW_NOT_WRITTEN, so the no-card verdict is two
+  segments; whether to suppress that is desk item 0 in QUEUE.md.
+
+The section below is the pre-2026-10-21 plan for step 5 and is superseded where
+it conflicts with the above (the three-column, one-lit-cell-per-column design and
+the two decisions it listed; the column groups are still Andy's to confirm).
+
 ## What remains: step 5, Okapi's renderer — THE NEXT ACTION
 
 Andy, 2026-10-20: "we have a spatial pattern to creating flashes on Okapi. I
