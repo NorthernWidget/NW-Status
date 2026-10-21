@@ -1014,25 +1014,32 @@ One flat list in the logger's own namespace. The compiler assigns the numbers,
 severity is a column in a table rather than a bit pattern, and nothing renumbers
 when a message is added.
 
-| # | Message | Category |
-|---|---|---|
-| 0 | READY | fine |
-| 1 | LOG_STARTED | fine |
-| 2 | NEW_FILE | fine |
-| 3 | INTERVAL_LENGTHENED | fine |
-| 4 | INTERVAL_SHORTENED | fine |
-| 5 | BATTERY_LOW | caught |
-| 6 | ROW_NOT_WRITTEN | caught |
-| 7 | NOTE_TRUNCATED | caught |
-| 8 | CYCLE_OVERRAN | caught |
-| 9 | BACKUP_WOKE | caught |
-| 10 | CLOCK_NOT_SET | actively bad |
-| 11 | CARD_MISSING | actively bad |
-| 12 | NO_SCHEDULE | actively bad |
+| # | Message | Band | Raised today? |
+|---|---|---|---|
+| 0 | READY | fine | the empty set at the verdict |
+| 1 | LOG_STARTED | fine | yes |
+| 2 | NEW_FILE | fine | yes |
+| 3 | INTERVAL_LENGTHENED | fine | yes |
+| 4 | INTERVAL_SHORTENED | fine | no (adaptive sampling, NW_Logger#1) |
+| 5 | CLOCK_SET | fine | yes |
+| 6 | BATTERY_LOW | caught | no (gated on the four bench readings) |
+| 7 | BME_MISSING | caught | yes |
+| 8 | ROW_NOT_WRITTEN | caught | yes |
+| 9 | NOTE_TRUNCATED | caught | yes |
+| 10 | CYCLE_OVERRAN | caught | yes |
+| 11 | BACKUP_WOKE | caught | no (alarm work) |
+| 12 | ONBOARD_MISSING | caught | yes |
+| 13 | PAGE0_INVALID | caught | yes |
+| 14 | CARD_MISSING | actively bad | yes |
+| 15 | CARD_UNREADABLE | actively bad | yes |
+| 16 | CARD_WRITE_FAILED | actively bad | yes |
+| 17 | NO_SCHEDULE | actively bad | yes |
+| 18 | SENSOR_MISSING | actively bad | yes |
+| 19 | CLOCK_NOT_SET | actively bad | yes |
 
-Three to add, for conditions the logger already diagnoses and never shows:
-`BME_MISSING` (caught - it still logs), `CARD_WRITE_FAILED` and `SENSOR_MISSING`
-(both actively bad).
+Twenty, as `NW_Message.h` has them (this table was 13 plus three to add until
+2026-10-21). The order inside the actively-bad band is a rule `worstMessage()`
+relies on and is still on Andy's desk (item 6).
 
 The categories are Andy's, in a stoplight sense, and they are about **the action
 required**: fine means none, caught means act at the next visit, actively bad
@@ -1115,18 +1122,27 @@ in lockstep with D5.
 
 ### The patterns
 
-**A fixed three-second window**, so the instruction is one sentence: *watch the
-status LED for three seconds after the aux light goes out.* Every fault pattern
-repeats for whole cycles inside it, which is what rescues a glance that arrives
-late.
+**A fixed three-second window per segment**, so the instruction is one sentence:
+*watch the status LED after the aux light goes out.* Every fault pattern repeats
+for whole cycles inside its segment, which is what rescues a glance that arrives
+late. Since 2026-10-21 one segment plays per distinct rhythm raised, worst to
+least, 1 s dark between (see "LED decisions, 2026-10-21"); a single fault is
+still one 3 s window.
 
 | Pattern | Colour | Means | Cycle | In 3 s |
 |---|---|---|---|---|
-| 60/60 continuous | red | **card** missing or unwritable | 120 ms | 25x |
+| 60/60 continuous | red | **card** missing, unreadable or unwritable | 120 ms | 25x |
 | 250/100/100/100 | red | **clock not set** | 550 ms | 5x |
 | 100/300 x8, last gap dropped | red | **sensor missing** | 2900 ms | 1x |
-| 500/500 x3 | amber | battery low | 3000 ms | 1x |
+| solid | red | **no schedule** (and any other actively-bad message without its own rhythm) | 3000 ms | 1x |
+| N x (100/200), 300 dark, then 500/500 x3 | amber | **caught**, any of the eight: N blips count the messages raised, then the 500/500 | up to 4900 ms | 1x |
 | 1000/300/100/100/100 | blue | READY | 1600 ms | once, then the window ends |
+
+Blue is Andy's colour for READY (2026-10-09, "population stereotypes: blue
+good, not green (red/green colorblind)"): for a red/green-deficient reader a
+green chirp and a red fault differ by rhythm alone, and blue is the one colour
+that keeps the chirp redundantly coded for everyone. IEC 60073 reads blue as
+"mandatory action"; weighed and kept (see "LED decisions, 2026-10-21").
 
 Three come from ALog with its provenance: `LEDgood()` is the chirp,
 `LEDwarn()` the card flutter, and `LEDtimeWrong()` the syncopation. The last of
