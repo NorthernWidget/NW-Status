@@ -27,6 +27,11 @@ Each line points at the section that holds the detail.
 5. **Three version numbers** (T9602, MaxBotix, DS3231_Logger), MS5803's release
    files and concept DOI, and whether to close Margay #33 and Project-Walrus
    #15/#16/#17.
+0. **A missing card also raises ROW_NOT_WRITTEN**, so the no-card verdict now
+   plays the flutter, a second of dark, then a one-blip amber (NW-Sim
+   `margay_nocard`, 2026-10-21). The amber is a consequence of the card, not a
+   second fault. Keep it (every raised message is true) or suppress
+   ROW_NOT_WRITTEN while a card message is raised? → "LED decisions, 2026-10-21"
 6. **The order within BAD** – card, NO_SCHEDULE, sensor, clock – is mine, set on
    the reviewer's argument that with no card the LED is the only channel left.
    Overrule it in `NW_Message.h` and the harness will show the new order.
@@ -1102,10 +1107,21 @@ The division of labour that follows:
   (`studies/okapi-leds/6-cognitive-science.md`).
 - **The 20 ms row blip stays.** Bloch's law says it fades first in sun; its
   observer is at a bench, where it has never been missed.
+- **Built 2026-10-21** (NW_Logger 8f1c53e, 2c26197): `nwVerdictSequence()`
+  and `nwMessageRhythm()` in `NW_Message.h`, checked over all 2^20 sets;
+  `showVerdict()` plays the sequence; the amber counts first. NW-Sim baselines
+  re-recorded: `margay_blank` gains the one-blip prefix, `margay_nocard` the
+  second segment, the rest move by at most 2 ms.
+- **The Okapi grid plan** (2026-10-21): D5 and aux are Margay's code, untouched.
+  Grid phase 1, after the unfed watchdog is fixed: a minimal PCA9634 driver,
+  all eight lit while aux says busy, fault bands lit steady for the D5 sequence,
+  dark otherwise, host-tested on the Wire stub. Phase 2 only if the first
+  telemetry push moves to the boot row: modem phases on the grid during that
+  upload. Nothing else survived the eight studies in `studies/okapi-leds/`.
 - Still open: column groups (A record, B power/identity, C time and sensing is
   the proposal); the field (nothing, or a button replay of the verdict on both
   boards); whether the first row's blip should play before aux-off; whether
-  the chirp stays at ALog's 1000/300/100/100/100.
+  the chirp stays at ALog's 1000/300/100/100/100; desk item 0 above.
 
 ### Okapi's grid: five design notes (2026-10-20)
 
