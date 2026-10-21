@@ -1067,6 +1067,34 @@ The division of labour that follows:
   written. Blue already means "all well" through the chirp, so a per-row blip is
   the same statement in miniature and belongs in the same colour on the same LED.
 
+### LED decisions, 2026-10-21 (Andy)
+
+- **Blue stays for READY.** IEC 60073 reads blue as "mandatory action", but
+  that meaning reaches operators trained on industrial panels, not field
+  scientists, and blue is the one colour that keeps the chirp distinct from
+  every red pattern for red/green-deficient viewers (Andy, 2026-10-09:
+  "population stereotypes: blue good, not green (red/green colorblind)").
+  Weighed against IEC and kept. Cyan would also work and is reserved.
+- **Margay shows every message, in sequence.** 3 s per segment, 1 s dark
+  between, worst to least, one pass, then dark. The 1 s gap exceeds the
+  longest in-pattern dark (500 ms) so it reads as a separator. Proposed
+  refinement, not yet decided: one segment per distinct rhythm, so the
+  shared amber plays once however many CAUGHT messages are raised (longest
+  sequence then 5 segments, 19 s). FINE messages stay file-only; the chirp
+  plays only when nothing else is raised.
+- **Okapi: all eight cells lit while booting** (lamp test, while aux says
+  busy). **In the verdict, every fault band present lights its cell**, steady,
+  no green cells, nothing on the grid blinks; the grid stays lit for the whole
+  D5 sequence and goes dark with it. A healthy Okapi looks like a healthy
+  Margay: dark grid, blue chirp. Lockstep blinking rejected on the evidence
+  (`studies/okapi-leds/6-cognitive-science.md`).
+- **The 20 ms row blip stays.** Bloch's law says it fades first in sun; its
+  observer is at a bench, where it has never been missed.
+- Still open: column groups (A record, B power/identity, C time and sensing is
+  the proposal); the field (nothing, or a button replay of the verdict on both
+  boards); whether the first row's blip should play before aux-off; whether
+  the chirp stays at ALog's 1000/300/100/100/100.
+
 ### Okapi's grid: five design notes (2026-10-20)
 
 Okapi's eight extra LEDs are a 3×3 grid with the top-middle cell empty, fixed
