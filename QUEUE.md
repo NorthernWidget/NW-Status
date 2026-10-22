@@ -1123,6 +1123,27 @@ The division of labour that follows:
   boards); whether the first row's blip should play before aux-off; whether
   the chirp stays at ALog's 1000/300/100/100/100; desk item 0 above.
 
+### Okapi's grid carries what Okapi has and Margay lacks (Andy, 2026-10-21)
+
+D5 says everything Margay can say; the grid says only Okapi's extras, so no cell
+duplicates D5. Andy's list, and what detects each today (checked 2026-10-22):
+
+| # | Item | Detection today | Requisite task before a cell can light |
+|---|---|---|---|
+| 1 | rechargeable battery | VBeta, IBeta read; `powerAuto()` rail test into `_powerState` | decide which of VBeta/VPrime is the LiPo (Okapi.cpp:397); a threshold; a message |
+| 2 | solar panel | ISolar from ADS1115 ch 1 ("FIX! adjust gain"); `!CHRG` goes to expander GPA3 and is never read; V_SOLAR_SENSE goes to the PAC1934, not the ADS1115 | read `!CHRG`; check what ADS1115 ch 1 measures; a message |
+| 3 | alkaline backup | `powerAuto()` returns 1 when running on VPrime | raise a CAUGHT message from `_powerState` |
+| 4 | Particle talks | FeatherGPIO handshake inside the 180 s wait, after the fifth row | raise a message from the handshake result |
+| 5 | commands received | nothing | new protocol: Feather to MCU, not yet designed |
+| 6 | message sent | same bit as 4 | separate "connected" from "sent" in the handshake |
+| 7 | hardware Margay lacks | boot sweep of 0x68, 0x20, 0x48, 0x49, 0x62, 0x77 raises ONBOARD_MISSING | test the PAC1934, the PCA9634 and the TPL5111; distinguish the expander (Feather power) from the DAC |
+
+With v1's fixed cell colours a column is a group and the lit row its band: A =
+power (1-3), B = telemetry (4-6; B2 green is the one positive the grid shows,
+at the first upload), C = on-board hardware (7). One cell per item would need
+uniform-colour LEDs on the next board revision. These replace the earlier
+record/power/time column proposal.
+
 ### Okapi's grid: five design notes (2026-10-20)
 
 Okapi's eight extra LEDs are a 3×3 grid with the top-middle cell empty, fixed
