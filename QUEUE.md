@@ -1153,10 +1153,13 @@ record/power/time column proposal.
 2. **A sensor that answers but reports a fault.** Today `noteFrom(s)` and
    `statusRow("report", s)` already put the device's Report register into the
    Note column and the status file (NW_Logger.cpp:932, 1011), but no logger
-   message is raised, so the LED says nothing. Andy asked whether Margay needs
-   it too: yes, it is NW_Logger's, so both boards get it on the RGB LED as the
-   amber band; the Note already names the device. Requisite: `SENSOR_FAULT`
-   (CAUGHT) raised when a watched device's `report().isFault()`.
+   message is raised, so the LED says nothing on either board. Requisite:
+   `SENSOR_FAULT` (CAUGHT) in NW_Logger, raised when a watched device's
+   `report().isFault()`; both boards then show amber and the Note names the
+   device. **Not on the Okapi grid** (Andy, 2026-10-22): arbitrary sensors
+   attach, so no cell can stand for one, and the grid's column C stays
+   Okapi's own on-board chips. Okapi stays with Margay here.
+   **Battery plan filed as Okapi_Library#9** (2026-10-22).
 3. **Card nearly full.** Andy: real cost, unlikely case. Filed as
    NW_Logger#2 with the cost (a FAT scan is tens of seconds; a directory-size
    proxy is milliseconds) and the benefit (about 150 card-years on 8 GB at one
@@ -1167,6 +1170,12 @@ record/power/time column proposal.
    `TELEMETRY_BEHIND` CAUGHT message when the backlog passes twice the push
    count; cleared by a successful push; a column in the data file so the gap is
    visible in the record. Depends on requisites 4 and 6 (connected vs sent).
+   **Filed as Okapi_Library#10** (2026-10-22) after reading the code: `_logCount`
+   and `_lastSdIndex` are RAM, `_logCount` is zeroed before the 180 s wait, and
+   the push sends a fixed five rows, so a failed push, a reset, or time on
+   backup power all drop rows from telemetry for good. The marker of the last
+   successful push, in the status file, is the state; the backlog is derived
+   from the data file and survives a boot cycle because the rows do.
 5. **The clock lost power since the last run** (DS3231 OSF). Andy: wants to
    discuss, and wants recovery. Three parts:
    (a) **Distinguish it**: `CLOCK_LOST` (still BAD, the time is wrong) with its
