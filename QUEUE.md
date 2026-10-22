@@ -1027,7 +1027,6 @@ when a message is added.
 | 3 | INTERVAL_LENGTHENED | fine | yes |
 | 4 | INTERVAL_SHORTENED | fine | no (adaptive sampling, NW_Logger#1) |
 | 5 | CLOCK_SET | fine | yes |
-| 6 | BATTERY_LOW | caught | no (gated on the four bench readings) |
 | 7 | BME_MISSING | caught | yes |
 | 8 | ROW_NOT_WRITTEN | caught | yes |
 | 9 | NOTE_TRUNCATED | caught | yes |
@@ -1042,8 +1041,8 @@ when a message is added.
 | 18 | SENSOR_MISSING | actively bad | yes |
 | 19 | CLOCK_NOT_SET | actively bad | yes |
 
-Twenty, as `NW_Message.h` has them (this table was 13 plus three to add until
-2026-10-21). The order inside the actively-bad band is a rule `worstMessage()`
+Nineteen, as `NW_Message.h` has them (BATTERY_LOW removed 2026-10-22: battery
+state is the chirp's colour; the numbers above 5 shift down by one). The order inside the actively-bad band is a rule `worstMessage()`
 relies on and is still on Andy's desk (item 6).
 
 The categories are Andy's, in a stoplight sense, and they are about **the action
@@ -1105,6 +1104,22 @@ The division of labour that follows:
   D5 sequence and goes dark with it. A healthy Okapi looks like a healthy
   Margay: dark grid, blue chirp. Lockstep blinking rejected on the evidence
   (`studies/okapi-leds/6-cognitive-science.md`).
+- **The chirp follows the faults** (Andy, 2026-10-22): long-short-short means
+  the logger is running, so it plays after every fault segment, and is left
+  out only when rows cannot reach the card on a schedule: the card messages
+  and NO_SCHEDULE (the FLUTTER and SOLID rhythms). An unset clock or a missing
+  sensor plays its rhythm and then the chirp. `nwChirpAfter()`, checked over
+  all 2^20 sets.
+- **Battery state is the chirp's colour, not a message** (Andy, 2026-10-22):
+  blue good, purple middling, red low ("swap before you leave"; red is
+  coherent here because the chirp is only ever seen with a person present).
+  `BATTERY_LOW` leaves the vocabulary; the voltage column in every row is the
+  record. With a card fault or no schedule the chirp does not play and the
+  battery is read from the file. Not built yet: it waits on the thresholds
+  (Andy's, Page 1 battery block) and on the USB discriminator,
+  **Margay_Library#34** (the TLV3691/TPS2104 USB-present signal reaches no MCU
+  pin; sense the RX line in v3 firmware, wire N$14 to PA5/PA6 in v4; four bench
+  readings are the acceptance test).
 - **The 20 ms row blip stays.** Bloch's law says it fades first in sun; its
   observer is at a bench, where it has never been missed.
 - **Built 2026-10-21** (NW_Logger 8f1c53e, 2c26197): `nwVerdictSequence()`
