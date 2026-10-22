@@ -1144,6 +1144,57 @@ at the first upload), C = on-board hardware (7). One cell per item would need
 uniform-colour LEDs on the next board revision. These replace the earlier
 record/power/time column proposal.
 
+### Six more messages, and Andy's disposition of each (2026-10-22)
+
+1. **Why the board last reset** (MCUSR: power-on, external = the watchdog's
+   RSTn, brown-out, internal watchdog). Andy: useful. Requisite: read MCUSR
+   once in `begin()`, raise `RESET_BY_WATCHDOG` / `BROWN_OUT` as CAUGHT, clear
+   the register. Both boards.
+2. **A sensor that answers but reports a fault.** Today `noteFrom(s)` and
+   `statusRow("report", s)` already put the device's Report register into the
+   Note column and the status file (NW_Logger.cpp:932, 1011), but no logger
+   message is raised, so the LED says nothing. Andy asked whether Margay needs
+   it too: yes, it is NW_Logger's, so both boards get it on the RGB LED as the
+   amber band; the Note already names the device. Requisite: `SENSOR_FAULT`
+   (CAUGHT) raised when a watched device's `report().isFault()`.
+3. **Card nearly full.** Andy: real cost, unlikely case. Filed as
+   NW_Logger#2 with the cost (a FAT scan is tens of seconds; a directory-size
+   proxy is milliseconds) and the benefit (about 150 card-years on 8 GB at one
+   row a minute).
+4. **Rows waiting to be sent** (Okapi). Andy: develop it. Sketch: a counter of
+   rows since the last successful push, kept on the card (a line in the status
+   file, so it survives a reset) and mirrored in a Page 2 register; a
+   `TELEMETRY_BEHIND` CAUGHT message when the backlog passes twice the push
+   count; cleared by a successful push; a column in the data file so the gap is
+   visible in the record. Depends on requisites 4 and 6 (connected vs sent).
+5. **The clock lost power since the last run** (DS3231 OSF). Andy: wants to
+   discuss, and wants recovery. Three parts:
+   (a) **Distinguish it**: `CLOCK_LOST` (still BAD, the time is wrong) with its
+   own word, so the Note says "bring a coin cell" rather than "set the clock".
+   DS3231 has `oscillatorCheck()`; the logger folds it into CLOCK_NOT_SET today
+   (NW_Logger.cpp:329).
+   (b) **Recover a provisional time on the logger alone**: when OSF is set and
+   the card has a data file, read the last row's timestamp, add the boot time,
+   set the clock to that, and raise `TIME_ESTIMATED` so every row until a real
+   set carries the flag in Note. The estimate is a lower bound: it misses the
+   whole outage. Still better than 2000-01-01, and the flag makes it
+   correctable.
+   (c) **Set from the mobile network on Okapi, as standard**: the Particle has
+   network time; it needs a Feather-to-MCU path, the same path requisite 5
+   (commands received) needs. One design serves both.
+   (d) **Measure computer-vs-logger offset on every plug-in**, Margay and Okapi:
+   the host reads the logger's time, computes the offset, writes it to the
+   status file and the registry, and offers to set. The SetTime tool already
+   sends a stamp; this adds the read-back and the record. Lives in NW-Provision
+   or the SetTime GUI.
+6. **Board temperature and RH out of range.** Andy: temperature and RH, yes.
+   The BME280 gives both; high RH inside the enclosure is the condensation
+   warning. CAUGHT, thresholds Andy's, Page 1 has room.
+
+Order of build, proposed: 1, 2, 6 first (small, both boards, no new hardware
+path); then 5a and 5b; 4, 5c and requisite 5 together once the Feather path is
+designed; 5d in the host tool.
+
 ### Okapi's grid: five design notes (2026-10-20)
 
 Okapi's eight extra LEDs are a 3×3 grid with the top-middle cell empty, fixed
