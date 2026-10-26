@@ -1093,7 +1093,9 @@ The division of labour that follows:
   the amber, since the three card messages are mutually exclusive. **The
   amber segment carries a count prefix** (Andy, 2026-10-21): one 100 ms blip
   per CAUGHT message raised, 200 ms dark between blips, then 300 ms dark,
-  then the 500/500 x3. Six raisable today: 1600 + 300 + 3000 = 4.9 s at most.
+  then the 500/500 x3 with the last gap dropped, so the segment ends on light
+  and the separator after it is the same second as after every other segment
+  (Andy, 2026-10-26). Seven CAUGHT messages exist: 4.7 s at most.
   100/200 (3.3 per second) was chosen over 40/100 because flashes are counted
   accurately only up to about 4 per second (Cheatham and White 1952) and a
   7 Hz train resembles the card flutter. Longest sequence 5 segments, 21 s. FINE messages stay file-only; the chirp
