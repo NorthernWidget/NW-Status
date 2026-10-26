@@ -1104,12 +1104,15 @@ The division of labour that follows:
   D5 sequence and goes dark with it. A healthy Okapi looks like a healthy
   Margay: dark grid, blue chirp. Lockstep blinking rejected on the evidence
   (`studies/okapi-leds/6-cognitive-science.md`).
-- **The chirp follows the faults** (Andy, 2026-10-22): long-short-short means
-  the logger is running, so it plays after every fault segment, and is left
-  out only when rows cannot reach the card on a schedule: the card messages
-  and NO_SCHEDULE (the FLUTTER and SOLID rhythms). An unset clock or a missing
-  sensor plays its rhythm and then the chirp. `nwChirpAfter()`, checked over
-  all 2^20 sets.
+- **The chirp follows the faults, in three forms** (Andy, 2026-10-22 and
+  2026-10-26): long-short-short means the logger is running and saving. A
+  card fault stops saving but not the cycle (it still reads, reports over
+  serial, and on Okapi posts), so the chirp keeps its 1000 ms long and 300 ms
+  pause and ends in five of the card flutter's 60/60 pulses in red instead of
+  the two shorts: "running, not saving", 1.9 s. NO_SCHEDULE stops the cycle
+  and leaves no chirp, and outranks the card. An unset clock or a missing
+  sensor plays its rhythm and then the full chirp. `nwChirpForm()`, checked
+  over all 2^20 sets; `chirp(form)` renders it and is virtual for Okapi.
 - **Battery state is the chirp's colour, not a message** (Andy, 2026-10-22):
   blue good, purple middling, red low ("swap before you leave"; red is
   coherent here because the chirp is only ever seen with a person present).
