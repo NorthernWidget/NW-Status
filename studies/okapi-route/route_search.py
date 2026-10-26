@@ -158,8 +158,8 @@ for l,y,x in path:
     arr[max(0,y-2):y+3,max(0,x-2):x+3]=(0,255,255) if l==0 else (255,0,255)
 for a,b in zip(path,path[1:]):
     if a[0]!=b[0]: y,x=a[1],a[2]; arr[max(0,y-6):y+7,max(0,x-6):x+7]=(255,255,255)
-Image.fromarray(arr).save('/tmp/okapi_route/route_"+os.environ.get("CL","x")+".png')
+Image.fromarray(arr).save('route_%s.png' % os.environ.get("CL","x"))
 # zoomed crop around the path
 ys_=[p[1] for p in path]; xs_=[p[2] for p in path]
 crop=Image.fromarray(arr).crop((max(0,min(xs_)-80),max(0,min(ys_)-80),min(W,max(xs_)+80),min(H,max(ys_)+80)))
-crop.save('/tmp/okapi_route/crop_"+os.environ.get("CL","x")+".png'); print('images written')
+crop.save('crop_%s.png' % os.environ.get("CL","x")); print('images written')
