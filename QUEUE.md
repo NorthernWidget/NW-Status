@@ -1150,7 +1150,7 @@ duplicates D5. Andy's list, and what detects each today (checked 2026-10-22):
 
 | # | Item | Detection today | Requisite task before a cell can light |
 |---|---|---|---|
-| 1 | rechargeable battery | VBeta, IBeta read; `powerAuto()` rail test into `_powerState` | decide which of VBeta/VPrime is the LiPo (Okapi.cpp:397); a threshold; a message |
+| 1 | rechargeable battery | `readOnBoard()` reads `_adcOb` at 0x48, **a chip not on the v1.0 schematic**; the batteries are on the PAC1934 (U32): ch1 V_PRIME, ch2 V_LI (the cell), ch3 V_BETA, ch4 V_SOLAR, never read; `powerAuto()` rail test into `_powerState` | drive the PAC1934; a LiPo curve and threshold; presence from cell current, and under sun by shutting the charger: **Project-Okapi#30** (re-land `!FAULT` on `!SHDN`, trade-off recorded there) |
 | 2 | solar panel | ISolar from ADS1115 ch 1 ("FIX! adjust gain"); `!CHRG` goes to expander GPA3 and is never read; V_SOLAR_SENSE goes to the PAC1934, not the ADS1115 | read `!CHRG`; check what ADS1115 ch 1 measures; a message |
 | 3 | alkaline backup | `powerAuto()` returns 1 when running on VPrime | raise a CAUGHT message from `_powerState` |
 | 4 | Particle talks | FeatherGPIO handshake inside the 180 s wait, after the fifth row | raise a message from the handshake result |
