@@ -1243,6 +1243,18 @@ Order of build, proposed: 1, 2, 6 first (small, both boards, no new hardware
 path); then 5a and 5b; 4, 5c and requisite 5 together once the Feather path is
 designed; 5d in the host tool.
 
+### The grid's first job: being on backup power (Andy, 2026-10-27)
+
+On the status LED `ON_BACKUP_POWER` is one blip in the amber's count like any
+other caught message, and the red chirp that follows says what it was. Andy:
+"Being on backup battery feels like a job for the LED array... alongside the
+yellow because it is an Okapi-specific serious fault." Record for when the grid
+comes back: the grid lights its power cell for the backup-in-use state while
+the amber plays, so the Okapi-only fault that the shared vocabulary can only
+count gets a place of its own in space. Under the Okapi-only mapping that is
+column A (power), the yellow cell, or whichever cell the final mapping gives
+the backup. First use of the grid, ahead of the rest of #9.
+
 ### Okapi's grid: five design notes (2026-10-20)
 
 Okapi's eight extra LEDs are a 3×3 grid with the top-middle cell empty, fixed
