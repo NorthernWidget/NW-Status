@@ -1243,6 +1243,28 @@ Order of build, proposed: 1, 2, 6 first (small, both boards, no new hardware
 path); then 5a and 5b; 4, 5c and requisite 5 together once the Feather path is
 designed; 5d in the host tool.
 
+### Okapi LED work, ordered (Andy, 2026-10-27)
+
+1. **Thresholds, decided**: LiPo 3.6 / 3.9 V stand (purple spans about half the
+   cell's capacity, time enough to get there); the alkaline pack is judged as a
+   whole, 3.3 / 3.75 V for a three-cell pack, because per-cell is not measured.
+   Solar-online 5 V stands as a placeholder.
+2. **Okapi_Library#9** (the grid's start-up power picture): decide what the grid
+   still shows now that the series on D5 carries LiPo, backup and solar.
+3. **Reset cause, sensor fault, temperature and RH, telemetry connected vs
+   sent, charger stopped**: the caught messages Okapi lacks, each an amber
+   blip and a word in the file.
+4. **The unfed watchdog** (DONE on the expander).
+5. Later, in this order: a bench run on a real Okapi; pin 0 reclaimed from
+   `ADC_Sense_SW`; ISolar and IBeta off the phantom 0x48 ADC and 0x48 out of
+   the boot sweep; shunt values for the PAC1934's current channels; LiPo
+   presence under sun (Project-Okapi#30).
+6. Grid, later: the PCA9634 driver; the verdict display and its column groups
+   and field behaviour; silkscreen and orientation; modem phases on the first
+   upload if the first push moves to boot.
+7. **NW-Sim Okapi model** with a PAC1934 and PCA9634: its own session; an
+   NW-Sim issue to file.
+
 ### The grid's first job: being on backup power (Andy, 2026-10-27)
 
 On the status LED `ON_BACKUP_POWER` is one blip in the amber's count like any
@@ -1251,9 +1273,12 @@ other caught message, and the red chirp that follows says what it was. Andy:
 yellow because it is an Okapi-specific serious fault." Record for when the grid
 comes back: the grid lights its power cell for the backup-in-use state while
 the amber plays, so the Okapi-only fault that the shared vocabulary can only
-count gets a place of its own in space. Under the Okapi-only mapping that is
-column A (power), the yellow cell, or whichever cell the final mapping gives
-the backup. First use of the grid, ahead of the rest of #9.
+count gets a place of its own in space. **Proposed cell: A2, the yellow of the
+power column** (column A is power in the Okapi-only mapping; yellow is the
+caught band, which is what ON_BACKUP_POWER is), lit steady for the whole D5
+sequence. First use of the grid, ahead of the rest of #9. **The lamp test is
+during boot**: all eight cells while the aux LED says busy, out when it goes
+out, so a dead cell shows before a verdict depends on it.
 
 ### Okapi's grid: five design notes (2026-10-20)
 
