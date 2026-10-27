@@ -1125,19 +1125,25 @@ The division of labour that follows:
   **Margay_Library#34** (the TLV3691/TPS2104 USB-present signal reaches no MCU
   pin; sense the RX line in v3 firmware, wire N$14 to PA5/PA6 in v4; four bench
   readings are the acceptance test).
-- **Built 2026-10-27, TEMPORARY, Okapi only**: the chirp's colour from the
-  battery. `NW_Logger::chirpColour()` is a hook (blue by default); Okapi reads
-  the PAC1934 (U32: VBUS 1 = V_PRIME, 2 = V_LI, 3 = V_BETA, 4 = V_SOLAR), found
-  by product ID since R51 has no value, and answers blue / purple / red from
-  the LiPo, or from the alkaline backup when V_LI is below 2.5 V or
-  `powerAuto()` chose the backup; then `ON_BACKUP_POWER` (CAUGHT, new, the
-  twentieth message) is raised and the chirp gains a third short
-  (`NW_CHIRP_BACKUP`). The row's VPrime and VBeta columns now come from the
-  PAC1934 instead of the absent 0x48 ADC. **Placeholder thresholds, Andy's to
-  set**: LiPo low 3.6 V, middling 3.9 V; alkaline 1.10 and 1.25 V a cell with
-  the pack taken as three cells. The worse-of-two rule (2026-10-26) is not yet
-  applied: the LiPo is judged alone while present. Not bench-tested: NW-Sim
-  has no Okapi model. Margay's chirp stays blue.
+- **Built 2026-10-27, TEMPORARY, Okapi only: the power story in series on
+  the status LED** (Andy's design, same day, updated twice). (1) Margay's
+  long-short-short in the LiPo's colour, every time: blue above 3.9 V, purple
+  above 3.6 V, red below or absent. (2) 500 ms dark, then "ba bap, ba bap
+  bap" in the alkaline backup's colour: ba 200 ms, bap 100 ms, 100 ms dark
+  inside a group, 300 ms at the comma. (3) If V_SOLAR is above 5 V, 500 ms
+  dark and one slow swell of warm white, dark to full and back in 32 steps of
+  30 ms (the luminosity byte of the colour word); a 60 ms two-colour trill
+  was tried first and judged a warning. `NW_Logger::chirpColour()` is the
+  hook (blue by default), `Okapi::chirp()` overrides and appends. Readings
+  from the PAC1934 (U32: VBUS 1 = V_PRIME, 2 = V_LI, 3 = V_BETA, 4 =
+  V_SOLAR), found by product ID since R51 has no value; the row's VPrime and
+  VBeta columns now come from it instead of the absent 0x48 ADC.
+  `ON_BACKUP_POWER` (CAUGHT, the twentieth message) is raised when V_LI is
+  below 2.5 V or `powerAuto()` chose the backup; it changes the file and the
+  amber count, not the chirp (the third-short form was built and removed the
+  same day). **Placeholder thresholds, Andy's to set**: LiPo 3.6 / 3.9 V;
+  alkaline 1.10 / 1.25 V a cell, three cells; solar online 5 V. Not
+  bench-tested: NW-Sim has no Okapi model. Margay's chirp stays blue.
 - **The 20 ms row blip stays.** Bloch's law says it fades first in sun; its
   observer is at a bench, where it has never been missed.
 - **Built 2026-10-21** (NW_Logger 8f1c53e, 2c26197): `nwVerdictSequence()`
