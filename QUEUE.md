@@ -1027,13 +1027,14 @@ when a message is added.
 | 3 | INTERVAL_LENGTHENED | fine | yes |
 | 4 | INTERVAL_SHORTENED | fine | no (adaptive sampling, NW_Logger#1) |
 | 5 | CLOCK_SET | fine | yes |
-| 7 | BME_MISSING | caught | yes |
-| 8 | ROW_NOT_WRITTEN | caught | yes |
-| 9 | NOTE_TRUNCATED | caught | yes |
-| 10 | CYCLE_OVERRAN | caught | yes |
-| 11 | BACKUP_WOKE | caught | no (alarm work) |
-| 12 | ONBOARD_MISSING | caught | yes |
-| 13 | PAGE0_INVALID | caught | yes |
+| 6 | BME_MISSING | caught | yes |
+| 7 | ROW_NOT_WRITTEN | caught | yes |
+| 8 | NOTE_TRUNCATED | caught | yes |
+| 9 | CYCLE_OVERRAN | caught | yes |
+| 10 | BACKUP_WOKE | caught | no (alarm work) |
+| 11 | ONBOARD_MISSING | caught | yes |
+| 12 | PAGE0_INVALID | caught | yes |
+| 13 | ON_BACKUP_POWER | caught | Okapi, from the PAC1934 (2026-10-27) |
 | 14 | CARD_MISSING | actively bad | yes |
 | 15 | CARD_UNREADABLE | actively bad | yes |
 | 16 | CARD_WRITE_FAILED | actively bad | yes |
@@ -1041,9 +1042,8 @@ when a message is added.
 | 18 | SENSOR_MISSING | actively bad | yes |
 | 19 | CLOCK_NOT_SET | actively bad | yes |
 
-Nineteen, as `NW_Message.h` has them (BATTERY_LOW removed 2026-10-22: battery
-state is the chirp's colour; the numbers above 5 shift down by one). The order inside the actively-bad band is a rule `worstMessage()`
-relies on and is still on Andy's desk (item 6).
+Twenty, as `NW_Message.h` has them (BATTERY_LOW removed 2026-10-22: battery
+state is the chirp's colour; ON_BACKUP_POWER added 2026-10-27).
 
 The categories are Andy's, in a stoplight sense, and they are about **the action
 required**: fine means none, caught means act at the next visit, actively bad
@@ -1125,6 +1125,19 @@ The division of labour that follows:
   **Margay_Library#34** (the TLV3691/TPS2104 USB-present signal reaches no MCU
   pin; sense the RX line in v3 firmware, wire N$14 to PA5/PA6 in v4; four bench
   readings are the acceptance test).
+- **Built 2026-10-27, TEMPORARY, Okapi only**: the chirp's colour from the
+  battery. `NW_Logger::chirpColour()` is a hook (blue by default); Okapi reads
+  the PAC1934 (U32: VBUS 1 = V_PRIME, 2 = V_LI, 3 = V_BETA, 4 = V_SOLAR), found
+  by product ID since R51 has no value, and answers blue / purple / red from
+  the LiPo, or from the alkaline backup when V_LI is below 2.5 V or
+  `powerAuto()` chose the backup; then `ON_BACKUP_POWER` (CAUGHT, new, the
+  twentieth message) is raised and the chirp gains a third short
+  (`NW_CHIRP_BACKUP`). The row's VPrime and VBeta columns now come from the
+  PAC1934 instead of the absent 0x48 ADC. **Placeholder thresholds, Andy's to
+  set**: LiPo low 3.6 V, middling 3.9 V; alkaline 1.10 and 1.25 V a cell with
+  the pack taken as three cells. The worse-of-two rule (2026-10-26) is not yet
+  applied: the LiPo is judged alone while present. Not bench-tested: NW-Sim
+  has no Okapi model. Margay's chirp stays blue.
 - **The 20 ms row blip stays.** Bloch's law says it fades first in sun; its
   observer is at a bench, where it has never been missed.
 - **Built 2026-10-21** (NW_Logger 8f1c53e, 2c26197): `nwVerdictSequence()`
