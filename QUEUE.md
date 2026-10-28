@@ -1267,7 +1267,14 @@ LDO from V_BETA directly (3.0-4.2 V into a 3.3 V LDO) and keep the TLV61220
 only for whatever needs 5 V at low power; halves the Li-ion sleep draw of the
 core path. **To check**: the FRAM's part number and standby current; the
 LTC4412 and LT3652 figures against their datasheets; a measured Okapi sleep
-current once a board exists.
+current once a board exists. **Filed as Project-Okapi#31** (2026-10-28), a
+bug: the B-SoM socket's 3V3 input (nRF52840 and logic, 150 mA minimum,
+500 mA recommended, Particle B404X datasheet) has no source on v1.0, since
+`3V3_FEATHER` is only the Feather socket's output pin; the modem's VCC is on
+the cell through U10 (2 A) and needs no 3.3 V regulator. Recommendations
+there: a switched 500 mA 3.3 V regulator for the SoM, a TPS63900-class
+buck-boost for the core instead of boost-then-LDO (a direct LDO fails in the
+cold), and a hardware-low default for the PAC1934.
 
 ### Okapi LED work, ordered (Andy, 2026-10-27)
 
