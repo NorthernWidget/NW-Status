@@ -1284,7 +1284,11 @@ messaging, decided (Andy, 2026-10-28), in two halves.** (1) Built: the
 per-row blip on D5 is the level of the pack carrying the logger, blue,
 purple or red, the chirp's own three, from the rechargeable pack or from
 the backup once it has taken over (`NW_Logger::rowBlipColour()` hook, blue
-by default; Okapi's override). Margay's blip stays blue. (2) When the PCA9634
+by default; Okapi's override). **Margay too** (Andy, 2026-10-28): its chirp
+and blip carry the pack's level from the alkaline fit's percentage, red
+below 20 %, purple below 50 %, placeholders for Page 1; below 3.4 V no
+judgement (blue), the stand-in for Margay_Library#34's USB discriminator,
+since USB alone reads 3.29 V. (2) When the PCA9634
 driver exists: a 20 ms flash on the grid beside the blip says which pack,
 green A1 for the rechargeable, yellow A2 for the backup, the driver woken
 and slept around it: about 0.15 mA.s a row, under 3 uA average at one-minute
