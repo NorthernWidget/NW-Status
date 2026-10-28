@@ -1243,6 +1243,32 @@ Order of build, proposed: 1, 2, 6 first (small, both boards, no new hardware
 path); then 5a and 5b; 4, 5c and requisite 5 together once the Feather path is
 designed; 5d in the host tool.
 
+### Okapi's sleep floor against Margay's 1.6 uA (Andy, 2026-10-28)
+
+Margay sleeps at about 1.6 uA measured (Andy): the MCU in power-down, the
+TPS79733's 1.2 uA, the TPL5010's 35 nA, and the whole 3V3_AUX rail switched
+off by the TPS22916. Okapi's floor, from the schematic and datasheets
+(2026-10-28):
+
+| Always-on part | Rail | Sleep draw | Source |
+|---|---|---|---|
+| PAC1934 (U32), !PWRDN tied to 3V3_CORE | 3V3_CORE | **585 uA at its power-up rate of 1024 samples/s**; 16 uA at 8/s; 5 uA asleep | DS20005850E Table 1-2 |
+| TLV61220 boost (U1) on the Li-ion core path, then the TPS797 LDO from 5 V | V_BETA | 5.5 uA plus the chain's inefficiency: roughly doubles the core's draw in sleep, half again awake | TLV61220 DS; TPS797 DS |
+| MB85RC FRAM (U35), part number not in the schematic | 3V3_CORE | tens of uA for some MB85RC parts: UNVERIFIED | - |
+| LTC4412 ideal diode (U7) | V_LI | about 11 uA (from memory, UNVERIFIED) | - |
+| LT3652 charger (U4), shut down | V_SOLAR | about 15 uA (from memory, UNVERIFIED) | - |
+| MCP23018, PCA9634 (powers up asleep), TPL5111, BQ2980, load switches, logic | various | a few uA together | datasheets |
+
+**Fixed 2026-10-28 in firmware**: the PAC1934 is put in single-shot mode at
+first contact (CTRL bit 4), one conversion per row, 5 uA between; before any
+firmware touched it the chip ran at 1024 samples/s continuously, which alone
+was hundreds of microamps. **Proposed for the next board**: feed the core
+LDO from V_BETA directly (3.0-4.2 V into a 3.3 V LDO) and keep the TLV61220
+only for whatever needs 5 V at low power; halves the Li-ion sleep draw of the
+core path. **To check**: the FRAM's part number and standby current; the
+LTC4412 and LT3652 figures against their datasheets; a measured Okapi sleep
+current once a board exists.
+
 ### Okapi LED work, ordered (Andy, 2026-10-27)
 
 1. **Thresholds, decided**: the rechargeable pack is **three 18650 Li-ion cells
