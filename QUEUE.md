@@ -1280,13 +1280,16 @@ count gets a place of its own in space. **Proposed cell: A2, the yellow of the
 power column** (column A is power in the Okapi-only mapping; yellow is the
 caught band, which is what ON_BACKUP_POWER is), lit steady for the whole D5
 sequence. First use of the grid, ahead of the rest of #9. **Full-time
-messaging, decided and built (Andy, 2026-10-28): the per-row blip on D5
-carries the power source.** Blue per row on the rechargeable pack, exactly
-as Margay's; amber per row while the backup carries the logger. No cost
-beyond the blip that already exists, and the array stays asleep (a steady A2
-would have cost about 7.5 mA, ninety times the sleep budget, from the pack
-that is the last resort). `NW_Logger::rowBlipColour()` is the hook, blue by
-default; Okapi answers amber from `_onBackup`, set in `readOnBoard()`. **The lamp test is
+messaging, decided (Andy, 2026-10-28), in two halves.** (1) Built: the
+per-row blip on D5 is the level of the pack carrying the logger, blue,
+purple or red, the chirp's own three, from the rechargeable pack or from
+the backup once it has taken over (`NW_Logger::rowBlipColour()` hook, blue
+by default; Okapi's override). Margay's blip stays blue. (2) When the PCA9634
+driver exists: a 20 ms flash on the grid beside the blip says which pack,
+green A1 for the rechargeable, yellow A2 for the backup, the driver woken
+and slept around it: about 0.15 mA.s a row, under 3 uA average at one-minute
+logging. A steady cell would have cost about 7.5 mA, ninety times the sleep
+budget, from the pack that is the last resort, which is why it is a flash. **The lamp test is
 during boot**: all eight cells while the aux LED says busy, out when it goes
 out, so a dead cell shows before a verdict depends on it.
 
