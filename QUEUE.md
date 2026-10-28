@@ -1279,15 +1279,14 @@ the amber plays, so the Okapi-only fault that the shared vocabulary can only
 count gets a place of its own in space. **Proposed cell: A2, the yellow of the
 power column** (column A is power in the Okapi-only mapping; yellow is the
 caught band, which is what ON_BACKUP_POWER is), lit steady for the whole D5
-sequence. First use of the grid, ahead of the rest of #9. **Andy wants it
-full-time** ("Full-time messaging seems important here", 2026-10-27). The
-cost, from the PCA9634 datasheet: the part draws 2.5 mA whenever it is awake
-and a lit cell about 5 mA, so a steady cell is about 7.5 mA, 180 mAh a day,
-ninety times the 80 uA sleep budget, drawn from the alkaline pack that is
-already the last resort. Proposed instead: a 100 ms blip of A2 at every row
-while on backup, the part woken and slept around it, about 12 uA average at
-one-minute logging and less at longer intervals, the same idea as D5's blue
-blip per row. Andy's call. **The lamp test is
+sequence. First use of the grid, ahead of the rest of #9. **Full-time
+messaging, decided and built (Andy, 2026-10-28): the per-row blip on D5
+carries the power source.** Blue per row on the rechargeable pack, exactly
+as Margay's; amber per row while the backup carries the logger. No cost
+beyond the blip that already exists, and the array stays asleep (a steady A2
+would have cost about 7.5 mA, ninety times the sleep budget, from the pack
+that is the last resort). `NW_Logger::rowBlipColour()` is the hook, blue by
+default; Okapi answers amber from `_onBackup`, set in `readOnBoard()`. **The lamp test is
 during boot**: all eight cells while the aux LED says busy, out when it goes
 out, so a dead cell shows before a verdict depends on it.
 
