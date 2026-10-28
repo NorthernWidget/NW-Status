@@ -1246,11 +1246,11 @@ designed; 5d in the host tool.
 ### Okapi LED work, ordered (Andy, 2026-10-27)
 
 1. **Thresholds, decided**: the rechargeable pack is **three 18650 Li-ion cells
-   in series** (Andy, 2026-10-27), so V_LI is judged at 10.8 / 11.7 V (3.6 /
-   3.9 V a cell: purple spans about half the pack's capacity), absent below
-   7.5 V; the alkaline pack is judged as a whole, 3.3 / 3.75 V for three cells,
+   in parallel** (Andy, 2026-10-28), so V_LI is one cell's voltage, judged at
+   3.6 / 3.9 V (purple spans about half the pack's capacity), absent below
+   2.5 V; the alkaline pack is judged as a whole, 3.3 / 3.75 V for three cells,
    because per-cell is not measured. Solar-online 5 V stands as a placeholder.
-   Built (Okapi_Library 6c12d28).
+   Built (Okapi_Library, 2026-10-28).
 2. **Okapi_Library#9** (the grid's start-up power picture): decide what the grid
    still shows now that the series on D5 carries LiPo, backup and solar.
 3. **Reset cause, sensor fault, temperature and RH, telemetry connected vs
