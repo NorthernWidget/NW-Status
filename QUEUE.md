@@ -1295,6 +1295,40 @@ there: a switched 500 mA 3.3 V regulator for the SoM, a TPS63900-class
 buck-boost for the core instead of boost-then-LDO (a direct LDO fails in the
 cold), and a hardware-low default for the PAC1934.
 
+### Okapi hardware audit (2026-10-30): the fixes, the KiCad base, the order
+
+Three agent studies in `studies/okapi-hardware-audit/` (issues.md, kicad.md,
+unfiled.md), each checked against `Okapi.sch`/`Okapi.brd` and datasheets.
+Headlines, verified by me where marked:
+
+- **KiCad**: the raw import (6b6530f) and the power-net fix (faaf72e) are sound:
+  board object-for-object (252 footprints, 3897 tracks, 345 vias, 16 zones, all
+  972 pad nets identical), 206 of 209 nets exact. **HEAD (fb54477) is broken**:
+  it deleted 62 global labels on Okapi_3 while meaning to add 7 no-connects,
+  losing 54 connections and fragmenting GND, 3V3_CORE, FEATHER_BAT, LOG_INT and
+  V_PRIME_SENSE (verified: 120 -> 58 global labels). Repair: restore the labels
+  from faaf72e, keep the 7 no-connects; then footprint library, design rules
+  (the project has KiCad's 0.2 mm default, not the board's 5 mil), two keepouts,
+  ERC hygiene. Eagle-origin discrepancies to decide: J9-67/74 and the two load
+  switches' QOD pins connected on the board, not the schematic; V_SOLAR_IN is an
+  unrouted airwire.
+- **Issues**: 22 hardware issues traced. Not reproducible: #16 (MCP23018 GPIO
+  is 5.5 V tolerant), #22 (dividers are the datasheets' own values); #15/#17/#28
+  mislocate IC1's supply (it is 3V3_CORE); #27 misreads the TPL5111 (see the
+  watchdog correction); #29 resolved (SDA_OB and SDA_EXT are separated by U24).
+  New and serious: **LT3652 SENSE and BAT are both on V_LI, no RSENSE** (verified
+  in the schematic; the datasheet sets charge current by RSENSE = 0.1 V /
+  ICHG(MAX) between those pins); C40-C42 are 0603 parts on 0402 pads; no discrete
+  I2C pull-ups. #30 strengthened: TIMER is grounded and NTC floats, so !FAULT can
+  never assert on this board and re-landing it costs nothing.
+- **Unfiled**: 11 items, each with an issue summary in unfiled.md.
+- **Before a first board, ranked** (issues.md): PAC1934 shunts and address
+  resistor values (#21, R51); the SoM 3.3 V regulator (#31); the charger RSENSE;
+  0402/0603 footprints and crystal caps (#28.3, #18); MOSFET part numbers (#7);
+  !SHDN re-land (#30); the TPL5111 interval resistor; AREF/AVCC filtering
+  (#15/#28.2); VCC caps (#17). About 12 schematic edits, 10 layout edits, 9 BoM
+  values. The rest can wait a revision.
+
 ### Okapi LED work, ordered (Andy, 2026-10-27)
 
 1. **Thresholds, decided**: the rechargeable pack is **three 18650 Li-ion cells
