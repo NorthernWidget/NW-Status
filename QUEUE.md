@@ -974,6 +974,25 @@ a transcript reaches.
 
 ## Okapi's watchdog is not being fed (found 2026-10-09)
 
+**Corrected 2026-10-30: Okapi's TPL5111 is not the MCU's watchdog.** Read from
+`Okapi.sch` and the TI datasheet (pin functions, DS "TPL5111"): its DRVn output
+(active high, asserted every interval tIP in timer mode, which EN/ONE_SHOT tied
+to 3V3_CORE selects) drives U10, the TPS22917 that switches the Feather's battery
+input (`FEATHER_BAT`); its DONE input is the net `WD_DONE`, which goes only to the
+FeatherWing socket's A3 and the B-SoM's ADC3, so the telemetry module, not the
+ATmega, says "done" and powers itself off; its DELAY/M_DRV pin (N$63, R62 330 k,
+outside the 170 k maximum, issue #10 in the unfiled list) is also pulled through
+Q3 by `FEATHER_EN` from the expander, which is the manual power-on the datasheet
+describes. So the part is a power timer for the SoM: it wakes the modem every
+tIP on its own and the MCU can also wake it, and the modem ends its own session.
+`resetWDT()` pulsing pin 23 on Okapi feeds nothing (and pin 23 is Sw_Bus_Prime,
+issue #4). There is no hardware watchdog for the MCU on Okapi v1.0 at all; the
+AVR's internal watchdog is the only one. Issue #27 ("TPL5111 hardware watchdog
+timer not suppressible by firmware"), the section below, the firmware comment at
+Okapi.cpp:27-32 and the LED work list's "unfed watchdog" item all carried the
+misreading; the section below is kept as the record of it.
+
+
 While setting `wdtSeconds` from the datasheet, Okapi's watchdog turned out not to
 be connected to the firmware at all. Three facts, all from `Okapi.sch`:
 
@@ -1289,7 +1308,11 @@ cold), and a hardware-low default for the PAC1934.
 3. **Reset cause, sensor fault, temperature and RH, telemetry connected vs
    sent, charger stopped**: the caught messages Okapi lacks, each an amber
    blip and a word in the file.
-4. **The unfed watchdog** (DONE on the expander).
+4. ~~The unfed watchdog~~ There is none: the TPL5111 is the SoM's power timer
+   (corrected 2026-10-30, see "Okapi's watchdog is not being fed"). What
+   replaces this item: decide whether the MCU needs a hardware watchdog on the
+   next board, and fix `resetWDT()`/`WDHold` on Okapi, which pulse a pin that is
+   the primary bus switch.
 5. Later, in this order: a bench run on a real Okapi; pin 0 reclaimed from
    `ADC_Sense_SW`; ISolar and IBeta off the phantom 0x48 ADC and 0x48 out of
    the boot sweep; shunt values for the PAC1934's current channels; LiPo
