@@ -17,7 +17,11 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    (`kicad-cli sch export netlist --format kicadxml`), run `compare.py` against
    the Eagle pinrefs: 206 of 209 nets exact, 0 lost connections, no fragmented
    nets. About an hour, mostly the check.
-2. **Redraw the two status-LED wires** at D5 so N$59 reaches GREEN_CATH without
+2. **DONE 2026-10-30** (Project-Okapi, "separate the status LED's green and red
+   cathodes"): the fault was a placement collision, R43's top pin end on the red
+   cathode's pin end, so R43 moved one grid step left under the green cathode
+   with its lead and label, and the joining wire went. 206 to 208 of 209.
+   **Redraw the two status-LED wires** at D5 so N$59 reaches GREEN_CATH without
    crossing the RED_CATH pin end (Eagle keeps an explicit netlist; KiCad joins
    by geometry). Acceptance: 208 of 209. Minutes.
 3. **Walk every sheet by eye for the same pattern**: wires crossing a pin end
