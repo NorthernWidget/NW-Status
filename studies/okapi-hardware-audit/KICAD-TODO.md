@@ -51,7 +51,12 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    BOM; relax the 0.8 mm silkscreen text rule or re-size the text, then check
    silk legibility by eye. Acceptance: ERC down from 622 to the residue you
    accept, listed. Half a day, no connectivity risk.
-9. **Decide the Eagle-origin discrepancies** (they are not conversion faults):
+9. **DONE in part, 2026-10-30** (Andy: "place the three of them not connected"):
+   U21/U22 QOD and J9 pins 67/74 are no-connects in the schematic and their
+   board pads carry no net; 209 of 209 Eagle nets exact. **Still open: the
+   V_SOLAR_IN airwire**, a layout change for the laptop. Also done the same
+   day: the status LED wiring redrawn to Andy's layout (one tick out, right
+   angles, mirrored). **Decide the Eagle-origin discrepancies** (they are not conversion faults):
    J9 pins 67 and 74 (SIM_VCC, UB_VBUS) and U21/U22 pin 5 (QOD) are connected
    on the board and not in the schematic; V_SOLAR_IN is an airwire that was
    never routed. Each becomes a schematic change, a board change, or a recorded
