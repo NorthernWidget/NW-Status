@@ -9,7 +9,9 @@ netlist export, `compare.py` reports nets exact / lost / fragmented). kicad-cli
 **Start state**: the import (6b6530f) and the power-net fix (faaf72e) are sound.
 HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
 
-1. **Restore the labels.** Take Okapi_3.kicad_sch's 62 global labels from
+1. **DONE 2026-10-30** (Project-Okapi, "restore the 60 global labels"): 168 of
+   209 nets exact at the old HEAD, 206 of 209 after, no Eagle pin missing; the
+   three left are items 2 and 9 below. **Restore the labels.** Take Okapi_3.kicad_sch's 62 global labels from
    faaf72e; keep the 7 no-connect flags from HEAD; delete only SIM_VCC and
    UB_VBUS, the two that were stray. Acceptance: export the netlist
    (`kicad-cli sch export netlist --format kicadxml`), run `compare.py` against
