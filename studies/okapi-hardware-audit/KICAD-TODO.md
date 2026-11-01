@@ -28,7 +28,18 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    **Redraw the two status-LED wires** at D5 so N$59 reaches GREEN_CATH without
    crossing the RED_CATH pin end (Eagle keeps an explicit netlist; KiCad joins
    by geometry). Acceptance: 208 of 209. Minutes.
-3. **Walk every sheet by eye for the same pattern**: wires crossing a pin end
+3. **DONE 2026-11-01** (Project-Okapi fabcef7 to d345b59, five commits): ERC's
+   unconnected-wire-endpoint count 60 to 0 and endpoint-off-grid 27 to 0, the
+   netlist 209 of 209 throughout. The ERC JSON put every one of the 87 under
+   /Okapi_1/, wrongly, and its position is the wire's connected end, not the
+   free one, so each was attributed and diagnosed from the file geometry
+   (`NW-Tests/kicad` plus the walk scripts in the session scratch directory).
+   The patterns: 59 wires running past the label that names it (trimmed to the
+   label, four removed outright); one 2 mm stub above the VUSB junction; GND13,
+   GND14 and Q3 a quarter-tick off grid; and the D4 RGB LED block, redrawn as
+   D5 was. Open from the walk, for step 8: SBU1 and SBU2 on J10 are single-pin
+   named nets in Eagle and now bare pins with a local label each, candidates
+   for no-connect flags. **Walk every sheet by eye for the same pattern**: wires crossing a pin end
    they should not touch. Start at the 112 dangling and 27 off-grid wire
    endpoints the audit counted. Acceptance: ERC's unconnected-wire count falls;
    the netlist comparison does not get worse. An hour.
