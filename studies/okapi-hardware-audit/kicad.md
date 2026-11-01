@@ -210,7 +210,7 @@ after refill).
 - `xxd Okapi.kicad_dru` → `(version 1)` only
 - `cat sym-lib-table` → one library, `Okapi-eagle-import`
 - Headers: Okapi.sch / Okapi.brd are Eagle 9.6.2 XML; kicad_sch version 20260306, kicad_pcb version 20260206
-- Scripts: scratchpad/kicad/parse_eagle.py, parse_knet.py, compare.py (outputs eagle.json, knet.json, compare2.out)
+- Scripts: scratchpad/kicad/parse_eagle.py, parse_knet.py, compare.py (outputs eagle.json, knet.json, compare2.out) (copied to `tools/` as run; maintained as `NW-Tests/kicad/eagle_nets.py`, `kicad_nets.py`, `compare_nets.py`, 2026-11-01)
 - `kicad-cli sch export netlist --format kicadxml -o okapi.xml Okapi.kicad_sch` (exit 0)
 - `kicad-cli sch erc --format json --severity-all` (622 violations); `kicad-cli pcb drc --format json --severity-all --all-track-errors --schematic-parity` (1296 + 18 unconnected + 361 parity)
 - `kicad-cli pcb export svg -l F.Cu,B.Cu,Edge.Cuts,F.SilkS,F.Fab` → board.svg (exit 0)

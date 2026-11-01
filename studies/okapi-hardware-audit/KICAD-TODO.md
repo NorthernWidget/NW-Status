@@ -3,8 +3,12 @@
 From `kicad.md`, the audit of `Project-Okapi/Hardware/KiCAD-10import/` against the
 Eagle originals. Each step has an acceptance test; `tools/` holds the scripts the
 audit used (`parse_eagle.py` reads Eagle pinrefs, `parse_knet.py` reads a KiCad
-netlist export, `compare.py` reports nets exact / lost / fragmented). kicad-cli
-10.0.7 is at /usr/bin/kicad-cli. Commit after each step; never squash.
+netlist export, `compare.py` reports nets exact / lost / fragmented), with the
+scratch-directory paths they ran with. The maintained copies, with every path on
+the command line, are `NW-Tests/kicad/` (`check_conversion.sh` runs the three in
+one call, `roundtrip.sh` checks that KiCad re-saves a sheet byte-identically),
+and the `nw-kicad` skill holds the expected numbers. kicad-cli 10.0.7 is at
+/usr/bin/kicad-cli. Commit after each step; never squash.
 
 **Start state**: the import (6b6530f) and the power-net fix (faaf72e) are sound.
 HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
