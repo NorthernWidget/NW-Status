@@ -39,7 +39,12 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    GND14 and Q3 a quarter-tick off grid; and the D4 RGB LED block, redrawn as
    D5 was. Open from the walk, for step 8: SBU1 and SBU2 on J10 are single-pin
    named nets in Eagle and now bare pins with a local label each, candidates
-   for no-connect flags. **Walk every sheet by eye for the same pattern**: wires crossing a pin end
+   for no-connect flags. Follow-up the same day (7e5a8a3, 492011d, d6aa0d6):
+   the D4 and D5 resistor columns widened to 7.62 mm so each reference reads
+   beside its own part (Andy's note on the D4 picture), and the D5 anode fed
+   straight down from its supply symbol. The walk tools are now
+   `NW-Tests/kicad/sch_walk.py`, `sch_edit.py` and `erc_counts.sh`
+   (NW-Tests). **Walk every sheet by eye for the same pattern**: wires crossing a pin end
    they should not touch. Start at the 112 dangling and 27 off-grid wire
    endpoints the audit counted. Acceptance: ERC's unconnected-wire count falls;
    the netlist comparison does not get worse. An hour.
