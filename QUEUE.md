@@ -63,7 +63,9 @@ Each line points at the section that holds the detail.
    and BROWN_OUT (no gate); the watchdog reset as a wake, route (a), lifting
    the 1800 s ceiling; the bench readings that unblock #34 and the thresholds;
    then the push. Also: no deployment sketch targets a v3 yet, and the README
-   still describes the 2018 colors. → `studies/margay-firmware-status/report.md`
+   still describes the 2018 colors. The firm list, every item with a label, a
+   gate and an acceptance test: → `MARGAY-TODO.md`; the survey behind it:
+   `studies/margay-firmware-status/report.md`
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
 duration, Okapi's unfed watchdog, and the older list under "The bench is now the
