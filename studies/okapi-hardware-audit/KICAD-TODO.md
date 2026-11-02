@@ -118,7 +118,9 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
 7. **Walk the refilled GND pours** against the Eagle rendering for islands (one
    isolated B.Cu island after refill). Acceptance: no isolated copper, or each
    island explained. An hour.
-8. **ERC hygiene.** PWR_FLAG per rail; add the two embedded power symbols to the
+8. **ERC hygiene.** The walk, easiest first, with the count each item takes
+   off, is `CHECKS-TODO.md` beside this file (ERC 147, DRC 1282, the 20
+   unconnected items), written 2026-11-03. PWR_FLAG per rail; add the two embedded power symbols to the
    library; clear the `${DISP}` fields; decide whether the 24 local labels that
    carry Eagle global names should be global; exclude U$1/U$2/H1-H3 from the
    BOM; relax the 0.8 mm silkscreen text rule or re-size the text, then check
