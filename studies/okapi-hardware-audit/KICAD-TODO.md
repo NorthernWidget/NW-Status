@@ -10,8 +10,13 @@ one call, `roundtrip.sh` checks that KiCad re-saves a sheet byte-identically),
 and the `nw-kicad` skill holds the expected numbers. kicad-cli 10.0.7 is at
 /usr/bin/kicad-cli. Commit after each step; never squash.
 
-**Next action (2026-11-02): step 4**, the footprint library, as its own commits with
-DRC schematic parity as the gate. Steps 4 to 8 are text work from the tablet, not
+**Next action (2026-11-02): step 4** against the shared library `nw-cold-silicon`
+(workspace repository, local, built 2026-11-02 from the Eagle libraries by its
+`tools/build.py`; Andy's two collision decisions are in it), as its own commits
+with DRC schematic parity as the gate: fp-lib-table naming `nw-cold-silicon`,
+the 338 `Okapi:NAME` footprint fields and 252 board footprint names rewritten to
+the library's names (the `_528` jumper suffix dropped; R48 maps to the square
+R0603), the footprint path links, then the 88 board net names. Steps 4 to 8 are text work from the tablet, not
 laptop work as first written: the board already holds every footprint under its
 reference, so re-linking is a footprint-field edit checked by `kicad-cli pcb drc
 --schematic-parity`; the netclasses live in `Okapi.kicad_pro` and the stackup and
