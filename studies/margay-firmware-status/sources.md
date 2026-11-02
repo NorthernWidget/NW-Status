@@ -1,0 +1,32 @@
+# Sources checked (one line each; dead ends included)
+
+- NW-Status/CLAUDE.md (read; working rules)
+- NW-Status/QUEUE.md lines 1-1035 (desk list, DS3231 merge, alarm study, three to-dos, schedule open items, adaptive logging, Page 1 reader, Okapi watchdog) - read
+- NW-Status/QUEUE.md lines 1035-1310 (LED vocabulary settled, decisions 2026-10-21, six more messages) - read
+- NW-Status/QUEUE.md lines 1349-1570 (Okapi LED order, full-time messaging, patterns, defects, order of work, Report-register decision) - read
+- NW-Status/QUEUE.md grep margay lines 1570-2386 (bench section, battery readings, queue-in-order items 1995/2354/2367/2369, ALog survey) - read
+- NW-Status/README.md (generated 2026-09-24; stale; Margay/DS3231 rows) - read
+- NW-Status/ITEM1-HANDOFF.md (full) - read
+- NW-Status/studies/okapi-leds/README.md - read
+- NW-Status/studies/okapi-leds/8-margay-audit.md - read (pre-sequence, partly superseded)
+- NW-Status/studies/okapi-power/ - not read (Okapi only)
+- NW-Status/NW_Logger_design_review.md - skimmed title only (2026-09 architecture review; see QUEUE line 2369)
+- Margay_Library: CLAUDE.md, git status/log/unpushed, gh issues, src/Margay.cpp (lines 40-110, 195-300, 440-560, greps) - read
+- NW_Logger: CLAUDE.md, git status/log/unpushed, gh issues, src listing - read
+- NW-Sim: CLAUDE.md, git status/log/unpushed, gh issues, tests/run.sh cases, tests/baseline listing - read
+- Project-Margay: git status, gh issues - read; Local-Project-Margay exists (hardware copy, not entered)
+- DS3231, DS3231_Logger: git status/log, gh issues, PROPOSED-absolute-alarms.md presence - read (no edits)
+- NW_Logger/src/NW_Message.h lines 1-120; grep raise sites in NW_Logger.cpp, Margay.cpp, Okapi.cpp; NW_Schedule.h function list; NW_Logger.h hook greps - read
+- gh issue view: Project-Margay #9, #61; Margay_Library #34 #15 #9 #7 #29 #26 #1 #5 #20 #30 #27 #31 #33 #32 - read
+- Margay_Library/examples/Basic, HighSpeed_NoSleep - read; Laser_Ranging, SensorDemo_TP-Downhole, BusScan - listed only
+- NW_Logger/src/NW_Logger.cpp lines 55-150, 305-352, 440-575, 590-700; grep for NW_Schedule helpers - read
+- Margay_Library/src/Margay.cpp lines 150-195, 575-665; PG grep; README.md - read
+- NW-Sim/src/boards/margay.c greps, src/nw_sim.c --battery, tests/baseline/*.leds heads, .gitignore - read
+- NW_Logger/extras/test/run.sh, .gitignore, test_output.cpp printf list - read
+- Deployments/Margay/*.ino greps (API, rates, models), git log -3 - read
+- NW-Tests/sketches listing; Overrun/Programmed/Walrus_Margay intervals - read
+- QUEUE.md lines 2350-2386 (desk work, bench, decided) - read
+- Project-Margay #60 body - read
+- NW_Logger/extras/test/run.sh run today: OK, exit 0
+- NW-Sim/tests/run.sh run today (TMPDIR in scratchpad): 19 OK, exit 0
+- git log @{u}..HEAD counts for NW-Status, NW-Tests, Okapi_Library, Project-Okapi, NW_Core, NW-Provision - read
