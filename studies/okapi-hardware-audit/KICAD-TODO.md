@@ -89,9 +89,16 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    the importer made the six sheets six top-level sheets (`top_level_sheets`
    in Okapi.kicad_pro, a KiCad 10 structure) and the CLI's parity walks only
    the first, while the netlist export walks all six. The by-reference link
-   and the pin-matched net rename are complete. Open: whether to fold the six
-   top-level sheets into one root with six sub-sheets (tested on a copy: the
-   nets and ERC hold, the CLI then double-counts; Andy's call on the shape).
+   and the pin-matched net rename are complete. **Resolved 2026-11-03** (Andy:
+   build the better structure): the root sheet re-saved by KiCad (c29b4e5,
+   the two import leftovers gone), then one root over six sub-sheets
+   (971e900; the former root is Okapi_1.kicad_sch), footprints linked into
+   the hierarchy and the 75 open pads given the schematic's unconnected-(...)
+   nets. Now: nets 209 of 209, ERC 147, all seven sheets and the board
+   re-save identical, **schematic parity 1** (the logo U$4, no symbol), DRC
+   1282 violations and 20 unconnected items (three of them ratsnest lines
+   among the USB2 shell pads, which the KiCad schematic joins and Eagle did
+   not).
    **Give the footprints a library.** Export the 252 embedded footprints to
    `Okapi.pretty`, add a project `fp-lib-table`, resolve the eight `_528`
    jumper footprint names, run Update PCB from Schematic with re-link by
@@ -146,12 +153,10 @@ their circle off the silkscreen because the library took Bobby's later
 drawing from Margay.brd); values and 208 BOM fields from the symbols. DRC
 399 against 398 at the start, 3 unconnected items throughout, parity 5.
 Open: (1) the Eagle netlist check gives 72 of 75 nets exact with 3
-differences, before and after, a conversion fault from the KiCad 7 import
-still to be diagnosed; (2) four BOM fields where the footprint disagreed with
-the symbol: R7 and R9 carry MPN RC0603FR-07330RL against the schematic's
-RC0402FR-071KL, R23 CRT0603-BY-1002ELF against the schematic's suffixed form,
-U13 DIGIKEY MAX6070AAUT18 against the schematic's MAX6070BAUT18, Andy's to
-settle; (3) DRC still lists the SD slot J1 and the logo U$2 as not matching
+differences, before and after: not a conversion fault but C20 and D4, added on
+the KiCad side on 2026-06-01 and absent from the Eagle files, filed as
+Project-Margay#63; (2) four BOM fields where the footprint disagreed with
+the symbol (R7, R9, R23, U13), filed as Project-Margay#62; (3) DRC still lists the SD slot J1 and the logo U$2 as not matching
 the library, both back-side, pads and mirrored graphics checked equal, so
 something else KiCad compares (a text or a field); (4) the project's old
 `Margay.pretty` and `Margay-eagle-import.kicad_sym` remain beside the new
