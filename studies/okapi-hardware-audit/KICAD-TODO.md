@@ -74,12 +74,32 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    they should not touch. Start at the 112 dangling and 27 off-grid wire
    endpoints the audit counted. Acceptance: ERC's unconnected-wire count falls;
    the netlist comparison does not get worse. An hour.
-4. **Give the footprints a library.** Export the 252 embedded footprints to
+4. **DONE 2026-11-02** (Project-Okapi 17df2c4 to the net-rename commit, eight
+   commits, each gated on KiCad's re-save returning the board unchanged and
+   on the pad-net table by (reference, pad)): the board re-saved by KiCad
+   10.0.7 (format only); every footprint reference pointed at the shared
+   `nw-cold-silicon` library (ERC footprint links 251 to 0, total 398 to 147);
+   Eagle's 2.5 mil mask frame as the board rule; every footprint body replaced
+   by the library's (the one pad change on the board: R48's 0603 from 1.0 by
+   1.1 mm to the library's 1.0 by 1.0); every footprint linked to its symbol by
+   path with the symbol's value and 61 BOM fields; 106 nets renamed to the
+   schematic's. DRC 1292 violations (1291 before, one more silkscreen
+   overlap), 17 unconnected items as before. kicad-cli's parity check reports
+   172 "extra" footprints and 22 net conflicts that are its own limitation:
+   the importer made the six sheets six top-level sheets (`top_level_sheets`
+   in Okapi.kicad_pro, a KiCad 10 structure) and the CLI's parity walks only
+   the first, while the netlist export walks all six. The by-reference link
+   and the pin-matched net rename are complete. Open: whether to fold the six
+   top-level sheets into one root with six sub-sheets (tested on a copy: the
+   nets and ERC hold, the CLI then double-counts; Andy's call on the shape).
+   **Give the footprints a library.** Export the 252 embedded footprints to
    `Okapi.pretty`, add a project `fp-lib-table`, resolve the eight `_528`
    jumper footprint names, run Update PCB from Schematic with re-link by
    reference so every footprint carries a path. Acceptance: DRC schematic
    parity 0, ERC footprint-link errors 0. Half a day.
-5. **Carry the design rules.** Default netclass clearance 0.127 mm and track
+5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
+   frame, as the board rule (Project-Okapi 96bf37b; the library carries no
+   per-pad margins). **Carry the design rules.** Default netclass clearance 0.127 mm and track
    0.127 mm, via drill 0.2 mm, from Eagle's `jlcpcb-2layer` set (the project
    has KiCad's 0.2 mm default and an empty `Okapi.kicad_dru`); add a two-layer
    stackup; refill zones; save. Acceptance: clearance errors 499 to 9, all nine
@@ -115,3 +135,24 @@ After step 10 the hardware fixes begin (QUEUE.md, "Okapi hardware audit":
 charger RSENSE, PAC1934 resistor values, the SoM 3.3 V regulator, footprints
 and crystal caps, MOSFET part numbers, !SHDN re-land, TPL5111 interval resistor,
 AREF/AVCC filtering, VCC bypass, the solar input route).
+
+## Margay, the same program (2026-11-02)
+
+Project-Margay's `Hardware/KiCAD/` (the KiCad 7 import) went through the
+same steps, six commits bf97651 to 7d92919: KiCad 10 format (twice; the
+first pass converts, the second settles); references onto `nw-cold-silicon`;
+the mask rule; every body from the library (no pad changed; H1 and H2 keep
+their circle off the silkscreen because the library took Bobby's later
+drawing from Margay.brd); values and 208 BOM fields from the symbols. DRC
+399 against 398 at the start, 3 unconnected items throughout, parity 5.
+Open: (1) the Eagle netlist check gives 72 of 75 nets exact with 3
+differences, before and after, a conversion fault from the KiCad 7 import
+still to be diagnosed; (2) four BOM fields where the footprint disagreed with
+the symbol: R7 and R9 carry MPN RC0603FR-07330RL against the schematic's
+RC0402FR-071KL, R23 CRT0603-BY-1002ELF against the schematic's suffixed form,
+U13 DIGIKEY MAX6070AAUT18 against the schematic's MAX6070BAUT18, Andy's to
+settle; (3) DRC still lists the SD slot J1 and the logo U$2 as not matching
+the library, both back-side, pads and mirrored graphics checked equal, so
+something else KiCad compares (a text or a field); (4) the project's old
+`Margay.pretty` and `Margay-eagle-import.kicad_sym` remain beside the new
+table, unused by footprints, to be removed as their own commit.
