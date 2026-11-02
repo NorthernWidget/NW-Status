@@ -10,6 +10,27 @@ one call, `roundtrip.sh` checks that KiCad re-saves a sheet byte-identically),
 and the `nw-kicad` skill holds the expected numbers. kicad-cli 10.0.7 is at
 /usr/bin/kicad-cli. Commit after each step; never squash.
 
+**Next action (2026-11-02): step 4**, the footprint library, as its own commits with
+DRC schematic parity as the gate. Steps 4 to 8 are text work from the tablet, not
+laptop work as first written: the board already holds every footprint under its
+reference, so re-linking is a footprint-field edit checked by `kicad-cli pcb drc
+--schematic-parity`; the netclasses live in `Okapi.kicad_pro` and the stackup and
+keepouts in `Okapi.kicad_pcb`; and `kicad-cli pcb drc --refill-zones --save-board`
+refills the pours. Only step 9's V_SOLAR_IN route needs the laptop. Method and
+scripts: the `kicad-text` skill (`~/.claude/skills/kicad-text`, repository
+NorthernWidget-Skunkworks/claude-kicad-text); Okapi's expected numbers: the
+`nw-kicad` skill. Two decisions inside step 8 are Andy's: no-connects on SBU1 and
+SBU2, and whether the 24 local labels carrying Eagle global names become global.
+
+**Open beside the conversion, pending, not declined** (2026-11-02): the Okapi
+thresholds (alkaline red 3.3 to 3.6 V, purple near 3.9 V, solar-online 5 V, the
+3.4 V guard; Margay 20 and 50 percent); the grid column groups and the scope of
+Okapi_Library#9; the rewrite of Project-Okapi#27 and the correction to #31,
+drafted and never posted; the eleven issues in `unfiled.md`; the clock-loss
+recovery discussion; the root sheet's two import leftovers (one optional commit).
+Local commits unpushed in NW_Logger, NW-Sim, NW-Status, NW-Tests, Okapi_Library,
+Margay_Library and Project-Okapi.
+
 **Start state**: the import (6b6530f) and the power-net fix (faaf72e) are sound.
 HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
 

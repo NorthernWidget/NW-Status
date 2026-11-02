@@ -2,7 +2,7 @@
 
 Work that is decided or open but not yet started, with what blocks it. One line per item; the linked issue holds the detail. Kept here so the list survives sessions; NW-Status/README.md carries the per-repository state.
 
-Last edited 2026-10-20.
+Last edited 2026-11-02.
 
 ## ON ANDY'S DESK
 
@@ -47,8 +47,16 @@ Each line points at the section that holds the detail.
 9. **Veto if unwanted: `LoggingStarted` in every first row's Note column**, and
    `NewLogFile` in a later pair's. Isolated in its own commits so it reverts
    alone. → `ITEM1-HANDOFF.md`, "Waiting on Andy"
-10. **Push.** Nothing has been pushed since 2026-10-09; the work sits in local
-   commits across six repositories.
+10. **Push.** Nothing has been pushed since 2026-10-09 except the new
+   claude-kicad-text repository; the work sits in local commits across seven
+   repositories (NW_Logger, NW-Sim, NW-Status, NW-Tests, Okapi_Library,
+   Margay_Library, Project-Okapi).
+11. **Okapi, the KiCad conversion: say "go" on step 4** (the footprint library,
+   text work, DRC parity as the gate), and three decisions that step 8 will
+   need: no-connects on J10's SBU1 and SBU2; whether the 24 local labels that
+   carry Eagle global names become global; and the Okapi thresholds (alkaline
+   red 3.3 to 3.6 V, purple near 3.9 V, solar-online 5 V, the 3.4 V guard).
+   → `studies/okapi-hardware-audit/KICAD-TODO.md`, top
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
 duration, Okapi's unfed watchdog, and the older list under "The bench is now the
@@ -1328,6 +1336,15 @@ Headlines, verified by me where marked:
   !SHDN re-land (#30); the TPL5111 interval resistor; AREF/AVCC filtering
   (#15/#28.2); VCC caps (#17). About 12 schematic edits, 10 layout edits, 9 BoM
   values. The rest can wait a revision.
+- **Progress, 2026-11-02**: KICAD-TODO steps 1 to 3 done and part of 9
+  (Project-Okapi 7929f42 to d6aa0d6): 209 of 209 Eagle nets exact, ERC
+  unconnected endpoints 60 to 0 and off-grid 27 to 0, every sheet but the root
+  byte-identical through KiCad's own re-save. Next is step 4, the footprint
+  library; steps 4 to 8 are text work and only the V_SOLAR_IN route (9) needs
+  the laptop. The method is the standalone `kicad-text` skill
+  (NorthernWidget-Skunkworks/claude-kicad-text, private, Apache-2.0), the
+  scripts `NW-Tests/kicad/`, the Okapi numbers the `nw-kicad` skill, and the
+  ordered list with the open items `KICAD-TODO.md`.
 
 ### Okapi LED work, ordered (Andy, 2026-10-27)
 
