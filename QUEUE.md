@@ -57,6 +57,13 @@ Each line points at the section that holds the detail.
    carry Eagle global names become global; and the Okapi thresholds (alkaline
    red 3.3 to 3.6 V, purple near 3.9 V, solar-online 5 V, the 3.4 V guard).
    → `studies/okapi-hardware-audit/KICAD-TODO.md`, top
+12. **Margay v3, about 100 boards built: the firmware list** (surveyed
+   2026-11-02). Five items in order: absolute alarms into DS3231 (item 1 above)
+   then the grid wired into `run()`; MCUSR read at boot for RESET_BY_WATCHDOG
+   and BROWN_OUT (no gate); the watchdog reset as a wake, route (a), lifting
+   the 1800 s ceiling; the bench readings that unblock #34 and the thresholds;
+   then the push. Also: no deployment sketch targets a v3 yet, and the README
+   still describes the 2018 colors. → `studies/margay-firmware-status/report.md`
 
 Waiting on the bench rather than on him: the four battery readings, the cycle
 duration, Okapi's unfed watchdog, and the older list under "The bench is now the
