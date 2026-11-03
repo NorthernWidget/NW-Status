@@ -8,16 +8,20 @@ Rules of the walk: the Eagle originals are the reference; a change that
 alters a pad or a net is its own commit gated on the netlist check, KiCad's
 re-save and the pad-net table.
 
-## ERC, 147 (131 errors, 16 warnings)
+## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03)
 
-1. **unresolved_variable, 22.** Sixteen `${DISP}` texts in symbol fields (U2,
+1. **DONE 2026-11-03**, not by patching: every placed symbol now takes its
+   definition from nw-cold-silicon (Project-Okapi 11776ab, f5ae35d, d8d6c7e),
+   whose symbols carry DISP as a field and no text; the import library is
+   retired. ERC 147 to 112, items 1 and 2 together. **unresolved_variable, 22.** Sixteen `${DISP}` texts in symbol fields (U2,
    U3, U6, U9, U17 to U20, U24 to U27, U29 to U31, U34, U35, U39, U40, U42,
    U43, U45): Eagle's DISP attribute, which the importer turned into a KiCad
    text variable nobody defines. Fix: delete the sixteen field texts (the
    value they displayed is the part number, which the Value field already
    shows), or define `DISP` as empty in Okapi.kicad_pro's text_variables.
    Text edit. 147 to 125.
-2. **lib_symbol_issues, 13.** The power symbols 3V3_AUX (nine placements) and
+2. **DONE 2026-11-03** with item 1: the three rails are nw-cold-silicon power
+   symbols. **lib_symbol_issues, 13.** The power symbols 3V3_AUX (nine placements) and
    3V3_CORE (four) exist only embedded in the sheets, not in
    Okapi-eagle-import.kicad_sym. Fix: copy the two symbol definitions from a
    sheet's lib_symbols into the library file. Text edit. 125 to 112.

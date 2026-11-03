@@ -104,6 +104,18 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    jumper footprint names, run Update PCB from Schematic with re-link by
    reference so every footprint carries a path. Acceptance: DRC schematic
    parity 0, ERC footprint-link errors 0. Half a day.
+4b. **DONE 2026-11-03, the symbol half** (Andy: replace all components with
+   the library's, checking at each batch): `symbol_map.py` measured 377 placed
+   symbols against nw-cold-silicon (244 identical in pins and geometry, 2
+   differing in pin names only, 6 absent, 125 power symbols); batch A moved
+   the 246 (11776ab, nets pin for pin identical); the 6 and the three rails
+   as power symbols were lifted into the library (nw-cold-silicon 3b2d109);
+   batch B moved the last 131 (f5ae35d) with one difference found and
+   rewired: Okapi_3's 3V3_CORE variant had its pin at the symbol origin where
+   the library's sits one tick below, so #SUPPLY9 and #SUPPLY10 moved up one
+   tick. Okapi-eagle-import.kicad_sym retired (d8d6c7e). Every symbol and
+   footprint on Okapi is nw-cold-silicon's. ERC 147 to 112 (CHECKS-TODO items
+   1 and 2); DRC 1282, 20 unconnected, parity 0, unchanged.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **Carry the design rules.** Default netclass clearance 0.127 mm and track
