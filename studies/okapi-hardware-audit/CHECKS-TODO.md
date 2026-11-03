@@ -53,19 +53,19 @@ re-save and the pad-net table.
    pins stay inputs, J9's VCC and 3V3. Hardest: 42 pins on about 14 nets.
    47 to a residue of what Andy accepts.
 
-## DRC, 1282 (536 errors, 746 warnings)
+## DRC, 1282 (536 errors, 746 warnings); 379 after items 1 to 3 (2026-11-03)
 
-1. **clearance, 499.** The project has KiCad's 0.2 mm default netclass where
+1. **DONE 2026-11-03** (Project-Okapi 9faa2fc): default netclass clearance 0.127 mm, via 0.508 on a 0.254 drill (the board's most used); clearance 499 to 9, all nine USB2's shell pads against tracks (item 7); 1282 to 783. **clearance, 499.** The project has KiCad's 0.2 mm default netclass where
    the board was routed to Eagle's 5 mil (0.127 mm) rules. Fix: default
    netclass clearance 0.127, track 0.127, via drill 0.2 in Okapi.kicad_pro
    (KICAD-TODO step 5). Measured on a copy: 499 to 9, all inside the USB2
    connector footprint. One edit. 1282 to 792.
-2. **text_height and text_thickness, 199 each.** One rule (silk text min
+2. **DONE 2026-11-03** (Project-Okapi dd3872b): min text height 0.4 mm and thickness 0.07 mm, under every reference text Bobby placed (0.53/0.078 mm for 205 of 243, the rest down to 0.42/0.078); both counts to 0; 783 to 385. **text_height and text_thickness, 199 each.** One rule (silk text min
    height 0.8 mm, min thickness 0.08 mm) against every reference text, which
    Bobby set at 0.53 mm. Fix: the rule to his size, or the texts to the rule.
    Decision: the fabricated boards carry 0.53 mm and read fine, so the rule.
    792 to 394.
-3. **via_dangling, 6; most of track_dangling, 3; 14 of the 20 unconnected
+3. **DONE 2026-11-03** (Project-Okapi a94ed86): zones refilled and saved; via_dangling 0, track_dangling 2, one isolated_copper warning (the island at 148.08, 128.78 mm, step 7), unconnected 20 to 3 (USB2's shell only; V_HP's track end joined through the pour), 385 to 379; re-save identical, pad-net table unchanged. **via_dangling, 6; most of track_dangling, 3; 14 of the 20 unconnected
    items.** Zones are unfilled since the import. Fix: `kicad-cli pcb drc
    --refill-zones --save-board` (step 7). Measured on a copy: vias 6 to 0,
    tracks 3 to 2, unconnected 20 to 3, and one isolated copper island
@@ -101,7 +101,7 @@ re-save and the pad-net table.
     Same decision as item 9: hidden references take most of these with them.
     141 to the residue.
 
-## Unconnected items, 20, a separate item
+## Unconnected items, 20, a separate item; 3 after DRC item 3 (2026-11-03)
 
 14 on GND and 2 on 5V_AUX join through the pours and vanish when the zones
 are refilled (DRC item 3). The remaining 3 are USB2's shell (DRC item 7).

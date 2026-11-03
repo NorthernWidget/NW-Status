@@ -136,7 +136,7 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    is `sheet_page.py` (NW-Tests 6f5a503, mirrored in the skill).
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
-   per-pad margins). **Carry the design rules.** Default netclass clearance 0.127 mm and track
+   per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
    0.127 mm, via drill 0.2 mm, from Eagle's `jlcpcb-2layer` set (the project
    has KiCad's 0.2 mm default and an empty `Okapi.kicad_dru`); add a two-layer
    stackup; refill zones; save. Acceptance: clearance errors 499 to 9, all nine
