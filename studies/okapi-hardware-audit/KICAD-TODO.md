@@ -198,6 +198,8 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    the heading band and every circuit label has two ticks of air (77 headings and labels,
    0 overlapping); the third fixer pass adds a stub wire rather than moving a wire end
    (a label's anchor can be a pin end). Project-Okapi 889609e; PDF v3 sent 2026-11-04.
+   Stage 16 (same evening): ISP & Feather follows Cellular Module, the two hosts for a
+   Particle module (B-series SoM on M.2, Boron on the Feather socket).
    Open: the Okapi dashed sub-dividers; the final look is Andy's in the GUI.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
