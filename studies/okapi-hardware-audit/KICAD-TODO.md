@@ -157,6 +157,19 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    once on a scratch copy and once on the repository (same result). Checks unchanged:
    every sheet re-saves identically, 209 of 209, ERC 112, DRC 375/3/parity 0, every
    page's ink inside the border and clear of the title block.
+4f. **DONE 2026-11-04, Andy's second round of notes** (okapi_2026-11-03_v2-AW.pdf:
+   hold font sizes constant, a small label per circuit, expand rather than cram):
+   one size per kind on every page (labels 1.27, notes 1.778, fields 1.27; stage 4);
+   sixteen content pages, six blocks lifted to pages of their own (Core_Power_Path,
+   GPIO_Expander, Level_Shifters_Ports, Analog_Clock_Power, Sensor_Terminals,
+   Feather_ISP; stage 5, GLOBAL_INT made global; the board re-linked, parity 0); a
+   3.048 mm label for every circuit, 60 of them, seated by a raster search for a clear
+   band above (or below) each part, the pages that sat against their headings moved
+   down six ticks (stages 6 to 10); `pages_headings_check.py` reports 77 headings and
+   labels with zero overlapping ink. The gate at every commit: seventeen sheets re-save
+   identically, Eagle nets 209 of 209, ERC 112, every page inside the border. Two
+   process slips are in the history (c9581de undid fifteen commits made without a
+   per-page gate; 9630d9c re-applied a plan run twice); both are rules in the loop now.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track

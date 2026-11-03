@@ -9,9 +9,13 @@ Bobby's on Margay's Power_Sensors sheet (5.08 x 4.318 bold text, 0.1524 mm
 line). Run kicad-cli sch upgrade on every touched sheet afterwards, then the
 checks. uuids are uuid5 of the page and item, so a rerun reproduces the files.
 """
-import os, re, subprocess, sys, uuid
+import json, os, re, subprocess, sys, uuid
 
 T = 1.27
+DATE, REV = '2024-11-02', '1.0'
+
+def page_uuid(name):   # the same deterministic uuid as pages_build.py, so a page's uuid never depends on when it was made
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/page/' + name))
 def tk(n): return n * T
 
 # per page: shift of the whole sheet (ticks), then block moves (rect in current mm, ticks),
@@ -122,6 +126,33 @@ STAGE3 = {
 # values that are Eagle package names, never set by Bobby: they print nothing a reader needs and sat on
 # the labels he circled; hidden on every page (the Footprint field carries the package)
 HIDE_VALUES = ('R-EU_R0402', 'R-EU_R0805', 'DIODEDO-214AC', 'DIODESOD-323', 'JUMPER-SMT_2_NO_SILK')
+# stage 6 (Andy, second round): a small label for each circuit, headings for the new pages, room used
+STAGE6 = {
+ 'Power_Input': dict(above=[('U5', 'Battery protection', -50, -4), ('U4', 'Solar charger', -40, -4), ('J5', 'V_PRIME', -10, -4), ('J6', 'Battery', -10, -4), ('J7', 'Solar', -10, -4)]),
+ 'Core_Supply': dict(blocks=[((5, 165, 97, 162), (0, 16))],   # D8, U37 (wired to U6's EN below it), the selector and LDO rows move down together
+    above=[('U39', 'Core switch', -30, -4), ('U1', '5V_LP boost', -30, -4), ('U37', 'V_CORE select', -30, -4), ('U9', '3V3_CORE LDO', -20, -4)]),
+ 'Core_Power_Path': dict(headings=[('Core Power Path', 12.7, 15.24)], blocks=[((95, 140, 60, 110), (60, 0)), ((5, 95, 18, 110), (0, 12))],   # D9's row is wired to Q5 below it: the whole ideal-diode block moves down under the heading   # Q6 with its labels at x 102.87 first, then the ideal-diode block down
+    props=[('D9', 'Reference', 55.88, 21.59)],
+    above=[('U7', 'Ideal diode', -30, -4), ('D9', 'Battery / USB sense', -30, -4), ('Q6', 'Battery switch', -20, -4)]),
+ 'Aux_Rails': dict(above=[('U2', '3V3_AUX buck', -40, -4), ('U3', '5V_AUX boost', -40, -4), ('U13', 'POWER_EN logic', -30, -4), ('U40', 'C0/C1 decode', -20, -4), ('U21', 'V_HP switches', -60, -4)]),
+ 'Microcontroller': dict(rename_texts=[('Microcontroller & GPIO Expander', 'Microcontroller')], above=[('IC1', 'ATmega1284', -30, -4), ('S4', 'Reset', -5, -8), ('XTAL1', 'Clock', -8, -14)]),
+ 'GPIO_Expander': dict(headings=[('GPIO Expander', 12.7, 15.24)], above=[('U41', 'MCP23018', -20, -4), ('R58', 'Pull-ups', -10, -8)]),
+ 'Indicators': dict(blocks=[((190, 245, 30, 62), (0, 40))],   # the log button only, down; the status LED stays
+    above=[('U45', 'PCA9634 LED driver', -20, -4), ('D5', 'Status LED', -10, -8), ('S3', 'Log button', -10, -8)]),
+ 'Cell_Module': dict(above=[('J9', 'B-series module', -20, -4), ('USB2', 'Module USB', -10, -4), ('D7', 'RGB LED', -10, -8), ('U35', 'FRAM', -10, -4), ('S6', 'Mode / reset buttons', -30, -8)]),
+ 'Level_Shifters': dict(rename_texts=[('Level Shifters', 'Level Shifters: Core Side')],
+    above=[('U34', 'Feather UART (TXS0102)', -20, -4), ('U24', 'SDA select (mux)', -20, -4), ('U25', 'SPI buffer', -20, -4), ('U26', 'TXS0102', -20, -4)]),
+ 'Level_Shifters_Ports': dict(headings=[('Level Shifters: Port Side', 12.7, 15.24)], blocks=[((105, 200, 18, 150), (24, 0))],   # column 3 with its left-hand labels at x 110.49
+    above=[('U27', 'TXS0104', -20, -4), ('U42', 'TXS0104', -20, -4), ('U29', 'TXS0104', -20, -4), ('U28', 'TCA9406 I2C', -20, -4), ('U36', 'TCA9406 I2C', -20, -4)]),
+ 'Sensors': dict(blocks=[((5, 110, 118, 152), (96, -64)), ((5, 110, 152, 190), (96, -56))],
+    above=[('U31', 'BME280 environment', -20, -4), ('U44', 'VEML6030 light', -20, -4), ('U43', 'BMA456 accelerometer', -20, -4), ('U38', 'MLX90393 magnetometer', -20, -4)]),
+ 'Analog_Clock_Power': dict(headings=[('Analog, Clock & Power Monitor', 12.7, 15.24)],
+    above=[('U30', 'DAC & reference', -30, -4), ('RTC1', 'Real-time clock', -20, -4), ('U32', 'PAC1934 power monitor', -20, -4), ('U33', 'ADS1115 ADC', -20, -4)]),
+ 'Sensor_Terminals': dict(blocks=[((65, 120, 50, 100), (92, -34)), ((65, 120, 15, 50), (52, 0)), ((15, 65, 60, 130), (44, -24))],
+    above=[('J1', 'J1', -10, -4), ('J2', 'J2', -10, -4), ('J3', 'J3', -10, -4), ('J4', 'J4', -10, -4)]),
+ 'USB_ISP_Feather': dict(above=[('J10', 'USB-C', -5, -8), ('U23', 'FT231X USB serial', -20, -4)]),
+ 'Feather_ISP': dict(above=[('JP5', 'SDA jumper', -5, -8), ('ISP1', 'ICSP header', -10, -4), ('MS1', 'Feather socket', -10, -4), ('Q4', 'Feather enable', -20, -8)]),
+}
 ORDER = ['Core_Supply', 'Power_Input', 'Aux_Rails', 'Microcontroller', 'Indicators', 'Cell_Module',
          'Level_Shifters', 'Sensors', 'Sensor_Ports', 'USB_ISP_Feather']   # Core_Supply first: it gives notes away
 
@@ -163,9 +194,228 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
-    if stage == 3:
+    if stage == 10:
+        # the ports page: one label per column at the top instead of one beside each chip (the chips' Value
+        # fields already print their part numbers and the columns are 15 mm apart); Indicators: two last nudges
+        path = sh('Level_Shifters_Ports'); t = open(path).read()
+        for text in ('TXS0104 (U28)', 'TXS0104 (U27)', 'TXS0104 (U42)', 'TCA9406 (U29)', 'TCA9406 (U36)'):
+            m = text_block(t, text); t = t[:m.start()] + t[m.end():]
+        open(path, 'w').write(t)
+        subs = [('4-bit shifters, TXS0104', 38.1, 33.02), ('I2C shifters, TCA9406', 139.7, 33.02)]
+        append_items(path, [HEADING.replace('(size 5.08 4.318)', '(size 3.048 2.54)').replace('(thickness 0.8636)', '(thickness 0.508)').format(text=a_, x=fmt(x), y=fmt(y), u=u5('Level_Shifters_Ports', 'column', i)) for i, (a_, x, y) in enumerate(subs)])
+        run('kicad-cli', 'sch', 'upgrade', '--force', path); print('Level_Shifters_Ports: a label per column')
+        path = sh('Indicators')
+        run('python3', os.path.join(tools, 'sheet_lift.py'), path, path, '--rect', '155', '190', '17', '96', '--translate', '0', fmt(tk(2)))
+        t = open(path).read()
+        m = text_block(t, 'PCA9634 LED driver'); blk = re.sub(r'\(at -?[\d.]+ -?[\d.]+ (\d+)\)', lambda q: '(at 12.7 43.18 %s)' % q.group(1), m.group(0), count=1); t = t[:m.start()] + blk + t[m.end():]
+        open(path, 'w').write(t)
+        run('kicad-cli', 'sch', 'upgrade', '--force', path); print('Indicators: nudged')
+        return
+    if stage == 9:
+        # the six labels the raster search could not seat: stacked columns on the ports page (labels set beside
+        # each chip instead), and the Indicators status block, nudged down with its label and the driver's label set by hand
+        sys.path.insert(0, tools)
+        path = sh('Level_Shifters_Ports'); t = open(path).read()
+        for text in ('TXS0104', 'TXS0104', 'TXS0104', 'TCA9406 I2C', 'TCA9406 I2C'):
+            m = text_block(t, text); t = t[:m.start()] + t[m.end():]
+        open(path, 'w').write(t)
+        subs = [('TXS0104 (U28)', 118.11, 57.15), ('TXS0104 (U27)', 118.11, 96.52), ('TXS0104 (U42)', 118.11, 139.7), ('TCA9406 (U29)', 200.66, 57.15), ('TCA9406 (U36)', 200.66, 96.52)]
+        append_items(path, [HEADING.replace('(size 5.08 4.318)', '(size 3.048 2.54)').replace('(thickness 0.8636)', '(thickness 0.508)').format(text=a_, x=fmt(x), y=fmt(y), u=u5('Level_Shifters_Ports', 'beside', i)) for i, (a_, x, y) in enumerate(subs)])
+        run('kicad-cli', 'sch', 'upgrade', '--force', path); print('Level_Shifters_Ports: five labels set beside their chips')
+        path = sh('Indicators')
+        run('python3', os.path.join(tools, 'sheet_lift.py'), path, path, '--rect', '155', '190', '17', '86', '--translate', '0', fmt(tk(6)))
+        t = open(path).read()
+        for text, x, y in (('PCA9634 LED driver', 12.7, 45.72), ('Status LED', 160.02, 22.86)):
+            m = text_block(t, text); blk = re.sub(r'\(at -?[\d.]+ -?[\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(x), fmt(y), q.group(1)), m.group(0), count=1); t = t[:m.start()] + blk + t[m.end():]
+        open(path, 'w').write(t)
+        run('kicad-cli', 'sch', 'upgrade', '--force', path); print('Indicators: status block down six ticks, two labels set')
+        return
+    if stage == 8:
+        # pages whose top block sat against the heading band, so a circuit label found no room: down six ticks
+        for name in ('Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Indicators', 'Level_Shifters', 'Level_Shifters_Ports',
+                     'Analog_Clock_Power', 'Sensor_Terminals', 'Feather_ISP'):
+            if only and name != only: continue
+            t = open(sh(name)).read()
+            # everything but the 5.08 mm page headings moves (sheet_page.py would move those too)
+            i = t.find('(lib_symbols'); d = 0; j = i
+            while True:
+                if t[j] == '(': d += 1
+                elif t[j] == ')':
+                    d -= 1
+                    if d == 0: break
+                j += 1
+            head, lib, body = t[:i], t[i:j + 1], t[j + 1:]
+            heads = re.findall(r'\t\(text "[^"]*"\n\t\t\(exclude_from_sim no\)\n\t\t\(at [^)]*\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t\(size 5\.08 4\.318\)\n(?:.*\n)*?\t\)\n', body)
+            for h in heads: body = body.replace(h, '', 1)
+            body = re.sub(r'\((at|xy|start|end|center|mid) (-?[\d.]+) (-?[\d.]+)', lambda m: '(%s %s %s' % (m.group(1), fmt(float(m.group(2))), fmt(float(m.group(3)) + tk(6))), body)
+            open(sh(name), 'w').write(head + lib + ''.join(heads) + body)
+            run('kicad-cli', 'sch', 'upgrade', '--force', sh(name))
+            print('%s: moved down six ticks under its heading' % name)
+        return
+    if stage == 7:
+        # the circuit labels of stage 6 were set just above each part's Reference text, which on these
+        # imported symbols sits on the body; here each is moved up to the first clear band in its own
+        # column, found on a raster of the page without its labels (1.9 mm per character, 6 mm band)
+        import shutil
+        from PIL import Image
+        import numpy as np
+        K_ = 100 / 25.4
+        NUDGE = {'Indicators': [((155, 190, 17, 70), (0, 4))]}        # the status LED block (the LED row's bus reaches x 152.4), from under its heading
+        MOVE_TEXTS = {'Aux_Rails': [('3V3_AUX & 5V_AUX Rails', 12.7, 88.9)]}   # the mid-page heading follows its block down
+        for name, p in STAGE6.items():
+            if only and name != only: continue
+            path = sh(name)
+            for (x0, x1, y0, y1), (bx, by) in NUDGE.get(name, []):
+                run('python3', os.path.join(tools, 'sheet_lift.py'), path, path, '--rect', str(x0), str(x1), str(y0), str(y1), '--translate', fmt(tk(bx)), fmt(tk(by)))
+            if MOVE_TEXTS.get(name):
+                t = open(path).read()
+                for text, x, y in MOVE_TEXTS[name]:
+                    m = text_block(t, text); blk = re.sub(r'\(at -?[\d.]+ -?[\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(x), fmt(y), q.group(1)), m.group(0), count=1); t = t[:m.start()] + blk + t[m.end():]
+                open(path, 'w').write(t)
+            labels = [a[1] for a in p.get('above', [])]
+            if not labels: continue
+            t = open(path).read()
+            # a page copy without the circuit labels, rendered alone
+            tmp = os.path.join(proj, '_probe'); shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
+            t2 = t
+            for text in labels:
+                m = text_block(t2, text); t2 = t2[:m.start()] + t2[m.end():]
+            open(os.path.join(tmp, 'probe.kicad_sch'), 'w').write(t2)
+            for f in ('fp-lib-table', 'sym-lib-table'):
+                if os.path.exists(os.path.join(proj, f)): shutil.copy(os.path.join(proj, f), tmp)
+            subprocess.run(['kicad-cli', 'sch', 'export', 'pdf', '-e', '-n', '--black-and-white', '-o', os.path.join(tmp, 'p.pdf'), os.path.join(tmp, 'probe.kicad_sch')], capture_output=True)
+            subprocess.run(['pdftoppm', '-r', '100', '-png', '-singlefile', os.path.join(tmp, 'p.pdf'), os.path.join(tmp, 'p')], capture_output=True)
+            ink = np.asarray(Image.open(os.path.join(tmp, 'p.png')).convert('L')) < 200
+            moved = []
+            for text in labels:
+                m = text_block(t, text); blk = m.group(0)
+                at = re.search(r'\(at ([-\d.]+) ([-\d.]+) (\d+)\)', blk); x, y = float(at.group(1)), float(at.group(2))
+                w = 2.1 * len(text) + 2; cx0, cx1 = int(x * K_), int((x + w) * K_)
+                ny = None
+                yy = y
+                while yy >= 24:          # the page heading band ends about 17 mm; keep 7 mm below it
+                    band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]
+                    if band.size and not band.any():
+                        ny = yy; break
+                    yy -= 1.27
+                if ny is None:           # nothing above: the first clear band below the part instead
+                    yy = y + 7.62
+                    while yy <= 205:
+                        band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]
+                        if band.size and not band.any():
+                            ny = yy; break
+                        yy += 1.27
+                if ny is None:
+                    print('  %s: no clear band above or below for %r, left at y %.2f' % (name, text, y)); continue
+                ny = round((ny - 1.27) / 1.27) * 1.27      # a tick of air under the label
+                ink[int((ny - 4.5) * K_):int((ny + 0.5) * K_), cx0:cx1] = True   # this label's box is taken now
+                if abs(ny - y) > 0.01:
+                    blk2 = blk.replace(at.group(0), '(at %s %s %s)' % (fmt(x), fmt(ny), at.group(3)), 1)
+                    t = t[:m.start()] + blk2 + t[m.end():]; moved.append((text, y, ny))
+            open(path, 'w').write(t)
+            shutil.rmtree(tmp, ignore_errors=True)
+            run('kicad-cli', 'sch', 'upgrade', '--force', path)
+            print('%s: %d circuit labels raised' % (name, len(moved)))
+        return
+    if stage == 5:
+        # Andy, second round: "this is usually the time to expand and produce more pages". Six pages give a
+        # block each to a new page (sheet_lift.py with --new), the stale dividers and two orphaned notes go,
+        # and the root lists sixteen pages in reading order.
+        SPLITS = [   # (source page, new page, rects in source mm, translate in ticks)
+            ('Core_Supply', 'Core_Power_Path', [(5, 180, 148, 215)], (0, -97)),                      # LTC4412 ideal diode, D9, Q5, Q6
+            ('Microcontroller', 'GPIO_Expander', [(129, 275, 60, 172)], (-88, -28)),                  # MCP23018, its notes and pull-up ladder
+            ('Level_Shifters', 'Level_Shifters_Ports', [(103, 280, 18, 200)], (-67, 0)),   # the TXS0104s and TCA9406s with their caps (the labels at x 106.68 are the caps' rails)
+            ('Sensors', 'Analog_Clock_Power', [(75, 110, 55, 91), (100, 110, 130, 160), (110, 280, 18, 200)], (-45, 0)),    # DAC and reference, RTC, PAC1934, ADS1115
+            ('Sensor_Ports', 'Sensor_Terminals', [(183, 280, 5, 200)], (-130, 0)),                   # J1 to J4 with their heading
+            ('USB_ISP_Feather', 'Feather_ISP', [(190, 280, 5, 200)], (-140, 0)),                     # JP5, ICSP, the Feather socket, Q4, with the heading
+            ('USB_ISP_Feather', 'Feather_ISP', [(5, 186, 123, 198)], (112, -77)),                    # the TPL5111 timer with its heading, to the new page's right half
+        ]
+        DELETE_POLYLINES = {'Sensor_Ports': [((181.61, 5.08), (181.61, 175.26))],
+                            'USB_ISP_Feather': [((187.96, 5.08), (187.96, 175.26)), ((5.08, 121.92), (187.96, 121.92))]}
+        DELETE_TEXTS = {'Power_Input': ['To Battery Connectors'],      # Bobby's pointer to wires that now sit beside the terminals they went to
+                        'Indicators': ['Indicators']}                 # his small block label, now under the page heading and over 3V3_CORE
+        ORDER16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
+                   'Cell_Module', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
+                   'Sensor_Terminals', 'USB_ISP_Feather', 'Feather_ISP']
+        # a local label whose instances would land on two pages becomes one net on each: make it global first
+        t = open(sh('Microcontroller')).read()
+        t, n = re.subn(r'\t\(label "GLOBAL_INT"\n\t\t\(at (-?[\d.]+) (-?[\d.]+) (\d+)\)\n\t\t\(effects\n(?:.*\n)*?\t\t\)\n\t\t\(uuid "([^"]*)"\)\n\t\)\n',
+                      lambda m: ('\t(global_label "GLOBAL_INT"\n\t\t(shape bidirectional)\n\t\t(at %s %s %s)\n\t\t(fields_autoplaced yes)\n'
+                                 '\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n\t\t\t(justify %s)\n\t\t)\n\t\t(uuid "%s")\n'
+                                 '\t\t(property "Intersheetrefs" "${INTERSHEET_REFS}"\n\t\t\t(at %s %s 0)\n\t\t\t(hide yes)\n\t\t\t(show_name no)\n\t\t\t(do_not_autoplace no)\n'
+                                 '\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1.27 1.27)\n\t\t\t\t)\n\t\t\t\t(justify left)\n\t\t\t)\n\t\t)\n\t)\n')
+                                % (m.group(1), m.group(2), m.group(3), 'left' if int(m.group(3)) in (0, 90) else 'right', m.group(4), '%g' % (float(m.group(1)) + 12.608), m.group(2)), t)
+        open(sh('Microcontroller'), 'w').write(t); print('GLOBAL_INT: %d local labels made global' % n)
+        for src, dst, rects, (dx, dy) in SPLITS:
+            cmd = ['python3', os.path.join(tools, 'sheet_lift.py'), sh(src), sh(dst)]
+            for x0, x1, y0, y1 in rects:
+                cmd += ['--rect', str(x0), str(x1), str(y0), str(y1)]
+            cmd += ['--translate', fmt(tk(dx)), fmt(tk(dy))]
+            if not os.path.exists(sh(dst)):
+                cmd += ['--new', '--uuid', page_uuid(dst), '--paper', 'USLetter', '--date', DATE, '--rev', REV]
+            run(*cmd)
+        # pages whose leftward labels grew past the left border: moved in by whole ticks
+        for name, (ex, ey) in {'Power_Input': (5, 0), 'Sensors': (5, 0), 'Feather_ISP': (4, 0)}.items():
+            run('python3', os.path.join(tools, 'sheet_page.py'), sh(name), '--translate', fmt(tk(ex)), fmt(tk(ey)))
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Cell_Module'), sh('Cell_Module'), '--rect', '5', '60', '95', '125', '--translate', fmt(tk(8)), '0')   # the RGB LED block
+        for name, lines in DELETE_POLYLINES.items():
+            t = open(sh(name)).read()
+            for (x1, y1), (x2, y2) in lines:
+                t, n = re.subn(r'\t\(polyline\n\t\t\(pts\n\t\t\t\(xy %s %s\) \(xy %s %s\)\n(?:.*\n)*?\t\)\n' % (re.escape(fmt(x1)), re.escape(fmt(y1)), re.escape(fmt(x2)), re.escape(fmt(y2))), '', t, count=1)
+                assert n == 1, ('polyline', name, x1, y1)
+            open(sh(name), 'w').write(t)
+        for name, texts in DELETE_TEXTS.items():
+            t = open(sh(name)).read()
+            for text in texts:
+                m = text_block(t, text); t = t[:m.start()] + t[m.end():]
+            open(sh(name), 'w').write(t)
+        plan = []
+        for name in ORDER16:
+            u = page_uuid(name) if name in [s[1] for s in SPLITS] else re.search(r'\(uuid "([^"]*)"\)', open(sh(name)).read()).group(1)
+            plan.append({'name': name, 'file': name + '.kicad_sch', 'uuid': u})
+        json.dump(plan, open(os.path.join(proj, 'sheets.json'), 'w'), indent=1)
+        run('python3', os.path.join(tools, 'root_sheets.py'), sh('Okapi'), os.path.join(proj, 'sheets.json'), '--paper', 'USLetter')
+        os.remove(os.path.join(proj, 'sheets.json'))
+        for f in sorted(os.listdir(proj)):
+            if f.endswith('.kicad_sch'):
+                run('kicad-cli', 'sch', 'upgrade', '--force', os.path.join(proj, f))
+        print('stage 5: %d lifts, root with %d pages' % (len(SPLITS), len(ORDER16)))
+        return
+    if stage == 4:
+        # Andy, second round (okapi_2026-11-03_v2-AW.pdf): "hold all font sizes constant". One size per kind:
+        # labels 1.27 mm (KiCad's default; Bobby's larger ones were 1.2446, the importer's 0.569 to 1.016),
+        # notes 1.778 (Bobby's pin notes and most of his remarks), Reference and Value fields 1.27; headings
+        # (5.08) and circuit labels (3.048) untouched.
+        for f in sorted(os.listdir(proj)):
+            if not f.endswith('.kicad_sch') or f == 'Okapi.kicad_sch': continue
+            path = os.path.join(proj, f); t = open(path).read()
+            i = t.find('(lib_symbols'); d = 0; j = i
+            while True:
+                if t[j] == '(': d += 1
+                elif t[j] == ')':
+                    d -= 1
+                    if d == 0: break
+                j += 1
+            head, lib, body = t[:i], t[i:j + 1], t[j + 1:]
+            n = [0, 0, 0]
+            def lab(m):
+                n[0] += 1; return m.group(1) + '(size 1.27 1.27)'
+            body = re.sub(r'(\t\((?:global_label|label|hierarchical_label) "[^"]*"\n(?:\t\t\(shape \w+\)\n)?\t\t\(at [^)]*\)\n(?:\t\t\(fields_autoplaced yes\)\n)?\t\t\(effects\n\t\t\t\(font\n\t\t\t\t)\(size [\d.]+ [\d.]+\)', lab, body)
+            def txt(m):
+                if m.group(2) in ('5.08', '3.048'): return m.group(0)
+                n[1] += 1; return m.group(1) + '(size 1.778 1.778)'
+            body = re.sub(r'(\t\(text "[^"]*"\n\t\t\(exclude_from_sim no\)\n\t\t\(at [^)]*\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t)\(size ([\d.]+) [\d.]+\)', txt, body)
+            def fld(m):
+                n[2] += 1; return m.group(1) + '(size 1.27 1.27)'
+            body = re.sub(r'(\t\t\(property "(?:Reference|Value)" "[^"]*"\n\t\t\t\(at [^)]*\)\n(?:\t\t\t\((?!effects)[^\n]*\n)*?\t\t\t\(effects\n\t\t\t\t\(font\n\t\t\t\t\t)\(size [\d.]+ [\d.]+\)', fld, body)
+            open(path, 'w').write(head + lib + body)
+            run('kicad-cli', 'sch', 'upgrade', '--force', path)
+            print('%s: %d labels, %d notes, %d fields resized' % (f, n[0], n[1], n[2]))
+        return
+    if stage in (3, 6):
         sys.path.insert(0, tools)
         from sch_edit import Editor, fmt as efmt
+        PLAN_N = {3: STAGE3, 6: STAGE6}[stage]
         if only in (None, 'hide_values'):
             for f in sorted(os.listdir(proj)):
                 if not f.endswith('.kicad_sch'): continue
@@ -176,10 +426,17 @@ def main():
                     open(path, 'w').write(t); run('kicad-cli', 'sch', 'upgrade', '--force', path); print('%s: %d package-name values hidden' % (f, n))
             if only == 'hide_values':
                 return
-        for name, p in STAGE3.items():
+        for name, p in PLAN_N.items():
             if only and name != only:
                 continue
             path = sh(name)
+            if p.get('rename_texts') or p.get('headings'):
+                t = open(path).read()
+                for a_, b_ in p.get('rename_texts', []):
+                    m = text_block(t, a_); t = t[:m.start()] + m.group(0).replace('(text "%s"' % a_, '(text "%s"' % b_, 1) + t[m.end():]
+                open(path, 'w').write(t)
+                if p.get('headings'):
+                    append_items(path, [HEADING.format(text=text, x=fmt(x), y=fmt(y), u=u5(name, 'heading6', i)) for i, (text, x, y) in enumerate(p['headings'])])
             sx, sy = p.get('shift', (0, 0))
             if sx or sy:
                 run('python3', os.path.join(tools, 'sheet_page.py'), path, '--translate', fmt(tk(sx)), fmt(tk(sy)))
@@ -217,6 +474,11 @@ def main():
                 t = t[:m.start()] + blk + t[m.end():]
             open(path, 'w').write(t)
             subs = [HEADING.replace('(size 5.08 4.318)', '(size 3.048 2.54)').replace('(thickness 0.8636)', '(thickness 0.508)').format(text=text, x=fmt(x), y=fmt(y), u=u5(name, 'subhead', i)) for i, (text, x, y) in enumerate(p.get('subheads', []))]
+            for i, (ref, text, ox, oy) in enumerate(p.get('above', [])):   # a circuit label above a part: at its Reference text, offset (ox, oy) mm
+                m = [m for m in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % ref in m.group(0)]
+                assert len(m) == 1, (name, ref, len(m))
+                r = re.search(r'\(property "Reference" "[^"]*"\n\t\t\t\(at ([-\d.]+) ([-\d.]+)', m[0].group(0))
+                subs.append(HEADING.replace('(size 5.08 4.318)', '(size 3.048 2.54)').replace('(thickness 0.8636)', '(thickness 0.508)').format(text=text, x=fmt(float(r.group(1)) + ox), y=fmt(float(r.group(2)) + oy), u=u5(name, 'above', i)))
             if subs:
                 append_items(path, subs)
             run('kicad-cli', 'sch', 'upgrade', '--force', path)

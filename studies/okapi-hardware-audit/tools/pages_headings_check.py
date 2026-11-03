@@ -39,9 +39,9 @@ def main():
                                    for blk in re.findall(r'\t\(sheet\n(?:.*\n)*?\t\)\n', root))]
     for f in order:
         t = open(os.path.join(b, f)).read()
-        hs = re.findall(r'\t\(text "([^"]*)"\n\t\t\(exclude_from_sim no\)\n\t\t\(at ([-\d.]+) ([-\d.]+) 0\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t\(size 5\.08 4\.318\)', t)
+        hs = re.findall(r'\t\(text "([^"]*)"\n\t\t\(exclude_from_sim no\)\n\t\t\(at ([-\d.]+) ([-\d.]+) 0\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t\(size (?:5\.08 4\.318|3\.048 2\.54)\)', t)
         heads[f] = [(h, float(x), float(y)) for h, x, y in hs]
-        t2 = re.sub(r'\t\(text "[^"]*"\n\t\t\(exclude_from_sim no\)\n\t\t\(at [-\d.]+ [-\d.]+ 0\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t\(size 5\.08 4\.318\)\n(?:.*\n)*?\t\)\n', '', t)
+        t2 = re.sub(r'\t\(text "[^"]*"\n\t\t\(exclude_from_sim no\)\n\t\t\(at [-\d.]+ [-\d.]+ 0\)\n\t\t\(effects\n\t\t\t\(font\n\t\t\t\t\(size (?:5\.08 4\.318|3\.048 2\.54)\)\n(?:.*\n)*?\t\)\n', '', t)
         open(os.path.join(b, f), 'w').write(t2)
     A = render(a, os.path.join(scratch, 'with.pdf')); B = render(b, os.path.join(scratch, 'without.pdf'))
     for i, f in enumerate(order):
