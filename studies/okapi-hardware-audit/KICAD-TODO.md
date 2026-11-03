@@ -194,8 +194,11 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    clear of it, C44 is back beside its chip, the battery switch beside the ideal diode,
    Bobby's "USB & ISP" block label gone. Lesson in sheet_lift.py (NW-Tests 7840cce): on
    one page a later rectangle must not cover where an earlier move has just put things,
-   and an in-place move keeps the head. Open: the Okapi dashed sub-dividers; the final
-   look is Andy's in the GUI.
+   and an in-place move keeps the head. Stage 15 after the moves: dividers start under
+   the heading band and every circuit label has two ticks of air (77 headings and labels,
+   0 overlapping); the third fixer pass adds a stub wire rather than moving a wire end
+   (a label's anchor can be a pin end). Project-Okapi 889609e; PDF v3 sent 2026-11-04.
+   Open: the Okapi dashed sub-dividers; the final look is Andy's in the GUI.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
