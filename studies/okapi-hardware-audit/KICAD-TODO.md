@@ -200,6 +200,12 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    (a label's anchor can be a pin end). Project-Okapi 889609e; PDF v3 sent 2026-11-04.
    Stage 16 (same evening): ISP & Feather follows Cellular Module, the two hosts for a
    Particle module (B-series SoM on M.2, Boron on the Feather socket).
+   Stage 17: the pages by relevance (Andy: "other ideas of page ordering by relevance"):
+   power in the order the current flows (input, core power path, core supply, aux rails),
+   the brain with its USB port, the on-board peripherals (indicators; analog, clock and
+   power monitor; sensors), the two Particle hosts, then core-side shifters, port-side
+   shifters, switched port power, terminals. Shared signal nets between neighbors 45
+   against 42. He will reorder within pages himself.
    Open: the Okapi dashed sub-dividers; the final look is Andy's in the GUI.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
