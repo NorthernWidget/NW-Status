@@ -199,6 +199,46 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 14:
+        # Andy, 2026-11-04 evening: "uniform spacing, not crowding, grouping by function", then "execute the list".
+        # Whole blocks by ticks, from the measured ink boxes: blocks that touched get a gap, stacks that left
+        # half a page empty become two columns or a row, a stranded part goes back beside its chip.
+        MOVES = [   # (page, rects x0 x1 y0 y1 in current mm, ticks dx dy, stretch); on one page a later rect must not
+                    # cover where an earlier move has just put things, so the order below is the order that holds
+            ('Power_Input', [(5, 170, 90, 205)], (0, 8), False),             # the solar charger block 10 mm down from the battery protection block it touched
+            ('Core_Supply', [(5, 170, 115, 185)], (0, 12), False),           # V_CORE select and the LDO down first ...
+            ('Core_Supply', [(25, 135, 52.5, 112)], (0, 8), False),          # ... then 5V_LP boost down from the core switch it touched
+            ('Core_Power_Path', [(150, 215, 50, 100)], (-32, 0), False),     # the battery switch beside the ideal diode
+            ('Microcontroller', [(5, 100, 18, 140), (100, 190, 15, 140)], (24, 0), False),   # the ATmega block, its labels and the Add: note 30 mm right
+            ('Microcontroller', [(30, 76, 36, 90)], (-8, 0), True),          # then clock and reset 10 mm back out from the chip
+            ('Level_Shifters', [(10, 100, 88, 113)], (100, -52), False),     # SDA select (mux) to a right column, top
+            ('Level_Shifters', [(10, 100, 145, 175)], (100, -40), False),    # TXS0102 to the right column, bottom
+            ('Level_Shifters', [(10, 100, 117, 142)], (0, -16), False),      # SPI buffer up under the Feather UART
+            ('Level_Shifters_Ports', [(5, 50, 163, 195)], (80, -24), False), # C44 back beside the third TXS0104
+            ('Sensors', [(15, 115, 78, 115)], (0, 28), False),               # VEML6030 to a second row
+            ('Sensors', [(120, 245, 72, 120)], (0, 32), False),              # MLX90393 with C47, C48 to the second row
+            ('Analog_Clock_Power', [(10, 131, 55, 110)], (0, -32), False),   # DAC up into the empty cell
+            ('Analog_Clock_Power', [(25, 126, 120, 172)], (0, -20), False),  # the RTC up after it
+            ('Sensor_Terminals', [(168, 215, 12, 56)], (35, 0), False),      # J1 to J4 in one row at a 66 mm pitch, rightmost first
+            ('Sensor_Terminals', [(118, 165, 14, 52)], (23, 0), False),
+            ('Sensor_Terminals', [(65, 118, 50, 102)], (11, -28), False),
+            ('Sensor_Terminals', [(5, 270, 12, 110)], (0, 8), False),       # the whole row 10 mm down, so J4's label has a band above it
+            ('Feather_ISP', [(10, 90, 50, 82)], (104, 70), False),           # the ICSP header under the power timer
+            ('Feather_ISP', [(5, 115, 82, 190)], (0, -24), False),           # the Feather socket up under the SDA jumper
+        ]
+        for name, rects, (dx, dy), stretch in MOVES:
+            cmd = ['python3', os.path.join(tools, 'sheet_lift.py'), sh(name), sh(name)]
+            for x0, x1, y0, y1 in rects:
+                cmd += ['--rect', str(x0), str(x1), str(y0), str(y1)]
+            cmd += ['--translate', fmt(tk(dx)), fmt(tk(dy))]
+            if stretch: cmd.append('--stretch')
+            run(*cmd)
+        path = sh('USB_ISP_Feather'); t = open(path).read()
+        m = text_block(t, 'USB & ISP'); t = t[:m.start()] + t[m.end():]; open(path, 'w').write(t)   # Bobby's block label, under the page heading now
+        for name in sorted({m_[0] for m_ in MOVES} | {'USB_ISP_Feather'}):
+            run('kicad-cli', 'sch', 'upgrade', '--force', sh(name))
+        print('stage 14: %d block moves' % len(MOVES))
+        only = 'Sensor_Terminals'; reseat_only = True; stage = 7   # then the four connector labels re-seated on the moved row
     HAND = {'Indicators': ['PCA9634 LED driver', 'Status LED'],                              # circuit labels set by hand in stages 9 and 10; the search leaves them
             'Level_Shifters_Ports': [a[1] for a in STAGE6['Level_Shifters_Ports']['above']],   # replaced by one label per column in stage 10
             'Power_Input': ['V_PRIME', 'Battery', 'Solar']}                                    # beside their connectors (stage 13)
