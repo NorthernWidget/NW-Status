@@ -189,6 +189,25 @@ def append_items(path, items):
     t = t[:i + 1] + ''.join(items) + t[i + 1:]
     open(path, 'w').write(t)
 
+def trim_dividers(proj):
+    """every page divider clipped to the printable area: x 10.16-269.24, y from 17.78 (below the heading band; 10.16
+    until stage 15, when the Terminals heading was found sitting on its divider) to 205.74, or 172.72 beside the title block"""
+    XL, XR, YT, YB, CX, CY = 10.16, 269.24, 17.78, 205.74, 172.72, 172.72
+    ndiv = [0]
+    for f in sorted(os.listdir(proj)):
+        if not f.endswith('.kicad_sch'): continue
+        path = os.path.join(proj, f); t = open(path).read()
+        def trim(m):
+            x1, y1, x2, y2 = map(float, m.groups())
+            nx1, nx2 = (min(max(x, XL), XR) for x in (x1, x2))
+            yb = CY if max(nx1, nx2) > CX else YB
+            ny1, ny2 = (min(max(y, YT), yb) for y in (y1, y2))
+            if (nx1, ny1, nx2, ny2) != (x1, y1, x2, y2): ndiv[0] += 1
+            return '\t(polyline\n\t\t(pts\n\t\t\t(xy %s %s) (xy %s %s)' % (fmt(nx1), fmt(ny1), fmt(nx2), fmt(ny2))
+        t2 = re.sub(r'^\t\(polyline\n\t\t\(pts\n\t\t\t\(xy ([-\d.]+) ([-\d.]+)\) \(xy ([-\d.]+) ([-\d.]+)\)', trim, t, flags=re.M)
+        if t2 != t: open(path, 'w').write(t2)
+    print('dividers trimmed: %d' % ndiv[0])
+
 def main():
     a = sys.argv[1:]
     only = None
@@ -199,6 +218,13 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 15:
+        # after the block moves: dividers kept out of the heading band, and every circuit label re-seated with two
+        # ticks of air (pages_headings_check found five resting on the ink below them)
+        trim_dividers(proj)
+        for name in STAGE6:
+            run('kicad-cli', 'sch', 'upgrade', '--force', sh(name))
+        reseat_only = True; stage = 7
     if stage == 14:
         # Andy, 2026-11-04 evening: "uniform spacing, not crowding, grouping by function", then "execute the list".
         # Whole blocks by ticks, from the measured ink boxes: blocks that touched get a gap, stacks that left
@@ -241,7 +267,8 @@ def main():
         only = 'Sensor_Terminals'; reseat_only = True; stage = 7   # then the four connector labels re-seated on the moved row
     HAND = {'Indicators': ['PCA9634 LED driver', 'Status LED'],                              # circuit labels set by hand in stages 9 and 10; the search leaves them
             'Level_Shifters_Ports': [a[1] for a in STAGE6['Level_Shifters_Ports']['above']],   # replaced by one label per column in stage 10
-            'Power_Input': ['V_PRIME', 'Battery', 'Solar']}                                    # beside their connectors (stage 13)
+            'Power_Input': ['V_PRIME', 'Battery', 'Solar'],                                    # beside their connectors (stage 13)
+            'Aux_Rails': ['3V3_AUX buck']}                                                     # the fullest page: a 7 mm band sent it over the mid-page heading (stage 15), so it keeps its stage-13 seat
     if stage == 13:
         # Andy's third round, the general causes behind "Battery / USB sense has nothing under it" and the
         # garbled text at D9: (1) every BOM field that prints (D9's DIGIKEY, MF and MPN, all at one point) and
@@ -293,21 +320,7 @@ def main():
         # locally"): every page divider is trimmed to the printable area, the two blocks that hang past the right
         # border move in by whole ticks, and then every page is shifted by the whole ticks its own rendered ink needs
         # to sit inside x 8.5-272.9 mm and y 8.5-209.4 mm, with nothing over the title block (x > 172.3, y > 174.8).
-        XL, XR, YT, YB, CX, CY = 10.16, 269.24, 10.16, 205.74, 172.72, 172.72   # divider limits (ticks 8, 212, 8, 162, 136)
-        ndiv = [0]
-        for f in sorted(os.listdir(proj)):
-            if not f.endswith('.kicad_sch'): continue
-            path = os.path.join(proj, f); t = open(path).read()
-            def trim(m):
-                x1, y1, x2, y2 = map(float, m.groups())
-                nx1, nx2 = (min(max(x, XL), XR) for x in (x1, x2))
-                yb = CY if max(nx1, nx2) > CX else YB
-                ny1, ny2 = (min(max(y, YT), yb) for y in (y1, y2))
-                if (nx1, ny1, nx2, ny2) != (x1, y1, x2, y2): ndiv[0] += 1
-                return '\t(polyline\n\t\t(pts\n\t\t\t(xy %s %s) (xy %s %s)' % (fmt(nx1), fmt(ny1), fmt(nx2), fmt(ny2))
-            t2 = re.sub(r'^\t\(polyline\n\t\t\(pts\n\t\t\t\(xy ([-\d.]+) ([-\d.]+)\) \(xy ([-\d.]+) ([-\d.]+)\)', trim, t, flags=re.M)
-            if t2 != t: open(path, 'w').write(t2)
-        print('dividers trimmed: %d' % ndiv[0])
+        trim_dividers(proj)
         run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Power_Input'), sh('Power_Input'), '--rect', '186', '280', '5', '120', '--translate', fmt(tk(-16)), '0')   # the terminals block, with its heading, centered in its column
         run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Feather_ISP'), sh('Feather_ISP'), '--rect', '145', '280', '5', '120', '--translate', fmt(tk(-8)), '0')     # the TPL5111 timer block, with its heading
         # every page's ink, from KiCad's own print, decides its shift
@@ -462,7 +475,7 @@ def main():
                 def seat(xx):            # the band for a column starting at xx, or None
                     cx0, cx1 = int(xx * K_), int((xx + w) * K_)
                     def clear(yy):
-                        band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]; return band.size and not band.any()
+                        band = ink[int((yy - 7) * K_):int(yy * K_), cx0:cx1]; return band.size and not band.any()   # 7 mm: the label box with two ticks of air under it
                     def ink_below(yy):       # distance from a band's bottom to the first ink under it in the column
                         col = ink[int(yy * K_):, cx0:cx1].any(axis=1); rows = np.where(col)[0]
                         return rows[0] / K_ if len(rows) else 99
@@ -473,8 +486,8 @@ def main():
                     yy = y + 7.62            # else a band below it, within 8 mm of the ink above
                     while yy <= 205:
                         if clear(yy):
-                            col = ink[:int((yy - 6) * K_), cx0:cx1].any(axis=1); rows = np.where(col)[0]
-                            if len(rows) and (yy - 6) - rows[-1] / K_ <= 8: return yy
+                            col = ink[:int((yy - 7) * K_), cx0:cx1].any(axis=1); rows = np.where(col)[0]
+                            if len(rows) and (yy - 7) - rows[-1] / K_ <= 8: return yy
                         yy += 1.27
                     return None
                 # the column slides by whole ticks either side of where the label starts (centered on its part since
@@ -491,7 +504,7 @@ def main():
                     print('  %s: no clear band near the part for %r, left at y %.2f' % (name, text, float(at.group(2)))); continue
                 _, x, ny = best
                 cx0, cx1 = int(x * K_), int((x + w) * K_)
-                ny = round((ny - 1.27) / 1.27) * 1.27      # a tick of air under the label
+                ny = round((ny - 2.54) / 1.27) * 1.27      # two ticks of air under the label (one left five labels resting on ink, stage 15)
                 ink[int((ny - 4.5) * K_):int((ny + 0.5) * K_), cx0:cx1] = True   # this label's box is taken now
                 if (fmt(x), fmt(ny)) != (at.group(1), at.group(2)):
                     blk2 = blk.replace(at.group(0), '(at %s %s %s)' % (fmt(x), fmt(ny), at.group(3)), 1)
