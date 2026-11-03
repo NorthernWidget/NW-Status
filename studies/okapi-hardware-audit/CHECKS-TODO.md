@@ -8,7 +8,7 @@ Rules of the walk: the Eagle originals are the reference; a change that
 alters a pad or a net is its own commit gated on the netlist check, KiCad's
 re-save and the pad-net table.
 
-## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03)
+## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03); 44 after items 3 and 4 (2026-11-04)
 
 1. **DONE 2026-11-03**, not by patching: every placed symbol now takes its
    definition from nw-cold-silicon (Project-Okapi 11776ab, f5ae35d, d8d6c7e),
@@ -25,12 +25,16 @@ re-save and the pad-net table.
    3V3_CORE (four) exist only embedded in the sheets, not in
    Okapi-eagle-import.kicad_sym. Fix: copy the two symbol definitions from a
    sheet's lib_symbols into the library file. Text edit. 125 to 112.
-3. **isolated_pin_label, 3.** SBU1 and SBU2 on J10 (USB-C, single-pin named
+3. **DONE in part 2026-11-04** (Project-Okapi 9ffbd69): SBU1 and SBU2 are no-connects and
+   their board pads carry the unconnected names; SENSOR_INT waits for Andy's word. ERC
+   46 to 44. **isolated_pin_label, 3.** SBU1 and SBU2 on J10 (USB-C, single-pin named
    nets in Eagle) and SENSOR_INT on U43 pin INT (the BMA456's interrupt,
    one pin in Eagle too). Fix: a no-connect flag at each pin end, the label
    removed or left as a note. Decision: SENSOR_INT's name says Bobby meant to
    route it; a flag says it is open on this revision. Andy's. 112 to 109.
-4. **pin_not_connected, 61.** Every one open in Eagle as well: J9's 27 unused
+4. **DONE 2026-11-04** (Project-Okapi 3983a5d, `tools/erc_noconnects.py` from ERC's own
+   report): 61 flags, USB2's shell net renamed on the board to match; ERC 112 to 46,
+   pin_not_driven 6 to 1 with it; DRC 375, unconnected 3, parity 0 unchanged. **pin_not_connected, 61.** Every one open in Eagle as well: J9's 27 unused
    M.2 pins, MS1's 12, U23's six handshake and CBUS pins, SD1's DAT1/DAT2,
    USB2's ID and shell, J8's two pads, U38's three, RTC1's 32KHZ and RST,
    U41's INTB and GPA2, U44's INT, U3's FB, U4's NTC, the three load
