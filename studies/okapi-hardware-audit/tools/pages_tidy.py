@@ -128,7 +128,8 @@ STAGE3 = {
 }
 # values that are Eagle package names, never set by Bobby: they print nothing a reader needs and sat on
 # the labels he circled; hidden on every page (the Footprint field carries the package)
-HIDE_VALUES = ('R-EU_R0402', 'R-EU_R0805', 'DIODEDO-214AC', 'DIODESOD-323', 'JUMPER-SMT_2_NO_SILK')
+HIDE_VALUES = ('R-EU_R0402', 'R-EU_R0805', 'DIODEDO-214AC', 'DIODESOD-323', 'JUMPER-SMT_2_NO_SILK',
+               'CONN_022.54_SCREW', 'CONN_42.54_SCREW', 'CONN_82.54_SCREW', 'CONN_102.54_SCREW')   # the screw terminals' package names (stage 13)
 # stage 6 (Andy, second round): a small label for each circuit, headings for the new pages, room used
 STAGE6 = {
  'Power_Input': dict(above=[('U5', 'Battery protection', -50, -4), ('U4', 'Solar charger', -40, -4), ('J5', 'V_PRIME', -10, -4), ('J6', 'Battery', -10, -4), ('J7', 'Solar', -10, -4)]),
@@ -198,6 +199,54 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    HAND = {'Indicators': ['PCA9634 LED driver', 'Status LED'],                              # circuit labels set by hand in stages 9 and 10; the search leaves them
+            'Level_Shifters_Ports': [a[1] for a in STAGE6['Level_Shifters_Ports']['above']],   # replaced by one label per column in stage 10
+            'Power_Input': ['V_PRIME', 'Battery', 'Solar']}                                    # beside their connectors (stage 13)
+    if stage == 13:
+        # Andy's third round, the general causes behind "Battery / USB sense has nothing under it" and the
+        # garbled text at D9: (1) every BOM field that prints (D9's DIGIKEY, MF and MPN, all at one point) and
+        # the screw terminals' package-name values are hidden; (2) each circuit label is centered over its part
+        # instead of sitting at a typed offset, then re-seated by the stage-7 band search from there.
+        # the pull-up ladder six more ticks down, so its label has a band above the rail labels and under U41's notes
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('GPIO_Expander'), sh('GPIO_Expander'), '--rect', '5', '150', '100', '150', '--translate', '0', fmt(tk(6)), '--stretch')
+        # the SPI buffer and the TXS0102 under it six ticks down, so the buffer's label has a band between it and the mux
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Level_Shifters'), sh('Level_Shifters'), '--rect', '5', '100', '110', '200', '--translate', '0', fmt(tk(6)), '--stretch')
+        # the three terminal labels stand beside their connectors (a column of connectors leaves no band between them)
+        BESIDE = {'Power_Input': [('J5', 'V_PRIME'), ('J6', 'Battery'), ('J7', 'Solar')]}
+        for name, pairs in BESIDE.items():
+            path = sh(name); t = open(path).read()
+            for ref, text in pairs:
+                sm = [s for s in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % ref in s.group(0)]
+                px, py = (float(v) for v in re.search(r'\t\t\(at ([-\d.]+) ([-\d.]+)', sm[0].group(0)).groups())
+                m = text_block(t, text)
+                blk = re.sub(r'\(at [-\d.]+ [-\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(round((px - 2.2 * len(text) - 6) / T) * T), fmt(py), q.group(1)), m.group(0), count=1)
+                t = t[:m.start()] + blk + t[m.end():]
+            open(path, 'w').write(t); print('%s: %d labels set beside their connectors' % (name, len(pairs)))
+        for f in sorted(os.listdir(proj)):
+            if not f.endswith('.kicad_sch'): continue
+            path = os.path.join(proj, f); t = open(path).read(); n = 0
+            t, k = re.subn(r'(\t\t\(property "(?!Reference|Value|Footprint|Datasheet|Description|Sheetname|Sheetfile)[^"]*" "[^"]+"\n\t\t\t\(at [^)]*\)\n)(?!\t\t\t\(hide yes\))', r'\1\t\t\t(hide yes)\n', t); n += k
+            for v in HIDE_VALUES:
+                t, k = re.subn(r'(\t\t\(property "Value" "%s"\n\t\t\t\(at [^)]*\)\n)(?!\t\t\t\(hide yes\))' % re.escape(v), r'\1\t\t\t(hide yes)\n', t); n += k
+            if n:
+                open(path, 'w').write(t); print('%s: %d fields hidden' % (f, n))
+        for name, p in STAGE6.items():
+            if only and name != only: continue
+            labels = [(a[0], a[1]) for a in p.get('above', []) if a[1] not in HAND.get(name, [])]
+            if not labels: continue
+            path = sh(name); t = open(path).read(); n = 0
+            for ref, text in labels:
+                m = text_block(t, text); blk = m.group(0)
+                sm = [s for s in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % ref in s.group(0)]
+                if not sm: print('  %s: no part %s for %r' % (name, ref, text)); continue
+                px = float(re.search(r'\t\t\(at ([-\d.]+) ', sm[0].group(0)).group(1))
+                w = 2.2 * len(text) + 1                                   # measured: 19 characters of 3.048 bold print 43 mm wide
+                x = round((px - w / 2) / T) * T
+                blk2 = re.sub(r'\(at [-\d.]+ ([-\d.]+) (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(x), q.group(1), q.group(2)), blk, count=1)
+                if blk2 != blk: t = t[:m.start()] + blk2 + t[m.end():]; n += 1
+            open(path, 'w').write(t); print('%s: %d circuit labels centered on their parts' % (name, n))
+        reseat_only = True   # then the band search from the new x, without stage 7's one-off nudges
+        stage = 7
     if stage == 12:
         # The edge rule as a general fix (Andy, third round: "seek to solve general problems instead of tweaking
         # locally"): every page divider is trimmed to the printable area, the two blocks that hang past the right
@@ -335,17 +384,18 @@ def main():
         K_ = 100 / 25.4
         NUDGE = {'Indicators': [((155, 190, 17, 70), (0, 4))]}        # the status LED block (the LED row's bus reaches x 152.4), from under its heading
         MOVE_TEXTS = {'Aux_Rails': [('3V3_AUX & 5V_AUX Rails', 12.7, 88.9)]}   # the mid-page heading follows its block down
+        if 'reseat_only' not in dir(): reseat_only = False
         for name, p in STAGE6.items():
             if only and name != only: continue
             path = sh(name)
-            for (x0, x1, y0, y1), (bx, by) in NUDGE.get(name, []):
+            for (x0, x1, y0, y1), (bx, by) in ([] if reseat_only else NUDGE.get(name, [])):
                 run('python3', os.path.join(tools, 'sheet_lift.py'), path, path, '--rect', str(x0), str(x1), str(y0), str(y1), '--translate', fmt(tk(bx)), fmt(tk(by)))
-            if MOVE_TEXTS.get(name):
+            if MOVE_TEXTS.get(name) and not reseat_only:
                 t = open(path).read()
                 for text, x, y in MOVE_TEXTS[name]:
                     m = text_block(t, text); blk = re.sub(r'\(at -?[\d.]+ -?[\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(x), fmt(y), q.group(1)), m.group(0), count=1); t = t[:m.start()] + blk + t[m.end():]
                 open(path, 'w').write(t)
-            labels = [a[1] for a in p.get('above', [])]
+            labels = [a[1] for a in p.get('above', []) if a[1] not in HAND.get(name, [])]
             if not labels: continue
             t = open(path).read()
             # a page copy without the circuit labels, rendered alone
@@ -367,29 +417,42 @@ def main():
                 # the search starts at the part's Reference text, not at wherever the label sits now
                 sm = [s for s in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % refs[text] in s.group(0)]
                 r = re.search(r'\(property "Reference" "[^"]*"\n\t\t\t\(at ([-\d.]+) ([-\d.]+)', sm[0].group(0)); y = float(r.group(2))
-                w = 2.1 * len(text) + 2; cx0, cx1 = int(x * K_), int((x + w) * K_)
-                def clear(yy):
-                    band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]; return band.size and not band.any()
-                def ink_below(yy):       # distance from a band's bottom to the first ink under it in the column
-                    col = ink[int(yy * K_):, cx0:cx1].any(axis=1); rows = np.where(col)[0]
-                    return rows[0] / K_ if len(rows) else 99
-                ny = None
-                yy = y
-                while yy >= 24:          # a band above the part, no further from the part's ink than 8 mm
-                    if clear(yy) and ink_below(yy) <= 8: ny = yy; break
-                    yy -= 1.27
-                if ny is None:           # else a band below it, within 8 mm of the ink above
-                    yy = y + 7.62
+                w = 2.2 * len(text) + 1
+                def seat(xx):            # the band for a column starting at xx, or None
+                    cx0, cx1 = int(xx * K_), int((xx + w) * K_)
+                    def clear(yy):
+                        band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]; return band.size and not band.any()
+                    def ink_below(yy):       # distance from a band's bottom to the first ink under it in the column
+                        col = ink[int(yy * K_):, cx0:cx1].any(axis=1); rows = np.where(col)[0]
+                        return rows[0] / K_ if len(rows) else 99
+                    yy = y
+                    while yy >= 24:          # a band above the part, no further from the part's ink than 8 mm
+                        if clear(yy) and ink_below(yy) <= 8: return yy
+                        yy -= 1.27
+                    yy = y + 7.62            # else a band below it, within 8 mm of the ink above
                     while yy <= 205:
                         if clear(yy):
                             col = ink[:int((yy - 6) * K_), cx0:cx1].any(axis=1); rows = np.where(col)[0]
-                            if len(rows) and (yy - 6) - rows[-1] / K_ <= 8: ny = yy; break
+                            if len(rows) and (yy - 6) - rows[-1] / K_ <= 8: return yy
                         yy += 1.27
-                if ny is None:
+                    return None
+                # the column slides by whole ticks either side of where the label starts (centered on its part since
+                # stage 13; a vertical wire above the part blocks one column and not the next); nearest seat wins
+                best = None
+                for k in sorted(range(-20, 21), key=abs):
+                    xx = x + k * 1.27
+                    if xx < 8.5 or xx + w > 272.9: continue
+                    yy = seat(xx)
+                    if yy is None: continue
+                    key = (0 if yy < y else 1, abs(yy - y) + 3 * abs(k) * 1.27)   # above the part before below it; then the nearest seat, a slid column costing three times its slide
+                    if best is None or key < best[0]: best = (key, xx, yy)
+                if best is None:
                     print('  %s: no clear band near the part for %r, left at y %.2f' % (name, text, float(at.group(2)))); continue
+                _, x, ny = best
+                cx0, cx1 = int(x * K_), int((x + w) * K_)
                 ny = round((ny - 1.27) / 1.27) * 1.27      # a tick of air under the label
                 ink[int((ny - 4.5) * K_):int((ny + 0.5) * K_), cx0:cx1] = True   # this label's box is taken now
-                if abs(ny - y) > 0.01:
+                if (fmt(x), fmt(ny)) != (at.group(1), at.group(2)):
                     blk2 = blk.replace(at.group(0), '(at %s %s %s)' % (fmt(x), fmt(ny), at.group(3)), 1)
                     t = t[:m.start()] + blk2 + t[m.end():]; moved.append((text, y, ny))
             open(path, 'w').write(t)
