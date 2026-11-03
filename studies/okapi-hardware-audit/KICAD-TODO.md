@@ -116,6 +116,24 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    tick. Okapi-eagle-import.kicad_sym retired (d8d6c7e). Every symbol and
    footprint on Okapi is nw-cold-silicon's. ERC 147 to 112 (CHECKS-TODO items
    1 and 2); DRC 1282, 20 unconnected, parity 0, unchanged.
+4c. **DONE 2026-11-03, pages and title blocks** (Andy: KiCad's own place for
+   the designer data, standard page sizes; Project-Okapi ffa5859 to 37978d3,
+   four commits). Eagle printed a border and a title block from a frame
+   symbol; KiCad draws them from a drawing sheet, so nw-cold-silicon now
+   holds `nw-cold-silicon.kicad_wks` (5e5ca68), Bobby's FRAME_A_L title
+   block on KiCad's default border, and both of Okapi's page-layout settings
+   name it through `${KIPRJMOD}`. Each sheet took the smallest A size that
+   holds its drawing inside the 10 mm margins and clear of the title-block
+   corner (Okapi_1 and Okapi_3 A2, Okapi_2 A3, the rest A4; the import had
+   sized each page to its drawing); every sheet and the board carry
+   `(title_block (date "2024-11-02") (rev "1.0"))`, the date and the "v1.0
+   updates" of the Eagle schematic's last commit b4032d4; the project's text
+   variables PROJECT = Okapi and DESIGNER = Bobby Schulz fill the rest.
+   Acceptance: `kicad-cli sch export pdf` through the project prints Project,
+   Designer, TITLE (the sheet's name), REV, Date, Sheet n/7 and the license
+   line on all seven pages; nets 209 of 209, ERC 112, DRC 1282/20/parity 0,
+   seven sheets and the board re-save identical, all unchanged. The script
+   is `sheet_page.py` (NW-Tests 6f5a503, mirrored in the skill).
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **Carry the design rules.** Default netclass clearance 0.127 mm and track
@@ -178,4 +196,11 @@ rails, 6 page frames and J1's SDMMCWR-CRD, lifted as nw-cold-silicon 668ce0d), t
 `Margay-eagle-import.kicad_sym` (efb5fae) and `Margay.pretty` (86c2bff) retired; ERC
 76 to 50, nets and DRC unchanged; the record is `studies/margay-kicad/symbols.md`.
 Flagged there: the library's FRAME_A_L carries no title-block texts, so the pages no
-longer print Project, Designer and REV; the sheets' title_block is the place for them.
+longer printed Project, Designer and REV. (5) DONE 2026-11-03 (d1e067b to a8262f8, four
+commits, as Okapi's item 4c): the six frame symbols removed, Margay_1 to _3 on A3 (the
+root A4), `(title_block (date "2024-11-01") (rev "2.2"))` on the four sheets and the
+board (REV from Bobby's frames, the date from the Eagle schematic's last commit 2e755b0),
+the project naming nw-cold-silicon's drawing sheet for schematic and board with
+PROJECT = Margay and DESIGNER = Bobby Schulz, the importer's empty.kicad_wks removed.
+The PDF through the project prints every title-block field on all four pages; nets
+72 of 75, ERC 50, DRC 399/3/parity 4, four sheets and the board re-save identical.
