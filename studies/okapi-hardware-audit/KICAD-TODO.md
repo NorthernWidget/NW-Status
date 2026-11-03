@@ -184,8 +184,18 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    and nudges notes. Collisions at 30 px or more: 47 before the first fixer pass, 18
    before the second, 3 left (RST on R52, GPIO_1_OUT beside a capacitor's fields,
    RST_TRIG on the Feather socket, each the least-ink candidate). Project-Okapi 1f32fcc
-   to 2f22c40. Open: the use of space per page (Andy's question of 2026-11-04 evening,
-   assessment in the session), the Okapi dashed sub-dividers.
+   to 2f22c40.
+4h. **DONE 2026-11-04 (evening), the use of space per page** (Andy: "uniform spacing, not
+   crowding, grouping by function", then "execute the list"): twenty whole-block moves
+   by ticks from the measured ink boxes (stage 14; Project-Okapi b94b6fd), then a third
+   fixer pass. Blocks that touched have a gap (Power_Input, Core_Supply), stacks that
+   left half a page empty are two columns or a row (Level_Shifters, Sensors,
+   Analog_Clock_Power, Sensor_Terminals, Feather_ISP), the ATmega has its clock and reset
+   clear of it, C44 is back beside its chip, the battery switch beside the ideal diode,
+   Bobby's "USB & ISP" block label gone. Lesson in sheet_lift.py (NW-Tests 7840cce): on
+   one page a later rectangle must not cover where an earlier move has just put things,
+   and an in-place move keeps the head. Open: the Okapi dashed sub-dividers; the final
+   look is Andy's in the GUI.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
