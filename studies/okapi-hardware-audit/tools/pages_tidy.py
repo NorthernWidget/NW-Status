@@ -17,6 +17,9 @@ DATE, REV = '2024-11-02', '1.0'
 def page_uuid(name):   # the same deterministic uuid as pages_build.py, so a page's uuid never depends on when it was made
     return str(uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/page/' + name))
 def tk(n): return n * T
+ORDER16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
+           'Cell_Module', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
+           'Sensor_Terminals', 'USB_ISP_Feather', 'Feather_ISP']   # the reading order of the sixteen pages, as the root lists them
 
 # per page: shift of the whole sheet (ticks), then block moves (rect in current mm, ticks),
 # headings (text, x, y), dividers ((x1,y1),(x2,y2)), notes to move in (text, from page, x, y, angle),
@@ -156,6 +159,7 @@ STAGE6 = {
 ORDER = ['Core_Supply', 'Power_Input', 'Aux_Rails', 'Microcontroller', 'Indicators', 'Cell_Module',
          'Level_Shifters', 'Sensors', 'Sensor_Ports', 'USB_ISP_Feather']   # Core_Supply first: it gives notes away
 
+LABRE = re.compile(r'^\t\((global_label|label) "([^"]*)"\n(\t\t\(shape \w+\)\n)?\t\t\(at ([-\d.]+) ([-\d.]+) (\d+)\)\n((?:.*\n)*?)\t\)\n', re.M)
 HEADING = '\t(text "{text}"\n\t\t(exclude_from_sim no)\n\t\t(at {x} {y} 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 5.08 4.318)\n\t\t\t\t(thickness 0.8636)\n\t\t\t\t(bold yes)\n\t\t\t)\n\t\t\t(justify left bottom)\n\t\t)\n\t\t(uuid "{u}")\n\t)\n'
 DIVIDER = '\t(polyline\n\t\t(pts\n\t\t\t(xy {x1} {y1}) (xy {x2} {y2})\n\t\t)\n\t\t(stroke\n\t\t\t(width 0.1524)\n\t\t\t(type solid)\n\t\t)\n\t\t(uuid "{u}")\n\t)\n'
 
@@ -194,6 +198,75 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 12:
+        # The edge rule as a general fix (Andy, third round: "seek to solve general problems instead of tweaking
+        # locally"): every page divider is trimmed to the printable area, the two blocks that hang past the right
+        # border move in by whole ticks, and then every page is shifted by the whole ticks its own rendered ink needs
+        # to sit inside x 8.5-272.9 mm and y 8.5-209.4 mm, with nothing over the title block (x > 172.3, y > 174.8).
+        XL, XR, YT, YB, CX, CY = 10.16, 269.24, 10.16, 205.74, 172.72, 172.72   # divider limits (ticks 8, 212, 8, 162, 136)
+        ndiv = [0]
+        for f in sorted(os.listdir(proj)):
+            if not f.endswith('.kicad_sch'): continue
+            path = os.path.join(proj, f); t = open(path).read()
+            def trim(m):
+                x1, y1, x2, y2 = map(float, m.groups())
+                nx1, nx2 = (min(max(x, XL), XR) for x in (x1, x2))
+                yb = CY if max(nx1, nx2) > CX else YB
+                ny1, ny2 = (min(max(y, YT), yb) for y in (y1, y2))
+                if (nx1, ny1, nx2, ny2) != (x1, y1, x2, y2): ndiv[0] += 1
+                return '\t(polyline\n\t\t(pts\n\t\t\t(xy %s %s) (xy %s %s)' % (fmt(nx1), fmt(ny1), fmt(nx2), fmt(ny2))
+            t2 = re.sub(r'^\t\(polyline\n\t\t\(pts\n\t\t\t\(xy ([-\d.]+) ([-\d.]+)\) \(xy ([-\d.]+) ([-\d.]+)\)', trim, t, flags=re.M)
+            if t2 != t: open(path, 'w').write(t2)
+        print('dividers trimmed: %d' % ndiv[0])
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Power_Input'), sh('Power_Input'), '--rect', '186', '280', '5', '120', '--translate', fmt(tk(-16)), '0')   # the terminals block, with its heading, centered in its column
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Feather_ISP'), sh('Feather_ISP'), '--rect', '145', '280', '5', '120', '--translate', fmt(tk(-8)), '0')     # the TPL5111 timer block, with its heading
+        # every page's ink, from KiCad's own print, decides its shift
+        pdf = os.path.join(proj, 'edge_fit.pdf')
+        run('kicad-cli', 'sch', 'export', 'pdf', '-e', '-n', '--black-and-white', '-o', pdf, sh('Okapi'))
+        run('pdftoppm', '-r', '50', '-png', pdf, pdf[:-4]); os.remove(pdf)
+        from PIL import Image
+        import numpy as np, math, glob
+        k = 25.4 / 50
+        pngs = sorted(glob.glob(pdf[:-4] + '-*.png')); assert len(pngs) == 1 + len(ORDER16), pngs
+        for name, png in zip(ORDER16, pngs[1:]):
+            a = np.asarray(Image.open(png).convert('L')) < 200; ys, xs = np.where(a)
+            x0, x1, y0, y1 = xs.min() * k, xs.max() * k, ys.min() * k, ys.max() * k
+            dx = max(0, math.ceil((8.5 - x0) / T)); dy = max(0, math.ceil((8.5 - y0) / T))
+            assert x1 + dx * T <= 272.9 and y1 + dy * T <= 209.4, (name, x0, x1, y0, y1, dx, dy)
+            if dx or dy:
+                run('python3', os.path.join(tools, 'sheet_page.py'), sh(name), '--translate', fmt(tk(dx)), fmt(tk(dy)))
+            print('%-22s ink x %.1f-%.1f y %.1f-%.1f  shift %d,%d ticks' % (name, x0, x1, y0, y1, dx, dy))
+            os.remove(png)
+        os.remove(pngs[0])
+        for f in sorted(os.listdir(proj)):
+            if f.endswith('.kicad_sch'): run('kicad-cli', 'sch', 'upgrade', '--force', os.path.join(proj, f))
+        return
+    if stage == 11:
+        # Andy's third round: the SD card off the page edge, C32 out from under the RTC's labels, the pull-up ladder
+        # clear of U41, J2's diagonal leads straightened; the edge rule is now 4 mm inside the border (gate.sh)
+        sys.path.insert(0, tools)
+        from sch_edit import Editor, fmt as efmt
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Cell_Module'), sh('Cell_Module'), '--rect', '200', '280', '5', '75', '--translate', fmt(tk(-5)), '0')
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('Analog_Clock_Power'), sh('Analog_Clock_Power'), '--rect', '40', '54', '135', '160', '--translate', fmt(tk(-8)), '0', '--stretch')
+        run('python3', os.path.join(tools, 'sheet_lift.py'), sh('GPIO_Expander'), sh('GPIO_Expander'), '--rect', '5', '150', '100', '190', '--translate', '0', fmt(tk(8)), '--stretch')   # the whole ladder, R55 at y 109 to R58 at 130
+        # J2: each diagonal lead becomes a horizontal stub of four ticks with its label at the far end, pointing left
+        path = sh('Sensor_Terminals'); t = open(path).read()
+        wires = [(m, (float(m.group(1)), float(m.group(2))), (float(m.group(3)), float(m.group(4)))) for m in re.finditer(r'\t\(wire\n\t\t\(pts\n\t\t\t\(xy ([-\d.]+) ([-\d.]+)\) \(xy ([-\d.]+) ([-\d.]+)\)\n(?:.*\n)*?\t\)\n', t)]
+        labels = {(float(m.group(4)), float(m.group(5))): m for m in LABRE.finditer(t)}
+        n = 0
+        for m, a_, b_ in wires:
+            if abs(a_[0] - b_[0]) < 1e-6 or abs(a_[1] - b_[1]) < 1e-6: continue   # straight
+            lab, pin = (a_, b_) if a_ in labels else ((b_, a_) if b_ in labels else (None, None))
+            if lab is None: continue
+            nx, ny = pin[0] - 5.08, pin[1]
+            t = t.replace(m.group(0), m.group(0).replace('(xy %s %s)' % (efmt(lab[0]), efmt(lab[1])), '(xy %s %s)' % (efmt(nx), efmt(ny)), 1), 1)
+            lm = labels[lab]
+            t = t.replace(lm.group(0), re.sub(r'\(at [-\d.]+ [-\d.]+ \d+\)', '(at %s %s 180)' % (efmt(nx), efmt(ny)), lm.group(0), count=1).replace('(justify left)', '(justify right)'), 1)
+            n += 1
+        open(path, 'w').write(t); print('Sensor_Terminals: %d diagonal leads straightened' % n)
+        for name in ('Cell_Module', 'Analog_Clock_Power', 'GPIO_Expander', 'Sensor_Terminals'):
+            run('kicad-cli', 'sch', 'upgrade', '--force', sh(name))
+        return
     if stage == 10:
         # the ports page: one label per column at the top instead of one beside each chip (the chips' Value
         # fields already print their part numbers and the columns are 15 mm apart); Indicators: two last nudges
@@ -287,26 +360,33 @@ def main():
             subprocess.run(['pdftoppm', '-r', '100', '-png', '-singlefile', os.path.join(tmp, 'p.pdf'), os.path.join(tmp, 'p')], capture_output=True)
             ink = np.asarray(Image.open(os.path.join(tmp, 'p.png')).convert('L')) < 200
             moved = []
+            refs = {a[1]: a[0] for a in p.get('above', [])}
             for text in labels:
                 m = text_block(t, text); blk = m.group(0)
-                at = re.search(r'\(at ([-\d.]+) ([-\d.]+) (\d+)\)', blk); x, y = float(at.group(1)), float(at.group(2))
+                at = re.search(r'\(at ([-\d.]+) ([-\d.]+) (\d+)\)', blk); x = float(at.group(1))
+                # the search starts at the part's Reference text, not at wherever the label sits now
+                sm = [s for s in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % refs[text] in s.group(0)]
+                r = re.search(r'\(property "Reference" "[^"]*"\n\t\t\t\(at ([-\d.]+) ([-\d.]+)', sm[0].group(0)); y = float(r.group(2))
                 w = 2.1 * len(text) + 2; cx0, cx1 = int(x * K_), int((x + w) * K_)
+                def clear(yy):
+                    band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]; return band.size and not band.any()
+                def ink_below(yy):       # distance from a band's bottom to the first ink under it in the column
+                    col = ink[int(yy * K_):, cx0:cx1].any(axis=1); rows = np.where(col)[0]
+                    return rows[0] / K_ if len(rows) else 99
                 ny = None
                 yy = y
-                while yy >= 24:          # the page heading band ends about 17 mm; keep 7 mm below it
-                    band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]
-                    if band.size and not band.any():
-                        ny = yy; break
+                while yy >= 24:          # a band above the part, no further from the part's ink than 8 mm
+                    if clear(yy) and ink_below(yy) <= 8: ny = yy; break
                     yy -= 1.27
-                if ny is None:           # nothing above: the first clear band below the part instead
+                if ny is None:           # else a band below it, within 8 mm of the ink above
                     yy = y + 7.62
                     while yy <= 205:
-                        band = ink[int((yy - 6) * K_):int(yy * K_), cx0:cx1]
-                        if band.size and not band.any():
-                            ny = yy; break
+                        if clear(yy):
+                            col = ink[:int((yy - 6) * K_), cx0:cx1].any(axis=1); rows = np.where(col)[0]
+                            if len(rows) and (yy - 6) - rows[-1] / K_ <= 8: ny = yy; break
                         yy += 1.27
                 if ny is None:
-                    print('  %s: no clear band above or below for %r, left at y %.2f' % (name, text, y)); continue
+                    print('  %s: no clear band near the part for %r, left at y %.2f' % (name, text, float(at.group(2)))); continue
                 ny = round((ny - 1.27) / 1.27) * 1.27      # a tick of air under the label
                 ink[int((ny - 4.5) * K_):int((ny + 0.5) * K_), cx0:cx1] = True   # this label's box is taken now
                 if abs(ny - y) > 0.01:
@@ -334,9 +414,6 @@ def main():
                             'USB_ISP_Feather': [((187.96, 5.08), (187.96, 175.26)), ((5.08, 121.92), (187.96, 121.92))]}
         DELETE_TEXTS = {'Power_Input': ['To Battery Connectors'],      # Bobby's pointer to wires that now sit beside the terminals they went to
                         'Indicators': ['Indicators']}                 # his small block label, now under the page heading and over 3V3_CORE
-        ORDER16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
-                   'Cell_Module', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
-                   'Sensor_Terminals', 'USB_ISP_Feather', 'Feather_ISP']
         # a local label whose instances would land on two pages becomes one net on each: make it global first
         t = open(sh('Microcontroller')).read()
         t, n = re.subn(r'\t\(label "GLOBAL_INT"\n\t\t\(at (-?[\d.]+) (-?[\d.]+) (\d+)\)\n\t\t\(effects\n(?:.*\n)*?\t\t\)\n\t\t\(uuid "([^"]*)"\)\n\t\)\n',
