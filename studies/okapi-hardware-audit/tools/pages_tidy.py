@@ -18,8 +18,9 @@ def page_uuid(name):   # the same deterministic uuid as pages_build.py, so a pag
     return str(uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/page/' + name))
 def tk(n): return n * T
 ORDER16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
-           'Cell_Module', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
-           'Sensor_Terminals', 'USB_ISP_Feather', 'Feather_ISP']   # the reading order of the sixteen pages, as the root lists them
+           'Cell_Module', 'Feather_ISP', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
+           'Sensor_Terminals', 'USB_ISP_Feather']   # the reading order of the sixteen pages, as the root lists them; Feather_ISP
+           # follows Cell_Module since stage 16 (Andy, 2026-11-04: the B-series M.2 socket and the Feather socket are two hosts for a Particle module)
 
 # per page: shift of the whole sheet (ticks), then block moves (rect in current mm, ticks),
 # headings (text, x, y), dividers ((x1,y1),(x2,y2)), notes to move in (text, from page, x, y, angle),
@@ -218,6 +219,15 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 16:
+        # the root re-listed so that ISP & Feather (the Boron's socket) follows Cellular Module (the B-series socket)
+        plan = [{'name': name, 'file': name + '.kicad_sch', 'uuid': re.search(r'\(uuid "([^"]*)"\)', open(sh(name)).read()).group(1)} for name in ORDER16]
+        json.dump(plan, open(os.path.join(proj, 'sheets.json'), 'w'), indent=1)
+        run('python3', os.path.join(tools, 'root_sheets.py'), sh('Okapi'), os.path.join(proj, 'sheets.json'), '--paper', 'USLetter')
+        os.remove(os.path.join(proj, 'sheets.json'))
+        run('kicad-cli', 'sch', 'upgrade', '--force', sh('Okapi'))
+        print('stage 16: root re-listed, %s' % ', '.join(ORDER16))
+        return
     if stage == 15:
         # after the block moves: dividers kept out of the heading band, and every circuit label re-seated with two
         # ticks of air (pages_headings_check found five resting on the ink below them)
