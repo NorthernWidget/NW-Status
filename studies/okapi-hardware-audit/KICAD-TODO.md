@@ -219,6 +219,13 @@ the project naming nw-cold-silicon's drawing sheet for schematic and board with
 PROJECT = Margay and DESIGNER = Bobby Schulz, the importer's empty.kicad_wks removed.
 The PDF through the project prints every title-block field on all four pages; nets
 72 of 75, ERC 50, DRC 399/3/parity 4, four sheets and the board re-save identical.
+(6) DONE 2026-11-03 (aa9fa4f, 3bc8b89): the sheets named as Bobby's headings and paged in his
+Eagle order, Digital_Core, Control_Connectors, Power_Sensors (sheet symbols keep their uuids;
+the board's 14 sheet-prefixed nets renamed, pad-net partition identical). (7) DONE 2026-11-03
+(992e152; Okapi bbe67d7 the same): the logo symbol draws its footprint's silkscreen at twice
+the size (nw-cold-silicon f6ed331, every GRAPHIC symbol) and sits in the empty top-right
+corner with reference and value hidden; before, it printed its stand-in text over the page
+heading.
 (4c5) DONE 2026-11-03 (Andy: US Letter, or A4 if it fits; A4 does not, Margay_3's
 drawing is 212 mm tall): the drawing sheet's margins 2.5 mm (nw-cold-silicon 0df320b,
 Bobby's border sat at the paper's edge), all four sheets USLetter, each drawing moved by
