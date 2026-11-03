@@ -59,14 +59,13 @@ def ink_under(A, B):
 
 WIRE = r'\t\(wire\n\t\t\(pts\n\t\t\t\(xy ([-\d.]+) ([-\d.]+)\) \(xy ([-\d.]+) ([-\d.]+)\)\n(?:.*\n)*?\t\)\n'
 
-def move_wire_end(t, old, new):
-    """the wire with an end at old gets that end at new"""
-    for wm in re.finditer(WIRE, t):
-        for i in (1, 3):
-            if abs(float(wm.group(i)) - old[0]) < 1e-6 and abs(float(wm.group(i + 1)) - old[1]) < 1e-6:
-                blk = wm.group(0).replace('(xy %s %s)' % (wm.group(i), wm.group(i + 1)), '(xy %s %s)' % (fmt(new[0]), fmt(new[1])), 1)
-                return t.replace(wm.group(0), blk, 1)
-    return t
+def add_wire(t, a, b):
+    """a new wire from a to b, appended before the closing paren: the old wire end stays where it was, because a
+    label's anchor can also be a pin end (C42 on the ATmega page lost its net when the end itself was moved)"""
+    import uuid
+    seg = '\t(wire\n\t\t(pts\n\t\t\t(xy %s %s) (xy %s %s)\n\t\t)\n\t\t(stroke\n\t\t\t(width 0)\n\t\t\t(type default)\n\t\t)\n\t\t(uuid "%s")\n\t)\n' % (
+        fmt(a[0]), fmt(a[1]), fmt(b[0]), fmt(b[1]), uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/stub/%s/%s' % (fmt(a[0]) + ',' + fmt(a[1]), fmt(b[0]) + ',' + fmt(b[1]))))
+    return t[:-2] + seg + ')\n'
 
 TEXT = re.compile(r'^\t\(text "([^"]*)"\n(\t\t\(exclude_from_sim \w+\)\n)?\t\t\(at ([-\d.]+) ([-\d.]+) (\d+)\)\n((?:.*\n)*?)\t\)\n', re.M)
 
@@ -124,7 +123,7 @@ def main():
                         ends.append(((x + ux * k * 1.27, y + uy * k * 1.27), 'extend', k))
             best = None
             for (ex, ey), how, k in ends:
-                page_t = base if how != 'extend' else move_wire_end(base, (x, y), (ex, ey))
+                page_t = base if how != 'extend' else add_wire(base, (x, y), (ex, ey))
                 Bk = B if how != 'extend' else render(proj, page_t, tmp, 'Bk')
                 for ca in (0, 90, 180, 270):
                     cand = set_label(block, ex, ey, ca)
@@ -141,7 +140,7 @@ def main():
                         if pts == {(x, y), (ex, ey)}:
                             t = t.replace(wm.group(0), '', 1); break
                 elif how == 'extend':
-                    t = move_wire_end(t, (x, y), (ex, ey))
+                    t = add_wire(t, (x, y), (ex, ey))
                 print('  %s: %s (%g,%g,%d) -> (%g,%g,%d) %s, %d px under it' % (page, name, x, y, ang, ex, ey, ca, how, px))
             else:
                 print('  %s: %s stays (%g,%g,%d), best %d px' % (page, name, x, y, ang, px))

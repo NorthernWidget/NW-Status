@@ -255,12 +255,12 @@ def main():
         BESIDE = {'Power_Input': [('J5', 'V_PRIME'), ('J6', 'Battery'), ('J7', 'Solar')]}
         for name, pairs in BESIDE.items():
             path = sh(name); t = open(path).read()
-            longest = max(len(text) for ref, text in pairs)   # one x for the group, so the labels line up, ten mm clear of the connectors' pin stubs
+            longest = max(len(text) for ref, text in pairs)   # one x for the group, so the labels line up, 14 mm clear of the connectors' pin stubs (bold text runs wider than 2.2 mm a character)
             for ref, text in pairs:
                 sm = [s for s in re.finditer(r'\t\(symbol\n(?:.*\n)*?\t\)\n', t) if '(property "Reference" "%s"' % ref in s.group(0)]
                 px, py = (float(v) for v in re.search(r'\t\t\(at ([-\d.]+) ([-\d.]+)', sm[0].group(0)).groups())
                 m = text_block(t, text)
-                blk = re.sub(r'\(at [-\d.]+ [-\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(round((px - 2.2 * longest - 10) / T) * T), fmt(py), q.group(1)), m.group(0), count=1)
+                blk = re.sub(r'\(at [-\d.]+ [-\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(round((px - 2.2 * longest - 14) / T) * T), fmt(py), q.group(1)), m.group(0), count=1)
                 t = t[:m.start()] + blk + t[m.end():]
             open(path, 'w').write(t); print('%s: %d labels set beside their connectors' % (name, len(pairs)))
         for f in sorted(os.listdir(proj)):
