@@ -17,10 +17,15 @@ DATE, REV = '2024-11-02', '1.0'
 def page_uuid(name):   # the same deterministic uuid as pages_build.py, so a page's uuid never depends on when it was made
     return str(uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/page/' + name))
 def tk(n): return n * T
-ORDER16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
-           'Cell_Module', 'Feather_ISP', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
-           'Sensor_Terminals', 'USB_ISP_Feather']   # the reading order of the sixteen pages, as the root lists them; Feather_ISP
-           # follows Cell_Module since stage 16 (Andy, 2026-11-04: the B-series M.2 socket and the Feather socket are two hosts for a Particle module)
+ORDER_STAGE16 = ['Power_Input', 'Core_Supply', 'Core_Power_Path', 'Aux_Rails', 'Microcontroller', 'GPIO_Expander', 'Indicators',
+                 'Cell_Module', 'Feather_ISP', 'Level_Shifters', 'Level_Shifters_Ports', 'Sensors', 'Analog_Clock_Power', 'Sensor_Ports',
+                 'Sensor_Terminals', 'USB_ISP_Feather']   # stages 5 to 16: the order of the split, then Feather_ISP after Cell_Module
+ORDER16 = ['Power_Input', 'Core_Power_Path', 'Core_Supply', 'Aux_Rails',                  # power: in, which source feeds the core, the core rails, the aux rails
+           'Microcontroller', 'GPIO_Expander', 'USB_ISP_Feather',                         # the brain and its programming and serial port
+           'Indicators', 'Analog_Clock_Power', 'Sensors',                                 # on-board peripherals
+           'Cell_Module', 'Feather_ISP',                                                  # the two Particle hosts
+           'Level_Shifters', 'Level_Shifters_Ports', 'Sensor_Ports', 'Sensor_Terminals']  # out to the sensor ports: core side, port side, switched power, terminals
+           # stage 17 (Andy, 2026-11-04: "other ideas of page ordering by relevance"); the shared-net counts between neighbors sum to 45 against 42 before
 
 # per page: shift of the whole sheet (ticks), then block moves (rect in current mm, ticks),
 # headings (text, x, y), dividers ((x1,y1),(x2,y2)), notes to move in (text, from page, x, y, angle),
@@ -190,6 +195,15 @@ def append_items(path, items):
     t = t[:i + 1] + ''.join(items) + t[i + 1:]
     open(path, 'w').write(t)
 
+def relist(proj, tools, sh, order, stage):
+    """the root sheet rewritten to list the pages in this order (sheet uuids kept, so the board's paths hold)"""
+    plan = [{'name': name, 'file': name + '.kicad_sch', 'uuid': re.search(r'\(uuid "([^"]*)"\)', open(sh(name)).read()).group(1)} for name in order]
+    json.dump(plan, open(os.path.join(proj, 'sheets.json'), 'w'), indent=1)
+    run('python3', os.path.join(tools, 'root_sheets.py'), sh('Okapi'), os.path.join(proj, 'sheets.json'), '--paper', 'USLetter')
+    os.remove(os.path.join(proj, 'sheets.json'))
+    run('kicad-cli', 'sch', 'upgrade', '--force', sh('Okapi'))
+    print('stage %d: root re-listed, %s' % (stage, ', '.join(order)))
+
 def trim_dividers(proj):
     """every page divider clipped to the printable area: x 10.16-269.24, y from 17.78 (below the heading band; 10.16
     until stage 15, when the Terminals heading was found sitting on its divider) to 205.74, or 172.72 beside the title block"""
@@ -219,14 +233,14 @@ def main():
         i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 17:
+        # the pages by relevance: power in to the aux rails, the brain with its USB port, the on-board peripherals,
+        # the two Particle hosts, then the chain out to the sensor terminals
+        relist(proj, tools, sh, ORDER16, 17)
+        return
     if stage == 16:
         # the root re-listed so that ISP & Feather (the Boron's socket) follows Cellular Module (the B-series socket)
-        plan = [{'name': name, 'file': name + '.kicad_sch', 'uuid': re.search(r'\(uuid "([^"]*)"\)', open(sh(name)).read()).group(1)} for name in ORDER16]
-        json.dump(plan, open(os.path.join(proj, 'sheets.json'), 'w'), indent=1)
-        run('python3', os.path.join(tools, 'root_sheets.py'), sh('Okapi'), os.path.join(proj, 'sheets.json'), '--paper', 'USLetter')
-        os.remove(os.path.join(proj, 'sheets.json'))
-        run('kicad-cli', 'sch', 'upgrade', '--force', sh('Okapi'))
-        print('stage 16: root re-listed, %s' % ', '.join(ORDER16))
+        relist(proj, tools, sh, ORDER_STAGE16, 16)
         return
     if stage == 15:
         # after the block moves: dividers kept out of the heading band, and every circuit label re-seated with two
@@ -340,8 +354,8 @@ def main():
         from PIL import Image
         import numpy as np, math, glob
         k = 25.4 / 50
-        pngs = sorted(glob.glob(pdf[:-4] + '-*.png')); assert len(pngs) == 1 + len(ORDER16), pngs
-        for name, png in zip(ORDER16, pngs[1:]):
+        pngs = sorted(glob.glob(pdf[:-4] + '-*.png')); assert len(pngs) == 1 + len(ORDER_STAGE16), pngs
+        for name, png in zip(ORDER_STAGE16, pngs[1:]):
             a = np.asarray(Image.open(png).convert('L')) < 200; ys, xs = np.where(a)
             x0, x1, y0, y1 = xs.min() * k, xs.max() * k, ys.min() * k, ys.max() * k
             dx = max(0, math.ceil((8.5 - x0) / T)); dy = max(0, math.ceil((8.5 - y0) / T))
@@ -574,7 +588,7 @@ def main():
                 m = text_block(t, text); t = t[:m.start()] + t[m.end():]
             open(sh(name), 'w').write(t)
         plan = []
-        for name in ORDER16:
+        for name in ORDER_STAGE16:
             u = page_uuid(name) if name in [s[1] for s in SPLITS] else re.search(r'\(uuid "([^"]*)"\)', open(sh(name)).read()).group(1)
             plan.append({'name': name, 'file': name + '.kicad_sch', 'uuid': u})
         json.dump(plan, open(os.path.join(proj, 'sheets.json'), 'w'), indent=1)
@@ -583,7 +597,7 @@ def main():
         for f in sorted(os.listdir(proj)):
             if f.endswith('.kicad_sch'):
                 run('kicad-cli', 'sch', 'upgrade', '--force', os.path.join(proj, f))
-        print('stage 5: %d lifts, root with %d pages' % (len(SPLITS), len(ORDER16)))
+        print('stage 5: %d lifts, root with %d pages' % (len(SPLITS), len(ORDER_STAGE16)))
         return
     if stage == 4:
         # Andy, second round (okapi_2026-11-03_v2-AW.pdf): "hold all font sizes constant". One size per kind:
