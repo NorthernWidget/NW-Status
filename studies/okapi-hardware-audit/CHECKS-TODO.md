@@ -74,11 +74,11 @@ re-save and the pad-net table.
    the library in something DRC compares beyond pads and graphics (pads and
    graphics checked equal). Fix: a GUI "update footprint from library" on
    the four says what; U$4 is item 8. 388 to 384.
-5. **annular_width, 9.** U3's nine thermal vias (PAD@1 to PAD@9, GND) have an
+5. **Measured 2026-11-03:** U3's nine thermal pads are drill 0.254 mm at diameter 0.3048 (ring 0.0254 mm, 1 mil) in Bobby's package; Eagle's DRU (rvPadTop 25 %, rlMinPadTop 5 mil) draws every pad ring at max(25 % of drill, 0.127 mm), so the fabricated boards carry 0.508 mm pads there. The converters took the package's nominal size, and the library holds many such pads (count in the report below). Proposal: apply Eagle's restring rule to through-hole pads in build.py (diameter = max(nominal, drill + 2 x max(0.25 x drill, 0.127))) and re-body; or raise just U3's nine in the library. Andy's call. **annular_width, 9.** U3's nine thermal vias (PAD@1 to PAD@9, GND) have an
    annulus below the 0.0508 mm rule. Fix: the rule to Eagle's (rlMinViaOuter
    5 mil = 0.127 mm would be stricter; read what Eagle actually passed) or
    the pads' size. Step 5 territory. 384 to 375.
-6. **silk_edge_clearance, 8.** SD1, J10 and USB2 outlines over the board
+6. **Measured 2026-11-03:** 7 are connector outlines (J10 two lines, SD1 five arcs and lines) that hang over the edge by design, 1 is USB2's reference text; KiCad's native answer for the seven is a DRC exclusion each (stored in Okapi.kicad_pro) and for the text a move. **silk_edge_clearance, 8.** SD1, J10 and USB2 outlines over the board
    edge: connectors that hang off the edge by design. Fix: DRC exclusions on
    the eight, or trim the three outlines. 375 to 367.
 7. **USB2's shell: hole_clearance 13, solder_mask_bridge 12, shorting_items 3,
