@@ -49,6 +49,14 @@ PLAN = {
     dividers=[((187.96, 5.08), (187.96, 175.26)), ((5.08, 121.92), (187.96, 121.92))],
     symbols=[('H1', -68, 44), ('H2', -68, 44), ('H3', -68, 44)]),
 }
+# stage 2 (2026-11-04), after pages_headings_check.py measured every heading's ink: two headings
+# touched their dividers, two sat far above the ink they label
+STAGE2 = {
+ 'Aux_Rails': dict(blocks=[((5, 200, 80, 195), (0, 2))], move_texts=[('3V3_AUX & 5V_AUX Rails', 12.7, 81.28)]),
+ 'USB_ISP_Feather': dict(blocks=[((5, 120, 125, 210), (0, 2))], move_texts=[('Feather Power Timer', 12.7, 130.81)]),
+ 'Microcontroller': dict(shift=(0, -20), move_texts=[('Microcontroller & GPIO Expander', 12.7, 15.24)]),   # the shift carries the heading too
+ 'Cell_Module': dict(move_texts=[('Cellular Module', 101.6, 15.24)]),
+}
 ORDER = ['Core_Supply', 'Power_Input', 'Aux_Rails', 'Microcontroller', 'Indicators', 'Cell_Module',
          'Level_Shifters', 'Sensors', 'Sensor_Ports', 'USB_ISP_Feather']   # Core_Supply first: it gives notes away
 
@@ -85,8 +93,28 @@ def main():
     only = None
     if '--only' in a:
         i = a.index('--only'); only = a[i + 1]; del a[i:i + 2]
+    stage = 1
+    if '--stage' in a:
+        i = a.index('--stage'); stage = int(a[i + 1]); del a[i:i + 2]
     proj, tools = a
     sh = lambda n: os.path.join(proj, n + '.kicad_sch')
+    if stage == 2:
+        for name, p in STAGE2.items():
+            path = sh(name)
+            sx, sy = p.get('shift', (0, 0))
+            if sx or sy:
+                run('python3', os.path.join(tools, 'sheet_page.py'), path, '--translate', fmt(tk(sx)), fmt(tk(sy)))
+            for (x0, x1, y0, y1), (bx, by) in p.get('blocks', []):
+                run('python3', os.path.join(tools, 'sheet_lift.py'), path, path, '--rect', str(x0), str(x1), str(y0), str(y1), '--translate', fmt(tk(bx)), fmt(tk(by)))
+            t = open(path).read()
+            for text, x, y in p.get('move_texts', []):
+                m = text_block(t, text); blk = m.group(0)
+                blk = re.sub(r'\(at -?[\d.]+ -?[\d.]+ (\d+)\)', lambda q: '(at %s %s %s)' % (fmt(x), fmt(y), q.group(1)), blk, count=1)
+                t = t[:m.start()] + blk + t[m.end():]
+            open(path, 'w').write(t)
+            run('kicad-cli', 'sch', 'upgrade', '--force', path)
+            print('%s: stage 2, shift %s, %d block moves, %d texts moved' % (name, p.get('shift', (0, 0)), len(p.get('blocks', [])), len(p.get('move_texts', []))))
+        return
     held = {}   # notes lifted out of a page, by text
     for name in ORDER:
         p = PLAN[name]
