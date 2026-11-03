@@ -188,9 +188,10 @@ Open: (1) the Eagle netlist check gives 72 of 75 nets exact with 3
 differences, before and after: not a conversion fault but C20 and D4, added on
 the KiCad side on 2026-06-01 and absent from the Eagle files, filed as
 Project-Margay#63; (2) four BOM fields where the footprint disagreed with
-the symbol (R7, R9, R23, U13), filed as Project-Margay#62; (3) DRC still lists the SD slot J1 and the logo U$2 as not matching
-the library, both back-side, pads and mirrored graphics checked equal, so
-something else KiCad compares (a text or a field); (4) DONE 2026-11-03: every placed symbol
+the symbol (R7, R9, R23, U13), filed as Project-Margay#62; (3) DONE 2026-11-03: DRC listed the SD slot J1 and the logo as not matching the
+library; J1's nine keepout zones had been copied in library coordinates and the logo's
+mirrored coordinates rounded to four decimals (rebody.py, fixed in NW-Tests 660405e and
+39a2cce); re-bodied (d723fcb, 02dc996), DRC 399 to 397, no mismatches; (4) DONE 2026-11-03: every placed symbol
 moved onto nw-cold-silicon in two batches (fc9e682, 82 symbols; f4ecd20, the 34 GND
 rails, 6 page frames and J1's SDMMCWR-CRD, lifted as nw-cold-silicon 668ce0d), then
 `Margay-eagle-import.kicad_sym` (efb5fae) and `Margay.pretty` (86c2bff) retired; ERC

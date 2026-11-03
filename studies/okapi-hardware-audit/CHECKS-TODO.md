@@ -53,7 +53,7 @@ re-save and the pad-net table.
    pins stay inputs, J9's VCC and 3V3. Hardest: 42 pins on about 14 nets.
    47 to a residue of what Andy accepts.
 
-## DRC, 1282 (536 errors, 746 warnings); 379 after items 1 to 3 (2026-11-03)
+## DRC, 1282 (536 errors, 746 warnings); 375 after items 1 to 4 (2026-11-03)
 
 1. **DONE 2026-11-03** (Project-Okapi 9faa2fc): default netclass clearance 0.127 mm, via 0.508 on a 0.254 drill (the board's most used); clearance 499 to 9, all nine USB2's shell pads against tracks (item 7); 1282 to 783. **clearance, 499.** The project has KiCad's 0.2 mm default netclass where
    the board was routed to Eagle's 5 mil (0.127 mm) rules. Fix: default
@@ -70,7 +70,7 @@ re-save and the pad-net table.
    --refill-zones --save-board` (step 7). Measured on a copy: vias 6 to 0,
    tracks 3 to 2, unconnected 20 to 3, and one isolated copper island
    appears (the audit's known one, step 7). 394 to about 388.
-4. **lib_footprint_mismatch, 4.** SD1, U43, S5 and the logo U$4 differ from
+4. **DONE 2026-11-03** (Project-Okapi 92610e4, aeb1460; Margay d723fcb, 02dc996; NW-Tests 660405e, 39a2cce): two rebody.py defects, found with the pcbnew Python module as the judge (`FootprintNeedsUpdate`). (a) A footprint's zone polygon is written in board coordinates where pads and graphics are local, and the script had copied the library's unmoved, so SD1's two keepouts, U43's and S5's (and Margay J1's nine) sat near the board origin: now mirrored, rotated and translated to the part, layer list masked to the board's copper. (b) Coordinates rounded to four decimals where KiCad writes six and compares exactly, which left the mirrored logo microns off; now six, with the library's descr and artwork attributes on the instance. Mismatches 4 to 0 on Okapi (DRC 379 to 375), 2 to 0 on Margay (399 to 397). **lib_footprint_mismatch, 4.** SD1, U43, S5 and the logo U$4 differ from
    the library in something DRC compares beyond pads and graphics (pads and
    graphics checked equal). Fix: a GUI "update footprint from library" on
    the four says what; U$4 is item 8. 388 to 384.
