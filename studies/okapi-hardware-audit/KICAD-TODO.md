@@ -172,6 +172,10 @@ the KiCad side on 2026-06-01 and absent from the Eagle files, filed as
 Project-Margay#63; (2) four BOM fields where the footprint disagreed with
 the symbol (R7, R9, R23, U13), filed as Project-Margay#62; (3) DRC still lists the SD slot J1 and the logo U$2 as not matching
 the library, both back-side, pads and mirrored graphics checked equal, so
-something else KiCad compares (a text or a field); (4) the project's old
-`Margay.pretty` and `Margay-eagle-import.kicad_sym` remain beside the new
-table, unused by footprints, to be removed as their own commit.
+something else KiCad compares (a text or a field); (4) DONE 2026-11-03: every placed symbol
+moved onto nw-cold-silicon in two batches (fc9e682, 82 symbols; f4ecd20, the 34 GND
+rails, 6 page frames and J1's SDMMCWR-CRD, lifted as nw-cold-silicon 668ce0d), then
+`Margay-eagle-import.kicad_sym` (efb5fae) and `Margay.pretty` (86c2bff) retired; ERC
+76 to 50, nets and DRC unchanged; the record is `studies/margay-kicad/symbols.md`.
+Flagged there: the library's FRAME_A_L carries no title-block texts, so the pages no
+longer print Project, Designer and REV; the sheets' title_block is the place for them.
