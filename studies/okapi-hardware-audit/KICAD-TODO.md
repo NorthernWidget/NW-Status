@@ -148,6 +148,15 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    112; at the end the printed ink of all eleven pages inside the Letter border
    and clear of the title block, DRC 375, 3 unconnected, parity 0. The repository
    build reproduces the scratch build byte for byte (deterministic page uuids).
+4e. **DONE 2026-11-03, the pages organized by section** (Andy: like Bobby's Margay
+   pages; Project-Okapi, eight commits after bbe67d7): a heading per theme in Bobby's
+   Margay form (5.08 x 4.318 bold), a divider between themes, blocks moved down or
+   across by whole ticks under their headings, his notes beside their parts ("To
+   Battery Connectors" to the terminals, "Remove PG pullup?" to U2), the mounting
+   holes out from under the Feather socket. The plan is `tools/pages_tidy.py`, run
+   once on a scratch copy and once on the repository (same result). Checks unchanged:
+   every sheet re-saves identically, 209 of 209, ERC 112, DRC 375/3/parity 0, every
+   page's ink inside the border and clear of the title block.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
