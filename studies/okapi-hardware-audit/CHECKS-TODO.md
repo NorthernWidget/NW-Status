@@ -84,7 +84,7 @@ re-save and the pad-net table.
    with Eagle's rules (item 1) hole clearance falls to 4; then either a
    no-connect on each shell pin in the schematic (Eagle had them separate)
    or one copper joining them. Decision, Andy's. 367 to about 340.
-8. **The logo U$4, and the parity check's one item.** Board-only in Eagle and
+8. **DONE 2026-11-03** (nw-cold-silicon f37fd81, Project-Okapi and Project-Margay "the logo is a schematic part"): parity 0 on Okapi, 4 on Margay (#62's fields). **The logo U$4, and the parity check's one item.** Board-only in Eagle and
    KiCad alike, no symbol. Fix: place nw-cold-silicon's NWLOGO_MED symbol on
    the schematic as LOGO1 with the library's artwork attributes (no BOM line,
    no position row, no simulation) and rename the footprint to match. Parity
