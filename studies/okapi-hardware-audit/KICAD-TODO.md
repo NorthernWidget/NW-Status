@@ -198,9 +198,15 @@ rails, 6 page frames and J1's SDMMCWR-CRD, lifted as nw-cold-silicon 668ce0d), t
 Flagged there: the library's FRAME_A_L carries no title-block texts, so the pages no
 longer printed Project, Designer and REV. (5) DONE 2026-11-03 (d1e067b to a8262f8, four
 commits, as Okapi's item 4c): the six frame symbols removed, Margay_1 to _3 on A3 (the
-root A4), `(title_block (date "2024-11-01") (rev "2.2"))` on the four sheets and the
+root A4; then all four on US Letter, Bobby's frame size, at 4c5 below), `(title_block (date "2024-11-01") (rev "2.2"))` on the four sheets and the
 board (REV from Bobby's frames, the date from the Eagle schematic's last commit 2e755b0),
 the project naming nw-cold-silicon's drawing sheet for schematic and board with
 PROJECT = Margay and DESIGNER = Bobby Schulz, the importer's empty.kicad_wks removed.
 The PDF through the project prints every title-block field on all four pages; nets
 72 of 75, ERC 50, DRC 399/3/parity 4, four sheets and the board re-save identical.
+(4c5) DONE 2026-11-03 (Andy: US Letter, or A4 if it fits; A4 does not, Margay_3's
+drawing is 212 mm tall): the drawing sheet's margins 2.5 mm (nw-cold-silicon 0df320b,
+Bobby's border sat at the paper's edge), all four sheets USLetter, each drawing moved by
+whole ticks onto the page with `sheet_page.py --translate` (NW-Tests ac950c3), the
+Margay_3 divider line shortened and H1/H2/U$1 moved two ticks up, clear of the title
+block; the printed ink measured inside the border on every page. Checks unchanged.
