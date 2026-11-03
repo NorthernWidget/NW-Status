@@ -1,6 +1,6 @@
 # Okapi on US Letter: page groupings
 
-STATUS: COMPLETE (2026-11-03)
+STATUS: COMPLETE (2026-11-03). BUILT 2026-11-03 as layout H: Project-Okapi c79791c to eae24bc, ten commits; driver `tools/pages_build.py`; see KICAD-TODO.md item 4d.
 
 Started 2026-11-03. Analysis only: nothing in Project-Okapi is edited. Every
 number below is pasted from a command logged in "Computation log" or is

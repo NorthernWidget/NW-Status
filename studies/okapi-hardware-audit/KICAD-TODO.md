@@ -134,6 +134,20 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    line on all seven pages; nets 209 of 209, ERC 112, DRC 1282/20/parity 0,
    seven sheets and the board re-save identical, all unchanged. The script
    is `sheet_page.py` (NW-Tests 6f5a503, mirrored in the skill).
+4d. **DONE 2026-11-03, the ten thematic pages** (Andy: "Make it so" on layout H
+   of `pages.md`; Project-Okapi c79791c to eae24bc, ten commits, one per step). The
+   six imported sheets became ten US Letter pages, each one named function, by
+   rigid block moves (`sheet_lift.py`, `root_sheets.py`; the plan is
+   `tools/pages_build.py`): Power_Input, Core_Supply, Aux_Rails, Microcontroller
+   (Okapi_6 renamed), Indicators, Cell_Module, Level_Shifters (Okapi_4), Sensors
+   (Okapi_5), Sensor_Ports, USB_ISP_Feather. RST_TRIG became a global label; the
+   SDA-jumper note wraps onto three lines; no wire was cut. The three sheets that
+   stayed whole kept their uuids. The board followed: footprints re-linked by
+   path, 24 nets renamed, pad-net partition identical. At every one of the ten
+   commits: KiCad re-saved every sheet identically, Eagle nets 209 of 209, ERC
+   112; at the end the printed ink of all eleven pages inside the Letter border
+   and clear of the title block, DRC 375, 3 unconnected, parity 0. The repository
+   build reproduces the scratch build byte for byte (deterministic page uuids).
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
