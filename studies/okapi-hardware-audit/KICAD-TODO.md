@@ -170,6 +170,22 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    identically, Eagle nets 209 of 209, ERC 112, every page inside the border. Two
    process slips are in the history (c9581de undid fifteen commits made without a
    per-page gate; 9630d9c re-applied a plan run twice); both are rules in the loop now.
+4g. **DONE 2026-11-04, Andy's third round** (the SD card over the edge, a circuit label
+   over nothing, collisions above "Pull-ups", "Select address", the RTC's wires, J2's
+   leads; "seek to solve general problems instead of tweaking locally"). The general
+   fixes, each a stage of `pages_tidy.py` or a tool: the edge rule tightened to 4 mm
+   inside the border and every page shifted by the whole ticks its own printed ink
+   needs, dividers clipped to the printable area (stage 12); every circuit label
+   centered on its part and re-seated by a band search whose column slides by ticks
+   when a vertical wire blocks it (stage 13); printed BOM fields and the screw
+   terminals' package-name values hidden; `pages_collisions.py` now sees a note over a
+   label; `pages_fix_labels.py` judges each candidate against the whole page without
+   that one annotation, pushes a label out along its wire with the wire lengthened,
+   and nudges notes. Collisions at 30 px or more: 47 before the first fixer pass, 18
+   before the second, 3 left (RST on R52, GPIO_1_OUT beside a capacitor's fields,
+   RST_TRIG on the Feather socket, each the least-ink candidate). Project-Okapi 1f32fcc
+   to 2f22c40. Open: the use of space per page (Andy's question of 2026-11-04 evening,
+   assessment in the session), the Okapi dashed sub-dividers.
 5. **Begun 2026-11-02**: pad-to-mask clearance 0.0635 mm, Eagle's 2.5 mil stop
    frame, as the board rule (Project-Okapi 96bf37b; the library carries no
    per-pad margins). **2026-11-03**: default netclass at 0.127 mm (9faa2fc), silk text rules at Bobby's sizes (dd3872b), zones refilled and saved (a94ed86): DRC 1282 to 379, unconnected 20 to 3, parity 0 (CHECKS-TODO DRC items 1 to 3). Still open here: the two-layer stackup. **Carry the design rules.** Default netclass clearance 0.127 mm and track
