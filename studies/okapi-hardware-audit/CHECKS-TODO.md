@@ -63,7 +63,7 @@ re-save and the pad-net table.
    pins stay inputs, J9's VCC and 3V3. Hardest: 42 pins on about 14 nets.
    47 to a residue of what Andy accepts.
 
-## DRC, 1282 (536 errors, 746 warnings); 375 after items 1 to 4 (2026-11-03); 377 after S5's keepout was made Eagle's (2026-11-04, two tracks under it, DECISIONS 12)
+## DRC, 1282 (536 errors, 746 warnings); 375 after items 1 to 4 (2026-11-03); 377 after S5's keepout was made Eagle's (2026-11-04); **5 after every item was taken as the Eagle board was fabricated (2026-11-04, late; Andy: "match the prior ways in which the Eagle boards printed")**: the two tracks under S5's restrict, two dangling track ends and the floating GND island, each carried by the fabricated board; unconnected 0, parity 0
 
 1. **DONE 2026-11-03** (Project-Okapi 9faa2fc): default netclass clearance 0.127 mm, via 0.508 on a 0.254 drill (the board's most used); clearance 499 to 9, all nine USB2's shell pads against tracks (item 7); 1282 to 783. **clearance, 499.** The project has KiCad's 0.2 mm default netclass where
    the board was routed to Eagle's 5 mil (0.127 mm) rules. Fix: default
@@ -84,14 +84,14 @@ re-save and the pad-net table.
    the library in something DRC compares beyond pads and graphics (pads and
    graphics checked equal). Fix: a GUI "update footprint from library" on
    the four says what; U$4 is item 8. 388 to 384.
-5. **Measured 2026-11-03:** U3's nine thermal pads are drill 0.254 mm at diameter 0.3048 (ring 0.0254 mm, 1 mil) in Bobby's package; Eagle's DRU (rvPadTop 25 %, rlMinPadTop 5 mil) draws every pad ring at max(25 % of drill, 0.127 mm), so the fabricated boards carry 0.508 mm pads there. The converters took the package's nominal size, and the library holds many such pads (count in the report below). Proposal: apply Eagle's restring rule to through-hole pads in build.py (diameter = max(nominal, drill + 2 x max(0.25 x drill, 0.127))) and re-body; or raise just U3's nine in the library. Andy's call. **annular_width, 9.** U3's nine thermal vias (PAD@1 to PAD@9, GND) have an
+5. **DONE as fabricated 2026-11-04** (nw-cold-silicon e747648, Eagle's restring in the build for every through-hole pad; Project-Okapi 6911cdf): annular_width 9 to 0. **Measured 2026-11-03:** U3's nine thermal pads are drill 0.254 mm at diameter 0.3048 (ring 0.0254 mm, 1 mil) in Bobby's package; Eagle's DRU (rvPadTop 25 %, rlMinPadTop 5 mil) draws every pad ring at max(25 % of drill, 0.127 mm), so the fabricated boards carry 0.508 mm pads there. The converters took the package's nominal size, and the library holds many such pads (count in the report below). Proposal: apply Eagle's restring rule to through-hole pads in build.py (diameter = max(nominal, drill + 2 x max(0.25 x drill, 0.127))) and re-body; or raise just U3's nine in the library. Andy's call. **annular_width, 9.** U3's nine thermal vias (PAD@1 to PAD@9, GND) have an
    annulus below the 0.0508 mm rule. Fix: the rule to Eagle's (rlMinViaOuter
    5 mil = 0.127 mm would be stricter; read what Eagle actually passed) or
    the pads' size. Step 5 territory. 384 to 375.
-6. **Measured 2026-11-03:** 7 are connector outlines (J10 two lines, SD1 five arcs and lines) that hang over the edge by design, 1 is USB2's reference text; KiCad's native answer for the seven is a DRC exclusion each (stored in Okapi.kicad_pro) and for the text a move. **silk_edge_clearance, 8.** SD1, J10 and USB2 outlines over the board
+6. **DONE as fabricated 2026-11-04** (9fcdf0c, the silkscreen checks set to ignore: Bobby's Gerbers print them). **Measured 2026-11-03:** 7 are connector outlines (J10 two lines, SD1 five arcs and lines) that hang over the edge by design, 1 is USB2's reference text; KiCad's native answer for the seven is a DRC exclusion each (stored in Okapi.kicad_pro) and for the text a move. **silk_edge_clearance, 8.** SD1, J10 and USB2 outlines over the board
    edge: connectors that hang off the edge by design. Fix: DRC exclusions on
    the eight, or trim the three outlines. 375 to 367.
-7. **USB2's shell: hole_clearance 13, solder_mask_bridge 12, shorting_items 3,
+7. **DONE as fabricated 2026-11-04** (nw-cold-silicon 38f98b3; Project-Okapi, "the micro-USB shell as Eagle built it"): each slot's two holes one pad with the copper bar folded in, three unconnected shell pins; every USB2 item gone (mask bridges 12, hole clearance 4, shorting 3, clearance 9, unconnected 3), and no rule needed for it. J10's four hole items are a rule naming the part and the measured 0.18 mm. **USB2's shell: hole_clearance 13, solder_mask_bridge 12, shorting_items 3,
    hole_to_hole 2, and the 3 unconnected items that remain after the refill.**
    The micro-USB's six shell slots sit closer than the 0.25 mm hole rules
    and the schematic joins them into one net the board never routed. Fix:
@@ -103,11 +103,11 @@ re-save and the pad-net table.
    the schematic as LOGO1 with the library's artwork attributes (no BOM line,
    no position row, no simulation) and rename the footprint to match. Parity
    1 to 0, and the BOM exclusion for free.
-9. **silk_over_copper, 199.** Every reference text sits over a pad somewhere
+9. **DONE as fabricated 2026-11-04** (9fcdf0c): the fabricated silkscreen carries the references over pads, so the check is off. **silk_over_copper, 199.** Every reference text sits over a pad somewhere
    ("silkscreen clipped by solder mask"). Fix: hide the references on silk
    (Bobby's boards print values, not references) or move 199 texts. Decision.
    340 to 141.
-10. **silk_overlap, 126.** Reference texts over outlines and each other.
+10. **DONE as fabricated 2026-11-04** (9fcdf0c), with item 9. **silk_overlap, 126.** Reference texts over outlines and each other.
     Same decision as item 9: hidden references take most of these with them.
     141 to the residue.
 

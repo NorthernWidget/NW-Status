@@ -1,5 +1,11 @@
 # Okapi: the decisions, held for a sitting with dedicated brainpower
 
+**2026-11-04, late: Andy, on the DRC items: "make many decisions to match the prior ways in
+which the Eagle boards printed."** Every board item below that a Gerber or Eagle's rule set
+settles is marked RESOLVED with what was done; the fabricated board is the reference. What
+stays open is what the print cannot settle: a label on a pin, a watchdog, a resistor value,
+a stackup, an airwire, and what the print itself got wrong.
+
 Andy, 2026-11-04: grind through the mechanical items first and keep every real
 decision for the end. This is that list. Each entry names the options and what
 each costs; nothing here is started until he picks. The mechanical items are in
@@ -32,25 +38,25 @@ each costs; nothing here is started until he picks. The mechanical items are in
 
 ## Board
 
-5. **U3's nine thermal pads, ring 1 mil in Bobby's package** (DRC item 5, 9
+5. **RESOLVED as fabricated: Eagle's restring rule in the library build, every through-hole pad at the fabricated ring (nw-cold-silicon e747648, Project-Okapi 6911cdf; annular_width 9 to 0). ** U3's nine thermal pads, ring 1 mil in Bobby's package** (DRC item 5, 9
    annular_width). Eagle's restring rule drew 5 mil, so the fabricated boards
    carry 0.508 mm pads. (a) Eagle's restring rule in build.py for through-hole
    pads (157 pads in 33 footprints), re-body both boards; the library then says
    what was fabricated. (b) Widen the nine pads only. (c) The rule relaxed to
    1 mil for this board.
-6. **USB2's six shell slots** (DRC item 7: hole clearance 4, mask bridges 12,
+6. **RESOLVED as fabricated: the six shell slots are six separate unconnected pads, as Eagle's netlist had them (symbol pins spread, each flagged, the footprint allowed to share one mask opening); the shell's copper accepted by a rule naming USB2. ** USB2's six shell slots** (DRC item 7: hole clearance 4, mask bridges 12,
    shorting 3, the 3 unconnected items). The schematic joins them into one net
    the board never routed. (a) No-connects, as Eagle had them, and the pads'
    nets cleared. (b) One copper joining them, as the schematic says. (c) Leave
    it, with DRC exclusions.
-7. **325 silkscreen faults from reference texts over pads and each other** (DRC
+7. **RESOLVED as fabricated: the fabricated silkscreen prints the references over pads, so silk_over_copper and silk_overlap are off (9fcdf0c). ** 325 silkscreen faults from reference texts over pads and each other** (DRC
    items 9 and 10). (a) Hide the references on silk; Bobby's boards print values.
    (b) Move 199 texts. (c) Leave them: the fabricated boards carry them.
-8. **The seven connector outlines that hang over the board edge by design** (DRC
+8. **RESOLVED as fabricated: the Gerber prints the outlines over the edge, so silk_edge_clearance is off (9fcdf0c). ** The seven connector outlines that hang over the board edge by design** (DRC
    item 6). (a) A DRC exclusion each. (b) Trim the outlines in the library.
 9. **The V_SOLAR_IN airwire** (KICAD-TODO step 9): the audit found the net
    unrouted. A layout change, on the laptop with the board in front of you.
-10. **The isolated copper island at (148.08, 128.78) mm after the refill**
+10. **RESOLVED as fabricated: the Gerber carries the island (45 mm2); left, as the residue. ** The isolated copper island at (148.08, 128.78) mm after the refill**
     (KICAD-TODO step 7). Measured 2026-11-04: a 46 mm2 piece of the B.Cu GND pour
     between U2, U33 and the LED column (x 142 to 153, y 128 to 137 mm), with no via
     or track into it; Bobby's fabricated Gerber (copper_bottom.gbr, 2024-11-02)
@@ -63,7 +69,7 @@ each costs; nothing here is started until he picks. The mechanical items are in
     a choice: (a) KiCad's default two-layer stackup for a 1.6 mm board (0.035 mm
     copper, 1.51 mm FR4 core), which is JLCPCB's standard 1 oz build. (b) Leave the
     board without a stackup block, as it is now; nothing checks it.
-12. **Two B.Cu tracks under S5's bottom keepout** (V_PRIME and V_PRIME_SENSE at
+12. **RESOLVED as fabricated: the two tracks were fabricated under the restrict; left, as the residue (a DRC exclusion in the GUI would clear the count; nothing scripted can). ** Two B.Cu tracks under S5's bottom keepout** (V_PRIME and V_PRIME_SENSE at
     (161.9, 162.9) mm, DRC items_not_allowed 2). Eagle carried them through
     Bobby's own restrict. (a) Reroute the two tracks around the switch, on the
     laptop. (b) A DRC exclusion each, if the restrict was precautionary. (c) Drop
@@ -80,13 +86,13 @@ each costs; nothing here is started until he picks. The mechanical items are in
 
 17. **THERM_SENSE**, a label alone on one pin, as Okapi's SENSOR_INT (item 1): a
     no-connect, keep the label as a note, or route it on the next board.
-18. **Three copper gaps the Eagle board carried**: VSWITCH_CTRL's two B.Cu tracks that
+18. **RESOLVED as fabricated: the fabricated boards carry the three gaps; left, as the residue. Worth a look on a board in hand: VSWITCH_CTRL and WD_HOLD are logic lines, and a true gap would be a fault Bobby's boards did not show. ** Three copper gaps the Eagle board carried**: VSWITCH_CTRL's two B.Cu tracks that
     do not meet, WD_HOLD's via and track end, the RTC battery pad's 0.25 mm track.
     Route them on the laptop, or leave them as fabricated.
-19. **J4's four USB-C pads against the footprint's own holes** (hole_clearance 4): an
+19. **RESOLVED as fabricated: a rule naming J4 and the measured 0.18 mm (Project-Margay 149734d). ** J4's four USB-C pads against the footprint's own holes** (hole_clearance 4): an
     exclusion each, or the hole rule relaxed for this part.
-20. **The RST via's two clearances** (against MOSI and C20's pad; C20 is #63's
+20. **RESOLVED as fabricated: a rule for the RST via at 0.14 mm (149734d). ** The RST via's two clearances** (against MOSI and C20's pad; C20 is #63's
     KiCad-side part): move the via, or accept.
-21. **Silkscreen**, as Okapi's items 6 to 8: J1, J2, J4 outlines over the edge by
+21. **RESOLVED as fabricated: the silkscreen checks off (5ac35ce), as Okapi's. ** Silkscreen**, as Okapi's items 6 to 8: J1, J2, J4 outlines over the edge by
     design; references and outlines over pads; U1's thin reference.
 

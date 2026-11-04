@@ -1,6 +1,6 @@
 # Margay: what ERC and DRC still report (2026-11-04)
 
-Measured at Project-Margay eb0e569 with kicad-cli 10.0.8 (`scratchpad/wks/mgate.sh`:
+Measured at Project-Margay 149734d (DRC 5, unconnected 3, parity 4; ERC 1) with kicad-cli 10.0.8 (`scratchpad/wks/mgate.sh`:
 four sheets and the board re-save identically, Eagle nets 72 of 75, the three
 differences being Project-Margay#63; parity 4, the fields of #62). Written like
 Okapi's `okapi-hardware-audit/CHECKS-TODO.md`, after the mechanical items were done
@@ -21,7 +21,7 @@ Left: **isolated_pin_label 1**, THERM_SENSE, a label alone on one pin: Bobby's n
 says he meant to route the thermistor sense; a no-connect says it is open on this
 revision. Decision.
 
-## DRC, 397 at the start; 256 after items 1 and 2
+## DRC, 397 at the start; 256 after items 1 and 2; 5 after the as-fabricated settings and rules (2026-11-04, Andy: match the way the Eagle boards printed)
 
 1. **DONE** (c71c242): netclass via 0.554/0.3 mm (81 of 119 vias), annular ring
    Eagle's 5 mil; clearance was already Eagle's 6 mil. No count moved.
@@ -29,16 +29,16 @@ revision. Decision.
    75 to 0, text_thickness 67 to 1 (U1's reference is thinner still). 397 to 256.
 3. **DONE, nothing to do** (eb0e569): the zones were already filled; the save pass
    wrote the project's text variables into the board.
-4. **unconnected items 3, track_dangling 4, via_dangling 1**: three gaps in the
+4. **As fabricated, left (the residue): unconnected items 3, track_dangling 4, via_dangling 1**: three gaps in the
    copper that the Eagle board carried too: VSWITCH_CTRL (two B.Cu tracks 3.58 and
    1.78 mm long that do not meet), WD_HOLD (a via and a 0.13 mm track end), and the
    RTC's battery pad (a 0.25 mm F.Cu track short of BT1's POWER1). Layout; decision.
-5. **hole_clearance 4**: J4's four VBUS and GND pads against the USB-C footprint's
+5. **DONE as fabricated** (149734d, a rule naming J4 and the measured 0.18 mm). **hole_clearance 4**: J4's four VBUS and GND pads against the USB-C footprint's
    own non-plated holes, closer than the 0.25 mm board rule. Footprint geometry from
    Eagle; an exclusion each, or the rule. Decision.
-6. **clearance 2**: the RST via against a MOSI track on B.Cu and against C20's GND
+6. **DONE as fabricated** (149734d, a rule for the RST via at 0.14 mm). **clearance 2**: the RST via against a MOSI track on B.Cu and against C20's GND
    pad (C20 is a KiCad-side addition, #63). Layout; decision.
-7. **silk_edge_clearance 11, silk_over_copper 199, silk_overlap 34**: J1, J2 and J4's
+7. **DONE as fabricated** (5ac35ce: the silkscreen checks set to ignore; Bobby's Gerbers print the references over pads and the outlines over the edge, and the fab clips silk over copper). **silk_edge_clearance 11, silk_over_copper 199, silk_overlap 34**: J1, J2 and J4's
    outlines over the board edge by design; references and outlines over pads. The
    same decision as Okapi's items 6, 9 and 10.
-8. **text_thickness 1**: U1's reference text. With item 7.
+8. **DONE as fabricated** with item 7. **text_thickness 1**: U1's reference text.
