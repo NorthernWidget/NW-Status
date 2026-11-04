@@ -215,7 +215,13 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    stackup; refill zones; save. Acceptance: clearance errors 499 to 9, all nine
    inside the USB2 connector footprint; confirm by eye that USB2's shell pads
    overlap by design. An hour.
-6. **Recreate the two bRestrict keepouts** on B.Cu from the Eagle board, the
+6. **DONE 2026-11-04** (nw-cold-silicon 71c5983, Project-Okapi, "S5's keepout is Eagle's
+   bRestrict"): the "two bRestrict polygons" were the SWITCH_2.6X1.6 package's own
+   restrict rectangle (S5, the one instance), which the converter had carried as a
+   via-only keepout on every copper layer; now B.Cu with no copper allowed, in the
+   library rule and on the board. DRC finds two B.Cu tracks under it (V_PRIME,
+   V_PRIME_SENSE), which Eagle carried too: DECISIONS.md item 12. DRC 375 to 377.
+   **Recreate the two bRestrict keepouts** on B.Cu from the Eagle board, the
    only geometry the import dropped. Acceptance: DRC shows the keepout areas;
    zones refill around them. An hour.
 7. **Walk the refilled GND pours** against the Eagle rendering for islands (one

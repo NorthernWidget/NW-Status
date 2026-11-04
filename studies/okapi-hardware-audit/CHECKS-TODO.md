@@ -58,7 +58,7 @@ re-save and the pad-net table.
    pins stay inputs, J9's VCC and 3V3. Hardest: 42 pins on about 14 nets.
    47 to a residue of what Andy accepts.
 
-## DRC, 1282 (536 errors, 746 warnings); 375 after items 1 to 4 (2026-11-03)
+## DRC, 1282 (536 errors, 746 warnings); 375 after items 1 to 4 (2026-11-03); 377 after S5's keepout was made Eagle's (2026-11-04, two tracks under it, DECISIONS 12)
 
 1. **DONE 2026-11-03** (Project-Okapi 9faa2fc): default netclass clearance 0.127 mm, via 0.508 on a 0.254 drill (the board's most used); clearance 499 to 9, all nine USB2's shell pads against tracks (item 7); 1282 to 783. **clearance, 499.** The project has KiCad's 0.2 mm default netclass where
    the board was routed to Eagle's 5 mil (0.127 mm) rules. Fix: default

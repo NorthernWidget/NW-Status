@@ -57,10 +57,15 @@ each costs; nothing here is started until he picks. The mechanical items are in
     a choice: (a) KiCad's default two-layer stackup for a 1.6 mm board (0.035 mm
     copper, 1.51 mm FR4 core), which is JLCPCB's standard 1 oz build. (b) Leave the
     board without a stackup block, as it is now; nothing checks it.
-12. **nw-cold-silicon's home**: public or private, and the push word.
-13. **Pushes waiting**: NW_Logger (13 commits), NW-Sim (7), Okapi_Library (10),
+12. **Two B.Cu tracks under S5's bottom keepout** (V_PRIME and V_PRIME_SENSE at
+    (161.9, 162.9) mm, DRC items_not_allowed 2). Eagle carried them through
+    Bobby's own restrict. (a) Reroute the two tracks around the switch, on the
+    laptop. (b) A DRC exclusion each, if the restrict was precautionary. (c) Drop
+    the restrict from the package.
+13. **nw-cold-silicon's home**: public or private, and the push word.
+14. **Pushes waiting**: NW_Logger (13 commits), NW-Sim (7), Okapi_Library (10),
     Margay_Library (2).
-14. **Project-Margay #62** (BOM fields on R7, R9, R23, U13) and **#63** (C20 and
+15. **Project-Margay #62** (BOM fields on R7, R9, R23, U13) and **#63** (C20 and
     D4 on the KiCad side only).
-15. **The Okapi dashed sub-dividers** inside pages, as Bobby drew Margay's: add
+16. **The Okapi dashed sub-dividers** inside pages, as Bobby drew Margay's: add
     them, or not. Held with the rest of the page cosmetics.
