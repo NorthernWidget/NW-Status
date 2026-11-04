@@ -147,9 +147,12 @@ numbering (rc.1 to v3.0.0 for the built boards; the KiCad board with D4, C20
 and WAKE as v3.1.0, run as its rc.2): "Great ... Good points all around", and
 asked for it in Issues with v3.0.0 and v3.1.0 milestones. This amends the
 earlier "v3.0.0 will be the converted and then updated KiCad version" under
-item 13: the KiCad board is v3.1.0. Milestones on Project-Margay: v3.0.0
-(created 2026-11-04: the boards as built plus the BoM corrections), v3.1.0
-(existing: the KiCad board), v4.0.0 (existing: the larger changes).
+item 13. The sequence Andy confirmed later that evening ("Precisely. Correct.",
+to the CV session): v3.0.0-rc.1 the 2023 boards as built; v3.0.0-rc.2 the same
+copper with the corrected part numbers, built from Margay_BoM_3v0_-_2026-11-04.csv;
+v3.0.0 once an rc.2 build confirms; the KiCad board v3.1.0, first prerelease
+v3.1.0-rc.1. Milestones on Project-Margay: v3.0.0 (created 2026-11-04), v3.1.0
+(existing, rewritten: the KiCad board), v4.0.0 (existing: the larger changes).
 
 ## Both boards: housekeeping, each a sentence from Andy
 
