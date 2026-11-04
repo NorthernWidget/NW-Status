@@ -224,7 +224,11 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
    **Recreate the two bRestrict keepouts** on B.Cu from the Eagle board, the
    only geometry the import dropped. Acceptance: DRC shows the keepout areas;
    zones refill around them. An hour.
-7. **Walk the refilled GND pours** against the Eagle rendering for islands (one
+7. **DONE 2026-11-04, the walk**: the KiCad B.Cu export and Bobby's copper_bottom.gbr
+   (gerbv, 600 dpi, registered on the profile) match around the one island DRC reports;
+   it is a 46 mm2 floating piece of the GND pour that the fabricated boards carry as
+   well (45 mm2 in the Gerber). What to do with it is DECISIONS.md item 10. **Walk the
+   refilled GND pours** against the Eagle rendering for islands (one
    isolated B.Cu island after refill). Acceptance: no isolated copper, or each
    island explained. An hour.
 8. **ERC hygiene.** The walk, easiest first, with the count each item takes

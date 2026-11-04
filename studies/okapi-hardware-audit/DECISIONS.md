@@ -51,7 +51,12 @@ each costs; nothing here is started until he picks. The mechanical items are in
 9. **The V_SOLAR_IN airwire** (KICAD-TODO step 9): the audit found the net
    unrouted. A layout change, on the laptop with the board in front of you.
 10. **The isolated copper island at (148.08, 128.78) mm after the refill**
-    (KICAD-TODO step 7): remove it, or stitch it.
+    (KICAD-TODO step 7). Measured 2026-11-04: a 46 mm2 piece of the B.Cu GND pour
+    between U2, U33 and the LED column (x 142 to 153, y 128 to 137 mm), with no via
+    or track into it; Bobby's fabricated Gerber (copper_bottom.gbr, 2024-11-02)
+    carries the same piece at 45 mm2, so the built boards have it floating too.
+    (a) A stitching via into it. (b) Remove it (a zone keepout or a smaller zone).
+    (c) Leave it, as the fabricated boards are.
 
 11. **The two-layer stackup** (KICAD-TODO step 5). Eagle's DRU names no copper or
     core thickness (mlCopperThickness and mlIsolate are empty), so the values are
