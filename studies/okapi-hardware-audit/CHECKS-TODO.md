@@ -8,7 +8,7 @@ Rules of the walk: the Eagle originals are the reference; a change that
 alters a pad or a net is its own commit gated on the netlist check, KiCad's
 re-save and the pad-net table.
 
-## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03); 44 after items 3 and 4, 43 after item 5 (2026-11-04)
+## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03); 44 after items 3 and 4, 43 after item 5, 9 after item 6's mechanical part (2026-11-04)
 
 1. **DONE 2026-11-03**, not by patching: every placed symbol now takes its
    definition from nw-cold-silicon (Project-Okapi 11776ab, f5ae35d, d8d6c7e),
@@ -47,9 +47,12 @@ re-save and the pad-net table.
    ON (Eagle net N$64) but the imported symbol types it Input. Fix: electrical
    type Output on that pin in the library symbol and the sheet's embedded
    copy. 48 to 47.
-6. **In progress 2026-11-04** (nw-cold-silicon e4361e1 and after; Project-Okapi 5dd68de): the
-   regulators' outputs typed by datasheet, 42 to 33; discretes passive and PWR_FLAGs next;
-   the residue is DECISIONS.md item 4. **power_pin_not_driven, 42.** The importer typed every Eagle "pwr" pin
+6. **DONE 2026-11-04, the mechanical part** (nw-cold-silicon e4361e1, a4a1038, 2270c27,
+   b9d62b8; Project-Okapi 5dd68de to the PWR_FLAG commit): regulator and switch outputs
+   typed power output, every discrete passive, forty-odd bidirectional pins typed by
+   datasheet, PWR_FLAG lifted into the library and fourteen placed from ERC's report
+   (`tools/pwr_flags.py`). ERC 43 to 9: three converter switch nodes, five two-switch
+   warnings (DECISIONS.md item 4) and SENSOR_INT (item 1). **power_pin_not_driven, 42.** The importer typed every Eagle "pwr" pin
    Power input and none Power output, so no rail has a driver. Two kinds of
    fix, both judgment per pin: (a) pin types in the library symbols: the
    regulators' outputs (U1 VOUT, U6 OUT, U17 and U19 OUT) to Power output,
