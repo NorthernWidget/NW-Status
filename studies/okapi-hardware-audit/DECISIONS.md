@@ -121,6 +121,11 @@ since those can change the board.
 
 ## Both boards: housekeeping, each a sentence from Andy
 
+16. **Project-Margay CITATION.cff** says version 3.0.0 and date-released 2023-08-01 at
+    the top level and in preferred-citation (read 2026-11-04), while the published tag
+    is v3.0.0-rc.1 and v3.0.0 is now the KiCad board after a built-board check. A
+    version bump is gated: set it with each release (rc.2, then v3.0.0) on Andy's word
+    at the time; .zenodo.json carries no version. Raised by the CV session.
 14. **DONE 2026-11-04** (Andy: "in NorthernWidget github"): https://github.com/NorthernWidget/nw-cold-silicon,
     created private (the visibility was not said; one setting flips it) and pushed.
 15. **DONE 2026-11-04** (Andy: "push"): NW_Logger, NW-Sim, Okapi_Library, Margay_Library,
