@@ -52,12 +52,15 @@ each costs; nothing here is started until he picks. The mechanical items are in
 10. **The isolated copper island at (148.08, 128.78) mm after the refill**
     (KICAD-TODO step 7): remove it, or stitch it.
 
-## Elsewhere
-
-11. **nw-cold-silicon's home**: public or private, and the push word.
-12. **Pushes waiting**: NW_Logger (13 commits), NW-Sim (7), Okapi_Library (10),
+11. **The two-layer stackup** (KICAD-TODO step 5). Eagle's DRU names no copper or
+    core thickness (mlCopperThickness and mlIsolate are empty), so the values are
+    a choice: (a) KiCad's default two-layer stackup for a 1.6 mm board (0.035 mm
+    copper, 1.51 mm FR4 core), which is JLCPCB's standard 1 oz build. (b) Leave the
+    board without a stackup block, as it is now; nothing checks it.
+12. **nw-cold-silicon's home**: public or private, and the push word.
+13. **Pushes waiting**: NW_Logger (13 commits), NW-Sim (7), Okapi_Library (10),
     Margay_Library (2).
-13. **Project-Margay #62** (BOM fields on R7, R9, R23, U13) and **#63** (C20 and
+14. **Project-Margay #62** (BOM fields on R7, R9, R23, U13) and **#63** (C20 and
     D4 on the KiCad side only).
-14. **The Okapi dashed sub-dividers** inside pages, as Bobby drew Margay's: add
+15. **The Okapi dashed sub-dividers** inside pages, as Bobby drew Margay's: add
     them, or not. Held with the rest of the page cosmetics.
