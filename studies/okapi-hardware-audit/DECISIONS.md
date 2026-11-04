@@ -84,6 +84,26 @@ since those can change the board.
     added on the KiCad side on 2026-06-01 and absent from the Eagle files; the net
     check's three differences.
 
+    **The Eagle side of #62 was settled on 2026-11-04 in the CV session**, from a
+    v3.0 board Andy measured (R7 = R9 = 330 Ω, R19 = 100 Ω, sleep 1.6 µA): eleven
+    local, unpushed commits on Project-Margay master after 8a28592 (c5e6a32 to
+    6920e9c, verified in git) put R7 and R9 at 330 Ω (RC0402FR-07330RL, as before
+    Bobby's 904d985 relabel), R19 at 100 kΩ, U13 at the MAX6070BAUT18 (grade B
+    stays; grade A is #64), and C13/C14's manufacturer at Taiyo Yuden. Tag
+    v3.0.0-rc.1 sits on 8a28592, the design as Caltronics built it (50 boards, UMN).
+    **What the KiCad side still carries** (read from the files 2026-11-04): R7 and
+    R9 symbols 1k / RC0402FR-071KL against footprints RC0603FR-07330RL; R19 value
+    100k but MPN RC0402FR-07100RL and DIGIKEY 311-100LRCT-ND, both the 100 Ω part;
+    U13 value MAX6070AAUT, symbol DIGIKEY and MPN grade B, footprint MPN
+    MAX6071AAUT18+T and DIGIKEY grade A; three MF fields "Yaiyo Yuden"
+    (Power_Sensors, and the board); R23 the Digi-Key suffix only. Porting the
+    Eagle commits' values onto the symbols and footprints is mechanical once Andy
+    says to (one commit per part, parity 4 to 0), and the gate's Eagle comparison
+    stays 72 of 75 since no net moves. **Open, Andy's call** (raised by the CV
+    session): whether v3.0.0 is the KiCad version as it stands, or the faithful
+    conversion of the corrected rc.1 design with D4, C20 and the oval USB-C slots
+    held for v3.1.0 as an untested change to the RTC's power.
+
 ## Both boards: housekeeping, each a sentence from Andy
 
 14. **DONE 2026-11-04** (Andy: "in NorthernWidget github"): https://github.com/NorthernWidget/nw-cold-silicon,
