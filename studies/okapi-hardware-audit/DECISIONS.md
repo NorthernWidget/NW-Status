@@ -68,8 +68,14 @@ since those can change the board.
 
 ### Design (can change the board)
 
-11. **THERM_SENSE**, a label alone on one pin, Okapi's item 1 again: a no-connect,
-    keep the label as a note, or route it on the next board.
+11. **THERM_SENSE: DONE 2026-11-04.** The v1.0 thermistor divider's label, alone on
+    PA1 since 8454dbc (2018-09-10). Andy: no v0.0 or v1.0 board is in service;
+    remove. Margay_Library 2a0eb69 drops the thermistor path (getTemp() branch,
+    tempConvert(), the Steinhart-Hart constants, ThermSense_Pin, the model < 2.0
+    branches, the Page 2 0x4B write that published a floating pin on a v3): flash
+    73040 to 71528 and RAM 3640 to 3561 on Programmed_Margay, of which the
+    Steinhart-Hart evaluation alone (log, pow) was 1000 B. Project-Margay: PA1
+    no-connect and the pad's unconnected net; README rows. ERC 1 to 0, parity 0.
 12. **Three copper gaps the Eagle board carried**, worth a board in hand:
     VSWITCH_CTRL's two B.Cu tracks that do not meet, WD_HOLD's via and track end,
     the RTC battery pad's 0.25 mm track short of BT1's POWER1. Two are logic lines,
