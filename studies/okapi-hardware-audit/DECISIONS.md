@@ -115,8 +115,9 @@ The fabricated board is the reference; each line says what was done.
   measured 0.18 mm (Okapi 2289f04, Margay 149734d).
 - **Margay's RST via**, 0.146 and 0.152 mm from C20's pad and a MOSI track: a rule
   at 0.14 mm (149734d).
-- **Okapi's three VUSB-ish rails and every undriven power pin**: not a decision
-  after all; typed by datasheet and flagged, ERC items 3 to 6.
+- **Every undriven power pin and open pin** on both boards: not a decision after
+  all; typed by datasheet in the library or flagged from ERC's report (CHECKS-TODO
+  ERC items 3 to 6).
 
 Counts after all of it: Okapi ERC 9, DRC 5, unconnected 0, parity 0; Margay ERC
 1, DRC 5, unconnected 3, parity 4.
