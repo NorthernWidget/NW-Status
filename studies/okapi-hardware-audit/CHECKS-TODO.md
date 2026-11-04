@@ -47,7 +47,9 @@ re-save and the pad-net table.
    ON (Eagle net N$64) but the imported symbol types it Input. Fix: electrical
    type Output on that pin in the library symbol and the sheet's embedded
    copy. 48 to 47.
-6. **power_pin_not_driven, 42.** The importer typed every Eagle "pwr" pin
+6. **In progress 2026-11-04** (nw-cold-silicon e4361e1 and after; Project-Okapi 5dd68de): the
+   regulators' outputs typed by datasheet, 42 to 33; discretes passive and PWR_FLAGs next;
+   the residue is DECISIONS.md item 4. **power_pin_not_driven, 42.** The importer typed every Eagle "pwr" pin
    Power input and none Power output, so no rail has a driver. Two kinds of
    fix, both judgment per pin: (a) pin types in the library symbols: the
    regulators' outputs (U1 VOUT, U6 OUT, U17 and U19 OUT) to Power output,

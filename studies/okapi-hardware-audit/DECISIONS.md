@@ -21,13 +21,14 @@ each costs; nothing here is started until he picks. The mechanical items are in
 3. **R62, 330 k on JP8's second position, above the TPL5111's 170 k maximum**
    (unfiled item 10). (a) 130 k, the same 3943 s as R20. (b) Another in-range
    value for a second interval. (c) Drop the jumper position. BoM and schematic.
-4. **The 42 power pins ERC reports undriven (CHECKS-TODO ERC item 6), the
-   residue.** The regulators' outputs become power outputs in the library and
-   PWR_FLAGs go where a rail enters from a connector; those are mechanical and
-   will be done. What stays for a decision: whether the LEDs' anodes and
-   cathodes, the converters' switch nodes and D6 become Passive (the datasheet
-   says nothing about an electrical type for a diode), or keep their import type
-   and the warnings stay.
+4. **ERC item 6's residue after the mechanical part.** Done by datasheet and by
+   KiCad's own typing: the regulators' and switches' outputs are power outputs,
+   every diode, LED, MOSFET and fuse has passive pins, a PWR_FLAG stands where a
+   rail enters from a connector or through a passive part. What stays: (a) the
+   converters' switch nodes (U1, U2, U3 SW, typed power input by the import):
+   passive, or left; (b) five warnings where two switches feed one rail by design
+   (U21 and U22 on V_HP, U17 and U18 on VBUS_SEC, U19 and U20 on VBUS_PRIME):
+   accept them, or an ERC exclusion each.
 
 ## Board
 
