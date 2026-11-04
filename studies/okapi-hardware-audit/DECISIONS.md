@@ -86,11 +86,13 @@ since those can change the board.
 
 ## Both boards: housekeeping, each a sentence from Andy
 
-14. **nw-cold-silicon's home**: public or private, and the push word. Every
-    symbol and footprint fix of 2026-11-04 lives there as a build rule.
-15. **Pushes waiting**: NW_Logger (13 commits), NW-Sim (7), Okapi_Library (10),
-    Margay_Library (2), and the day's commits in Project-Okapi, Project-Margay,
-    NW-Status, NW-Tests and nw-cold-silicon.
+14. **DONE 2026-11-04** (Andy: "in NorthernWidget github"): https://github.com/NorthernWidget/nw-cold-silicon,
+    created private (the visibility was not said; one setting flips it) and pushed.
+15. **DONE 2026-11-04** (Andy: "push"): NW_Logger, NW-Sim, Okapi_Library, Margay_Library,
+    Project-Okapi, Project-Margay, NW-Status, NW-Tests and nw-cold-silicon pushed after the
+    verification sequence (style OK on the three libraries, 20 of 22 sketches compile with
+    MaxBotix the known failure, 11 of 11 harnesses, the three version failures older and
+    elsewhere: T9602, MaxBotix, DS3231_Logger).
 
 ## Resolved as fabricated on 2026-11-04 (the record)
 
