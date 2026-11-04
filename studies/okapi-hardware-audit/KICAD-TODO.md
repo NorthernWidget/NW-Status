@@ -270,6 +270,10 @@ AREF/AVCC filtering, VCC bypass, the solar input route).
 
 ## Margay, the same program (2026-11-02)
 
+**2026-11-04 (evening): the checks walked as Okapi's were**, `studies/margay-kicad/CHECKS-TODO.md`:
+ERC 50 to 1 (THERM_SENSE, a decision), DRC 397 to 256, parity 4 (#62), Project-Margay 38868b0 to
+008bd77; every symbol fix went into nw-cold-silicon's build rules and reached Margay by refresh.
+
 Project-Margay's `Hardware/KiCAD/` (the KiCad 7 import) went through the
 same steps, six commits bf97651 to 7d92919: KiCad 10 format (twice; the
 first pass converts, the second settles); references onto `nw-cold-silicon`;
