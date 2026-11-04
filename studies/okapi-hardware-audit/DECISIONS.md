@@ -99,10 +99,12 @@ since those can change the board.
     (Power_Sensors, and the board); R23 the Digi-Key suffix only. Porting the
     Eagle commits' values onto the symbols and footprints is mechanical once Andy
     says to (one commit per part, parity 4 to 0), and the gate's Eagle comparison
-    stays 72 of 75 since no net moves. **Open, Andy's call** (raised by the CV
-    session): whether v3.0.0 is the KiCad version as it stands, or the faithful
-    conversion of the corrected rc.1 design with D4, C20 and the oval USB-C slots
-    held for v3.1.0 as an untested change to the RTC's power.
+    stays 72 of 75 since no net moves. **Decided by Andy, 2026-11-04:** "v3.0.0 will be the converted and then updated
+    KiCad version. We can produce rc.2 before production and confirm after
+    production." So D4, C20 and the oval USB-C slots stay in v3.0.0, #63's three net
+    differences are the design and the gate's 72 of 75 is the intended figure; the
+    KiCad board is tagged rc.2 before the next run and v3.0.0 once a built board
+    confirms it (each tag on Andy's word at the time).
 
 ## Both boards: housekeeping, each a sentence from Andy
 
