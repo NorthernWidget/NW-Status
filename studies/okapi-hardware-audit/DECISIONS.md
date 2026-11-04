@@ -135,6 +135,22 @@ since those can change the board.
     KiCad board is tagged rc.2 before the next run and v3.0.0 once a built board
     confirms it (each tag on Andy's word at the time).
 
+### Version numbers, settled 2026-11-04
+
+A trace change that the firmware must know about takes at least a minor bump,
+because Page 0 carries the hardware version as major.minor only and that byte is
+the only way firmware can tell two boards apart. NW-Registry already names the
+50 built boards "Margay 3.0.0" (board type 0x4D03), so 3.0.0 stays theirs and
+carries no electrical change. Wiring the TPL5010's WAKE to PA7 (#61) adds a
+capability that old firmware ignores: a minor bump, 3.1. Andy, on the clean
+numbering (rc.1 to v3.0.0 for the built boards; the KiCad board with D4, C20
+and WAKE as v3.1.0, run as its rc.2): "Great ... Good points all around", and
+asked for it in Issues with v3.0.0 and v3.1.0 milestones. This amends the
+earlier "v3.0.0 will be the converted and then updated KiCad version" under
+item 13: the KiCad board is v3.1.0. Milestones on Project-Margay: v3.0.0
+(created 2026-11-04: the boards as built plus the BoM corrections), v3.1.0
+(existing: the KiCad board), v4.0.0 (existing: the larger changes).
+
 ## Both boards: housekeeping, each a sentence from Andy
 
 16. **Project-Margay CITATION.cff** says version 3.0.0 and date-released 2023-08-01 at
