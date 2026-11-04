@@ -22,6 +22,7 @@ def main():
     if '--labels' in a:
         i = a.index('--labels'); labels = a[i + 1].split(','); del a[i:i + 2]
     ercf, proj = a
+    project = [f[:-10] for f in os.listdir(proj) if f.endswith('.kicad_pro')][0]
     erc = json.load(open(ercf))
     flags = {}   # sheet file -> [(x, y, why)]
     for s in erc['sheets']:
@@ -47,7 +48,7 @@ def main():
         items = ''
         for x, y, why in pts:
             if re.search(r'\(no_connect\n\t\t\(at %s %s\)' % (re.escape(fmt(x)), re.escape(fmt(y))), t): continue
-            u = uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-Okapi/kicad/no_connect/%s/%s,%s' % (os.path.basename(path), fmt(x), fmt(y)))
+            u = uuid.uuid5(uuid.NAMESPACE_URL, 'https://github.com/NorthernWidget/Project-%s/kicad/no_connect/%s/%s,%s' % (project, os.path.basename(path), fmt(x), fmt(y)))
             items += '\t(no_connect\n\t\t(at %s %s)\n\t\t(uuid "%s")\n\t)\n' % (fmt(x), fmt(y), u)
         t = t[:-2] + items + ')\n'
         open(path, 'w').write(t)

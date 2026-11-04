@@ -75,3 +75,18 @@ each costs; nothing here is started until he picks. The mechanical items are in
     D4 on the KiCad side only).
 16. **The Okapi dashed sub-dividers** inside pages, as Bobby drew Margay's: add
     them, or not. Held with the rest of the page cosmetics.
+
+## Margay (the same evening; `studies/margay-kicad/CHECKS-TODO.md` has the numbers)
+
+17. **THERM_SENSE**, a label alone on one pin, as Okapi's SENSOR_INT (item 1): a
+    no-connect, keep the label as a note, or route it on the next board.
+18. **Three copper gaps the Eagle board carried**: VSWITCH_CTRL's two B.Cu tracks that
+    do not meet, WD_HOLD's via and track end, the RTC battery pad's 0.25 mm track.
+    Route them on the laptop, or leave them as fabricated.
+19. **J4's four USB-C pads against the footprint's own holes** (hole_clearance 4): an
+    exclusion each, or the hole rule relaxed for this part.
+20. **The RST via's two clearances** (against MOSI and C20's pad; C20 is #63's
+    KiCad-side part): move the via, or accept.
+21. **Silkscreen**, as Okapi's items 6 to 8: J1, J2, J4 outlines over the edge by
+    design; references and outlines over pads; U1's thin reference.
+
