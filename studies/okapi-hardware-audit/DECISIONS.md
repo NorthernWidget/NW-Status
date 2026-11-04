@@ -100,18 +100,18 @@ since those can change the board.
     Parity 4 to 2; the two left are R7 and R9. R23 itself is a KiCad-side choice of
     Andy's (42cc7cf, 2026-06-01: Bourns CRT0603-BY-1002ELF 0.1 % on the battery-sense
     divider, where Eagle has Yageo RC0603FR-0710KL), kept with the updated KiCad v3.0.0.
-    **R7 and R9 (the UART series resistors, ATmega1284P to FT231X) wait on Andy:**
-    he asked for the value to be checked before the schematic goes to 330 Ω. Found:
-    330 Ω was the v1.0 to v2.1 value (R7, R10); Bobby's 904d985 (2019-07-19) set
-    technology 1K on both in a pass that also changed R15/R16, R10 and R19, with the
-    part-level MPN override RC0603FR-07330RL left in place, so every BoM since
-    (2v2, 2v3, 3v0) says 1k with the 330 Ω number and the v3.0 board measures 330 Ω;
-    the ALog BottleLogger (2018-09-14) uses a 1K network (RN1) on the same lines;
-    electrically either value works (10 mA or 3.3 mA into a fault at 3.3 V, RC far
-    below any baud rate). Options: (a) 330 Ω on both sides, as built and measured,
-    one BoM line shared with the LED resistors. (b) 1 kΩ, the 2019 design intent and
-    the ALog lineage, a BoM line of its own and the first build at that value; the
-    Eagle commit 292ea53 would be reverted.
+    **R7 and R9 decided 2026-11-04 (Andy, after the history: 330 Ω was v1.0 to
+    v2.1, Bobby's 904d985 set 1k with the 330 Ω MPN override left in place, every
+    build since carried 330 Ω, the ALog BottleLogger uses 1K, either works):** 330 Ω,
+    the value that shares a BoM line with the LED resistors (Project-Margay c872856;
+    parity 2 to 0). **R19 100 kΩ to 10 kΩ** the same day, Andy's choice from the
+    unique-parts review: Q2's gate pull-up carries current only on USB (0.33 mA at
+    10 kΩ), and the change removes the board's only 100 kΩ part (d76c9bb; a design
+    change from Eagle v3.0, which keeps 100 kΩ). Resistor lines 8 to 6: 27, 330,
+    5.1k and 10k in 0402, Bourns 10k 0.1 % and 130k in 0603. The 130 kΩ (R10) sets
+    the TPL5010 interval at 3943 s by Equation 1 of SNAS651A; no other value on the
+    board gives a usable interval (10 kΩ is 7.6 s, two 10 kΩ in series 52 s), and
+    the datasheet asks 1 %, which the Yageo part is.
     **Decided by Andy, 2026-11-04:** "v3.0.0 will be the converted and then updated
     KiCad version. We can produce rc.2 before production and confirm after
     production." So D4, C20 and the oval USB-C slots stay in v3.0.0, #63's three net
