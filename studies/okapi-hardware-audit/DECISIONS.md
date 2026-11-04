@@ -91,15 +91,28 @@ since those can change the board.
     Bobby's 904d985 relabel), R19 at 100 kΩ, U13 at the MAX6070BAUT18 (grade B
     stays; grade A is #64), and C13/C14's manufacturer at Taiyo Yuden. Tag
     v3.0.0-rc.1 sits on 8a28592, the design as Caltronics built it (50 boards, UMN).
-    **What the KiCad side still carries** (read from the files 2026-11-04): R7 and
-    R9 symbols 1k / RC0402FR-071KL against footprints RC0603FR-07330RL; R19 value
-    100k but MPN RC0402FR-07100RL and DIGIKEY 311-100LRCT-ND, both the 100 Ω part;
-    U13 value MAX6070AAUT, symbol DIGIKEY and MPN grade B, footprint MPN
-    MAX6071AAUT18+T and DIGIKEY grade A; three MF fields "Yaiyo Yuden"
-    (Power_Sensors, and the board); R23 the Digi-Key suffix only. Porting the
-    Eagle commits' values onto the symbols and footprints is mechanical once Andy
-    says to (one commit per part, parity 4 to 0), and the gate's Eagle comparison
-    stays 72 of 75 since no net moves. **Decided by Andy, 2026-11-04:** "v3.0.0 will be the converted and then updated
+    **Ported 2026-11-04 (Andy: "Make the updates and ensure that the proper part
+    number is printed to the BoM")**: R19 RC0402FR-07100KL / 311-100KLRCT-ND on
+    symbol and footprint (Project-Margay fc29ee4), U13's footprint MAX6070BAUT18+T /
+    MAX6070BAUT18+TCT-ND (2265994), C13, C14, C20 Taiyo Yuden (b6e127a), R23's
+    symbol MPN without the CT-ND suffix (00f4534). `kicad-cli sch export bom` with
+    fields Reference, Value, Footprint, MF, MPN, DIGIKEY prints R19 as RC0402FR-07100KL.
+    Parity 4 to 2; the two left are R7 and R9. R23 itself is a KiCad-side choice of
+    Andy's (42cc7cf, 2026-06-01: Bourns CRT0603-BY-1002ELF 0.1 % on the battery-sense
+    divider, where Eagle has Yageo RC0603FR-0710KL), kept with the updated KiCad v3.0.0.
+    **R7 and R9 (the UART series resistors, ATmega1284P to FT231X) wait on Andy:**
+    he asked for the value to be checked before the schematic goes to 330 Ω. Found:
+    330 Ω was the v1.0 to v2.1 value (R7, R10); Bobby's 904d985 (2019-07-19) set
+    technology 1K on both in a pass that also changed R15/R16, R10 and R19, with the
+    part-level MPN override RC0603FR-07330RL left in place, so every BoM since
+    (2v2, 2v3, 3v0) says 1k with the 330 Ω number and the v3.0 board measures 330 Ω;
+    the ALog BottleLogger (2018-09-14) uses a 1K network (RN1) on the same lines;
+    electrically either value works (10 mA or 3.3 mA into a fault at 3.3 V, RC far
+    below any baud rate). Options: (a) 330 Ω on both sides, as built and measured,
+    one BoM line shared with the LED resistors. (b) 1 kΩ, the 2019 design intent and
+    the ALog lineage, a BoM line of its own and the first build at that value; the
+    Eagle commit 292ea53 would be reverted.
+    **Decided by Andy, 2026-11-04:** "v3.0.0 will be the converted and then updated
     KiCad version. We can produce rc.2 before production and confirm after
     production." So D4, C20 and the oval USB-C slots stay in v3.0.0, #63's three net
     differences are the design and the gate's 72 of 75 is the intended figure; the
