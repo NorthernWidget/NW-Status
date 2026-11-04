@@ -77,6 +77,22 @@ since those can change the board.
     bridges them that KiCad does not see, or they are open. Route them, or leave
     them as fabricated (DRC's three unconnected items and five dangling ends).
 
+### Firmware, found 2026-11-04 while checking the watchdog resistor
+
+12a. **The firmware's watchdog period is v2.2's, not v3.0's.** `Margay.cpp:59` sets
+    `wdtSeconds = 2110` "from R10 = 100k", read in October from
+    `Local-Project-Margay/Hardware/Margay.sch`, a 2021-02-20 checkout. Project-Margay
+    itself has had R10 = 130 kΩ since Andy's 755ffd9 (2022-05-02, "~65:47 WDT ... 1 hour
+    logging intervals"), and both 2023 production BoMs carry RC0603FR-07130KL, so every
+    v3.0 board's period is 3854 to 4033 s (Equation 1, 1 % resistor), 3943 s nominal.
+    Consequences: the library refuses a 3600 s interval that a v3.0 keeps with 254 s
+    of headroom; Project-Margay#60 asks v4 for the 130 kΩ that v3.0 already has
+    (QUEUE.md "schedule's open items" 2, marked DONE, rests on the same stale read);
+    v2.2 boards (100 kΩ, 2110 s) do need the lower value. Options: (a) 3853 in the
+    constructor and the v2.2 boards' 2110 provisioned through Page 1 0x30, which
+    exists for this; (b) the reverse. Then amend #60 (gated: a comment is outward).
+    Route (a) of the watchdog-as-wake plan (MARGAY-TODO 3) is unchanged by this.
+
 ### Issues already filed
 
 13. **Project-Margay #62**: four BOM fields where the footprint disagreed with the
