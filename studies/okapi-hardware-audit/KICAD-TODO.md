@@ -248,6 +248,16 @@ HEAD (fb54477) deleted 62 global labels on Okapi_3 and lost 54 connections.
 10. **Baseline the clean conversion**: commit, tag nothing, record the netlist
     comparison and the DRC/ERC counts here as the numbers every later hardware
     change is measured against.
+    **Baseline recorded 2026-11-04 (evening), Project-Okapi at the PWR_FLAG commit
+    150925f, nw-cold-silicon b9d62b8, kicad-cli 10.0.8.** Netlist: Eagle nets 209,
+    exactly reproduced in one KiCad net 209, differences 0; no Eagle-connected pin
+    missing; USB2's six shell pads the one tolerated line. ERC 9 (three converter
+    switch nodes typed power input, five two-switch-one-rail warnings, SENSOR_INT; all
+    on DECISIONS.md). DRC 377 with severity-all (silk_over_copper 199, silk_overlap 126,
+    solder_mask_bridge 12, clearance 9, annular_width 9, silk_edge_clearance 8,
+    hole_clearance 4, shorting_items 3, items_not_allowed 2, hole_to_hole 2,
+    track_dangling 2, isolated_copper 1), unconnected 3 (USB2's shell), parity 0.
+    Seventeen sheets and the board re-save byte-identically. Nothing tagged.
 
 After step 10 the hardware fixes begin (QUEUE.md, "Okapi hardware audit":
 charger RSENSE, PAC1934 resistor values, the SoM 3.3 V regulator, footprints
