@@ -8,7 +8,7 @@ Rules of the walk: the Eagle originals are the reference; a change that
 alters a pad or a net is its own commit gated on the netlist check, KiCad's
 re-save and the pad-net table.
 
-## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03); 44 after items 3 and 4 (2026-11-04)
+## ERC, 147 (131 errors, 16 warnings); 112 after items 1 and 2 (2026-11-03); 44 after items 3 and 4, 43 after item 5 (2026-11-04)
 
 1. **DONE 2026-11-03**, not by patching: every placed symbol now takes its
    definition from nw-cold-silicon (Project-Okapi 11776ab, f5ae35d, d8d6c7e),
@@ -42,7 +42,8 @@ re-save and the pad-net table.
    positions `sch_walk.py` gives; the board pads already carry the matching
    unconnected-(...) nets. Mechanical, one commit. Also clears five of the six
    in item 5. 109 to 48.
-5. **pin_not_driven, 1 left after item 4.** U8 (TPL5111) pin DRVN drives U10's
+5. **DONE 2026-11-04** (nw-cold-silicon b6f9491, build rule PIN_TYPES; Project-Okapi 2d6b034):
+   DRVn is an output; ERC 44 to 43. **pin_not_driven, 1 left after item 4.** U8 (TPL5111) pin DRVN drives U10's
    ON (Eagle net N$64) but the imported symbol types it Input. Fix: electrical
    type Output on that pin in the library symbol and the sheet's embedded
    copy. 48 to 47.
