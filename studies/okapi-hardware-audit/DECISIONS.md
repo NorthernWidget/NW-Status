@@ -179,8 +179,15 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    firmware (the reset as a wake, resume-into-file) shared; (b) the AVR's internal
    watchdog in interrupt mode, firmware only, waking every 8 s at a few µA; (c) keep
    the Particle chain but make its condition "no DONE handshake from the logger
-   within the session" rather than "90 s of silence". Andy's call; (a) recommended
-   for the firmware it shares with Margay.
+   within the session" rather than "90 s of silence". **Andy, 2026-11-05:** the
+   90 s was meant as a session timeout, to start once the Particle and the logger
+   are awake and talking, not from the module's power-on; (b) is out, a few
+   microamps being 100 to 1000 times the sleep draw (backup power sleeps at 4 µA);
+   (c) the handshake is the better criterion whatever else is chosen; (a) maybe.
+   So two items follow: the Boron firmware arms its 90 s clock on the first line
+   from the logger (a handshake) rather than at boot, with Mayday's reset then
+   meaning "the logger stopped mid-session"; and the TPL5010 question stays open
+   for v0.7.0.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
