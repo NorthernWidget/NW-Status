@@ -27,12 +27,16 @@ work first, then the rest with a cheaper model.
 **A. Fable, first** (judgment, datasheets, anything that changes a rule or a
 board):
 
-A1. **The version scheme**, Andy's call with the analysis done: Margay's pattern
-    fits (v1.0.0-rc.1 = the 2024-11-02 Eagle files as built, rc.2 = the corrected
-    BoM, v1.0.0 after a board confirms, the KiCad board with firmware-visible
-    changes = v1.1.0). Needed from Andy: how many boards exist and where. Then
-    the milestones and the sort of the 24 issues onto them (the triage is
-    judgment; the moves are B).
+A1. **DONE 2026-11-05, Andy's call: Okapi stays pre-1.0 until it is ready.** The 25
+    boards (late 2019 or early 2020; 15 registered as board type 0x9950, hardware
+    0.4.0, "formerly Resnik") keep their tags v0.4/v0.5.0; their silk's "v1.0" is
+    the one outlier and nothing reads silk. v0.6.0 stays the marker of the 2024
+    redesign. The KiCad board continues at v0.7.0 and up, pre-1.0 minors allowed
+    to break; v1.0.0 and board type 0x4F01 (reserved, "Okapi 1.0.0", matching the
+    2024 title block's REV 1.0) are for the design judged ready, with rc's before
+    a run and the as-built confirmation after, as Margay's. No retroactive tags.
+    Still to do under this item (B3): milestones for v0.7.0 and v1.0.0 and the sort
+    of the 24 open issues onto them, from a triage list Andy approves.
 A2. **R26 to R33**: the schematic says 287R, the build ordered 232 Ω and 453 Ω
     (ILIM of the four port switches U17 to U20, the second in parallel through
     JP1 to JP4). Read the switches' datasheet for what each sets, decide the
