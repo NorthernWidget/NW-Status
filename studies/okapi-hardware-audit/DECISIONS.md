@@ -13,6 +13,57 @@ since those can change the board.
 
 ## Okapi
 
+### The plan (2026-11-05), split by who should do it
+
+Okapi checked the way Margay was: the conversion lost no copper (every one of
+Eagle's 3897 wires and 345 vias is on the KiCad board, at the first import and
+now); the BoM has Margay's slips and one gap of its own (the KiCad fields carry a
+number on 16 of 117 lines where Eagle's device technologies hold one for 222 of
+376 parts); the built prototypes say REV 1.0 and the registry 1.0.0 while
+GitHub's latest release is v0.6.0; 24 issues are open on no milestone. The
+findings are in `parts-audit.md` beside this file. Andy, 2026-11-05: Fable-tier
+work first, then the rest with a cheaper model.
+
+**A. Fable, first** (judgment, datasheets, anything that changes a rule or a
+board):
+
+A1. **The version scheme**, Andy's call with the analysis done: Margay's pattern
+    fits (v1.0.0-rc.1 = the 2024-11-02 Eagle files as built, rc.2 = the corrected
+    BoM, v1.0.0 after a board confirms, the KiCad board with firmware-visible
+    changes = v1.1.0). Needed from Andy: how many boards exist and where. Then
+    the milestones and the sort of the 24 issues onto them (the triage is
+    judgment; the moves are B).
+A2. **R26 to R33**: the schematic says 287R, the build ordered 232 Ω and 453 Ω
+    (ILIM of the four port switches U17 to U20, the second in parallel through
+    JP1 to JP4). Read the switches' datasheet for what each sets, decide the
+    intended limits, then the value fields and the as-built row.
+A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21): values from
+    the PAC1934's range and the expected currents; a datasheet decision.
+A4. **Consolidation decisions** from `parts-audit.md`: which package merges are
+    worth a footprint change (R69, R71, R48, the 180 k set, R49/R50, C1), the two
+    free value merges (R19 to 100 k, R62 to 130 k: item 3 below), C42's package.
+A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
+    airwire) and the review issues that change behavior (#16, #20, #22 at least).
+A6. **Any nw-cold-silicon build rule** these need, and any copper.
+
+**B. Cheaper model, after A** (specified, with a count as the test):
+
+B1. **The BoM port**: a tool that reads each Eagle part's device technology
+    (MF, MPN, DIGIKEY; `Hardware/Okapi.sch`) and writes the KiCad symbol fields,
+    then `rebody.py` so the footprints carry them; parity stays 0; the BoM export
+    shows a number on every line Eagle has one for. Fix in the same pass the
+    eight 330 Ω 0402s to RC0402FR-07330RL / 311-330LRCT-ND, C40/C41 to the TDK
+    0402 number, and the value fields of R54, R84 to R87 from their numbers.
+B2. **The as-built checks document** for Okapi, as Margay's
+    `docs/v3.0-as-built-checks.md`: R26 to R33 first, the 330 Ω size, C42, R19.
+B3. **Milestones and issue moves** from A1's list; comments in Andy's voice.
+B4. **Capacitor line edits** from A4 (the free 12 pF merge now; the rest when
+    decided).
+B5. **ERC/DRC residue** (items 5 to 8) once Andy says accept, exclude or reroute;
+    the stackup block (item 9) once chosen; page cosmetics (item 10) last.
+B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
+    Margay's were done on 2026-11-05.
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The name says Bobby
