@@ -54,7 +54,14 @@ A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     out of range, 100 k gives 36 min on an existing line, 130 k would copy R20).
     All of these ride in B1 as field edits except #33's footprint changes.
 A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
-    airwire) and the review issues that change behavior (#22 at least; **#20 checked
+    airwire) and the review issues that change behavior (**#22 checked 2026-11-05
+    against both datasheets: the TLV61220 half is not a defect, R5 = 180 k is the
+    datasheet's own example value and its rule is R2 < 500 k (divider current 2.8 µA
+    against a 10 nA FB current); the TPS62822 half is a documented trade, R7 = 180 k
+    against the datasheet's "R2 ≤ 120 k for 5 µA in the divider", chosen for light-
+    load efficiency, with C6 = 68 pF exactly the datasheet's 12 ms / R2. Options:
+    keep, or R7 100 k with R6 453 k and C6 120 pF for noise robustness at a small
+    light-load cost; Andy's call, keep recommended**; **#20 checked
     2026-11-05: VIN_REG = 2.7 V × (1 + 143/100) = 6.56 V matches the Vmp Voltaic
     publishes for the P106 the README recommends (6.5 V, Voc 7.7 V); resellers list
     6.0 V / 7.0 V for the P106C tough variant, and the P106 is end-of-life. The
