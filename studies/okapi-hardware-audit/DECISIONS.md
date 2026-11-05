@@ -195,6 +195,24 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    the button, Q4 and the expander's !RESET), DONE on PA6, WAKE on PA7 (PCINT7, the
    Port A ISR Margay's #61 already plans), fed on every wake and answered on the
    clock's schedule. Cost: the Particle socket loses CTS/RTS, two traces.
+   **Inbound messages (Andy, 2026-11-05: the logger wakes the Particle, so both are
+   awake while they talk; but a human's instruction reaching the Particle needs a
+   way to the logger). Analyzed from the netlist and the code:** the data path
+   exists (UART0 TX/RX through R38/R40 to both sockets) and nothing uses it inward:
+   the Boron sketch never writes to Serial1, its only cloud entry is
+   Particle.function("Reset") which pulses RST, and the logger reads Serial once,
+   at boot, for a time stamp (serialTimeSet). Two paths, no new pins: (1)
+   synchronous, inside the session the logger opens: the Particle connects, the
+   cloud delivers what it queued, the Particle forwards it as lines on Serial1,
+   and the logger listens for a few seconds after END BACKHAUL before letting the
+   module go; (2) asynchronous, at the hourly wake: FEATHER_GPIO already lands on
+   PA5, PCINT5, in the Port A group whose ISR NW_Logger runs for the log button
+   (PCINT0_vect, enabled per pin in PCMSK0), so the Particle raising that line
+   wakes a sleeping logger with one mask bit and an ISR that reads PINA to tell
+   the button from the module; FEATHER_GPIO's meaning changes from "busy" level
+   to "attention" edge, which afterLogEvent's 180 s wait must follow. Both need the
+   UART framing choice (COBS or the magic preamble, project_uart_framing) and a
+   command grammar. RTS and CTS stay free for the TPL5010.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
