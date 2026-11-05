@@ -129,9 +129,10 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    `resetWDT()`, as Margay has. (b) The AVR's internal watchdog only, and
    `resetWDT()`/`WDHold` fixed in Okapi_Library so they do nothing. Either way the
    firmware fix is its own item.
-3. **R62, 330 k on JP8's second position, above the TPL5111's 170 k maximum**
-   (unfiled item 10). (a) 130 k, the same 3943 s as R20. (b) Another in-range value
-   for a second interval. (c) Drop the jumper position. BoM and schematic.
+3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
+   The timer's hourly wake is the module's receive window and the session bound;
+   the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
+   second position, above the TPL5111's 170 k maximum.
 4. **The V_SOLAR_IN airwire** (KICAD-TODO step 9): the audit found the net
    unrouted. A layout change, on the laptop with the board in front of you.
 
