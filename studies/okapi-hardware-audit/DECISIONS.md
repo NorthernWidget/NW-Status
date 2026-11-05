@@ -73,6 +73,15 @@ A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21). Checked
     now (a jumper line in B1), or drop R51 and tie ADDRSEL to ground in v0.7.0
     copper (B8, if Andy wants the line gone). Firmware follow-up (B7): the
     current constants `Okapi.cpp` 182 and 239 say "waits on the shunt value".
+    **Decided 2026-11-05.** Andy: the PAC1934 asleep is a tenth of the board's
+    floor, so current metering is kept as Bobby laid it out. Values, from a
+    blank slate (no 2024 board was ever built): R72, R73, R75 = 20 mΩ
+    ERJ-6BWFR020V (P.02AQCT-ND); R74 = 50 mΩ ERJ-6BWFR050V (P17581CT-ND), the
+    line shared with #32's restored charger sense resistor; R51 = 0 Ω
+    RC0402JR-070RL (311-0.0JRCT-ND), address 0x10. The 0.5 W ERJ-6BW series
+    rather than the 0.25 W ERJ-L06: a 3 A burst on 20 mΩ is 0.18 W. All five
+    are field edits in B1; the firmware constants follow in B7. The sleep-floor
+    itemization (about fifteen parts from their datasheets) stays with #31.
 A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     package merges filed as Project-Okapi #33 (R69, R71 to 0402 now; R1, R8 now and
     R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48 stays
