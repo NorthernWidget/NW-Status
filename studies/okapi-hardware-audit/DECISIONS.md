@@ -76,22 +76,29 @@ since those can change the board.
     73040 to 71528 and RAM 3640 to 3561 on Programmed_Margay, of which the
     Steinhart-Hart evaluation alone (log, pow) was 1000 B. Project-Margay: PA1
     no-connect and the pad's unconnected net; README rows. ERC 1 to 0, parity 0.
-12. **Three copper gaps, traced 2026-11-05: none is on the fabricated board.**
-    (a) **BT1's two + pads** (POWER0 at 148.96, POWER1 at 133.72 mm, net VCOIN+):
-    the coin holder's two terminals are one piece of metal, and Eagle's board says
-    so (`route="any" routetag="G$1.+"` on both contactrefs), so no copper joins them
-    there either; POWER1's 2.65 mm stub is Eagle's. KiCad does not know the pads are
-    joined. Fix in nw-cold-silicon's build: give LINX_BAT-HLD-012-SMT's POWER0 and
-    POWER1 one pad number (the PAD_RENUMBER rule) or a net-tie pad group; no board
-    edit. (b) **VSWITCH_CTRL on B.Cu**: Eagle has a 7.8 mm diagonal from (30.25, 12.7)
-    to (35.76, 7.18) in Eagle's frame; KiCad has no segment between (153.68, 107.51)
-    and (159.26, 112.27). (c) **WD_HOLD**: Eagle runs on F.Cu from the via at
-    (33.10, 6.35) to (37.74, 5.04); KiCad's via at (156.52, 113.86) reaches nothing
-    and the B.Cu run resumes at (158.88, 114.20). Both (b) and (c) sit where D4 and
-    C20 were placed on 2026-06-01 (b82f7d8 introduced the geometry at (159.26,
-    112.27)), so they are the June rework's unfinished reroutes on the KiCad board,
-    v3.1.0 work, and the built v3.0 boards are whole. Two tracks to draw and one
-    library rule; the dangling 0.11 mm VBAT_SW stub is Eagle's own.
+12. **Three copper gaps: DONE 2026-11-05** (Andy: "Find out the cause ... Once all
+    issues are found: fix KiCad's version"). The cause of each, verified:
+    (a) **BT1's two + pads** were the conversion's one omission on either board:
+    Eagle's device maps the holder's + pin to both pads with `route="any"`, the
+    import made two pins and two pads, and KiCad asked for copper between springs
+    that are one piece of metal. Fixed in the library (nw-cold-silicon ca48709:
+    PAD_SAME_NUMBER, PIN_DROP and the footprint's duplicate_pad_numbers_are_jumpers
+    yes, which is what KiCad 9+ needs; net-tie groups and same numbers alone do
+    not do it, tested) and both boards re-bodied (Margay, Okapi 8c4ee82; rebody.py
+    now carries the flag, NW-Tests be621bb). (b), (c) **VSWITCH_CTRL and WD_HOLD**
+    were not the conversion's: DRC on the first import (5bab1ac) and on the board
+    before b82f7d8 finds only BT1, and a wire-by-wire comparison of Eagle's copper
+    with the first import finds every one of 1443 wires and 120 vias present (the
+    one curved wire, a 0.1 mm corner on 3V3_FTDI, became two straight segments);
+    all 44 wires absent today left in the June 2026 D4/C20 rework. Both rejoined on
+    B.Cu as parallel staircases between ISP1's pads 1 and 2 at 6 mil clearance
+    (Project-Margay, "the June reroute finished"). The scan for the same failure
+    mode: every one-pin-many-pads part in both Eagle schematics (MOSFETs, BME280,
+    USB-C, the combo headers, Okapi's QFNs) has copper to all its pads on its
+    board; only the coin holders rely on the part's metal. Counts now: Margay DRC
+    1 (Eagle's 0.11 mm VBAT_SW stub) / unconnected 0 / parity 0, ERC 0, Eagle nets
+    72 of 75; Okapi DRC 5 / 0 / 0, Eagle nets 208 of 209, the one difference BT1's
+    second pin that KiCad no longer has.
 ### Firmware, found 2026-11-04 while checking the watchdog resistor
 
 12a. **DONE 2026-11-05 (Margay_Library 63bbec9, NW_Logger 0d29627 and 000ffce): the period is set by model, 3853 s for v3.0 and 2110 s for v2.x; the harness shows 3600 s holding at the first and no step holding at the second.** The finding as recorded: the firmware's watchdog period was v2.2's, not v3.0's. `Margay.cpp:59` sets
