@@ -48,6 +48,15 @@ A4. **Consolidation decisions** from `parts-audit.md`: which package merges are
     free value merges (R19 to 100 k, R62 to 130 k: item 3 below), C42's package.
 A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     airwire) and the review issues that change behavior (#16, #20, #22 at least).
+    **Added 2026-11-05, found while sizing the PAC1934 shunts: the LT3652 charger
+    has no charge-current sense resistor.** In the 2021 design R18 (50 mΩ) sat
+    between SENSE (the inductor side, L4) and BAT (V_LI), shared with the INA
+    current-sense amplifier U35, and set the charge limit at 0.1 V / 50 mΩ = 2 A.
+    The 2024 "CSA layout" commit (677d839) that replaced the INAs with the PAC1934
+    removed it and tied SENSE and BAT together on V_LI, so the charger has no
+    current regulation: a copper change for the KiCad board, and an issue to file.
+    The PAC1934's V_LI shunt R72 sits on the cell side of that node and cannot
+    double as the charger's sense resistor without moving the topology.
 A6. **Any nw-cold-silicon build rule** these need, and any copper.
 
 **B. Cheaper model, after A** (specified, with a count as the test):
