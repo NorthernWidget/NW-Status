@@ -163,8 +163,15 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
    second position, above the TPL5111's 170 k maximum.
-4. **The V_SOLAR_IN airwire** (KICAD-TODO step 9): the audit found the net
-   unrouted. A layout change, on the laptop with the board in front of you.
+4. **DONE 2026-11-05: not a gap.** The "airwire" is Eagle's own 0.03 mm: in
+   Okapi.brd the top-layer trace on V_SOLAR_IN ends at (23.990, 4.188) and the
+   LT3652's VIN pad (pin 1, 0.25 mm wide) has its connection point at (24.021,
+   4.188), and Eagle draws an unrouted-layer wire between the two because a wire
+   must reach the pad's origin to count. The trace end lies inside the pad's
+   copper, so the fabricated copper is continuous, and KiCad, which connects by
+   overlap, reports the net complete (unconnected 0, with every Eagle wire present
+   per the comparison). Nothing to route; the audit's "never routed" was Eagle's
+   bookkeeping. Was: a layout change for the laptop.
 
 ### ERC residue (accept, or exclude in the GUI)
 
