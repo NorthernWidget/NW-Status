@@ -161,12 +161,26 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    anywhere in the workspace (Apis's LIS3DH pitch/roll code is the pattern); a
    driver is new work, B-tier from the datasheet, with the Bosch feature-engine
    configuration blob a question to settle first.
-2. **A hardware watchdog for the MCU on the next board.** Okapi v1.0 has none: the
-   TPL5111 is the Particle module's power timer (QUEUE.md, "Corrected 2026-10-30"),
-   and `resetWDT()` pulses pin 23, the primary bus switch. (a) Add a TPL5010 fed by
-   `resetWDT()`, as Margay has. (b) The AVR's internal watchdog only, and
-   `resetWDT()`/`WDHold` fixed in Okapi_Library so they do nothing. Either way the
-   firmware fix is its own item.
+2. **A hardware watchdog for the MCU on the next board.** Okapi has no dedicated
+   one; the TPL5111 is the Particle module's power timer and `resetWDT()` pulses
+   pin 23, the primary bus switch. **Checked 2026-11-05 at Andy's question: there is
+   an indirect chain, and it is the design's intent.** The Particle can reset the
+   logger: its RST_TRIG line (FeatherWing pin 9 / M.2 GPIO9) drives Q4, whose
+   drain is the ATmega's RESET net, with R54 holding the gate low while the module
+   is unpowered. The 2019 Boron sketch uses it: when its 90 s serial-silence
+   watchdog fires it pulses RST (resetting the logger) and then WD_DONE (powering
+   itself off). So the logger's watchdog today is the TPL5111 waking the Particle
+   hourly and the Particle resetting a logger it cannot hear. Its flaws: it needs
+   the module present and its firmware right; its grain is the 66-minute wake; and
+   as written it fires whenever the logger has printed nothing for 90 s, which for
+   any logging interval above 90 s is every wake, a reset an hour on a healthy
+   logger (to verify on a board; MCUSR would show EXTRF each hour). Options for
+   v0.7.0: (a) a TPL5010 fed on every wake, as Margay, with Margay's route (a)
+   firmware (the reset as a wake, resume-into-file) shared; (b) the AVR's internal
+   watchdog in interrupt mode, firmware only, waking every 8 s at a few µA; (c) keep
+   the Particle chain but make its condition "no DONE handshake from the logger
+   within the session" rather than "90 s of silence". Andy's call; (a) recommended
+   for the firmware it shares with Margay.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
