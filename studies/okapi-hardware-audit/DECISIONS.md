@@ -43,9 +43,16 @@ A2. **R26 to R33**: the schematic says 287R, the build ordered 232 Ω and 453 Ω
     intended limits, then the value fields and the as-built row.
 A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21): values from
     the PAC1934's range and the expected currents; a datasheet decision.
-A4. **Consolidation decisions** from `parts-audit.md`: which package merges are
-    worth a footprint change (R69, R71, R48, the 180 k set, R49/R50, C1), the two
-    free value merges (R19 to 100 k, R62 to 130 k: item 3 below), C42's package.
+A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
+    package merges filed as Project-Okapi #33 (R69, R71 to 0402 now; R1, R8 now and
+    R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48 stays
+    0603 or becomes 1 kΩ 0402 on the existing line, Andy to pick; C1/C18 to one
+    package, Andy to pick, 0603 X7R suggested). **R19 to 100 kΩ: decided** (the
+    pull-up on Q3's gate, no specification binds it; checked). **C40, C41 to the TDK
+    0402 12 pF of C23/C24 and C42 to an 0402 1 µF: decided** (0603 numbers on 0402
+    pads). **R62**: Andy's interval choice (JP8's second TPL5111 period; 330 k is
+    out of range, 100 k gives 36 min on an existing line, 130 k would copy R20).
+    All of these ride in B1 as field edits except #33's footprint changes.
 A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     airwire) and the review issues that change behavior (#16, #20, #22 at least).
     **Added 2026-11-05, found while sizing the PAC1934 shunts: the LT3652 charger
