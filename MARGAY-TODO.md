@@ -142,11 +142,12 @@ Buildable now, no gate:
 
 ## Out of scope, noted
 
-Project-Margay#60 (R10 to 130 kΩ) and #61 (WAKE to PA7) are the hardware
-routes past the watchdog ceiling, for v4. #61's firmware half (the clock
-decides whether to log; the liveness check earns the feed) is reusable in A3.
-The remaining Project-Margay issues (#42, #47-#59, #40, #48 with its firmware
-workaround already in place) are hardware.
+Project-Margay#61 (WAKE to PA7) is the hardware route past the watchdog
+ceiling, on the v3.1.0 milestone since 2026-11-04 (section G). #60 closed
+2026-11-04: the v3.0 boards already carry R10 = 130 kΩ, and the library's
+period follows the model since Margay_Library 63bbec9. #61's firmware half
+(the clock decides whether to log; the liveness check earns the feed) is
+reusable in A3. The remaining Project-Margay hardware issues are in section G.
 
 ## G. v3.1.0, the KiCad board (2026-11-05)
 
