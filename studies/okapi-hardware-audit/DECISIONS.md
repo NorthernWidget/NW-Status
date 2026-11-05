@@ -85,7 +85,7 @@ since those can change the board.
 
 ### Firmware, found 2026-11-04 while checking the watchdog resistor
 
-12a. **The firmware's watchdog period is v2.2's, not v3.0's.** `Margay.cpp:59` sets
+12a. **DONE 2026-11-05 (Margay_Library 63bbec9, NW_Logger 0d29627 and 000ffce): the period is set by model, 3853 s for v3.0 and 2110 s for v2.x; the harness shows 3600 s holding at the first and no step holding at the second.** The finding as recorded: the firmware's watchdog period was v2.2's, not v3.0's. `Margay.cpp:59` sets
     `wdtSeconds = 2110` "from R10 = 100k", read in October from
     `Local-Project-Margay/Hardware/Margay.sch`, a 2021-02-20 checkout. Project-Margay
     itself has had R10 = 130 kΩ since Andy's 755ffd9 (2022-05-02, "~65:47 WDT ... 1 hour
