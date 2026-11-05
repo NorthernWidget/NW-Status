@@ -69,7 +69,12 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     the silk ("MPPT: R22 top, R69 bottom; see README"), and the README's power
     section carries the table of values per panel. The alternative that needs no
     iron, a three-pad solder jumper choosing between two bottom resistors (100 k
-    for 6.5 V, 118 k for 6.0 V), is the JP8 pattern and is Andy's to want**; **#16
+    for 6.5 V, 118 k for 6.0 V), is the JP8 pattern and is Andy's to want. Andy,
+    2026-11-05, on the picture: R69 and R22 beside the mounting hole are already
+    among the easier parts to replace with hot air, and 0603 is the smallest size a
+    less-skilled hand should be asked to solder. So: as built, labeled on v0.7.0,
+    no pitch change; and a rule for both boards, a part a user is meant to swap
+    is 0603 or larger and sits clear of tall neighbors**; **#16
     checked 2026-11-05: not a defect, the MCP23018's GPIO pins are rated to 5.5 V
     (DS22103 absolute maximum ratings); closes on Andy's word**).
     **Added 2026-11-05, found while sizing the PAC1934 shunts: the LT3652 charger
