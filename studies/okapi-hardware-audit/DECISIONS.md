@@ -161,7 +161,10 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    anywhere in the workspace (Apis's LIS3DH pitch/roll code is the pattern); a
    driver is new work, B-tier from the datasheet, with the Bosch feature-engine
    configuration blob a question to settle first.
-2. **A hardware watchdog for the MCU on the next board.** Okapi has no dedicated
+2. **DONE 2026-11-05: Project-Okapi #35, a TPL5010 for the logger on v0.7.0, no ATmega
+   pin taken (WAKE onto GLOBAL_INT through one FET, DONE through the expander's
+   GPA2, RSTn on RESET), RTS/CTS kept for the Particle, Margay's firmware plan
+   shared.** The analysis that led there: Okapi has no dedicated
    one; the TPL5111 is the Particle module's power timer and `resetWDT()` pulses
    pin 23, the primary bus switch. **Checked 2026-11-05 at Andy's question: there is
    an indirect chain, and it is the design's intent.** The Particle can reset the
