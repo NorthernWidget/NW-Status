@@ -54,7 +54,9 @@ A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     out of range, 100 k gives 36 min on an existing line, 130 k would copy R20).
     All of these ride in B1 as field edits except #33's footprint changes.
 A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
-    airwire) and the review issues that change behavior (#16, #20, #22 at least).
+    airwire) and the review issues that change behavior (#20, #22 at least; **#16
+    checked 2026-11-05: not a defect, the MCP23018's GPIO pins are rated to 5.5 V
+    (DS22103 absolute maximum ratings); closes on Andy's word**).
     **Added 2026-11-05, found while sizing the PAC1934 shunts: the LT3652 charger
     has no charge-current sense resistor.** In the 2021 design R18 (50 mΩ) sat
     between SENSE (the inductor side, L4) and BAT (V_LI), shared with the INA
