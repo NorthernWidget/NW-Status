@@ -46,8 +46,8 @@ A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21): values from
 A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     package merges filed as Project-Okapi #33 (R69, R71 to 0402 now; R1, R8 now and
     R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48 stays
-    0603 or becomes 1 kΩ 0402 on the existing line, Andy to pick; C1/C18 to one
-    package, Andy to pick, 0603 X7R suggested). **R19 to 100 kΩ: decided** (the
+    0603 or becomes 1 kΩ 0402 on the existing line, Andy to pick; C1/C18 both 0603,
+    decided 2026-11-05, an X7R 16 V part for the 5 V rail; R69, R71 to 0402 confirmed). **R19 to 100 kΩ: decided** (the
     pull-up on Q3's gate, no specification binds it; checked). **C40, C41 to the TDK
     0402 12 pF of C23/C24 and C42 to an 0402 1 µF: decided** (0603 numbers on 0402
     pads). **R62**: Andy's interval choice (JP8's second TPL5111 period; 330 k is
