@@ -60,7 +60,16 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     6.0 V / 7.0 V for the P106C tough variant, and the P106 is end-of-life. The
     setting is a panel choice, erring high is the safe side (the charger throttles
     early rather than collapsing the panel), and 6.0 V would be R69 = 118 k or R22 =
-    122 k. Keep unless the standard panel changes; closes on Andy's word**; **#16
+    122 k. **Closed 2026-11-05 as resolved.** Andy: R22 and R69 are "replaceable"
+    items to be customized per panel. On the board they are 0603 on the top side at
+    (136.8, 170.3) and (134.8, 170.3) mm, 2.0 mm apart in a row with R71 and R70
+    (the SHDN divider), nothing taller than an 0805 within 4 mm and the mounting
+    hole H2 at 4.8 mm, so a swap with an iron is easy as built. To make it easier
+    on v0.7.0: keep them 0603 (so R69 leaves #33's 0402 merge), label the pair on
+    the silk ("MPPT: R22 top, R69 bottom; see README"), and the README's power
+    section carries the table of values per panel. The alternative that needs no
+    iron, a three-pad solder jumper choosing between two bottom resistors (100 k
+    for 6.5 V, 118 k for 6.0 V), is the JP8 pattern and is Andy's to want**; **#16
     checked 2026-11-05: not a defect, the MCP23018's GPIO pins are rated to 5.5 V
     (DS22103 absolute maximum ratings); closes on Andy's word**).
     **Added 2026-11-05, found while sizing the PAC1934 shunts: the LT3652 charger
