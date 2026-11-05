@@ -148,11 +148,15 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
 
 ### Design (can change the board)
 
-1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The name says Bobby
-   meant to route the accelerometer's interrupt to the MCU; on v1.0 it reaches
-   nothing (ERC's one warning). (a) A no-connect flag: open on this revision, one
-   line. (b) Keep the label as a note of intent and accept the warning. (c) Route it
-   on the next board: an issue, not an edit here.
+1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
+   on the pin; ERC's one warning. **Checked 2026-11-05 at Andy's question: no record
+   anywhere plans a wake on motion.** The "wake on shaking" reading was mine, from
+   the pin's name and the BMA456's feature list, not from Bobby or Andy; the only
+   recorded purpose for an accelerometer in the workspace is orientation (pitch and
+   roll, read over I2C: QUEUE.md "The accelerometer's three layers", about Apis's
+   LIS3DH), and the v0.6.0 notes say only "BMA456 accelerometer". So: (a) a
+   no-connect flag, the honest state, one line, recommended. (b) Route INT to a free
+   pin on v0.7.0 only if Andy wants motion events later. Andy's word.
 2. **A hardware watchdog for the MCU on the next board.** Okapi v1.0 has none: the
    TPL5111 is the Particle module's power timer (QUEUE.md, "Corrected 2026-10-30"),
    and `resetWDT()` pulses pin 23, the primary bus switch. (a) Add a TPL5010 fed by
