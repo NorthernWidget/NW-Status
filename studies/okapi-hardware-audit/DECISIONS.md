@@ -61,7 +61,8 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     against the datasheet's "R2 ≤ 120 k for 5 µA in the divider", chosen for light-
     load efficiency, with C6 = 68 pF exactly the datasheet's 12 ms / R2. Options:
     keep, or R7 100 k with R6 453 k and C6 120 pF for noise robustness at a small
-    light-load cost; Andy's call, keep recommended**; **#20 checked
+    light-load cost. **Andy, 2026-11-05: keep as is; the trade is written into the
+    Okapi README under "Regulator feedback dividers"**; #22 closes on his word**; **#20 checked
     2026-11-05: VIN_REG = 2.7 V × (1 + 143/100) = 6.56 V matches the Vmp Voltaic
     publishes for the P106 the README recommends (6.5 V, Voc 7.7 V); resellers list
     6.0 V / 7.0 V for the P106C tough variant, and the P106 is end-of-life. The
