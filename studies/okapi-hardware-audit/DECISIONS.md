@@ -154,9 +154,13 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    the pin's name and the BMA456's feature list, not from Bobby or Andy; the only
    recorded purpose for an accelerometer in the workspace is orientation (pitch and
    roll, read over I2C: QUEUE.md "The accelerometer's three layers", about Apis's
-   LIS3DH), and the v0.6.0 notes say only "BMA456 accelerometer". So: (a) a
-   no-connect flag, the honest state, one line, recommended. (b) Route INT to a free
-   pin on v0.7.0 only if Andy wants motion events later. Andy's word.
+   LIS3DH), and the v0.6.0 notes say only "BMA456 accelerometer". **DONE
+   2026-11-05, Andy: U43 is read for the board's orientation when desired, never
+   continuously or for impulses; the no-connect is on (Project-Okapi, "the BMA456's
+   INT pin is a no-connect"), ERC 9 to 8.** Firmware: none exists for the BMA456
+   anywhere in the workspace (Apis's LIS3DH pitch/roll code is the pattern); a
+   driver is new work, B-tier from the datasheet, with the Bosch feature-engine
+   configuration blob a question to settle first.
 2. **A hardware watchdog for the MCU on the next board.** Okapi v1.0 has none: the
    TPL5111 is the Particle module's power timer (QUEUE.md, "Corrected 2026-10-30"),
    and `resetWDT()` pulses pin 23, the primary bus switch. (a) Add a TPL5010 fed by
