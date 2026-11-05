@@ -187,7 +187,14 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    So two items follow: the Boron firmware arms its 90 s clock on the first line
    from the logger (a handshake) rather than at boot, with Mayday's reset then
    meaning "the logger stopped mid-session"; and the TPL5010 question stays open
-   for v0.7.0.
+   for v0.7.0. **Pins, checked 2026-11-05 from the netlist: all 32 of the 1284P's
+   I/O pins are on nets.** The two to free are FEATHER_CTS (PA6, D30) and
+   FEATHER_RTS (PA7, D31), the UART flow-control lines to the Particle socket that
+   no firmware has ever used (`Okapi.cpp` reads only FEATHER_GPIO). A TPL5010 then
+   lands as Margay's: RSTn on the RESET net (open-drain, beside the ISP header,
+   the button, Q4 and the expander's !RESET), DONE on PA6, WAKE on PA7 (PCINT7, the
+   Port A ISR Margay's #61 already plans), fed on every wake and answered on the
+   clock's schedule. Cost: the Particle socket loses CTS/RTS, two traces.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
