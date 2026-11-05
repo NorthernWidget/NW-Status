@@ -81,10 +81,21 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     powered by the timer alone, and it is powered nearly always, because a module
     that never pulses DONE stays on for the whole 66-minute interval less 50 ms, so
     the backhaul always finds it listening (the README's "16 mA background"). To
-    verify on a board: FEATHER_BAT over an hour, expecting a 50 ms dropout and
-    nothing else. If so, the TPL5111 gates nothing today and the firmware fix is
-    the LOW pulse of 20 to 30 ms on FEATHER_EN plus DONE from the module, which
-    turns the always-on module into one that is on only for the backhaul.
+    verify on a board: FEATHER_BAT over an hour. **Refined the same evening from
+    `Particle_Files/Boron_Test.ino` (2019-07-30; the deployed image is
+    `Resnik_Boron_Firmware.bin`, 2020-04-25, which may differ):** the Boron runs an
+    ApplicationWatchdog of 90 s, checked in on every serial line it receives, whose
+    handler Mayday() pulses WD_DONE low then high ("Cycle VBat if in use"). So the
+    cycle Andy saw on the LEDs is: the timer powers the Boron every 66 min, it
+    stays on while rows arrive on Serial1, and 90 s after the last line it pulses
+    DONE and the TPL5111 cuts its power. With a logging interval under 90 s it
+    never goes quiet and stays on; above 90 s it is on about 1.5 min per 66, and a
+    "START BACKHAUL" sent while it is off is lost, so the backhaul after N logs
+    works only when it lands inside an on-window. The fix is unchanged: FEATHER_EN
+    pulsed low by the logger when it has rows to send, and DONE from the Boron
+    when sent. The test sketch also pulses RST (the ATmega's reset through Q4)
+    every loop once 90 s have passed since boot, which cannot be the deployed
+    behavior; the deployed .bin is the thing to read on a board.
 A6. **Any nw-cold-silicon build rule** these need, and any copper.
 
 **B. Cheaper model, after A** (specified, with a count as the test):
