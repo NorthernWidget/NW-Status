@@ -72,10 +72,19 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     writes `FeatherEN` HIGH "to turn on Feather power": on the open-drain MCP23018
     that releases the pin, Q3 stays off, and nothing happens; the module is only
     ever powered by the timer's own 66-minute expiry. Same circuit in the 2020
-    Resnik.sch, so the 25 boards behave this way. To verify on a board (pull GPB7
-    low, watch FEATHER_BAT), then fix in Okapi_Library: a LOW pulse of 20 to 30 ms,
-    and DONE handled by the module as designed. Bobby's own comment on the pin
-    reads "turn Feather on if True, I guess?".
+    Resnik.sch, so the 25 boards behave this way. Bobby's 2021 original had both
+    lines commented out, with "HIGH: turn off battery to feather by default" and,
+    at the backhaul, "turn on Feather power //FIX! Needed??", so the deployed
+    firmware never drove the pin at all and the polarity reading matches his own
+    first comment. Andy, 2026-11-05: the backhaul after N (usually 5) logs "has
+    worked" on the existing boards. The reading that fits both: the module is
+    powered by the timer alone, and it is powered nearly always, because a module
+    that never pulses DONE stays on for the whole 66-minute interval less 50 ms, so
+    the backhaul always finds it listening (the README's "16 mA background"). To
+    verify on a board: FEATHER_BAT over an hour, expecting a 50 ms dropout and
+    nothing else. If so, the TPL5111 gates nothing today and the firmware fix is
+    the LOW pulse of 20 to 30 ms on FEATHER_EN plus DONE from the module, which
+    turns the always-on module into one that is on only for the backhaul.
 A6. **Any nw-cold-silicon build rule** these need, and any copper.
 
 **B. Cheaper model, after A** (specified, with a count as the test):
