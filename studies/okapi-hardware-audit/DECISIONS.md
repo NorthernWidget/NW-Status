@@ -29,7 +29,9 @@ board):
 
 A1. **DONE 2026-11-05, Andy's call: Okapi stays pre-1.0 until it is ready.** The 25
     boards (late 2019 or early 2020; 15 registered as board type 0x9950, hardware
-    0.4.0, "formerly Resnik") keep their tags v0.4/v0.5.0; their silk's "v1.0" is
+    0.4.0, "formerly Resnik") are the v0.4 design and the only Okapi boards ever
+    built or run (Andy, 2026-11-05: v0.5.0's 2020-02-13 files and the 2024
+    v0.6.0 redesign were never built); their silk's "v1.0" is
     the one outlier and nothing reads silk. v0.6.0 stays the marker of the 2024
     redesign. The KiCad board continues at v0.7.0 and up, pre-1.0 minors allowed
     to break; v1.0.0 and board type 0x4F01 (reserved, "Okapi 1.0.0", matching the
