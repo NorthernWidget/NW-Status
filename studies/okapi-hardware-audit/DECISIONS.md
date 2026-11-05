@@ -64,6 +64,18 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     current regulation: a copper change for the KiCad board, and an issue to file.
     The PAC1934's V_LI shunt R72 sits on the cell side of that node and cannot
     double as the charger's sense resistor without moving the topology.
+    **Added 2026-11-05, found while reading the TPL5111: the firmware's Feather
+    power-on has the wrong polarity, on both designs.** FEATHER_EN is the gate of
+    Q3, a P-channel FET with R19 pulling it to 3V3_CORE; Q3 conducts when the
+    expander pulls the gate LOW, putting 3V3 on the TPL5111's DELAY/M_DRV, which is
+    its manual power-on (a pulse of at least 20 ms). `Okapi::afterLogEvent()`
+    writes `FeatherEN` HIGH "to turn on Feather power": on the open-drain MCP23018
+    that releases the pin, Q3 stays off, and nothing happens; the module is only
+    ever powered by the timer's own 66-minute expiry. Same circuit in the 2020
+    Resnik.sch, so the 25 boards behave this way. To verify on a board (pull GPB7
+    low, watch FEATHER_BAT), then fix in Okapi_Library: a LOW pulse of 20 to 30 ms,
+    and DONE handled by the module as designed. Bobby's own comment on the pin
+    reads "turn Feather on if True, I guess?".
 A6. **Any nw-cold-silicon build rule** these need, and any copper.
 
 **B. Cheaper model, after A** (specified, with a count as the test):
