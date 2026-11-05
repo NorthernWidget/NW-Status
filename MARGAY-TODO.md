@@ -147,3 +147,31 @@ routes past the watchdog ceiling, for v4. #61's firmware half (the clock
 decides whether to log; the liveness check earns the feed) is reusable in A3.
 The remaining Project-Margay issues (#42, #47-#59, #40, #48 with its firmware
 workaround already in place) are hardware.
+
+## G. v3.1.0, the KiCad board (2026-11-05)
+
+v3.0.0-rc.2 is released (the 2023 copper, parts corrected; Zenodo
+10.5281/zenodo.23971433) and v3.0.0 is a GitHub draft until a reworked board
+passes `docs/v3.0-as-built-checks.md`. Development continues on master toward
+v3.1.0, the KiCad board in `Hardware/KiCAD/`, whose milestone holds the issues.
+
+1. **The defining change:** TPL5010 WAKE to PA7, one trace, and the firmware
+   that answers it (#61). The reason it is a minor bump: Page 0 carries
+   major.minor, and firmware tells a WAKE-wired board apart by that byte.
+2. **Five small hardware fixes from the 2025 review**, a part or a value each:
+   a pull-up on the DS3231's INT line (#48), C12 to the TPS79733's minimum
+   (#49), bypass capacitors at the MCP3421 (#52) and the SD slot (#53), the
+   crystal's load capacitors against its CL (#54).
+3. **Two decisions**: SBU1/SBU2 to ground or left as the no-connects the board
+   has (#58); whether the USB D+/D− pair needs 90 Ω control on a full-speed link
+   (#56, likely wontfix).
+4. **Open since 2025:** switch SCL as well as SDA in the I²C isolation (#40,
+   marked wontfix; close or reopen).
+5. **Housekeeping, done in substance, close on Andy's word:** #37 (the
+   conversion), #62 (BoM fields, parity 0), #63 and #42 (D4 and C20 stay).
+6. **Optional:** R10 to the 0402 130 kΩ so every Yageo resistor is one
+   package; a footprint change.
+7. **Firmware, no hardware needed, first in time:** MCUSR reset-cause messages
+   (A.2), then route (a) of the watchdog plan (A.3).
+8. **Release path as for v3.0:** v3.1.0-rc.1 before the run, v3.1.0 after a
+   built board confirms it; each tag on Andy's word.
