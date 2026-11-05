@@ -145,6 +145,23 @@ B5. **ERC/DRC residue** (items 5 to 8) once Andy says accept, exclude or reroute
     the stackup block (item 9) once chosen; page cosmetics (item 10) last.
 B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
     Margay's were done on 2026-11-05.
+B7. **Firmware, specified 2026-11-05, no board needed to write, a board to accept:**
+    (a) Okapi_Library: the backhaul pulses FEATHER_EN LOW for 20 to 30 ms (expander
+    port B pin 7, configured as an output) when it has rows to send, instead of
+    writing it HIGH, and reads MCUSR at boot (shared with Margay's item);
+    (b) the Boron sketch arms its 90 s watchdog on the first line received from
+    the logger, not at power-on, and pulses WD_DONE when its transmission is sent;
+    (c) a BMA456 driver and the orientation reading (Okapi_Library #12);
+    (d) acceptance for (a) and (b) on a board: FEATHER_BAT on when the logger
+    backhauls and off otherwise, measured over an hour; the same measurement
+    before the fix is the diagnosis (always on, 90 s per hour, or on at backhauls).
+B8. **The v0.7.0 board edits now filed and decided:** #32 the LT3652 sense resistor,
+    #33 the package merges, #34 remove JP8/R62, #35 the TPL5010, the MPPT pair's
+    silk label and README table (#20), the BMA456 no-connect (done).
+
+**Status of A on 2026-11-05 late: A1 to A4 decided; A5 all items decided or filed
+except #26/#31 (the next board's power path, a design conversation for a sitting
+of its own); A6 nothing arose. The cheaper model starts at B1.**
 
 ### Design (can change the board)
 
