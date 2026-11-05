@@ -76,13 +76,22 @@ since those can change the board.
     73040 to 71528 and RAM 3640 to 3561 on Programmed_Margay, of which the
     Steinhart-Hart evaluation alone (log, pow) was 1000 B. Project-Margay: PA1
     no-connect and the pad's unconnected net; README rows. ERC 1 to 0, parity 0.
-12. **Three copper gaps the Eagle board carried**, worth a board in hand:
-    VSWITCH_CTRL's two B.Cu tracks that do not meet, WD_HOLD's via and track end,
-    the RTC battery pad's 0.25 mm track short of BT1's POWER1. Two are logic lines,
-    and a true gap would be a fault Bobby's boards did not show, so something
-    bridges them that KiCad does not see, or they are open. Route them, or leave
-    them as fabricated (DRC's three unconnected items and five dangling ends).
-
+12. **Three copper gaps, traced 2026-11-05: none is on the fabricated board.**
+    (a) **BT1's two + pads** (POWER0 at 148.96, POWER1 at 133.72 mm, net VCOIN+):
+    the coin holder's two terminals are one piece of metal, and Eagle's board says
+    so (`route="any" routetag="G$1.+"` on both contactrefs), so no copper joins them
+    there either; POWER1's 2.65 mm stub is Eagle's. KiCad does not know the pads are
+    joined. Fix in nw-cold-silicon's build: give LINX_BAT-HLD-012-SMT's POWER0 and
+    POWER1 one pad number (the PAD_RENUMBER rule) or a net-tie pad group; no board
+    edit. (b) **VSWITCH_CTRL on B.Cu**: Eagle has a 7.8 mm diagonal from (30.25, 12.7)
+    to (35.76, 7.18) in Eagle's frame; KiCad has no segment between (153.68, 107.51)
+    and (159.26, 112.27). (c) **WD_HOLD**: Eagle runs on F.Cu from the via at
+    (33.10, 6.35) to (37.74, 5.04); KiCad's via at (156.52, 113.86) reaches nothing
+    and the B.Cu run resumes at (158.88, 114.20). Both (b) and (c) sit where D4 and
+    C20 were placed on 2026-06-01 (b82f7d8 introduced the geometry at (159.26,
+    112.27)), so they are the June rework's unfinished reroutes on the KiCad board,
+    v3.1.0 work, and the built v3.0 boards are whole. Two tracks to draw and one
+    library rule; the dangling 0.11 mm VBAT_SW stub is Eagle's own.
 ### Firmware, found 2026-11-04 while checking the watchdog resistor
 
 12a. **DONE 2026-11-05 (Margay_Library 63bbec9, NW_Logger 0d29627 and 000ffce): the period is set by model, 3853 s for v3.0 and 2110 s for v2.x; the harness shows 3600 s holding at the first and no step holding at the second.** The finding as recorded: the firmware's watchdog period was v2.2's, not v3.0's. `Margay.cpp:59` sets
