@@ -41,8 +41,36 @@ A2. **R26 to R33**: the schematic says 287R, the build ordered 232 Ω and 453 Ω
     (ILIM of the four port switches U17 to U20, the second in parallel through
     JP1 to JP4). Read the switches' datasheet for what each sets, decide the
     intended limits, then the value fields and the as-built row.
-A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21): values from
-    the PAC1934's range and the expected currents; a datasheet decision.
+A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21). Checked
+    2026-11-05 against the Eagle nets and the full datasheet (DS20005850B, 56
+    pages; the 26-page copy in scratch lacks Table 5-1). Channels: 1 is V_PRIME
+    through R73, 2 is V_LI through R72, 3 is V_BETA through R75, 4 is V_SOLAR_IN
+    through R74, and `Okapi.h`'s channel 2 = V_LI, channel 4 = V_SOLAR agree.
+    Range ±100 mV; LSB 1.5 µV unidirectional, 3.05 µV bidirectional (16 bits);
+    shunt = 0.1 V / I_max. **Correction to the evening's table:** the ERJ-L06
+    series the 2021 BoM used for R18 (ERJ-L06KF50MV) is 0.25 W by Digi-Key's
+    listing, not 0.5 W; the ERJ-6BW series is 0.5 W, ±1 %, 200 ppm/°C, same 0805
+    footprint: ERJ-6BWFR020V 20 mΩ (P.02AQCT-ND, $0.63 at 1, $0.374 at 10,
+    41,559 in stock) and ERJ-6BWFR050V 50 mΩ. Proposal, Andy to pick: (1) one
+    line, all four 20 mΩ, full scale 5 A, LSB 76 µA (153 µA bipolar on V_LI),
+    0.18 W at a 3 A burst; or (2) two lines, 50 mΩ on V_SOLAR_IN (2 A full
+    scale, LSB 31 µA on the charge current, 0.11 W at 1.5 A) and 20 mΩ on the
+    other three. V_PRIME takes 20 mΩ either way, since Andy wants telemetry
+    possible on it (3 A on 50 mΩ would be 0.45 W). **R51:** Table 5-1 maps the
+    pull-down to the address: 0 Ω (tie to ground) 0x10, 499 Ω 0x11, 806 Ω 0x12,
+    1.27 k 0x13, 2.05 k 0x14, 3.24 k 0x15, 5.23 k 0x16, 8.45 k 0x17, 13.3 k
+    0x18, 21.5 k 0x19, 34 k 0x1A, 54.9 k 0x1B, 88.7 k 0x1C, 140 k 0x1D, 226 k
+    0x1E, tie to VDD 0x1F; latched at power-up. 0x10 is free on the on-board
+    segment, read from the strapping: VEML6030 ADDR to 3V3_AUX gives 0x48,
+    PCA9634 A6..A0 = 1010010 gives 0x52, MCP23018 ADDR to ground 0x20, MB85RC
+    A2..A0 = 000 0x50, BME280 SDO high 0x77, MLX90393 A1A0 = 00 0x0C, DS3231
+    0x68, BMA456 0x18 or 0x19 (its SDO pin is not in the Eagle pin list); the
+    registry's 0x10–0x1F row holds only the PAC itself and a VEML6030 strapped
+    low, which Okapi's is not (this strapping answers #29's item 1 for six of
+    its seven chips). `pacFind()` scans 0x10–0x1F, so any row works: R51 = 0 Ω
+    now (a jumper line in B1), or drop R51 and tie ADDRSEL to ground in v0.7.0
+    copper (B8, if Andy wants the line gone). Firmware follow-up (B7): the
+    current constants `Okapi.cpp` 182 and 239 say "waits on the shunt value".
 A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     package merges filed as Project-Okapi #33 (R69, R71 to 0402 now; R1, R8 now and
     R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48 stays
