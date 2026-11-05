@@ -166,6 +166,10 @@ B1. **The BoM port**: a tool that reads each Eagle part's device technology
     0402 number, and the value fields of R54, R84 to R87 from their numbers.
 B2. **The as-built checks document** for Okapi, as Margay's
     `docs/v3.0-as-built-checks.md`: R26 to R33 first, the 330 Ω size, C42, R19.
+    Andy, 2026-11-05: the 2024 design has never been built; the 25 existing
+    boards are the 2019/2020 design. So this document is the pre-build checklist
+    for the first v0.7.0 run, R72 to R75 and R51 included, and nothing on it has
+    an as-built value yet. The firmware's PAC1934 path has not run on hardware.
 B3. **Milestones and issue moves** from A1's list; comments in Andy's voice.
 B4. **Capacitor line edits** from A4 (the free 12 pF merge now; the rest when
     decided).
