@@ -178,18 +178,16 @@ v3.1.0-rc.1. Milestones on Project-Margay: v3.0.0 (created 2026-11-04), v3.1.0
 
 ## Both boards: housekeeping, each a sentence from Andy
 
-16. **Project-Margay CITATION.cff** says version 3.0.0 and date-released 2023-08-01 at
-    the top level and in preferred-citation (read 2026-11-04), while the published tag
-    is v3.0.0-rc.1 and v3.0.0 is now the KiCad board after a built-board check. A
-    version bump is gated: set it with each release (rc.2, then v3.0.0) on Andy's word
-    at the time; .zenodo.json carries no version. Raised by the CV session.
-14. **DONE 2026-11-04** (Andy: "in NorthernWidget github"): https://github.com/NorthernWidget/nw-cold-silicon,
-    created private (the visibility was not said; one setting flips it) and pushed.
-15. **DONE 2026-11-04** (Andy: "push"): NW_Logger, NW-Sim, Okapi_Library, Margay_Library,
-    Project-Okapi, Project-Margay, NW-Status, NW-Tests and nw-cold-silicon pushed after the
-    verification sequence (style OK on the three libraries, 20 of 22 sketches compile with
-    MaxBotix the known failure, 11 of 11 harnesses, the three version failures older and
-    elsewhere: T9602, MaxBotix, DS3231_Logger).
+16. **DONE 2026-11-05.** Project-Margay v3.0.0-rc.2 released (tag 299f9de on 76849ad,
+    normal release, Latest; Zenodo 10.5281/zenodo.23971433 under concept 3766638,
+    minted on the release event, the 409s in the hook log being the duplicate
+    created/published deliveries). CITATION.cff was 3.0.0-rc.2 at the tag and is
+    3.0.0 on master (a995a55, local, the date left at rc.2's until the release).
+    v3.0.0 exists only as a GitHub draft, no tag, notes marked placeholder, to be
+    published once a reworked board (U13 MAX6070BAUT18, R19 100 kΩ) passes the
+    as-built checks. Andy's plan, 2026-11-05: prepare and bypass the bench so
+    development continues; the draft rather than a tag so nothing irreversible
+    names an untested state.
 
 ## Resolved as fabricated on 2026-11-04 (the record)
 
