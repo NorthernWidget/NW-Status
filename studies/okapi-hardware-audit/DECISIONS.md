@@ -212,7 +212,16 @@ B6. **The release mechanics** of A1 when authorized: tag, notes, draft, as
    the button from the module; FEATHER_GPIO's meaning changes from "busy" level
    to "attention" edge, which afterLogEvent's 180 s wait must follow. Both need the
    UART framing choice (COBS or the magic preamble, project_uart_framing) and a
-   command grammar. RTS and CTS stay free for the TPL5010.
+   command grammar. **Andy, 2026-11-05: keep the standard handshake; RTS and CTS
+   stay the UART's, so either side can wake the other and the logger can be
+   rescued through the Particle.** Then the TPL5010 takes no MCU pin: RSTn on
+   RESET; DONE through an expander output (a rising edge is all it needs); WAKE
+   wired-OR onto GLOBAL_INT (PA4, PCINT4), the MCP23018's INTA, which IOCON can set
+   open-drain and active-low: the TPL5010's active-high WAKE pulse drives one
+   N-FET that pulls the line low, the ATmega's pull-up holds it, and the firmware
+   reads the expander's INTF to tell an expander event from a watchdog wake. One
+   transistor, no new pins; RTS/CTS cannot do this because flow control is a held
+   level and a wake is an edge, and two push-pull drivers on one net would short.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
