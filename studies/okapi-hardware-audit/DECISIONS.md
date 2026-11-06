@@ -364,6 +364,20 @@ boards and their headers are not BoM parts; f46c629). **#21 closed 2026-11-06 on
 his word**; its firmware half, the PAC1934 currents from the shunt values, is
 Okapi_Library #13, which points back at #21 (B7's PAC1934 item). Next: step 4 (B4).
 
+**Q7 and #7, analyzed 2026-11-06 (Opus), recorded on #7.** The v0.4 latch came
+from U38, a TS5A21366 analog switch on 5V_AUX with its inputs on LI+ and
+V_PRIME: in sleep the batteries fed the dead rail through its input protection
+(Bobby's notes: 5V_AUX 1.3 V) and Q7 sank the current. The datasheets do not
+explain why the 2N7002WT1G fixed it (onsemi: V_GS(th) 1.0 to 2.5 V, R_DS(on)
+2.5 Ω max at 4.5 V, ESD-protected gate, I_GSS 150 nA at 5 V; Diodes DS30099:
+1.0 to 2.0 V, 7.5 Ω max at 5 V, I_GSS 10 nA). The 2024 design removed the
+TS5A21366, and no part on today's 5V_AUX has a pin on a battery net, so the
+cause is gone and the part choice matters much less. Q7 stays for a clean
+off-state (5V_AUX to 0 V in milliseconds; without it the rail sits near 2.5 V
+on D6 and R48, then decays on leakage, an estimate). Held for later: whether a
+Particle module drives its USB pin in sleep, and user sensors powered
+separately on the ADC inputs or VREF (Andy: hold the paths for later).
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
