@@ -324,7 +324,12 @@ with a comment; v0.8.0 now holds 12 issues. **#27 closed 2026-11-06 on his word*
 its wiring (EN and VDD on 3V3_CORE, DRVn to U10.ON, DONE = WD_DONE from MS1
 GPIOA3 and J9 ADC3, the FEATHER_EN hold-on of SNAS659B 7.5.2.1) is recorded in
 a comment on #34, with a pointer from #35. Nothing is left to his word on the
-issue sort. Next: step 2.
+issue sort. **Step 2 (B2) done 2026-11-06:** `Project-Okapi/docs/v0.7-pre-build-checks.md`
+(a5b9409, local): the as-designed values against the 2024 files, the look,
+resistance and powered checks, and a blank results table. It also covers C40/C41
+and Q7 (#7), which the list did not name, because they carry the same slips.
+No board images yet. Next: step 3 (B1, Opus), with the R26 to R33 fields
+decided (A2) and the Digi-Key code for the 464 Ω to confirm.
 
 ### Design (can change the board)
 
