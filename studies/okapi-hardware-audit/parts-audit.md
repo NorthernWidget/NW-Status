@@ -54,6 +54,57 @@ remove five lines at the cost of footprint changes on the board; R19 to 100 k
 and R62 to 130 k remove two more for nothing. Floor about 27 lines without
 touching the dividers.
 
+## Okapi resistors, planned for v0.7.0 (2026-11-06)
+
+The 2024 partlist with every decision through A5 applied (DECISIONS A2 to A4,
+#20, #32 to #35). Pending items are marked; everything else is a B1 field edit
+or a filed footprint change. Counts are parts; a value in two packages is two
+lines.
+
+| Value | Package | Count | Number | Refs | Change from 2024 |
+|---|---|---|---|---|---|
+| 0 Ω | 0402 | 1 | RC0402JR-070RL | R51 | new value: PAC1934 address 0x10 (A3) |
+| 20 mΩ, 0.5 W | 0805 | 3 | ERJ-6BWFR020V | R72, R73, R75 | new value: PAC1934 shunts (A3) |
+| 50 mΩ, 0.5 W | 0805 | 2 | ERJ-6BWFR050V | R74, and the restored charger sense resistor of #32 (new designator) | new value (A3); #32 names ERJ-L06KF50MV and needs the 0.5 W part instead |
+| 3 mΩ | 0805 | 1 | none yet | R10 | BQ2980 sense; number to pick in B1 |
+| 20 Ω | 0402 | 1 | RC0402FR-0720RL | R11 | – |
+| 27 Ω | 0402 | 2 | RC0402FR-0727RL | R34, R35 | – |
+| 100 Ω | 0402 | 1 | RC0402FR-07100RL | R14 | – |
+| 220 Ω | 0402 | 8 | none yet | R53, R60, R64, R76 to R80 | number to pick in B1 |
+| 232 Ω | 0402 | 4 | RC0402FR-07232RL | R26 to R29 | value field from 287R (A2) |
+| 330 Ω | 0402 | 9 | RC0402FR-07330RL | R9, R36 to R40, R42 to R44 | eight take the 0402 number; one line instead of three |
+| 330 Ω | 0603 | 1 | RC0603FR-07330RL | R48 | **pending**: stays, or 330 Ω 0402 on the line above, or 1 kΩ / 2 kΩ / 10 kΩ 0402 on an existing line (A4) |
+| 453 Ω | 0402 | 4 | RC0402FR-07453RL | R30 to R33 | value field from 287R (A2) |
+| 1 kΩ | 0402 | 1 | RC0402FR-071KL | R12 | – |
+| 2 kΩ | 0402 | 1 | RC0402FR-072KL | R15 | – |
+| 5.1 kΩ | 0402 | 2 | RC0402FR-075K1L | R84, R85 | value field from the number (B1) |
+| 5.6 kΩ | 0402 | 3 | RC0402FR-075K6L | R81 to R83 | – |
+| 10 kΩ | 0402 | 11 | RC0402FR-0710KL | R24, R25, R41, R45 to R47, R52, R54, R67, R86, R87 | R54, R86, R87 value fields from the number (B1); one Digi-Key code, not two |
+| 10 kΩ, 0.1 % | 0603 | 2 | ERA-3AEB103V | R49, R50 | stays (#33) |
+| 91 kΩ | 0603 | 1 | ERJ-3EKF9102V | R16 | – |
+| 100 kΩ | 0402 | 7 | RC0402FR-07100KL | R18, R19, R23, R57, R58, R61, R63 | R19 from 120 kΩ (A4); the 120 kΩ line is gone |
+| 100 kΩ | 0603 | 1 | RC0603FR-07100KL | R69 | stays 0603: MPPT pair, user-swappable (#20) |
+| 130 kΩ | 0603 | 1 (+1) | RC0603FR-07130KL | R20, and the TPL5010 DELAY resistor of #35 if its interval is 66 min | #35's value is open |
+| 143 kΩ | 0603 | 1 | RC0603FR-07143KL | R22 | stays 0603: MPPT pair (#20) |
+| 180 kΩ | 0402 | 4 | RC0402FR-07180KL | R1, R8, R65, R66 | R1, R8 from 0603 (#33) |
+| 180 kΩ | 0603 | 2 | ERJ-3EKF1803V | R5, R7 | **pending**: regulator feedback legs; #22 kept the values, so the 0402 merge is a footprint change only |
+| 182 kΩ | 0603 | 1 | ERJ-3EKF1823V | R13 | – |
+| 200 kΩ | 0603 | 1 | RC0603FR-07200KL | R70 | – |
+| 330 kΩ | 0603 | 1 | ERJ-3EKF3303V | R17 | R62 removed with JP8 (#34) |
+| 360 kΩ | 0603 | 1 | RC0603FR-07360KL | R3 | – |
+| 470 kΩ | 0603 | 1 | RC0603JR-07470KL | R21 | – |
+| 820 kΩ | 0603 | 1 | RC0603JR-07820KL | R6 | – |
+| 1 MΩ | 0402 | 5 | RC0402FR-071ML | R55, R56, R59, R68, R71 | R71 from 0603 (#33) |
+| 1.62 MΩ | 0603 | 2 | RMCF0603FT1M62CT-ND | R2, R4 | – |
+
+Totals: 88 resistors (77 valued in 2024, plus the ten that had no value, plus
+#32's, plus #35's, minus R62) on 32 lines against 34, with R48 and R5/R7
+pending; R48 onto an existing line makes 31, R5/R7 merged makes 30. Lines
+removed: the 0603 330 Ω eight, R48's 330 Ω 0603 (if moved), R71's 1 MΩ 0603,
+the 120 kΩ. Lines added: 0 Ω, 5.1 kΩ, 20 mΩ, 50 mΩ. The 5.1 kΩ and 10 kΩ
+additions were always on the board; they were missing from the 2024 export
+because their value fields were empty.
+
 ## Okapi capacitors
 
 Thirteen lines on the 2024 partlist.
