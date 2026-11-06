@@ -359,7 +359,10 @@ JP1 to JP8, MS1 and the two logos. Found on the way: R10 and the 220 Ω line had
 numbers in Eagle (parts-audit corrected); manufacturer spellings vary (On Shore
 and OnShore, a trailing space on one Panasonic, N/A on three), a proposal for
 step 5. Open for Andy: MS1 on or off the BoM; whether Q4 and Q8 (2N7002W-7-F)
-change with Q7; #21 (R72 to R75 valued) closes on his word. Next: step 4 (B4).
+change with Q7. MS1 (the Feather footprint) is off the BoM (Andy: the Particle
+boards and their headers are not BoM parts; f46c629). **#21 closed 2026-11-06 on
+his word**; its firmware half, the PAC1934 currents from the shunt values, is
+Okapi_Library #13, which points back at #21 (B7's PAC1934 item). Next: step 4 (B4).
 
 ### Design (can change the board)
 
