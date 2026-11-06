@@ -119,7 +119,7 @@ A5. **Items 1 to 4 below** (SENSOR_INT, the MCU watchdog, R62, the V_SOLAR_IN
     6.0 V / 7.0 V for the P106C tough variant, and the P106 is end-of-life. The
     setting is a panel choice, erring high is the safe side (the charger throttles
     early rather than collapsing the panel), and 6.0 V would be R69 = 118 k or R22 =
-    122 k. **Closed 2026-11-05 as resolved.** Andy: R22 and R69 are "replaceable"
+    122 k. **Closed 2026-11-06 on GitHub, with the comment; #22 closed the same day.** Andy: R22 and R69 are "replaceable"
     items to be customized per panel. On the board they are 0603 on the top side at
     (136.8, 170.3) and (134.8, 170.3) mm, 2.0 mm apart in a row with R71 and R70
     (the SHDN divider), nothing taller than an 0805 within 4 mm and the mounting
