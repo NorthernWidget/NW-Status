@@ -305,9 +305,15 @@ tracks the design, so a port alone would not earn a minor bump; he chose to
 keep v0.7.0 as the KiCad board with its decided fixes regardless. This also
 settles #18 against A4: C40/C41 take the TDK 0402 12 pF number in v0.7.0 (the
 part-number slip only), and whether 12 pF suits the 18 pF crystal is v0.8.0's
-question. #18 is on v0.8.0 with a comment. Still his to answer: whether #3,
-#14, #19 and #23 (unplaced, all hardware changes) go to v0.8.0; #27 closes only
-on his word. Next: step 2.
+question. #18 is on v0.8.0 with a comment. His rule for placing an issue:
+innocent goes to v0.7.0, possibly needing debugging to v0.8.0, really big to a
+later version. By it #3, #14, #19 and #23 went to v0.8.0 (he said do it), each
+with a comment; v0.8.0 now holds 12 issues. **#27 closed 2026-11-06 on his word**
+(not planned): the TPL5111 is the B-SoM's power timer, not a logger watchdog;
+its wiring (EN and VDD on 3V3_CORE, DRVn to U10.ON, DONE = WD_DONE from MS1
+GPIOA3 and J9 ADC3, the FEATHER_EN hold-on of SNAS659B 7.5.2.1) is recorded in
+a comment on #34, with a pointer from #35. Nothing is left to his word on the
+issue sort. Next: step 2.
 
 ### Design (can change the board)
 
