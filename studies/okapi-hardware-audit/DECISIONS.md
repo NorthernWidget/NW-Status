@@ -94,7 +94,8 @@ A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     for the whole awake time (POWER_EN is up for every logging cycle). Andy's
     rule for it: pads that take an 0603 or an 0402, the BoM item 0402, so a
     user who wants more current can hot-air a 330 Ω 0603 onto the same pads;
-    documented in the README's pinout as "VREF supplies up to 2 mA". Also
+    documented in the README's pinout as "VREF supplies up to 2 mA"; filed as
+    Project-Okapi #36 (dual pads, a millimeter right of C31, silk, README). Also
     found: POWER_EN enables both aux rails at once, filed on #31 for the next
     board; C1/C18 both 0603,
     decided 2026-11-05, an X7R 16 V part for the 5 V rail; R69, R71 to 0402 confirmed). **R19 to 100 kΩ: decided** (the
@@ -210,8 +211,9 @@ B7. **Firmware, specified 2026-11-05, no board needed to write, a board to accep
     backhauls and off otherwise, measured over an hour; the same measurement
     before the fix is the diagnosis (always on, 90 s per hour, or on at backhauls).
 B8. **The v0.7.0 board edits now filed and decided:** #32 the LT3652 sense resistor,
-    #33 the package merges, #34 remove JP8/R62, #35 the TPL5010, the MPPT pair's
-    silk label and README table (#20), the BMA456 no-connect (done).
+    #33 the package merges, #34 remove JP8/R62, #35 the TPL5010, #36 R48 on dual
+    pads, the MPPT pair's silk label and README table (#20), the BMA456
+    no-connect (done).
 
 **Status of A on 2026-11-05 late: A1 to A4 decided; A5 all items decided or filed
 except #26/#31 (the next board's power path, a design conversation for a sitting
