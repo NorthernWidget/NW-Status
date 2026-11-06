@@ -376,7 +376,8 @@ cause is gone and the part choice matters much less. Q7 stays for a clean
 off-state (5V_AUX to 0 V in milliseconds; without it the rail sits near 2.5 V
 on D6 and R48, then decays on leakage, an estimate). Held for later: whether a
 Particle module drives its USB pin in sleep, and user sensors powered
-separately on the ADC inputs or VREF (Andy: hold the paths for later).
+separately on the ADC inputs or VREF (Andy: hold the paths for later). **Q4 and Q8
+also 2N7002WT1G** (Andy, 2026-11-06; one line for the three; reasoning on #7).
 
 ### Design (can change the board)
 
