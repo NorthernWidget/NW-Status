@@ -379,6 +379,23 @@ Particle module drives its USB pin in sleep, and user sensors powered
 separately on the ADC inputs or VREF (Andy: hold the paths for later). **Q4 and Q8
 also 2N7002WT1G** (Andy, 2026-11-06; one line for the three; reasoning on #7).
 
+**Step 4 (B4) done 2026-11-06 (Opus).** Okapi: C42 Samsung CL05A105KA5NQNC (0402,
+f4c919d); C18 and C1 one Murata GRM188Z71C475KE21D 0603 X7R (e75eb34, 5aaf6fd;
+C1's footprint 0805 to 0603 with rebody.py, DRC unconnected 0); XTAL1, the
+obsolete TXC 7A-8.000MAAE-T, to ECS-80-12-30-JGN-TR (47a944d; 12 pF load, the
+TXC's was 12 pF too, so #18's 18 pF premise was wrong, comment on #18, closes on
+Andy's word; -40 to +85 °C, Andy's floor); C40/C41 TDK 12 pF (1234b3e). **Margay
+(Andy: one crystal for both boards, parts lists as alike as possible):** XTAL1
+ECS-80-18-30-JGN to ECS-80-12-30-JGN (867945f) and C2/C3 18 pF Murata to the
+TDK 12 pF (797759b), KiCad board only (v3.1.0); gates unchanged (72 of 75, 4
+sheets and board identical, ERC 0, DRC 1/0/0). Reasoning: the 12 pF crystal
+loads inside the ATmega's 12 to 22 pF range and needs about 1.8 times less
+oscillator gain ((C0 + C_L)^2), margin for -40 °C; the fuses (0xF7) select
+the full-swing oscillator. Every capacitor under 1 nF on both boards is now
+the TDK 12 pF, except Okapi's C6 (68 pF, the TPS62822 feed-forward). Okapi
+capacitor lines 13 to 11 (the step-5 row's "10" assumed C42 on 0603). Stock
+to recheck before an order: GRM188Z71C475KE21D (no figure shown, 17-week lead).
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
