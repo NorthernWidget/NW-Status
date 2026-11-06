@@ -43,6 +43,17 @@ A2. **R26 to R33**: the schematic says 287R, the build ordered 232 Ω and 453 Ω
     (ILIM of the four port switches U17 to U20, the second in parallel through
     JP1 to JP4). Read the switches' datasheet for what each sets, decide the
     intended limits, then the value fields and the as-built row.
+    **Decided 2026-11-06 (Andy), from the MIC2544/48 datasheet DS20005725B** (part
+    MIC2544-1YMM, active-high enable): I_limit = 230 V / R_SET, 154 Ω < R_SET <
+    2.29 kΩ (Eq. 5-1), setpoint better than ±20 %, operating range 0.1 to 1.5 A.
+    232 Ω gives 0.99 A (the 1 A default); 453 Ω in parallel gave 153.4 Ω, 1.50 A
+    but 0.6 Ω below the 154 Ω floor. **R26 to R29 = 232 Ω; R30 to R33 = 464 Ω**
+    (E96; 232 ∥ 464 = 154.7 Ω, 1.49 A nominal, inside the range). Datasheet spread
+    at the 1.5 A setting is 1.05 to 1.95 A (current-limit factor 161 to 299 V).
+    The schematic's 287 Ω (0.80 A) was a stale value field. Not checked: whether
+    the 5 V and 3.3 V rails upstream can source 1.5 A. B1 writes the eight value
+    fields and the number RC0402FR-07464RL (Digi-Key code to confirm); the
+    Okapi README (the ports paragraph, "453 Ω in parallel") changes with it.
 A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21). Checked
     2026-11-05 against the Eagle nets and the full datasheet (DS20005850B, 56
     pages; the 26-page copy in scratch lacks Table 5-1). Channels: 1 is V_PRIME

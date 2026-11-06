@@ -73,7 +73,7 @@ lines.
 | 220 Ω | 0402 | 8 | none yet | R53, R60, R64, R76 to R80 | number to pick in B1 |
 | 232 Ω | 0402 | 4 | RC0402FR-07232RL | R26 to R29 | value field from 287R (A2) |
 | 330 Ω | 0402 | 9 | RC0402FR-07330RL | R9, R36 to R40, R42 to R44 | eight take the 0402 number; one line instead of three |
-| 453 Ω | 0402 | 4 | RC0402FR-07453RL | R30 to R33 | value field from 287R (A2) |
+| 464 Ω | 0402 | 4 | RC0402FR-07464RL | R30 to R33 | value field from 287R; 464 Ω in place of the built 453 Ω so that 232 ∥ 464 = 154.7 Ω is inside the MIC2544's 154 Ω floor (A2, 2026-11-06); Digi-Key code to confirm |
 | 1 kΩ | 0402 | 2 | RC0402FR-071KL | R12, R48 | R48 from 330 Ω 0603 (A4, 2026-11-06); its pads take 0603 or 0402 so a user can fit 330 Ω for more reference current |
 | 2 kΩ | 0402 | 1 | RC0402FR-072KL | R15 | – |
 | 5.1 kΩ | 0402 | 2 | RC0402FR-075K1L | R84, R85 | value field from the number (B1) |
