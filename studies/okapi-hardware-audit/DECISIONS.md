@@ -398,6 +398,8 @@ to recheck before an order: GRM188Z71C475KE21D (rechecked 2026-11-06: active, 1,
 on Digi-Key, $0.27 at 1, 17-week factory lead; its KE21J substitute 0). **#18 closed
 2026-11-06 on Andy's word** after a layout check: each crystal net 6.4 mm of F.Cu,
 no vias, about 0.6 pF of trace (estimate); a -40 °C start on a built board remains.
+**#35's DELAY resistor decided 2026-11-06 (Andy):** 130 kΩ as Margay's R10, about
+66 minutes "at least for now"; R20's line (RC0603FR-07130KL), 0603, user-swappable.
 
 ### Design (can change the board)
 

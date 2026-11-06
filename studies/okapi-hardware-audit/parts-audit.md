@@ -83,7 +83,7 @@ lines.
 | 91 kΩ | 0603 | 1 | ERJ-3EKF9102V | R16 | – |
 | 100 kΩ | 0402 | 7 | RC0402FR-07100KL | R18, R19, R23, R57, R58, R61, R63 | R19 from 120 kΩ (A4); the 120 kΩ line is gone |
 | 100 kΩ | 0603 | 1 | RC0603FR-07100KL | R69 | stays 0603: MPPT pair, user-swappable (#20) |
-| 130 kΩ | 0603 | 1 (+1) | RC0603FR-07130KL | R20, and the TPL5010 DELAY resistor of #35 if its interval is 66 min | #35's value is open |
+| 130 kΩ | 0603 | 2 | RC0603FR-07130KL | R20, and the TPL5010 DELAY resistor of #35 | #35's value decided 2026-11-06: 130 kΩ, 66 min, as Margay's R10 |
 | 143 kΩ | 0603 | 1 | RC0603FR-07143KL | R22 | stays 0603: MPPT pair (#20) |
 | 180 kΩ | 0402 | 4 | RC0402FR-07180KL | R1, R8, R65, R66 | R1, R8 from 0603 (#33) |
 | 180 kΩ | 0603 | 2 | ERJ-3EKF1803V | R5, R7 | **pending**: regulator feedback legs; #22 kept the values, so the 0402 merge is a footprint change only |
