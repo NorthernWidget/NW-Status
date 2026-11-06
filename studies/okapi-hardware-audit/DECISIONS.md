@@ -336,6 +336,31 @@ bench console's port to the new MCP23018 library was started, unchecked), kept
 upgrades after the v0.7.0 baseline. Every open issue now has a milestone. No board images yet. Next: step 3 (B1, Opus), with the R26 to R33 fields
 decided (A2) and the Digi-Key code for the 464 Ω to confirm.
 
+**Progress, 2026-11-06 (Opus): step 3 (B1) done.** Gates before the first edit
+as recorded (nets 208 of 209, 17 sheets and the board identical, ERC 8, DRC
+5 / 0 / parity 0). NW-Tests gained `kicad/eagle_fields.py` (Eagle attributes,
+resolved as bom.ulp does, into the symbols; 49e307e), `kicad/set_fields.py`
+(fields by reference; c8b0ac7), and a fix to `link_paths.py --fields`, which
+added footprint fields but never updated one (3a89253). Fable's note named
+`rebody.py` for carrying fields to the footprints; `link_paths.py` is the tool
+that does it. Project-Okapi: 667 fields onto the symbols (5442738; MF, MPN,
+DIGIKEY, DISP, Andy's choice; D8's MPN BAT54CLT1G read from Eagle's misspelled
+MFP, checked against the Digi-Key code and the pinout) and onto the footprints
+(dc76d04, parity 199 to 0); then one commit each: R26 to R29 232, R30 to R33
+464 (311-464LRCT-ND, read from Digi-Key), the eight 330 Ω 0402 numbers (R37
+and R39 also had the 0603 Digi-Key code), R19 100k, R54/R84 to R87 value
+fields, R45/R52's 0603 Digi-Key code on the 10 k line, R51 0 Ω, R72/R73/R75
+20 mΩ, R74 50 mΩ, R48 1k (its pads stay 0603 until #36), Q7 2N7002WT1G (#7;
+Q7 is 5V_AUX's output-drain MOSFET, drain on 5V_AUX and gate from U13, which
+99ad985's message calls "the 5V_AUX switch"), C11/C13 "Taiyo Yuden", and the
+README's port paragraph (464 Ω). Every gate unchanged after each. BoM export:
+251 rows, MPN on 240, one Digi-Key code per part number; the 11 without are
+JP1 to JP8, MS1 and the two logos. Found on the way: R10 and the 220 Ω line had
+numbers in Eagle (parts-audit corrected); manufacturer spellings vary (On Shore
+and OnShore, a trailing space on one Panasonic, N/A on three), a proposal for
+step 5. Open for Andy: MS1 on or off the BoM; whether Q4 and Q8 (2N7002W-7-F)
+change with Q7; #21 (R72 to R75 valued) closes on his word. Next: step 4 (B4).
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
