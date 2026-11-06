@@ -288,13 +288,17 @@ Sonnet):**
 Steps 1, 2 and 5 are Sonnet's; a Sonnet session that reaches step 3 stops and
 says so rather than starting on the KiCad files.
 
-**Progress, 2026-11-06 (Sonnet):** step 1 is half done. Done: the #32 part-number
-comment (0.5 W ERJ-6BWFR050V) and the README's "Reference voltage on the sensor
-port" section (Project-Okapi 4dee0fc; the pinout has no J2 entry, as it
-describes the built v0.4 board). Waiting on Andy: the proposed sort in
-`issue-triage.md` (nothing moved), including a v1.0.0 milestone to create and
-one conflict to decide, #18 (crystal load capacitors) against A4's 12 pF for
-C40/C41. Step 2 starts after he answers.
+**Progress, 2026-11-06 (Sonnet):** step 1 (B3) done. The #32 part-number
+comment and the README's "Reference voltage on the sensor port" section
+(Project-Okapi 4dee0fc; the pinout has no J2 entry, as it describes the built
+v0.4 board) are in. Andy approved the sort in `issue-triage.md` and said he has
+nothing yet for a v1.0.0 milestone, so none was created: #3, #13, #14, #19 and
+#23 stay unplaced, with #10, #12 and #27. Applied on GitHub: #7, #15, #17, #18,
+#21, #24, #28, #29, #30 to v0.7.0 (15 issues there now); #5, #25, #31 to v0.8.0
+(7 there); #10 off v0.6.0, which is now empty. Comments posted on #7, #13, #15,
+#17, #21, #28, #29. Still open and his to answer: #18 (crystal load
+capacitors, against A4's 12 pF for C40/C41, before B4); #27 closes only on his
+word. Next: step 2.
 
 ### Design (can change the board)
 
