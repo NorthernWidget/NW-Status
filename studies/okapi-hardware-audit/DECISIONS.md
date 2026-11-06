@@ -400,6 +400,11 @@ on Digi-Key, $0.27 at 1, 17-week factory lead; its KE21J substitute 0). **#18 cl
 no vias, about 0.6 pF of trace (estimate); a -40 °C start on a built board remains.
 **#35's DELAY resistor decided 2026-11-06 (Andy):** 130 kΩ as Margay's R10, about
 66 minutes "at least for now"; R20's line (RC0603FR-07130KL), 0603, user-swappable.
+**R5, R7 to 0402 (Andy, 2026-11-06, no downside found):** 9fc83f9, zones refilled
+around R7 and C1. **R6 5 % to 1 %** (Andy: higher precision for 3V3_AUX): d7504ee,
+the divider's worst-case share of the error 4.92 % to 1.64 %. R21 (470 kΩ, 5 %) is a
+pull-up on U7's STAT and stays. Andy's order: finish Okapi, then the Okapi/Margay
+merges.
 
 ### Design (can change the board)
 
