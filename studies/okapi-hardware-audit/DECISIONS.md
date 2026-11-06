@@ -288,6 +288,14 @@ Sonnet):**
 Steps 1, 2 and 5 are Sonnet's; a Sonnet session that reaches step 3 stops and
 says so rather than starting on the KiCad files.
 
+**Progress, 2026-11-06 (Sonnet):** step 1 is half done. Done: the #32 part-number
+comment (0.5 W ERJ-6BWFR050V) and the README's "Reference voltage on the sensor
+port" section (Project-Okapi 4dee0fc; the pinout has no J2 entry, as it
+describes the built v0.4 board). Waiting on Andy: the proposed sort in
+`issue-triage.md` (nothing moved), including a v1.0.0 milestone to create and
+one conflict to decide, #18 (crystal load capacitors) against A4's 12 pF for
+C40/C41. Step 2 starts after he answers.
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
