@@ -1,5 +1,12 @@
 # Project-Okapi open issues: a proposed sort onto milestones (B3)
 
+> **Superseded 2026-11-06.** Andy reviewed this sort and changed it: #18 and the four
+> issues proposed for v1.0.0 (#3, #14, #19, #23) went to v0.8.0, #12 went to v0.8.0,
+> #13 and #10 went to a new v1.0.0 milestone, and #27 was closed. Final placement:
+> v0.7.0 14 issues, v0.8.0 13, v1.0.0 2. The record is in `DECISIONS.md`
+> (the B list, step 1). The table below is the original proposal, kept as written.
+
+
 2026-11-06, Sonnet, from `issues.md` (the 2026-10-30 audit against the Eagle
 files) and DECISIONS "Okapi: The plan". A proposal: nothing on GitHub has been
 moved, commented or closed from this list. Milestones today: v0.6.0 (#1, the
