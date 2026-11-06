@@ -227,6 +227,49 @@ milestone v0.8.0 (#3, "the next power section") created; #31 stays open as the
 parent. #26 moved to v0.8.0 with the reset options written in (cold exists, warm wants
 a second expander, soft is firmware). A5 is complete. B8 gains #37.**
 
+### Notes for the model doing the B list (Fable, 2026-11-06)
+
+1. **Read before acting:** this file's "Okapi: The plan" and its status lines;
+   the planned resistor table at the end of `parts-audit.md`; the `nw-kicad`
+   skill for the gate numbers (Okapi: 17 sheets and the board round-trip
+   identical, nets 208 of 209, ERC 8, DRC 5/0/0; tolerated unconnected J10
+   A8/B8 and U43 pin 5). Run the gates before the first edit to see them pass,
+   and after every commit. A number that moves is a regression until shown
+   otherwise; do not explain it away.
+2. **B1 is a tool, then a run.** Eagle's device technologies live in
+   `Hardware/Okapi.sch` as `<technology>` attributes (MF, MPN, DIGIKEY) under
+   each deviceset's device; the part's `technology=""` picks which. Use the
+   field names Margay's KiCad sheets already use for manufacturer, part number
+   and Digi-Key (grep them first; do not invent new names). Write the symbol
+   properties, then `rebody.py` so the footprints carry them. Tests: parity 0,
+   round-trip identical, and the BoM export shows a number on every line Eagle
+   has one for (222 of 376 parts). The value edits ride in the same pass, one
+   commit each, from the planned table: R26 to R33, the eight 330 Ω, R19, R54,
+   R84 to R87, R51, R72 to R75, R48 (value only; its pads are #36), C40 to C42.
+3. **Text editing traps that have each cost a session:** anchors change after
+   `kicad-cli pcb upgrade` or `--save-board` (find segments by endpoints, not
+   by uuid or line); the file's own decimals (`110.89175`, not DRC's rounded
+   `110.8918`); the cwd resets between Bash calls, so every path is absolute;
+   never `git add -A` (`Okapi-backups/` is untracked on purpose); a no-connect
+   goes on both the sheet and the pad net; the Eagle originals are never
+   edited.
+4. **Two small corrections on the way:** #32 names the 0.25 W ERJ-L06KF50MV
+   and wants ERJ-6BWFR050V (0.5 W); the README's J2 pinout entry needs "VREF
+   supplies up to 2 mA; R48 sets it" (#36).
+5. **Questions only Andy answers, so ask, do not fill:** R5/R7 to 0402 (the
+   last pending row); which module v0.7.0 hosts (decides #38's milestone); the
+   TPL5010 interval (#35's DELAY value); the firmware mode for energy
+   (snapshot or accumulate, B7). Any threshold or default you pick is a
+   proposal stated in one sentence.
+6. **Gates on outward acts:** commits are yours, granular, with the
+   Co-Authored-By and Claude-Session lines; pushes, closes, tags, releases,
+   milestone deletions need Andy's word in the current message and the
+   `CLAUDE_ALLOW=` prefix. Issue comments are allowed and are written in
+   Andy's voice (American spelling, spaced en-dashes, no em-dashes, the
+   Claude Code line and session URL at the end).
+7. **Reports:** short answers by default; the closing `**Summary.**` paragraph
+   only for substantial work, one paragraph, no list after the rule.
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
