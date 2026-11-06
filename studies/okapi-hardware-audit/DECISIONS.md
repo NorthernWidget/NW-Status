@@ -394,7 +394,10 @@ oscillator gain ((C0 + C_L)^2), margin for -40 °C; the fuses (0xF7) select
 the full-swing oscillator. Every capacitor under 1 nF on both boards is now
 the TDK 12 pF, except Okapi's C6 (68 pF, the TPS62822 feed-forward). Okapi
 capacitor lines 13 to 11 (the step-5 row's "10" assumed C42 on 0603). Stock
-to recheck before an order: GRM188Z71C475KE21D (no figure shown, 17-week lead).
+to recheck before an order: GRM188Z71C475KE21D (rechecked 2026-11-06: active, 1,729
+on Digi-Key, $0.27 at 1, 17-week factory lead; its KE21J substitute 0). **#18 closed
+2026-11-06 on Andy's word** after a layout check: each crystal net 6.4 mm of F.Cu,
+no vias, about 0.6 pF of trace (estimate); a -40 °C start on a built board remains.
 
 ### Design (can change the board)
 
