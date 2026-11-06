@@ -224,7 +224,8 @@ closed on GitHub. #31 split, on Andy's word, into #37 (PAC1934 hardware default,
 v0.7.0), #38 (B-SoM 3.3 V regulator, v0.8.0 unless v0.7.0 hosts a B-SoM), #39
 (core path buck-boost, v0.8.0) and #40 (separate 5 V boost enable, v0.8.0);
 milestone v0.8.0 (#3, "the next power section") created; #31 stays open as the
-parent. #26 remains the one A5 item not yet placed. B8 gains #37.**
+parent. #26 moved to v0.8.0 with the reset options written in (cold exists, warm wants
+a second expander, soft is firmware). A5 is complete. B8 gains #37.**
 
 ### Design (can change the board)
 
