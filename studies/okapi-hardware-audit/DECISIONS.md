@@ -84,8 +84,19 @@ A3. **R72 to R75 and R51** (PAC1934 shunts and address select, #21). Checked
     itemization (about fifteen parts from their datasheets) stays with #31.
 A4. **Consolidation decisions** from `parts-audit.md`. Decided 2026-11-05:
     package merges filed as Project-Okapi #33 (R69, R71 to 0402 now; R1, R8 now and
-    R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48 stays
-    0603 or becomes 1 kΩ 0402 on the existing line, Andy to pick; C1/C18 both 0603,
+    R5, R7 with #22; R49/R50 keep their 0.1 %: divider legs behind JP6/JP7; R48: **decided
+    2026-11-06, 1 kΩ 0402 (RC0402FR-071KL, R12's line)**, after reading the LM4040
+    (D6, 2.5 V shunt reference, 60 µA minimum, 15 mA maximum, 0.3 Ω dynamic
+    impedance): the pin's only loads are the DAC's buffered reference input and
+    whatever a user wires to J2's VREF terminal, and with load cells ruled out
+    (they arrive on their own bridge ADC) the heaviest plausible load is a
+    potentiometer, so the pin promises 2 mA and R48 drops from 7.6 mA to 2.5 mA
+    for the whole awake time (POWER_EN is up for every logging cycle). Andy's
+    rule for it: pads that take an 0603 or an 0402, the BoM item 0402, so a
+    user who wants more current can hot-air a 330 Ω 0603 onto the same pads;
+    documented in the README's pinout as "VREF supplies up to 2 mA". Also
+    found: POWER_EN enables both aux rails at once, filed on #31 for the next
+    board; C1/C18 both 0603,
     decided 2026-11-05, an X7R 16 V part for the 5 V rail; R69, R71 to 0402 confirmed). **R19 to 100 kΩ: decided** (the
     pull-up on Q3's gate, no specification binds it; checked). **C40, C41 to the TDK
     0402 12 pF of C23/C24 and C42 to an 0402 1 µF: decided** (0603 numbers on 0402

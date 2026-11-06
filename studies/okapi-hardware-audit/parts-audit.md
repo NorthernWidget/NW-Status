@@ -73,9 +73,8 @@ lines.
 | 220 Ω | 0402 | 8 | none yet | R53, R60, R64, R76 to R80 | number to pick in B1 |
 | 232 Ω | 0402 | 4 | RC0402FR-07232RL | R26 to R29 | value field from 287R (A2) |
 | 330 Ω | 0402 | 9 | RC0402FR-07330RL | R9, R36 to R40, R42 to R44 | eight take the 0402 number; one line instead of three |
-| 330 Ω | 0603 | 1 | RC0603FR-07330RL | R48 | **pending**: stays, or 330 Ω 0402 on the line above, or 1 kΩ / 2 kΩ / 10 kΩ 0402 on an existing line (A4) |
 | 453 Ω | 0402 | 4 | RC0402FR-07453RL | R30 to R33 | value field from 287R (A2) |
-| 1 kΩ | 0402 | 1 | RC0402FR-071KL | R12 | – |
+| 1 kΩ | 0402 | 2 | RC0402FR-071KL | R12, R48 | R48 from 330 Ω 0603 (A4, 2026-11-06); its pads take 0603 or 0402 so a user can fit 330 Ω for more reference current |
 | 2 kΩ | 0402 | 1 | RC0402FR-072KL | R15 | – |
 | 5.1 kΩ | 0402 | 2 | RC0402FR-075K1L | R84, R85 | value field from the number (B1) |
 | 5.6 kΩ | 0402 | 3 | RC0402FR-075K6L | R81 to R83 | – |
@@ -98,9 +97,9 @@ lines.
 | 1.62 MΩ | 0603 | 2 | RMCF0603FT1M62CT-ND | R2, R4 | – |
 
 Totals: 88 resistors (77 valued in 2024, plus the ten that had no value, plus
-#32's, plus #35's, minus R62) on 32 lines against 34, with R48 and R5/R7
-pending; R48 onto an existing line makes 31, R5/R7 merged makes 30. Lines
-removed: the 0603 330 Ω eight, R48's 330 Ω 0603 (if moved), R71's 1 MΩ 0603,
+#32's, plus #35's, minus R62) on 31 lines against 34, with R5/R7
+pending; merged to 0402 they make 30. Lines
+removed: the 0603 330 Ω eight, R48's 330 Ω 0603, R71's 1 MΩ 0603,
 the 120 kΩ. Lines added: 0 Ω, 5.1 kΩ, 20 mΩ, 50 mΩ. The 5.1 kΩ and 10 kΩ
 additions were always on the board; they were missing from the 2024 export
 because their value fields were empty.
