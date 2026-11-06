@@ -270,6 +270,24 @@ a second expander, soft is firmware). A5 is complete. B8 gains #37.**
 7. **Reports:** short answers by default; the closing `**Summary.**` paragraph
    only for substantial work, one paragraph, no list after the rule.
 
+**The order of the B list, and the model for each (Andy, 2026-11-06: start with
+Sonnet):**
+
+| Step | Item | Model | Why this order |
+|---|---|---|---|
+| 1 | **B3** milestones and issue sort: the open issues onto v0.7.0, v0.8.0 or none, from a list Andy approves; the #32 part-number comment (ERJ-6BWFR050V, 0.5 W); the README's VREF line (#36) | Sonnet | GitHub and prose, no KiCad files; it fixes what the later steps are measured against |
+| 2 | **B2** the pre-build checklist for the first v0.7.0 run (`docs/v0.7-pre-build-checks.md`, Margay's `docs/v3.0-as-built-checks.md` as the model): R26 to R33, the 330 Ω size, C42, R19, R48, R51, R72 to R75, the MPPT pair | Sonnet | Written from the planned table; nothing to run |
+| 3 | **B1** the BoM port: the tool from Eagle's technologies to the KiCad fields, `rebody.py`, then the value edits from the planned table, one commit each | Opus | KiCad text, the gates after every commit |
+| 4 | **B4** the capacitor edits in the same pass: C40/C41 to the TDK 0402 12 pF of C23/C24, C42 to an 0402 1 µF part, C1 to an 0603 X7R 4.7 µF beside C18 (Andy, 2026-11-05) | Opus | Same files and gates as B1 |
+| 5 | **The unique-parts audit, repeated from the export:** regenerate the resistor and capacitor line counts from the KiCad BoM export for both boards and compare with the planned tables (Okapi 31 resistor lines with R5/R7 pending, 10 capacitor lines; Margay 5 and 5). Any further merge is a proposal to Andy, never applied unasked; user-swappable parts (MPPT pair, watchdog period, R48) stay 0603 or larger | Sonnet | A count against a number already written down |
+| 6 | **B8** the filed board edits, least copper first: #33 footprints (R71, R1, R8 to 0402; R5/R7 if Andy says), #37 the SLOW pull-up, #36 R48's dual pads and the move clear of C31, #34 JP8 and R62 out, #32 the charger sense resistor between L4 and V_LI, #35 the TPL5010 (symbol and footprint from Margay's in nw-cold-silicon) | Opus | Copper and footprints; DRC and the round-trip after each |
+| 7 | **B5** ERC/DRC residue (items 5 to 8) as Andy rules on each, the stackup block, page cosmetics last | Opus | Judgment on what KiCad reports |
+| 8 | **B7** firmware: the FEATHER_EN pulse and MCUSR in Okapi_Library, the Boron sketch's watchdog arming and DONE, the PAC1934 current constants from the shunts, the BMA456 driver (#12) | Opus | Library code with the harness and NW-Sim as the gates |
+| 9 | **B6** release mechanics for v0.7.0 when Andy authorizes: the review, the notes for approval, the tag, the draft | Sonnet | Mechanics, each step gated |
+
+Steps 1, 2 and 5 are Sonnet's; a Sonnet session that reaches step 3 stops and
+says so rather than starting on the KiCad files.
+
 ### Design (can change the board)
 
 1. **SENSOR_INT on the BMA456's INT pin (U43, Sensors page).** The label is alone
