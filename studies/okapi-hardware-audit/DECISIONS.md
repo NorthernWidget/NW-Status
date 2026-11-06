@@ -212,12 +212,19 @@ B7. **Firmware, specified 2026-11-05, no board needed to write, a board to accep
     before the fix is the diagnosis (always on, 90 s per hour, or on at backhauls).
 B8. **The v0.7.0 board edits now filed and decided:** #32 the LT3652 sense resistor,
     #33 the package merges, #34 remove JP8/R62, #35 the TPL5010, #36 R48 on dual
-    pads, the MPPT pair's silk label and README table (#20), the BMA456
+    pads, #37 the PAC1934's hardware default, the MPPT pair's silk label and README table (#20), the BMA456
     no-connect (done).
 
 **Status of A on 2026-11-05 late: A1 to A4 decided; A5 all items decided or filed
 except #26/#31 (the next board's power path, a design conversation for a sitting
 of its own); A6 nothing arose. The cheaper model starts at B1.**
+
+**2026-11-06: A3 and A4 closed (the PAC1934 shunts, R48 as #36); #20 and #22
+closed on GitHub. #31 split, on Andy's word, into #37 (PAC1934 hardware default,
+v0.7.0), #38 (B-SoM 3.3 V regulator, v0.8.0 unless v0.7.0 hosts a B-SoM), #39
+(core path buck-boost, v0.8.0) and #40 (separate 5 V boost enable, v0.8.0);
+milestone v0.8.0 (#3, "the next power section") created; #31 stays open as the
+parent. #26 remains the one A5 item not yet placed. B8 gains #37.**
 
 ### Design (can change the board)
 
