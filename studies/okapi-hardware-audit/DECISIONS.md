@@ -296,9 +296,18 @@ nothing yet for a v1.0.0 milestone, so none was created: #3, #13, #14, #19 and
 #23 stay unplaced, with #10, #12 and #27. Applied on GitHub: #7, #15, #17, #18,
 #21, #24, #28, #29, #30 to v0.7.0 (15 issues there now); #5, #25, #31 to v0.8.0
 (7 there); #10 off v0.6.0, which is now empty. Comments posted on #7, #13, #15,
-#17, #21, #28, #29. Still open and his to answer: #18 (crystal load
-capacitors, against A4's 12 pF for C40/C41, before B4); #27 closes only on his
-word. Next: step 2.
+#17, #21, #28, #29. **Andy, 2026-11-06, on reviewing the sort:** #18 moves to
+v0.8.0. v0.7.0 keeps everything it holds (14 issues now), and v0.8.0 is the set
+of hardware upgrades that come after it; the two stay separate milestones
+because v0.7.0 must remain a complete board he can build as a debug baseline
+while v0.8.0 is developed (he is not sure he will build it). A version number
+tracks the design, so a port alone would not earn a minor bump; he chose to
+keep v0.7.0 as the KiCad board with its decided fixes regardless. This also
+settles #18 against A4: C40/C41 take the TDK 0402 12 pF number in v0.7.0 (the
+part-number slip only), and whether 12 pF suits the 18 pF crystal is v0.8.0's
+question. #18 is on v0.8.0 with a comment. Still his to answer: whether #3,
+#14, #19 and #23 (unplaced, all hardware changes) go to v0.8.0; #27 closes only
+on his word. Next: step 2.
 
 ### Design (can change the board)
 
