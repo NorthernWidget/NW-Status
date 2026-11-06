@@ -330,11 +330,10 @@ resistance and powered checks, and a blank results table. It also covers C40/C41
 and Q7 (#7), which the list did not name, because they carry the same slips.
 **v1.0.0 milestone created 2026-11-06** (Andy): #13 and #10 are on it
 ("anything extraneous leaves the repository before a v1"); #12 stays open
-with no milestone, a status comment (serial numbers are NW-Provision's now; the
+(placed on v0.8.0 the same day), a status comment (serial numbers are NW-Provision's now; the
 bench console's port to the new MCP23018 library was started, unchecked), kept
 "until we are truly finished". v0.8.0's description now reads as the hardware
-upgrades after the v0.7.0 baseline. No issue is left without a milestone but
-#12. No board images yet. Next: step 3 (B1, Opus), with the R26 to R33 fields
+upgrades after the v0.7.0 baseline. Every open issue now has a milestone. No board images yet. Next: step 3 (B1, Opus), with the R26 to R33 fields
 decided (A2) and the Digi-Key code for the 464 Ω to confirm.
 
 ### Design (can change the board)
