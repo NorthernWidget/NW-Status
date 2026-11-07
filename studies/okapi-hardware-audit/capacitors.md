@@ -46,6 +46,32 @@ published with data. Murata X7S 1210s hold more at 32 V (4.2 to 4.8 µF) but 59 
 were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yuden's
 (a terms dialog not accepted without Andy's OK).
 
+## Findings that change the design (2026-11-08, verified against the netlist and the datasheet text)
+
+1. **C33, 0.1 µF on the DAC output (U30 MCP4726 VOUT, DAC_OUT to J1 pin 7).** The
+   datasheet: "The VOUT pin can drive up to 100 pF of capacitive load"; its electrical
+   specifications assume CL = 100 pF; larger loads want a series RISO, sized on the
+   bench (DS22272C §4.4.6). Its own Fig 8-2 draws an optional 0.1 µF there, so the
+   document disagrees with itself. As built: 1000 times the stated load, no RISO.
+2. **U37 (TLV3691 comparator) has no supply capacitor.** Its VCC net (Net-(D8-C), fed
+   through D8) holds no capacitor at all; the datasheet asks 0.1 µF at VCC (SBOS694A §10.1).
+3. **R9, 330 Ω, exceeds the BQ298000's R_VDD maximum of 300 Ω** (SLUSCS3M Table 8-1:
+   R_VDD max 300 Ω; C_VDD typ 0.1 µF, max 1 µF). C11 is 1 µF, at the maximum.
+4. **BQ298000 CTR (configured "CTR" in this variant): high opens the FETs or shuts the
+   part down for storage (§7.1).** R12 (1 kΩ) and C12 (0.1 µF) hold it low; it is driven
+   through R14 (100 Ω) from expander GPA1, an open-drain output, so it can never be
+   driven high, and Okapi_Library never uses it. Harmless as built; the intended
+   firmware disconnect cannot work. Andy's question: what was CTR meant to do.
+5. **U21 (TPS22917) VIN has C16 0.22 µF**; the datasheet calls 1 µF "sufficient in most
+   situations" (SLVSDW8B §11), a recommendation.
+6. **Supply pins with no capacitor within 3 mm** (3 mm is a threshold of mine, a
+   proposal): sources/2026-11-08-supply-pins-nearest-capacitor.txt. Datasheets that ask
+   for one: the AUP/AHC logic gates (0.1 µF), TPL5111 (0.1 µF X7R), DS3231M (0.1 to 1.0
+   µF), the MIC2544s at IN (0.1 to 1 µF), the TPS22917s at VIN (1 µF), the TXS0102/0104
+   and TCA9406 B sides (0.1 µF), ADS1115 ("at least 0.1 µF", C36 at 3.3 mm), the ATmega
+   (AN2519). Datasheets silent: MCP23018, PCA9634, MB85RC512T, SN74AUP3G34,
+   SN74LVC1G3157, MIC94094. The SD card specification was not obtained (terms page).
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
