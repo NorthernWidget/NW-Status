@@ -72,6 +72,24 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
    (AN2519). Datasheets silent: MCP23018, PCA9634, MB85RC512T, SN74AUP3G34,
    SN74LVC1G3157, MIC94094. The SD card specification was not obtained (terms page).
 
+## Decided 2026-11-08 (Andy)
+
+- C33 (DAC output) 68 pF, Würth 885012005060 (Project-Okapi 33d3041).
+- R9 (BQ298000 VDD) 220 Ω, TE CRGCQ0402F220R (cff1189).
+- C15, C16 1 µF, Samsung CL05A105KA5NQNC; the 0.22 µF line retired (73477d8).
+- **C10 (solar input): two TDK CNA6P1X7R1H106K250AE in parallel** (10 µF 50 V X7R
+  1210, AEC-Q200; 445-180367-1-ND), the second with a new designator; a copper change
+  for B8. Bounds: rated 50 V for the 32 V input; C_eff(V_IN) >= 84/V_IN µF (LT3652
+  rev D: C_IN(BULK) = I_CHG (V_BAT/V_IN)/ΔV_IN, 2 A, 4.2 V, 0.1 V), so 12.8 µF at the
+  P106's 6.56 V operating point, holding at +85 °C and -10 % tolerance (two parts: 15.8
+  µF; one part: 9.45 µF at 25 °C); about 1 A RMS ripple shared. No datasheet upper
+  bound. Before placing: check Linear AN88 (ceramic-only inputs ringing at plug-in on
+  long leads toward 2 x V_panel against the LT3652's 40 V absolute maximum), which may
+  add a damped bulk capacitor.
+- For a later exchange (Andy): C3, C4, C14 effective margin at 4.2 to 5 V, and C17
+  (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF ceramic capacitor
+  improves the immunity of the device to short-circuit transients").
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
