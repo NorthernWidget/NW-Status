@@ -86,6 +86,9 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
   bound. Before placing: check Linear AN88 (ceramic-only inputs ringing at plug-in on
   long leads toward 2 x V_panel against the LT3652's 40 V absolute maximum), which may
   add a damped bulk capacitor.
+- **Missing decouplers on v0.8.0 (Andy): Project-Okapi #41**, with the table (28 pins
+  whose datasheets ask for a capacitor, 7 where they are silent, 4 near the line). U37's
+  capacitor is in it. The ATmega's VCC pins stay with #17 on v0.7.0.
 - For a later exchange (Andy): C3, C4, C14 effective margin at 4.2 to 5 V, and C17
   (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF ceramic capacitor
   improves the immunity of the device to short-circuit transients").
