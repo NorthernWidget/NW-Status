@@ -182,9 +182,11 @@ Decided 2026-11-08 (Andy): **R70 and R71 lands at least 0603** whatever resistor
 0603/0402 pads to join the 1 MΩ 0402 line; R70 stays an 0603 part (recorded on #33). The
 logger core (3V3_CORE) is typically 10 mA or less awake (Andy), so one C43 ceramic suffices
 (worst case about 9 mA through 0.15 V of droop with the backup at 3.6 V, 17 mA through 0.3 V).
-Proposed, awaiting Andy: C10's 50 V upgrade to v0.8.0 with a README panel-voltage limit
-(below C10's 16 V) for v0.7.0; #43 to v0.8.0, retitled to the remaining land and symbol;
-R69 on dual pads with an 0402 100 kΩ.
+Decided 2026-11-08 (Andy): **C10's 50 V upgrade is #44 on v0.8.0**; the README now limits the
+panel to 4.95 to 16 V open-circuit on v0.7.0 (Project-Okapi 30adefc). **#43 moved to v0.8.0**
+for the ceramic land and plain symbol (v0.7.0 carries the stocked Murata part). **R69 on dual
+0603/0402 pads with an 0402 100 kΩ** (on #33). **#45 (enhancement, v0.8.0): a second C43** if
+the first board shows thin hold-up margin.
 
 ## Positions
 
