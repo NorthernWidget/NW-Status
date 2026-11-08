@@ -165,6 +165,19 @@ C1206_TANT pads** (Project-Okapi d630f34; #43 updated). Left for the copper work
 land and a non-polarized symbol. To measure on the first board: backup-pack sleep current, and
 the core's awake current (a second part only if the core exceeds about 10 to 20 mA awake).
 
+## Copper plan (2026-11-08)
+
+Check of every R and C: the part number's size against its footprint. One mismatch, R48
+(0402 on 0603 pads), which is Andy's intended user-adjustable part; #36's dual 0603/0402
+land completes it. C43 is the one real inconsistency (a ceramic on a tantalum land and
+symbol). Steps, least copper first, each one commit with a render shown first: (1) R1, R8 to
+0402 (#33); (2) C43 ceramic 1206 land and a plain capacitor symbol; (3) R48 dual pads (#36,
+footprint drawn in nw-cold-silicon first); (4) JP8, R62 out (#34); (5) #37's SLOW pull-up;
+(6) C10 as two 50 V 1210s (milestone to confirm; AN88 check first); (7) #32's sense
+resistor; (8) #35's TPL5010; (9) #17's three IC1 decouplers: **a top-side reroute (Andy),
+not yet: placement around IC1 to be thought through first**. Open: R71 staying 0603; C10's
+milestone; AREF.
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
