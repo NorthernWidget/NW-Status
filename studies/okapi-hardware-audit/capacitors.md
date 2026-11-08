@@ -177,6 +177,14 @@ footprint drawn in nw-cold-silicon first); (4) JP8, R62 out (#34); (5) #37's SLO
 resistor; (8) #35's TPL5010; (9) #17's three IC1 decouplers: **a top-side reroute (Andy),
 not yet: placement around IC1 to be thought through first**. Open: R71 staying 0603; C10's
 milestone; AREF.
+Decided 2026-11-08 (Andy): **R70 and R71 lands at least 0603** whatever resistor is fitted
+(they set the charger's start voltage, 7.2 V, per panel); R71 can take an 0402 1 MΩ on dual
+0603/0402 pads to join the 1 MΩ 0402 line; R70 stays an 0603 part (recorded on #33). The
+logger core (3V3_CORE) is typically 10 mA or less awake (Andy), so one C43 ceramic suffices
+(worst case about 9 mA through 0.15 V of droop with the backup at 3.6 V, 17 mA through 0.3 V).
+Proposed, awaiting Andy: C10's 50 V upgrade to v0.8.0 with a README panel-voltage limit
+(below C10's 16 V) for v0.7.0; #43 to v0.8.0, retitled to the remaining land and symbol;
+R69 on dual pads with an 0402 100 kΩ.
 
 ## Positions
 
