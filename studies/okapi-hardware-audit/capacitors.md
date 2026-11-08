@@ -103,6 +103,31 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
 - Still pending: C17 (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF
   ceramic capacitor improves the immunity of the device to short-circuit transients").
 
+## C43 (V_CORE hold-up): leakage and a ceramic alternative (2026-11-08)
+
+Leakage, rated maximum at 25 °C after 5 min at rated voltage: the old Vishay TL8A0107M010
+(MICROTAN, MnO2) 100 µA (Vishay 40156, Standard Ratings); KEMET T520A107M006ATE070 63 µA,
+T520B107M010ATE070 100 µA (KEMET spec sheets). Vishay's typical leakage-factor curve (40156
+p4, read off the plot) at +25 °C: about 0.12 at 50 % of rated voltage, 0.3 at 67 %, 0.5 at
+79 %, 0.65 at 86 %; about 3 times higher at +55 °C. Upper-bound estimates on V_CORE (5.0 V):
+old part and T520B about 12 µA, T520A 32 to 41 µA; README's backup sleep figure is 4 µA.
+
+Hold-up need, from TPS2105 Figure 11 (IN2 to IN1, read off the plot): 0.4 V droop at about
+6 mA with 10 µF and about 30 mA with 47 µF, so a gap of about 0.65 ms;
+C_eff >= I x 0.65 ms / ΔV. The TPS797 downstream needs about 3.45 V, so with the backup pack
+low (3.6 V) the droop allowed is about 0.15 V: 87 µF effective at 20 mA, 217 µF at 50 mA;
+at 0.3 V, 43 and 108 µF.
+
+Ceramic 1210 candidates, 100 µF 10 V X5R, manufacturer data read in Chrome (2026-11-08):
+- TDK C3225X5R1A107M250AC (Production): 100, 95.5, 81.4, 62.7 (3.2 V), 53.1 (4 V),
+  43.7 (5 V), 34.8 µF (6.3 V); temperature at 0 V: 86.8 % at -55 °C, 87.5 % at +85 °C.
+  Digi-Key: 0 in stock, 500 expected 2027-03-04.
+- Murata GRM32ER61A107ME20L: 59.9 µF (3.6 V), 55.4 (4 V), 45.6 (5 V), 42.3 (5.4 V)
+  (25 °C, 0.5 Vrms, Murata's characteristic data); temperature at 0 V: -2.0 % at -40 °C,
+  -8.7 % at +85 °C. Digi-Key 490-9969-1-ND: 0 in stock, 1,000 expected 2026-11-25,
+  17-week lead, $0.82.
+Leakage: insulation resistance, nanoamps.
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
