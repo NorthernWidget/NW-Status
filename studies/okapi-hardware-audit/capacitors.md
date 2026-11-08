@@ -97,9 +97,8 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
   +105 °C, 20,065 stocked 2026-11-08).
 - **C43 (V_CORE, Vishay TL8A0107M010D) is obsolete** (Digi-Key, 2026-11-08; 7 Ω
   ESR): needs a current part before a v0.7.0 order; open for Andy.
-- Done in that exchange, no longer pending: C3, C4, C14 effective margin at 4.2 to 5 V, and C17
-  (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF ceramic capacitor
-  improves the immunity of the device to short-circuit transients").
+- Still pending: C17 (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF
+  ceramic capacitor improves the immunity of the device to short-circuit transients").
 
 ## Positions
 
