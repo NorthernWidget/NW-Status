@@ -133,6 +133,21 @@ if the first board shows the core above about 20 mA awake), recorded on #43, who
 now says so. The 1210 footprint is copper work, with the other board edits. #42 keeps a
 non-ceramic part (the LT3652 asks for one) and gained a leakage note.
 
+**Smaller and better-stocked alternatives (Andy: "not necessarily that part"), read in
+Chrome 2026-11-08.** Effective µF at 25 °C, 3.6 V / 4 V / 5 V:
+- Murata GRM31CR60J107MEA8 (100 µF 6.3 V X5R 1206): 50.6 / 45.2 / 34.8; Digi-Key 0, expected
+  2027-09-08.
+- TDK C3216X5R0J107M160AB (100 µF 6.3 V X5R 1206): about 42.9 (interpolated) / 37.8 / 28.8;
+  -11 % at -40 °C (interpolated), -9 % at +85 °C; Digi-Key 38.
+- Taiyo Yuden JMK316ABJ107ML-T (100 µF 6.3 V X5R 1206): Digi-Key 330,856, $0.52; its own
+  curve sits behind TY-COMPAS's terms dialog (not accepted), so Murata's and TDK's 1206 curves
+  bracket it (an assumption).
+- Samsung CL31A107MQHNNNE (same spec): Digi-Key 0.
+- Murata GRM32ER60J107ME20 (100 µF 6.3 V 1210): 56.9 / 52.6 / 43.2. Taiyo Yuden
+  LMK325ABJ107MM-T (100 µF 10 V 1210): Digi-Key 59.
+- Murata 47 µF 1206 (GRM31CR61A476ME15): 25.8 / 23.5 / 18.7, too little.
+A 1206 keeps about 85 % (Murata) or 72 to 75 % (TDK) of the 1210's effective capacitance.
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
