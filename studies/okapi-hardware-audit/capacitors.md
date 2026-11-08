@@ -160,6 +160,11 @@ A 1206 keeps about 85 % (Murata) or 72 to 75 % (TDK) of the 1210's effective cap
   $1.40); TDK C3225X7T1A107M250AC (X7T) 1,507, $2.06.
 - Not stocked: TDK C3216X5R1A107M160AC (0, expected 2027-01-18), Samsung CL32A107MPVNNNE (0).
 
+**Done 2026-11-08 (Andy: "Great plan"): C43 is the Murata GRM31CR61A107MEA8L on its existing
+C1206_TANT pads** (Project-Okapi d630f34; #43 updated). Left for the copper work: a 1206 ceramic
+land and a non-polarized symbol. To measure on the first board: backup-pack sleep current, and
+the core's awake current (a second part only if the core exceeds about 10 to 20 mA awake).
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
