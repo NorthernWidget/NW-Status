@@ -1,0 +1,34 @@
+status Optimal
+chosen set (10): 24, 220, 560, 1k, 5.6k, 68k, 124k*, 169k*, 300k, 620k
+assignments:
+  Okapi R26-R29 ILIM default                                             -> 220
+  Okapi R9 BQ2980 RVDD                                                   -> 220
+  Okapi R11 BQ2980 RBAT                                                  -> 24
+  Okapi R15 BQ2980 RPACK                                                 -> 1k
+  Okapi R14 BQ2980 RCTR                                                  -> 220
+  Okapi R12 CTR pull-down                                                -> 1k/5.6k/68k
+  USB series R34/R35 Okapi, R3/R4 Margay                                 -> 24
+  UART series R38/R40 Okapi, R7/R9 Margay                                -> 220/560/1k
+  Status RGB LEDs D4/D5 Okapi, D2/D3 Margay (12)                         -> 220/560
+  Okapi LED grid D10-D17 (8)                                             -> 220
+  Okapi B-SoM RGB LED R81-R83                                            -> 5.6k
+  USB-C CC Rd R84/R85 Okapi, R31/R32 Margay                              -> 5.6k
+  Logic pull-ups/downs, 3.3 V (Okapi R18,R19,R24,R25,R41,R45,R46,R47,R57 -> 68k
+  Reset pull-up Okapi R52, Margay R2                                     -> 5.6k
+  I2C pull-ups Margay R15/R16                                            -> 5.6k
+  Weak pull-ups R55,R56 (LT3652 CHRG/FAULT), R59 (LDO PG)                -> 124k/169k/300k/620k
+  Pull-ups 5V_AUX into 3.3 V expander R1,R8,R58; series R68              -> 124k/169k/300k/620k
+  Bleeds R23,R63,R65,R66 Okapi                                           -> 68k/124k/169k/300k/620k
+  5V_AUX bleed R67 Okapi                                                 -> 68k
+  LTC4412 STAT pull-up R21                                               -> 620k
+  Timer DELAY: TPL5111 R20, TPL5010 (#35), Margay R10                    -> 124k
+  Margay R17/R18 comparator 1:1 divider (equal pair)                     -> 1k/5.6k/68k
+  TLV61220 5V_LP R4/R5: 0.5(1+t/b)=5.0 V +/-2 %                          -> 620k/68k
+  TPS62822 3V3_AUX R6/R7: 0.6(1+t/b)=3.3 V +/-3 %                        -> 300k/68k
+  TPS61032 LBI R2/R3: 0.5(1+t/b) in 2.6-3.0 V                            -> 620k/124k
+  LT3652 VIN_REG R22/R69: 2.7(1+t/b) in 6.3-6.8 V                        -> 169k/124k
+  LT3652 SHDN R71/R70: 1.2(1+t/b) in 6.8-7.5 V                           -> 620k/124k
+  LT3652 float R16/R17: 3.3(1+t/b) in 4.178-4.200 V; R13 + t||b in 225-2 -> 169k/620k
+  ILIM jumper                                                            -> 220/560
+
+[exited with code 0]
