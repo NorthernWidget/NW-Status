@@ -89,7 +89,15 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
 - **Missing decouplers on v0.8.0 (Andy): Project-Okapi #41**, with the table (28 pins
   whose datasheets ask for a capacitor, 7 where they are silent, 4 near the line). U37's
   capacitor is in it. The ATmega's VCC pins stay with #17 on v0.7.0.
-- For a later exchange (Andy): C3, C4, C14 effective margin at 4.2 to 5 V, and C17
+- **C3, C4, C14 to 22 µF** (Andy; Project-Okapi 26d9ddc).
+- **V_LI bulk: Project-Okapi #42 on v0.8.0** (Andy: add the part): 100 µF low-ESR
+  non-ceramic beside C14 per the LT3652's "VBAT Output Decoupling" (battery
+  disconnected under a system load: the BQ2980 opening its FETs; long cell leads).
+  Proposed KEMET T520B107M010ATE070 (100 µF 10 V polymer, 70 mΩ, B case, -55 to
+  +105 °C, 20,065 stocked 2026-11-08).
+- **C43 (V_CORE, Vishay TL8A0107M010D) is obsolete** (Digi-Key, 2026-11-08; 7 Ω
+  ESR): needs a current part before a v0.7.0 order; open for Andy.
+- Done in that exchange, no longer pending: C3, C4, C14 effective margin at 4.2 to 5 V, and C17
   (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF ceramic capacitor
   improves the immunity of the device to short-circuit transients").
 
