@@ -148,6 +148,18 @@ Chrome 2026-11-08.** Effective µF at 25 °C, 3.6 V / 4 V / 5 V:
 - Murata 47 µF 1206 (GRM31CR61A476ME15): 25.8 / 23.5 / 18.7, too little.
 A 1206 keeps about 85 % (Murata) or 72 to 75 % (TDK) of the 1210's effective capacitance.
 
+**Rated 10 V or more, in stock (Andy's ask; Digi-Key and Murata in Chrome, 2026-11-08):**
+- **Murata GRM31CR61A107MEA8L, 100 µF 10 V X5R 1206: 873,508 in stock, $0.55.** Murata's
+  data: 50.6 µF at 3.6 V, 45.2 at 4 V, 34.8 at 5 V, 31.6 at 5.4 V (25 °C, 0.5 Vrms);
+  -6.7 % at -40 °C, -13.3 % at +85 °C (0 V, 0.2 Vrms). The DC-bias numbers are identical to
+  the 6.3 V GRM31CR60J107MEA8's, which suggests one construction rated two ways (an
+  inference). At V_CORE's 5.0 to 5.4 V it runs at 50 to 54 % of rating.
+- 1206 at 16 V: none in stock.
+- 1210 at 10 V in stock: Murata GRM32ER61A107ME20K (the K-reel version of the earlier plan)
+  23,692, $0.82; Taiyo Yuden LMK325ABJ107MM-P 95,115, LMK325BJ107MM-T 79,108 (about $1.36 to
+  $1.40); TDK C3225X7T1A107M250AC (X7T) 1,507, $2.06.
+- Not stocked: TDK C3216X5R1A107M160AC (0, expected 2027-01-18), Samsung CL32A107MPVNNNE (0).
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
