@@ -128,6 +128,11 @@ Ceramic 1210 candidates, 100 µF 10 V X5R, manufacturer data read in Chrome (202
   17-week lead, $0.82.
 Leakage: insulation resistance, nanoamps.
 
+**Decided (Andy, 2026-11-08): C43 becomes the Murata GRM32ER61A107ME20L** (one; a second
+if the first board shows the core above about 20 mA awake), recorded on #43, whose title
+now says so. The 1210 footprint is copper work, with the other board edits. #42 keeps a
+non-ceramic part (the LT3652 asks for one) and gained a leakage note.
+
 ## Positions
 
 (to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
