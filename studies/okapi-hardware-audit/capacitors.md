@@ -96,7 +96,10 @@ were in stock. Not reachable: Samsung's data pages (server error) and Taiyo Yude
   Proposed KEMET T520B107M010ATE070 (100 µF 10 V polymer, 70 mΩ, B case, -55 to
   +105 °C, 20,065 stocked 2026-11-08).
 - **C43 (V_CORE, Vishay TL8A0107M010D) is obsolete** (Digi-Key, 2026-11-08; 7 Ω
-  ESR): needs a current part before a v0.7.0 order; open for Andy.
+  ESR): **replaced on v0.7.0 by the KEMET T520B107M010ATE070 (Andy: the same part as #42,
+  for an easier migration): Project-Okapi #43.** The B case (CT3528) does not fit in place
+  (DRC 5 to 23: mask bridges and clearances to V_CORE, 3V3_CORE and C16), so it needs
+  a nearby site and rerouting; the in-place attempt is a stash in Project-Okapi.
 - Still pending: C17 (TPS2105 output, 0.1 µF; TI: "bypassing the output with a 1-µF
   ceramic capacitor improves the immunity of the device to short-circuit transients").
 
