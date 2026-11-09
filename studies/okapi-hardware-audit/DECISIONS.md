@@ -509,6 +509,7 @@ merges.
    not cycle off in low light. A 6 V panel will not start at 13.2 V; its values go in the
    README's per-panel table (#20). The Campbell panels' 60 C Vmp (about 14 V) sits below
    16.2 V. Open: a winter power budget to confirm 10 W gives 10-20 times the draw.
+   Filed as Project-Okapi #46 (v0.8.0, enhancement).
 
 ### ERC residue (accept, or exclude in the GUI)
 
