@@ -75,3 +75,17 @@ any case. Margay's VMAIN load during an SD write is not known here: it wants a b
 measurement before a part is chosen.
 
 Option 3 needs no bulk beyond ordinary decoupling. Option 2 depends on the part.
+
+## Okapi does not share it (checked 2026-11-09)
+
+Okapi's U6 is a TPS2105 (EN high selects IN1). Its EN comes from U37, a TLV3691 powered through
+D8 from whichever of 5V_LP and V_PRIME is higher, comparing the two inputs themselves: IN+ =
+5V_LP (U6's IN1, the TLV61220's 5.06 V boost output from the Li-ion cell), IN- = V_PRIME (U6's
+IN2, the backup pack). U6 changes over the moment the falling source crosses the other one, so
+V_CORE starts the gap near the backup pack's voltage, as C43's sizing assumed (capacitors.md,
+#45).
+
+A different point the same comparison raises: U6 runs from whichever input is higher. A backup
+pack above 5.06 V (three fresh lithium AAs, about 5.4 V, ASSUMED cell count) would carry V_CORE
+in place of the Li-ion cell until it fell below the boost output. Not yet checked against the
+intended priority.
