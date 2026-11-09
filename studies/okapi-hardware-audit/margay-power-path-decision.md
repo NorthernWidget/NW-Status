@@ -158,7 +158,7 @@ to 4.7 µF (Okapi's choice for its VUSB) while keeping the ECN's 1 µF minimum.
 **Sourcing.** The options agent saw LM66100DCKR at 386 units at Digi-Key (296-53541-1-ND,
 UNVERIFIED here); worth a check before the part is fixed.
 
-## 8. The USB side, upstream of U_A (proposal, 2026-11-09)
+## 8. The USB side, upstream of U_A (decided, Andy 2026-11-09; on Project-Margay #66, v3.1.0)
 
 ```
    J4 VBUS ──┬── VUSB ──┬──────────────── VIN ┌───────────┐ VOUT ── VUSB_SS ── U_A LM66100 VIN
