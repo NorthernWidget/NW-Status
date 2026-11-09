@@ -95,6 +95,21 @@ critical path".
    cells instead, and Andy replied the RTC takes 2.3-5.5 V, so two or three D cells would do.
    A post-deployment check was planned for late August 2024; no email records it, and none
    mentions the USB-cable workaround (in person, or elsewhere).
+   **Hypothesis (2026-11-09, not measured):** a floating 3V3_AUX on battery. In sleep the
+   2024 library calls powerAux(OFF) and powerOB(OFF) (Margay.cpp), so on battery U8 cuts VMAIN
+   and the TPS7A05 (U7) sits with no input; its 120 Ω active discharge needs VIN (SBVS254D
+   §7.3.2), so 3V3_AUX floats. Anything high on SCL/SDA can back-feed it: R16 (10 kΩ) ties SCL,
+   which runs straight to the ATmega's pin, to 3V3_AUX, and the BME280 and MCP3421 on 3V3_AUX
+   have ESD paths from their I2C pins (the AVR Wire library enables the pins' internal
+   pull-ups: from memory). The DS3231M runs from VCC whenever VCC is above VBAT, even below
+   VPF (19-5312, Power Control), so a back-fed 3V3_AUX of a few volts beats a cold, sagging
+   CR1220, and the clock tries to run on a supply too weak for its temperature conversions. A
+   warmer coin cell raises VBAT above the back-fed VCC; on USB, VMAIN stays live through sleep (U8
+   does not switch USB), the TPS7A05 is powered and disabled, and its pulldown holds 3V3_AUX
+   near 0 V, so the clock runs cleanly from VBAT. Test at room temperature: 3V3_AUX (C15) in sleep
+   on battery against on USB; then a bench supply in place of the coin cell, stepped down
+   toward 2.5 V, on battery. Fixes if it holds: in firmware, release SDA/SCL (no pull-ups, or
+   driven low) before powerAux(OFF); on v3.1, #66's always-live VSYS keeps the pulldown working.
 
 15. **Margay's power path: USB supply against sleep current** (Andy, 2026-11-09: a topic to
    think about). Whether to add a low-quiescent selector (two LM66100s, about +0.3 µA; or a
