@@ -137,3 +137,16 @@ Confirms 19 values for five changes (R21, R13, R22, R69, R70) with the float as 
 | 17 | 9 | R3 330k to 374k, R16/R17 to 100k/374k: LBI 2.95 to 2.67 V, float 4.182 V |
 | 16 | 17 | ILIM 232/464 to 220/560 Ω: 0.99 to 1.045 A, jumper 1.49 to 1.46 A |
 | 15 | 33 | status LEDs 330 to 220 Ω and UART series, on both boards |
+
+## Andy, 2026-11-09 (evening): R15, STAT, R51, the precision 10 kΩ
+
+- **R51 (0 Ω) stays.** Proposal F, a copper tie, is declined.
+- **Precision 10 kΩ for both boards: Panasonic ERA-3AEB103V** (0.1 %, ±25 ppm/°C, 0603 thin
+  film, AEC-Q200), picked for the broadest sourcing. The Bourns CRT0603-BY-1002ELF has the same
+  tolerance and TCR (B = 0.1 %, Y = ±25 ppm/°C). FindChips, 2026-11-09: ERA-3AEB103V on
+  Newark (605,000 and 259,246 on two lines), RS, TME, Rutronik, LCSC and others, 6.29 M on
+  all rows including brokers; CRT0603-BY-1002ELF at 150,302 on all rows (Newark 48,745 the
+  largest). Digi-Key US shows ERA-3AEB103V at 0 with a 55-week factory lead time on the same
+  day, so the Digi-Key code on the BoM should carry an alternate. Changes Margay R22-R24 at
+  the Okapi/Margay merge; Okapi R49/R50 already carry it.
+- **R15 and STAT:** discussed below; R15 held at 2 kΩ, STAT kept.
