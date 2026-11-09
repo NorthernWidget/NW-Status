@@ -42,3 +42,20 @@ average current (sleep against wake) are not checked here.
    noise; if the logger sleeps nearly always, it is about a sixth of the budget.
 3. Whether the RTC conversation (QUEUE, desk item 14) wants a system rail anyway, to feed the
    RTC's battery input from main power as the ALog did.
+
+## A typical deployment (Andy, 2026-11-09)
+
+Measure every 5 minutes for about 3 s and sleep the rest. Awake, the logger alone draws 8.6 mA,
+and sensors typically add up to 20 mA. Average current, with the published 1.68 µA sleep
+current (not measured here) and each selector's typical quiescent current added during sleep:
+
+| Interval | Awake load | Average | Sleep's share | +0.3 µA (LM66100 pair) | +1.32 µA (TPS2116) |
+|---|---|---|---|---|---|
+| 5 min | 8.6 mA | 87.7 µA | 1.9 % | +0.34 % | +1.49 % |
+| 5 min | 28.6 mA | 287.7 µA | 0.6 % | +0.10 % | +0.45 % |
+| 60 min | 8.6 mA | 8.8 µA | 19.0 % | +3.39 % | +14.91 % |
+| 60 min | 28.6 mA | 25.5 µA | 6.6 % | +1.17 % | +5.17 % |
+
+At 5 minutes the awake cycles carry 98 % or more of the energy, and either selector is lost in
+the noise. The selector's cost appears only at long intervals with light sensors, and even
+there the LM66100 pair stays near 3 %.
