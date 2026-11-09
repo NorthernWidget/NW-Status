@@ -221,3 +221,41 @@ C22; (C) the two 1 µF lines, copper either way.
   14): Andy added C20 to keep the clock's time through power drops.
 - **Margay C10 as an 0603** (Andy, 2026-11-09: one 1 µF part on Margay): Project-Margay #65
   (v3.1.0), which also weighs it against the dual-land plan above.
+
+## Both boards' capacitor lines with every proposal applied (2026-11-09)
+
+Starting from the two KiCad netlists after Okapi C30 (3a981d2) and Margay C10 (01cb15f), and
+applying: Okapi #44 (C10 as two 50 V 1210s), #42 (V_LI polymer), #45 (second C43), C11 to the
+0402 1 µF, C13 to a larger boost capacitor; Margay #66 (C11 leaves with U9; VSYS gains two 100
+µF 1206s; C6 from 10 µF to 4.7 µF; C_CT 10 nF), #67 (C5 moves, same part). Okapi #41's missing
+decouplers add to the 0.1 µF and 1 µF lines and are not counted. Margay's 1 µF 0603 positions
+follow #65's open choice (0603 kept, as recommended).
+
+| Line | Okapi | Margay | Note |
+|---|---|---|---|
+| 0.1 µF 0402 Murata GCM155R71C104KA55D | 23 | 9 | Margay C11 leaves |
+| 22 µF 0805 Murata GRM219R61C226ME15L | 10 | – | Okapi C10 leaves (#44) |
+| 12 pF 0402 TDK CGA2B2C0G1H120J050BA | 4 | 4 | |
+| 1 µF 0603 Taiyo Yuden TMK107B7105KA-T | 0 | 3 | Margay only, if #65 keeps 0603 |
+| 1 µF 0402 Samsung CL05A105KA5NQNC | 4 | 1 | Okapi C11 joins |
+| 4.7 µF 0603 Murata GRM188Z71C475KE21D | 3 | 1 | Margay C6, if its land becomes 0603 |
+| 68 pF 0402 Würth 885012005060 | 2 | – | |
+| 10 µF 0805 Murata GRM21BR61C106KE15K | – | 1 | Margay C15 only |
+| 100 µF 1206 Murata GRM31CR61A107MEA8L | 2 | 2 | now shared: Okapi C43 pair, Margay VSYS pair |
+| 220 µF 2917 AVX TPSY227K010R0100 | 1 | – | Okapi C5 |
+| 10 µF 50 V 1210 TDK CNA6P1X7R1H106K250AE | 2 | – | new, #44 |
+| 100 µF polymer KEMET T520B107M010ATE070 | 1 | – | new, #42 |
+| Okapi C13 boost capacitor, above 1 µF | 1 | – | new unless an existing line serves (below) |
+| 10 nF 0402 X7R (e.g. GRM155R71C103KA01D) | – | 1 | new, Margay C_CT |
+
+Fourteen lines, from ten. Candidates to bring it back down (proposals, each to check):
+1. **Okapi C13 on the 4.7 µF 0603 line** in place of a new 2.2 µF line: the LT3652 asks "1µF or
+   greater" with no upper bound; at about 4.5 V the 16 V X7R part holds about 2.9 µF (Murata data
+   at 4.2 and 5 V). Same 0603 land, no copper.
+2. **Margay C15 (3V3_AUX) on the 4.7 µF 0603 line**, retiring the 10 µF line: the TPS7A05 asks
+   0.47-22 µF nominal on its output; 4.7 µF X7R holds 3.57 µF at 3.3 V. Whether 3V3_AUX's SD-card
+   writes want more is the question; 22 µF would put the rail at about 22.1 µF nominal, at the
+   TPS7A05's 22 µF maximum. Needs an 0603 land.
+3. **Okapi C5 (220 µF tantalum on 5V_AUX) as 100 µF 1206 ceramics**, retiring the AVX line and the
+   board's last MnO2 tantalum: a copper change for v0.8.0, with the 5V_AUX bulk need to size.
+With all three, twelve lines.
