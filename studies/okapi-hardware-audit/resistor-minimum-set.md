@@ -10,7 +10,8 @@ in `tools/resistor_minimum_set.py`; the first run's output is
 
 Held outside the set (fixed by function): 0 Ω (R51), the shunts 3 mΩ (R10), 20 mΩ (R72, R73,
 R75), 50 mΩ (R74, #32), and the 0.1 % 10 kΩ (Okapi R49/R50, Margay R22-R24; one part to choose
-for both). R48 is 1 kΩ by Andy's decision; 1 kΩ is in the set.
+for both). R48 is 1 kΩ by Andy's decision; 1 kΩ is in the set. (Superseded: run 1's script listed R48 but never
+constrained it, and 1 kΩ came into the set on its own. Run 2 holds it.)
 
 ## Run 1: 10 values, optimal
 
@@ -32,6 +33,53 @@ Couplings the table does not model, which run 1 breaks or strains:
 5. **Status LEDs at 220 or 560 Ω** change brightness on both boards.
 6. Almost every resistor on both boards changes value, Margay's included.
 
-Next: run 2 with Rd fixed at 5.1 kΩ, R7 held at 180 kΩ (or C6 modeled), the timer held to its
-interval by equation, and MPPT held to 6.4-6.7 V; then a variant that also counts changed
-positions, so Andy can weigh the minimum against the churn.
+## Run 2: the trade between values and changed positions
+
+`tools/resistor_minimum_set_run2.py` models every position with its current value, read from
+the KiCad netlists (101 positions: 78 on Okapi, 23 on Margay; the shunts, 0 Ω, the 0.1 % parts and R62,
+which leaves with JP8 in #34, are excluded). It holds what run 1 broke: Rd at 5.1 kΩ; R7 at 180 kΩ, which keeps C6 at 68 pF; the
+timer at 130 kΩ, which TPL5010 Equation 1 (set 5) puts at 3943 s, 65.7 min (124 kΩ gives 59.0
+min); MPPT at 6.4-6.7 V; and R48 at 1 kΩ. For each cap on the number of values, it finds the
+fewest changed positions. Outputs: `sources/2026-11-09-resistor-minimum-set-run2-float4200.txt`
+and `-float4210.txt`.
+
+The floor is still 10 values, at 70 changed positions on both boards. The check: with the float
+window opened to 4.210 V, the as-built boards satisfy every constraint and the solver returns
+22 values with 0 changes. The as-built float, 3.3(1 + 91k/330k), is 4.210 V, outside the
+4.178-4.200 V window I proposed; holding 4.200 V costs one change, R16 91k to 88.7k (4.187 V).
+
+| Values | Changed (float 4.210 V) | Changed (float 4.200 V) |
+|---|---|---|
+| 10 | 70 | 70 |
+| 11 | 47 | 47 |
+| 12 | 31 | 31 |
+| 13 | 23 | 23 |
+| 14 | 16 | 16 |
+| 15 | 12 | 12 |
+| 16 | 8 | 9 |
+| 17 | 6 | 7 |
+| 18 | 4 | 5 |
+| 19 | 3 | 4 |
+| 20 | 2 | 3 |
+| 22 | 0 | 1 |
+
+From 16 values up, every change is on Okapi and none touches a pull-up's current. With the float
+as built, the 16-value option changes eight positions, each checked by hand:
+- R21 470k to 1M: the LTC4412 STAT pull-up still meets R ≥ 420 k.
+- R13 182k to 180k: R13 + R16||R17 = 251.3 k against 253.3 k now.
+- R15 2k to 1k: BQ298000 RPACK ≤ 2 kΩ; this is proposal D.
+- R14 100 to 220: BQ298000 RCTR, 100 Ω typical; 220 Ω is inside my proposed 47-220 Ω.
+- R22/R69 143k/100k to 130k/91k: MPPT 6.557 V against 6.561 V now.
+- R71/R70 1M/200k to 1.62M/330k: SHDN start 7.09 V against 7.20 V now.
+
+That leaves 27, 220, 232*, 330, 464*, 1k, 5.1k, 10k, 91k, 100k, 130k, 180k, 330k, 820k, 1M, and
+1.62M* (* = E96). Below 16 the changes reach the weak pull-ups (R55, R56, R59, R68 from 1 MΩ to
+100-180 kΩ), the LBI threshold, and the float divider, and from 12 down the status-LED
+brightness on both boards.
+
+Not modeled: static current. The 10-100 kΩ range for logic pull-ups treats a 10 kΩ pull-up on
+a held-low line (FEATHER_EN, ~LED_EN) as free, at 330 µA. Every option of 16 values or more
+leaves those positions alone, but a cut below 16 needs that constraint first.
+
+For Andy: (1) whether 4.210 V float stands or R16 goes to 88.7k; (2) which point on the table;
+(3) R14 at 220 Ω and R15 at 1 kΩ, which ride with the 18-value option and below.
