@@ -80,7 +80,11 @@ critical path".
    switchover (SLVS235A p12, Figure 11). Andy's intent for C20 (1 µF, 2535612)
    and D4: more capacitance and a second feed so the clock keeps its time when power drops.
    To discuss with it: the ALog's approach, which ran the RTC's battery input from the logger's
-   main power and fell back to the coin cell only when unpowered. → studies/okapi-hardware-audit/capacitors.md
+   main power and fell back to the coin cell only when unpowered. Analyzed 2026-11-09:
+   U9 switches from USB to the battery only after VUSB has fallen to about 2 V, so VMAIN and
+   3V3_AUX (the RTC's VCC, the SD card, J2) drop out at every USB unplug, whatever the
+   capacitance; the switchover control has to change first.
+   → studies/okapi-hardware-audit/margay-vmain-switchover.md and studies/okapi-hardware-audit/capacitors.md
 
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
