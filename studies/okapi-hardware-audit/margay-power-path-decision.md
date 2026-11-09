@@ -126,3 +126,34 @@ two 100 µF parts hold about 70 µF effective at 5 V, about 350 µC, where the U
 µs and does not limit the slew. With a battery fitted, VSYS only steps from the battery to USB
 (0.2-0.5 V, 14-35 µC). Options: a slew-controlled switch ahead of U_A, or accept the overshoot
 of the USB limit in the battery-less case. Open.
+
+## 7. USB inrush (2026-11-09, two agent reports in `sources/`)
+
+**The rule.** Margay is an Rd-only USB-C sink with USB 2.0 data, so Type-C defers to USB 2.0
+(Type-C R2.5 §4.6.2.1). USB 2.0 §7.2.4.1 allows "10 µF in parallel with 44 Ω", counting "any
+capacitive effects visible through the regulator in the device", and requires "some form of VBUS
+surge current limiting, such that it matches the characteristics of the above load" for anything
+more. Compliance tests read this as under 50 µC of attach charge, integrated only while the
+current exceeds 100 mA; current is held to one unit load (100 mA) until configured (§7.2.1).
+Type-C caps the receptacle at 10 µF before attach (Table 4-3); PD's 100 µF needs a negotiated
+contract Margay never makes. (`2026-11-09-usb-inrush-spec-agent-report.md`)
+
+**Margay as proposed fails it**: about 70-80 µF connected in about 27 µs is 350-400 µC. A real port
+would not trip (switches current-limit inside a 4-15 ms flag delay), but VBUS would sag for other
+devices on the hub.
+
+**The fix (proposal): a TPS22917 slew-controlled load switch ahead of U_A**, ON tied to VUSB, 4.7
+nF from CT to VIN. TI's constants (SLVSDW8B) give about 0.49 V/ms, about 19 ms to full voltage, and
+34 mA into 70 µF (98 mA at the 200 µF nominal ceiling), under one unit load with the board's
+own attach current added. It draws only from VUSB, so sleep current is unchanged, and it adds
+16-24 mV at 200 mA ahead of U_A without touching the battery handover. TPS22917DBVR,
+296-50498-1-ND, 57,870 in stock at Digi-Key; second source TPS22918DBVR.
+(`2026-11-09-usb-inrush-options-agent-report.md`) Rejected: an RC on U_A's CE (the LM66100
+conducts through its body diode when off), the TPS2120/21 (200 µA quiescent), series resistance.
+
+**The capacitance ahead of the limiter still counts in full.** VUSB today carries C5 and C11 (0.1
+µF each) and C6 (10 µF): 10.2 µF, at the limit with no margin. C11 leaves with U9; C6 can drop
+to 4.7 µF (Okapi's choice for its VUSB) while keeping the ECN's 1 µF minimum.
+
+**Sourcing.** The options agent saw LM66100DCKR at 386 units at Digi-Key (296-53541-1-ND,
+UNVERIFIED here); worth a check before the part is fixed.
