@@ -86,6 +86,11 @@ critical path".
    capacitance; the switchover control has to change first.
    → studies/okapi-hardware-audit/margay-vmain-switchover.md and studies/okapi-hardware-audit/capacitors.md
 
+15. **Margay's power path: USB supply against sleep current** (Andy, 2026-11-09: a topic to
+   think about). Whether to add a low-quiescent selector (two LM66100s, about +0.3 µA; or a
+   TPS2116, +1.32 µA, against the published 1.68 µA) so USB powers the whole board, or keep
+   the core on the battery and only re-point U10. → studies/okapi-hardware-audit/margay-power-path-topic.md
+
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
 Decided: the two libraries become one, and `DS3231` is the survivor. The study
