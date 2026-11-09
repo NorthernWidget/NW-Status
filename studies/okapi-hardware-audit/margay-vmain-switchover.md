@@ -89,3 +89,39 @@ A different point the same comparison raises: U6 runs from whichever input is hi
 pack above 5.06 V (three fresh lithium AAs, about 5.4 V, ASSUMED cell count) would carry V_CORE
 in place of the Li-ion cell until it fell below the boost output. Not yet checked against the
 intended priority.
+
+## The proposed control: chatter and USB without a battery (checked 2026-11-09)
+
+Proposal: U10's IN+ from a VUSB divider (Ra 100k, Rb 150k, k = 0.6) in place of 3V3_FTDI; IN-
+stays VBAT_SW/2 (R17/R18); Rh from OUT to IN+ for hysteresis. TLV3691 (SBOS694A): push-pull
+output, internal hysteresis 17 mV (28 mV referred to VUSB), input range (V-) - 0.1 V to (V+) +
+0.1 V. That input limit is why the existing design keeps both inputs under 3.3 V.
+
+**Chatter.** Moving the load onto USB lowers VUSB by the source and cable resistance times the
+load, and raises VBAT_SW by the battery's internal resistance times the same load. Both push U10
+back toward the battery. With 200 mA (the TPS7A05's rating), 0.5 Ω of USB source and cable, and
+0.75 Ω of pack (both ASSUMED, to be measured), that is about 0.1 V at VUSB and 0.15 V at
+VBAT_SW, which IN- sees halved: about 0.25 V referred to VUSB, against U10's own 28 mV. Rh = 1 MΩ
+(on the shared list) gives a 0.33 V band; IN+ peaks at 3.16 V at VUSB 5.25 V, inside 3.4 V.
+
+| Battery | To USB above | Back to battery below |
+|---|---|---|
+| 5.5 V | 4.86 V | 4.53 V |
+| 5.0 V | 4.42 V | 4.09 V |
+| 4.5 V | 3.98 V | 3.65 V |
+| 3.6 V | 3.18 V | 2.85 V |
+
+With a fresh 5.5 V pack, USB below 4.86 V (a long cable at the 4.75 V port minimum) leaves the
+logger on the battery, which is then the higher source. The handover to the battery happens
+0.33 V lower than without Rh, which takes from the VMAIN capacitor's droop allowance.
+
+**USB without a battery.** U10 is powered: the FT231X's 3V3OUT reaches the core 3V3 through Q2,
+which Q3 holds on from VUSB. IN- is near 0 V, so U10 selects USB in both designs. (Corrects an
+earlier line in this session that called U10 unpowered.) What this shows instead: with no battery
+the whole core (the ATmega, LEDs, U10, D4's feed to the RTC) runs from the FT231X's internal
+regulator, which the datasheet rates at "a maximum current of 50mA" and describes as mainly for
+the USB transceiver (FT_000565 v1.4, §4). The core 3V3 also back-feeds VBAT+ through the TPS797's
+PMOS "back diode", which "conducts reverse current when the input voltage drops below the output
+voltage ... and is not internally limited" (SLVS332J §7.3.1). Bench work on USB alone runs
+the logger near the FTDI regulator's limit; the README's "Make sure battery power is applied"
+is consistent with that.
