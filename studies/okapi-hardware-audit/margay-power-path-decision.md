@@ -81,7 +81,7 @@ adapted (`margay-power-path-lm66100.md`):
 2. The FT231X configuration against FTDI's self-powered design.
 3. The RTC conversation (QUEUE, desk item 14): VSYS is a candidate feed for the RTC's battery
    input.
-4. The milestone: Margay v3.1.0 (Andy, 2026-11-09).
+4. The milestone: Margay v3.1.0 (Andy, 2026-11-09); filed as Project-Margay #66.
 5. Bench: today's switchover on a built board, then the new path's handover under an SD write.
 
 ## 6. Details settled after the decision (2026-11-09)
