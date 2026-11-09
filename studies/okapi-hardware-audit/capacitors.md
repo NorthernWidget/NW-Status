@@ -202,3 +202,20 @@ Margay C19 + C20, 1.1 µF on VBAT against the DS3231M's 0.1-1.0 µF. Merge candi
 µF 0805 into 22 µF 0805, no copper, blocked by Margay's VUSB 10 µF limit and the TPS7A05's 22
 µF maximum read nominally; (B) 4.7 µF 0603 into 1 µF 0603, blocked by FTDI's 4.7 µF at Okapi
 C22; (C) the two 1 µF lines, copper either way.
+
+## Decided 2026-11-09 (Andy), from the two-board constraint table
+
+- **Margay C10 1 µF 0402** (CL05A105KA5NQNC), for the TPS2104's 0.22 µF on IN1 (Project-Margay
+  01cb15f). C11 (IN2, on VUSB) stays 0.1 µF: VUSB already holds 10.2 µF against USB's 10 µF.
+- **Okapi C30 22 µF** (GRM219R61C226ME15L), 7.6 µF effective at 5 V against the MCP4726's
+  10 µF tantalum (Project-Okapi 3a981d2). Okapi no longer uses the 10 µF line; Margay does.
+- **C43: both parts on v0.8.0**, fitted by default (#45, retitled, with the reasoning).
+- **CTR (C12, R12, R14): Project-Okapi #47**, a firmware battery disconnect to revisit.
+- **The 1 µF positions onto 0402**, on dual 0402/0603 lands where the land is 0603 now: Okapi
+  C11 (v0.8.0), Margay C13, C14, C20 (v3.1). Margay C13 meets at the line (0.51 µF effective at
+  5.5 V against the TPS7A05's 1 µF nominal, which TI says assumes about 50 %). Okapi C13
+  (LT3652 BOOST, "1µF or greater", no upper bound) takes a higher-capacitance part instead:
+  proposed a 2.2 µF 0603 X7R on its present land, to be picked with the Digi-Key pass. The
+  Taiyo TMK107B7105KA line then retires and a 2.2 µF line arrives: the count stays 10.
+- **Margay C19 + C20** stay as they are until the RTC conversation (QUEUE, "ON ANDY'S DESK"
+  14): Andy added C20 to keep the clock's time through power drops.

@@ -77,7 +77,10 @@ critical path".
    below that takes current. The DS3231M's own VBAT pin is "UL recognized to ensure against
    reverse charging" (19-5312 Rev 5 p7), a protection D4 bypasses. Related: VMAIN carries 1 µF
    (C13) where the TPS2104 recommends 220 µF for 100 mA loads across the IN2-to-IN1
-   switchover (SLVS235A p12, Figure 11). → studies/okapi-hardware-audit/capacitors.md
+   switchover (SLVS235A p12, Figure 11). Andy's intent for C20 (1 µF, 2535612)
+   and D4: more capacitance and a second feed so the clock keeps its time when power drops.
+   To discuss with it: the ALog's approach, which ran the RTC's battery input from the logger's
+   main power and fell back to the coin cell only when unpowered. → studies/okapi-hardware-audit/capacitors.md
 
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
