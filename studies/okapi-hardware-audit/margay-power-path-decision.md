@@ -157,3 +157,41 @@ to 4.7 µF (Okapi's choice for its VUSB) while keeping the ECN's 1 µF minimum.
 
 **Sourcing.** The options agent saw LM66100DCKR at 386 units at Digi-Key (296-53541-1-ND,
 UNVERIFIED here); worth a check before the part is fixed.
+
+## 8. The USB side, upstream of U_A (proposal, 2026-11-09)
+
+```
+   J4 VBUS ──┬── VUSB ──┬──────────────── VIN ┌───────────┐ VOUT ── VUSB_SS ── U_A LM66100 VIN
+             │          │                     │ U_SS      │                (R_PU 10k to VUSB_SS)
+            C6 4.7µF   C5 0.1µF    ON ◄── VUSB│ TPS22917  │
+             │          │                     │ CT ── C_CT 10 nF ── VIN
+            R21 10k     ├── D1 → FT231X VCC   │ QOD open  │
+             │          └── Q3 gate           └───────────┘
+            GND
+   CC1/CC2: R32/R31 5.1k to GND (unchanged)
+```
+
+- **U_SS, TPS22917DBVR** (SLVSDW8B): VIN = VUSB; ON tied to VUSB (active high, 1-5.5 V
+  input, smart pulldown keeps it from floating); CT through C_CT to VIN; QOD open (slowest
+  discharge of VUSB_SS); 2 A continuous; always-on reverse current blocking. It draws only from
+  VUSB, so the battery-only sleep current is unchanged.
+- **C_CT = 10 nF** (proposal): TI's 2300 (mV/µs)·pF at 5 V gives 0.23 V/ms and a 40 ms turn-on,
+  so VSYS charges at 16 mA into 70 µF effective and 46 mA into the full 200 µF nominal that two
+  100 µF parts present near 0 V. With the board's own attach load (FT231X, the core once VSYS
+  passes about 3.4 V, R21's 0.5 mA), the total stays under one unit load (100 mA) with margin.
+  4.7 nF (19 ms) would give 98 mA into 200 µF, too close. The part must be rated at least 7 V
+  (TPS22917 recommended operating conditions for CT): 10 nF 16 V X7R 0402, for example Murata
+  GRM155R71C103KA01D (stock not checked).
+- **R_PU moves to VUSB_SS** (TI's Figure 17 pulls ST up to the priority input): U_B stays on
+  until the soft-started USB rises past the battery, so the battery carries VSYS through the
+  ramp when one is fitted.
+- **Ahead of the soft-start (counts fully against USB's 10 µF):** C6 from 10 µF to 4.7 µF (also
+  TPS22917's input capacitor), C5 0.1 µF, about 4.8 µF nominal; C11 goes with U9. The USB 2.0
+  Device Capacitance ECN's 1 µF minimum is kept (a 4.7 µF X7R holds about 2.7 µF at 5 V).
+- **Unchanged:** D1 into the FT231X's VCC, Q3's gate, R21, and the CC resistors. The FT231X's VCC
+  has no capacitor of its own today (FTDI's reference shows 100 nF and 4.7 µF); a 100 nF there
+  sits behind D1 and counts toward the 10 µF.
+- **Not on Margay today, worth deciding:** VBUS surge or ESD protection (no TVS on VUSB).
+
+Battery fitted at plug-in: VSYS only rises from the battery to USB, slowly. No battery: VSYS
+ramps from 0 V over about 40 ms, and the core starts when VSYS clears about 3.4 V.
