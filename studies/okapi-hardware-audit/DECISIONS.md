@@ -299,6 +299,38 @@ Sonnet):**
 Steps 1, 2 and 5 are Sonnet's; a Sonnet session that reaches step 3 stops and
 says so rather than starting on the KiCad files.
 
+**Status of the B list, 2026-11-10:**
+
+| Step | Item | State |
+|---|---|---|
+| 1 | B3 issue sort | done |
+| 2 | B2 pre-build checklist | written; stale since 2026-11-09 (C2 below) |
+| 3 | B1 BoM port | done; every resistor now also carries a secondary part (ALT_MPN, ALT_MF, ALT_DIGIKEY; Project-Okapi 4adc304) |
+| 4 | B4 capacitor edits | done, widened into the two-board capacitor review (`capacitors.md`) |
+| 5 | Unique-parts recount | ready to close (C1) |
+| 6 | B8 copper edits | not started; also #43 (C43 land) and #17 (last) |
+| 7 | B5 ERC/DRC residue | not started |
+| 8 | B7 firmware | not started; C6 adds to it |
+| 9 | B6 release mechanics | on Andy's word |
+
+**The C list (2026-11-10): work that came out of the resistor and capacitor consolidation, in
+order.** It runs beside the B list; the B list's order stands.
+
+| Item | What | State, and where |
+|---|---|---|
+| C1 | Close Step 5 with the recount from fresh netlists: resistor part numbers Okapi 26, Margay 6, both boards 26 (Margay's all on Okapi's list); resistor values 23 on both (19 standard, plus 0 Ω and three shunts; 18 standard after #46 retires 143k); capacitor part numbers Okapi 9, Margay 5, both 10 (14 with every proposal, 12 with the merges #49, #50, Margay #68) | to record in `parts-audit.md` with C3 |
+| C2 | Refresh B2's checklist for the part changes since it was written: Okapi R15 1k, R21 1M, R13 180k, R20, R2/R4, R49/R50, R51, R70 primaries, C30 22 µF; Margay C10 1 µF, R10 | to do |
+| C3 | `parts-audit.md`: its resistor table is stale; rewrite it from the export, with primary and secondary parts | to do |
+| C4 | Jonas's cold clock failures: four unbiased agents (circuit, firmware, physics, field), then a blind adjudicator over their reports and our list; then #69 updated | in flight; reports in the session scratchpad `jonas/` |
+| C5 | The CR1220's real cold limit at the clock's load, and the gain from the VBAT buffer (D5 Schottky, R_BAT 1 kΩ, C_BUF 100 µF 1206, C20 out); then file the VBAT redesign for Margay v3.1.0 | agent in flight (`sources/2026-11-10-cr1220-cold-agent-report.md`); filing waits on Andy |
+| C6 | Margay firmware: release MOSI, MISO, SCK in `turnOffSDcard()` (three lines; `margay-rtc-cold.md`); the brown-out level (board package 1.8 V, README's MightyCore 2.7 V, the ATmega needs 2.7 V at 8 MHz) | Andy's decisions |
+| C7 | Margay README: the Vs table's 220 mA from USB against the TPS2104's 100 mA; the RTC "powered exclusively by the CR1220" wording (VCC is on 3V3_AUX); confirm the 3.5 V floor (against the firmware's 3.3 V and the switched rail's 3.63 V) | small edits, on Andy's word |
+| C8 | Margay v3.1.0 design: #66 power path (two LM66100, TPS22917 soft-start with 10 nF CT, VSYS two 100 µF 1206, JP2 pin 1 to VSYS); #67 C5 to the FT231X's VCC; #65 the 1 µF direction (recommended 0603); #68 C15; the VBAT redesign (C5 above); ESD for Margay (Okapi #51's parts, not yet filed for Margay) | filed except the last two |
+| C9 | Okapi v0.8.0 issues from this work: #46 charger dividers for 12 V panels, #47 CTR battery disconnect, #48 power-switching review (placeholder, links Margay #65-#67), #49 C13, #50 C5, #51 ESD with suggested parts; with #41-#45 from 2026-11-08 | filed |
+| C10 | Parts: the shunt secondaries' land check (R10, R72-R75); precision 10 kΩ primary, Bourns (kept) or Susumu (more stock); LM66100 stock at Digi-Key (an agent saw 386); a part for the TPS22917's 10 nF CT | to do |
+| C11 | Pushes: Project-Okapi 46, Project-Margay 7, NW-Status 66+, NW-Tests 3 (plus its uncommitted generated `results.*` from 2026-11-04), nw-cold-silicon 1 | on Andy's word |
+
+
 **Progress, 2026-11-06 (Sonnet):** step 1 (B3) done. The #32 part-number
 comment and the README's "Reference voltage on the sensor port" section
 (Project-Okapi 4dee0fc; the pinout has no J2 entry, as it describes the built
