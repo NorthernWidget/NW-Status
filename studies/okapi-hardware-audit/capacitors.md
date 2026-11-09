@@ -190,5 +190,15 @@ the first board shows thin hold-up margin.
 
 ## Positions
 
-(to be filled: ref, net and voltage, the datasheet and its type, lower and upper bound,
-our part, its effective value, verdict)
+All 70 positions on Okapi and Margay, one row each (net and voltage, governing pin, the
+requirement quoted with its type, bounds, rating, dielectric, land, effective value, verdict,
+source): `sources/2026-11-09-capacitor-constraints-agent-report.md` (agent, 2026-11-09).
+Checked against the netlist: Margay C19 (0.1 µF) and C20 (1 µF) both sit on the DS3231M's
+VBAT with BT1 and D4; D4 (BAT43WS) runs from 3V3 to BT1+ (Andy b82f7d8, a backup feed for
+the RTC, whose VCC is on the switched 3V3_AUX); Margay U9 is a TPS2104DBVT.
+
+Fails: Okapi C10 (#44); Margay C10, 0.1 µF on the TPS2104's IN1 against "require 0.22 µF";
+Margay C19 + C20, 1.1 µF on VBAT against the DS3231M's 0.1-1.0 µF. Merge candidates: (A) 10
+µF 0805 into 22 µF 0805, no copper, blocked by Margay's VUSB 10 µF limit and the TPS7A05's 22
+µF maximum read nominally; (B) 4.7 µF 0603 into 1 µF 0603, blocked by FTDI's 4.7 µF at Okapi
+C22; (C) the two 1 µF lines, copper either way.
