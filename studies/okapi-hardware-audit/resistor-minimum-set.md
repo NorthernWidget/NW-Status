@@ -150,3 +150,25 @@ Confirms 19 values for five changes (R21, R13, R22, R69, R70) with the float as 
   day, so the Digi-Key code on the BoM should carry an alternate. Changes Margay R22-R24 at
   the Okapi/Margay merge; Okapi R49/R50 already carry it.
 - **R15 and STAT:** discussed below; R15 held at 2 kΩ, STAT kept.
+
+**R15 (BQ298000 RPACK, PACK pin on V_LI).** Table 8-1: maximum 2 kΩ, no minimum, "to protect
+the PACK pin from a reverse charging current condition". It forms a divider with the internal
+RPACK-VSS (100-550 kΩ, typical 300 kΩ), so PACK reads low by 15-82 mV at 4.2 V with 2 kΩ and
+8-42 mV with 1 kΩ. The detection thresholds it feeds are 100 mV (charger removed), 400 mV (load)
+and 700 mV (charger attached): neither value crosses one. 1 kΩ halves the offset and doubles the
+current a reverse-voltage fault on PACK could drive; on Okapi PACK sits on V_LI beside an
+on-board charger, so that fault takes a reversed cell. No measurable performance change either
+way; held at 2 kΩ (Andy, leaning no), which keeps 2k as a value of its own.
+
+**STAT (LTC4412, U7).** U7 drives Q5, the ideal diode from V_LI to V_BETA; USB reaches V_BETA
+through D9. STAT sinks 10 µA (6-17 µA) when V_BETA is above V_LI by 20 mV, that is, when USB
+rather than the cell carries the load. Today nothing reads it: R21 pulls it to V_BETA, and the
+pin costs about 10 µA at 470 kΩ, 4.6 µA at 1 MΩ, only while on USB. Against keeping it: R68
+already tells U41 (GPA0) that USB is present, and with D9 dropping 0.3-0.5 V USB wins over a
+full cell nearly always, so STAT mostly repeats R68; the PAC1934's V_LI and V_BETA channels
+show which source is supplying, when the PAC is read. For keeping it: STAT is the one signal
+that says the cell is not supplying without powering and reading the PAC (a missing, dead or
+disconnected cell while on USB), it is free in current off USB, and U41's GPA2 is unconnected.
+To read it, R21 moves from V_BETA to 3V3_CORE (V_BETA reaches about 4.7 V, above the expander's
+supply) and STAT routes to GPA2; at 1 MΩ the 10 µA sink pulls it fully low. Andy expects to
+want it: Proposal A (remove R21) is withdrawn, and the read is a v0.8.0 candidate.
