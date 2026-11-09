@@ -47,7 +47,9 @@ USB port. The ideal-diode pair therefore gives USB priority with the packs Marga
 use. Fresh lithium AAs (5.37-5.49 V) would carry the board ahead of USB, and they are not a
 recommended pack. (`sources/2026-11-09-fresh-aa-voltages-agent-report.md`)
 
-**Decision (Andy, 2026-11-09): the LM66100 ideal-diode pair**, option 3.
+**Decision (Andy, 2026-11-09): the LM66100 ideal-diode pair**, option 3, for Margay v3.1.0.
+Andy's weight on it: freeing the core from the FT231X's 50 mA regulator, "because otherwise
+there could be unexpected failures when running off of USB".
 
 ## 4. The proposed power path
 
@@ -79,5 +81,48 @@ adapted (`margay-power-path-lm66100.md`):
 2. The FT231X configuration against FTDI's self-powered design.
 3. The RTC conversation (QUEUE, desk item 14): VSYS is a candidate feed for the RTC's battery
    input.
-4. The milestone: Margay's next hardware revision.
+4. The milestone: Margay v3.1.0 (Andy, 2026-11-09).
 5. Bench: today's switchover on a built board, then the new path's handover under an SD write.
+
+## 6. Details settled after the decision (2026-11-09)
+
+**The source switch is the LM66100 pair itself**, with no control net: U_A conducts while USB
+clears the battery, U_A's ST holds U_B off, and U_B takes over when U_A lets go. The MCU keeps
+3V3_AUX on and off through U7's EN (3V3_AUX_CTRL) as now; U8 only gates the battery-sense
+divider.
+
+**The Vs output.** JP2 picks Vs's source for U11 (MIC94094): pin 1 is VMAIN today, pin 3 is
+3V3_AUX. Pin 1 moves to VSYS. U11 is enabled by the MCU, as now. Unlike VMAIN, VSYS is live in
+sleep, so U7 and U11 now sit on a powered rail while off: U7's shutdown current is 100 nA
+typical, 300 nA maximum at 25 °C (TPS7A05, SBVS254D); U11's is 0.01 µA typical, 1 µA maximum
+(MIC94094, DS20006706B). The sleep budget becomes about 0.46 µA typical (0.35 µA for the pair
+plus 0.11 µA), under 0.6 % of the typical 5-minute deployment.
+
+**The VSYS capacitor, -40 to +85 °C.** The gap is U_B's turn-on: about 41 µs at -40 °C with
+3.6 V in, 37 µs at +85 °C, 25-28 µs at 5 V (LM66100 Figure 8, read by eye), plus ST's 1 µs
+and U_A's turn-off of about 2 µs (Figure 9): 44 µs. VSYS starts the gap about 0.1 V below the
+battery (U_A turns off within 0-80 mV of it, less its on-resistance drop) and must stay above
+3.512 V, the TPS7A05's 3.3 V plus its 212 mV maximum dropout at 200 mA over -40 to +85 °C.
+U_B's body diode (0.5 V typical, 1.1 V maximum at 10 mA) is a floor beneath that and is not
+counted. Effective capacitance needed, C = I x 44 µs / ΔV:
+
+| Battery | 30 mA (typical) | 210 mA (3V3_AUX full + core) | 710 mA (+ Vs at 500 mA) |
+|---|---|---|---|
+| 4.5 V | 1.5 µF | 10.4 µF | 35.2 µF |
+| 4.2 V | 2.2 µF | 15.7 µF | 53.1 µF |
+| 4.0 V | 3.4 µF | 23.8 µF | 80.5 µF |
+| 3.8 V | 7.0 µF | 49.1 µF | 166 µF |
+
+Worst-case effective value per part (X5R ±15 % over -55 to +85 °C, -20 % tolerance, DC bias at
+5 V from Murata's data): a 22 µF 0805 (GRM219R61C226ME15L) about 5.2 µF; a 100 µF 1206
+(GRM31CR61A107MEA8L, Okapi's C43) about 23.7 µF. Proposal: **two GRM31CR61A107MEA8L** (47 µF
+worst-case effective), the same line as Okapi's C43. They carry 210 mA to a 3.9 V pack and the
+full Vs load to about 4.4 V at every temperature in the range. A polymer bulk capacitor is ruled out on VSYS: it is live in
+sleep, and a polymer's leakage (tens of µA) would dwarf the logger's sleep current.
+
+**USB inrush with no battery.** Plugging USB into a board with no battery charges VSYS from 0 V:
+two 100 µF parts hold about 70 µF effective at 5 V, about 350 µC, where the USB limit is about
+50 µC (10 µF at 5 V; USB 2.0 §7.2.4.1, from memory, to check). The LM66100 turns on in about 27
+µs and does not limit the slew. With a battery fitted, VSYS only steps from the battery to USB
+(0.2-0.5 V, 14-35 µC). Options: a slew-controlled switch ahead of U_A, or accept the overshoot
+of the USB limit in the battery-less case. Open.

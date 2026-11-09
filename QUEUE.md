@@ -85,6 +85,10 @@ critical path".
    3V3_AUX (the RTC's VCC, the SD card, J2) drop out at every USB unplug, whatever the
    capacitance; the switchover control has to change first.
    → studies/okapi-hardware-audit/margay-vmain-switchover.md and studies/okapi-hardware-audit/capacitors.md
+   A lead for this conversation (Andy, 2026-11-09): a colleague's Margay failed in the cold on
+   battery power, and the failures stopped when he powered it through the USB cable spliced
+   to the same batteries. On USB the core runs from the FT231X's regulator through Q2 and the
+   aux rail through U9's IN2, bypassing Q1, U6 (TPS797), U8 (TPS22916) and U9's IN1.
 
 15. **Margay's power path: USB supply against sleep current** (Andy, 2026-11-09: a topic to
    think about). Whether to add a low-quiescent selector (two LM66100s, about +0.3 µA; or a
