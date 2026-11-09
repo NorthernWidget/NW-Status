@@ -110,3 +110,34 @@ current, and its resistance rises in the cold too.
 **Cell chemistry stays the simplest cold fix**: the README already names the BR1220 (to -30 °C)
 and the BR1225A (to -40 °C). A larger holder (CR2032 class, lower resistance and about six times
 the capacity) is a v3.1 copper option.
+
+## The CR1220 in the cold, and what the buffer buys (agent report, 2026-11-10)
+
+`sources/2026-11-10-cr1220-cold-agent-report.md`. Corrections first: on VBAT the DS3231M converts
+"once every 10s" (19-5312), not every 64 s as an earlier line of this work said; the 575 µA,
+10 ms pulse averages 0.575 µA, inside IBATT's 2-3 µA.
+
+No maker publishes a CR1220's resistance or pulse voltage in the cold; the limits below are
+estimates bracketed from continuous-load curves (Panasonic to -10 °C, Renata and Maxell to -20 °C).
+Fresh cell, VBAT at or above 2.3 V through the pulse:
+
+| | Panasonic-type CR1220 | Maxell CR1220 | BR1220 / BR1225A |
+|---|---|---|---|
+| Unbuffered | about -25 °C (pessimistic bound) to below -40 °C | about -5 °C to -17 °C | about 0 °C |
+| Buffered (1 kΩ + BAT43WS + 100 µF) | below -40 °C (2.47 V estimated at -40 °C) | about -34 °C | about -12 to -14 °C |
+
+- The buffer gains about 15-30 °C against the pessimistic bound and little against the
+  optimistic one, because the Schottky costs 0.12 V at 20 °C and about 0.27 V at -40 °C. Its larger
+  gain is that the clock stops seeing the cell's resistance, which roughly triples by late life
+  (Energizer: 45 Ω fresh, 150 Ω near the end).
+- **The BR cells are worse here, not better**: about 0.2 V below a CR1220 at the same load, and
+  Panasonic rates the BR1220 to -40 °C only at about 9 µA down to 2.0 V, below the clock's 2.3 V.
+  The README's advice to fit a BR1220 or BR1225A for cold deployments needs revisiting.
+- **The capacitor's leakage is the open risk**: if the 100 µF part carries Murata's usual 50 ΩF
+  insulation floor, worst-case leakage is 6 µA at room temperature (UNVERIFIED: the part's own
+  specification was not retrieved), which would cut the cell's backup life from about 1.6 to
+  0.47 years. Measure one board's VBAT current with main power off before choosing the part; a
+  smaller capacitor (two 22 µF) halves the risk at 0.25 V of droop.
+- The agent's proposal, unchecked against the schematic: drop D5 and feed the cell through 1 kΩ
+  alone, recovering the diode's 0.12-0.27 V, at the cost of the capacitor's leakage drawing on
+  the cell while main power is present, and of losing D5's block against reverse current.
