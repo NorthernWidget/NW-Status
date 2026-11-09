@@ -195,3 +195,44 @@ an RC on EN or a longer settle.
   +20, 0 and -20 °C; freezer scope, J3 against the USB splice.
 - T6: inspect failed units as received (register dump, holder, leakage at VCOIN+).
 
+
+## The clock's supply through one cycle, and what the VBAT changes still buy (2026-11-10)
+
+Battery path, 2024 firmware, three fresh D cells (about 4.5 V). Netlist from the Eagle `Margay.sch`
+(U6 core LDO on VBAT+; U8 TPS22916CYFPT VBAT+ to VBAT_SW; U9 TPS2104 IN1 VBAT_SW, IN2 VUSB, OUT
+VMAIN; U7 TPS7A0533PDBVR VMAIN to 3V3_AUX; RTC1 VCC on 3V3_AUX; R15/R16 I2C pull-ups on 3V3_AUX;
+VBAT on BT1 and C19 0.1 µF only). Times computed from datasheet values; nothing measured.
+
+| Moment | What happens | Datasheet rule | Path |
+|---|---|---|---|
+| Sleep, t = 0 | U7 EN falls on a GPIO edge (ns) | EN ramp-down ≥ 100 µs below 15 °C (TPS7A05 §8.1.3) | both |
+| Sleep, t = 0 | 3V3_AUX 2.70 to 2.45 V in 58-118 µs (120 Ω on 5-10 µF effective); the clock hands over to the cell | tVCCF ≥ 300 µs (DS3231M) | both |
+| Sleep, t ≈ µs | U8 off; VMAIN 4.5 to 2.7 V in 61-84 µs through U8's 150 Ω QOD and U9's on IN1 switch; below 2.7 V unspecified (U9's charge pump limit) | IN ramp-down ≥ 10 ms below 15 °C | battery only |
+| Sleep, 5 min | Clock on the cell; 575 µA for 10 ms every 10 s; C19 holds 0.1 µC of the 5.75 µC | VBAT ≥ 2.3 V | both |
+| Wake, 0-5 ms | U8 tON 1.4-1.7 ms, U9 IN1 rise about 0.34 ms, U7 tSTR 1.5-2.8 ms: 3V3_AUX valid at about 3-5 ms | firmware starts at 16 ms | battery; on USB only U7 |
+| Wake, cold | after a fast EN fall: up to 130 ms of delay; after a fast IN fall: partial start, shutoff, normal start | | EN both, IN battery only |
+
+A partial start lifts VCC; once VCC exceeds the cell's voltage (VCC < VPF but > VBAT) the clock runs
+from it, and the shutoff then drops it through the 120 Ω pulldown, a second fast handover onto the
+cold cell. The battery path makes three handovers a cycle in the cold and the USB path one. The USB
+loggers ran the same cells through the same sleep pulses in the same cold without resetting (Andy's
+recollection), which argues that the pulses alone do not reset the clock; the handovers do. Inference.
+
+**What the VBAT changes buy now.** The v3.1 KiCad schematic already has D4 (BAT43WS) from 3V3 to
+Net-(BT1-+), with no diode in series with the cell (verified from a fresh netlist export): as drawn it
+charges a primary lithium cell.
+- D4: the fix. VBAT sits near 3.1 V from the core rail whenever the pack is in, every handover lands
+  on it, and the cell leaves the loop. Keep.
+- D5, a Schottky in series with the cell: now required, to stop D4 charging it. Keep.
+- R_BAT 1 kΩ: the second protection element beside D5, and the cell's isolation from C_BUF. Keep.
+- C_BUF 100 µF: no longer load-bearing. It serves only when the pack is out (a cold pack swap, a dead
+  pack). Its leakage risk mostly goes, because while the pack is in, D4 feeds the leakage and D5
+  blocks the cell. It exceeds the DS3231M's 0.1-1.0 µF recommendation. Optional.
+- C20 out: unchanged.
+- Option, unchecked: ground the clock's VCC (Maxim's VBAT-only configuration, Figure 5) so that no
+  handover happens at all. Needs the alarm output's behavior in VBAT-only mode checked (BBSQW).
+
+**For the v3.0 boards already built**, firmware cannot stop the IN ramp cheaply: holding U8 on through
+sleep costs about 450 µA in the R22/R23 and R17/R18 dividers. A longer settle at wake (about 150 ms,
+about 4.3 µA average at 8.6 mA awake every 5 min) covers the 130 ms EN delay for I2C and the SD card
+but not the clock's handovers. The hardware fix there is a D4 + D5 rework.
