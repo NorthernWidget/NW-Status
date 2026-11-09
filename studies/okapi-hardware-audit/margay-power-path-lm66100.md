@@ -86,3 +86,18 @@ VSYS's capacitance sits behind U_A.
    (SLVS332J §6.3), which covers USB.
 4. The RTC conversation (desk item 14): VSYS is an obvious source for the RTC's battery input.
 5. Bench: the handover under an SD write, and U_A's leakage at temperature.
+
+## Against fresh batteries (2026-11-09, `sources/2026-11-09-fresh-aa-voltages-agent-report.md`)
+
+Fresh alkaline cells measure about 1.6 V open-circuit (Energizer's handbook, checked: "Open
+circuit voltage = 1.6 Volts"; the stated spread runs 1.56-1.65 V), so a fresh 3-cell alkaline
+pack, AA or D, is 4.68-4.95 V unloaded, 4.80 V typical, and 4.46-4.80 V under the light loads
+the manufacturers chart; it falls below 4.75 V within the first few percent of capacity. U_A
+takes the load when USB clears the battery by 80-250 mV (150 mV typical), so against 5.0 V USB
+an alkaline pack yields to USB. The exception is the top of the fresh spread against a weak
+port (USB at or below about 4.9 V with a 4.95 V pack): the battery can carry the board until
+it sags, and U_A's CE hysteresis (VON -150 mV, VOFF +35 mV typical) keeps the two from
+chattering; an alkaline pack's slow recovery can move the load back and forth only slowly, and
+either source holds VSYS. Lithium iron disulfide (L91) packs, 5.37-5.49 V fresh, sit above every
+USB voltage and carry the board until they fall below it; they also sit within 0.13 V of the
+5.5 V ceiling.
