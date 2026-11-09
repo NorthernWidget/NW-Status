@@ -163,7 +163,12 @@ their lists and ours blind. Reports: `sources/2026-11-10-jonas-cold-*`. The rank
 
 Andy, 2026-11-10: the clock reset to 2000 on battery and never after the USB hack. The date
 separates two causes: 2000-01-01 is the DS3231M's power-on reset (both supplies lost); 2000/00/00
-is `begin()` setting the clock from serial garbage (Margay.cpp lines 225-234, verified). To ask.
+is `begin()` setting the clock from serial garbage (Margay.cpp lines 225-234, verified).
+**Answered, Andy 2026-11-10: Jan 1 2000, the normal reset.** The DS3231M lost both supplies; the
+serial time-set is out. Because the clock sleeps on VBAT in both modes, the cell alone cannot be
+the whole cause: the reading that fits all three observations is a weak (cold) cell plus a VCC
+disturbance that only the battery path makes, such as the TPS7A05 restart at wake or pack sag.
+A fresh cell restores the margin; USB removes the disturbance.
 
 ### The TPS7A05 caution (SBVS254D §8.1.3, read)
 
