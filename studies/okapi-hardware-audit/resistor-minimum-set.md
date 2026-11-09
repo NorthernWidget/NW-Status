@@ -99,3 +99,21 @@ Andy on the 16-value option:
 - R22/R69 (MPPT) and R71/R70 (SHDN start): set from the solar panels Okapi is likely to use,
   not from the value count. An agent surveys the panels:
   `sources/2026-11-09-solar-panels-agent-report.md`.
+
+## Run 4: with Andy's decisions held
+
+Holds R21 at 1 MΩ, R13 at 180 kΩ and R15 at 2 kΩ; MPPT and SHDN as built (143k/100k, 1M/200k)
+until the panel survey; every LED at its current value or lower. The floor rises to 15 values.
+Outputs: `sources/2026-11-09-resistor-minimum-set-run4-*.txt`.
+
+| Values | Changed (float 4.210 V) | Changed (float 4.200 V) | What the last value removed costs |
+|---|---|---|---|
+| 20 | 2 | 3 | R21 and R13, both approved (and R16 88.7k for 4.200 V) |
+| 19 | 3 | 4 | R14 100 to 220 Ω |
+| 18 | 6 | 6 | R3, R16, R17: LBI 2.72 V (2.67 V at 4.200), float 4.204 V (4.182 V) |
+| 17 | 14 | 14 | ILIM 232/464 to 220/560: 1.045 A, 1.456 A on the jumper |
+| 16 | 30 | 30 | status LEDs 330 to 220 Ω and UART series on both boards |
+| 15 | 51 | 51 | 10 kΩ pull-ups to 100 kΩ on both boards |
+
+The approved changes alone take the boards from 22 values to 20. The 18-value step undoes the
+LBI threshold set this morning (R3 330k, 2.95 V).
