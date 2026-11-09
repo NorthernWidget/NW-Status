@@ -125,3 +125,29 @@ PMOS "back diode", which "conducts reverse current when the input voltage drops 
 voltage ... and is not internally limited" (SLVS332J §7.3.1). Bench work on USB alone runs
 the logger near the FTDI regulator's limit; the README's "Make sure battery power is applied"
 is consistent with that.
+
+## In the hysteresis band, and a power path that takes USB directly (2026-11-09)
+
+**In the band** (for example 4.53-4.86 V with a 5.5 V pack), U10 keeps whichever state it last
+held: plugged in at 4.7 V, the logger stays on the battery; on USB at 5 V and sagging to 4.7 V,
+it stays on USB. No oscillation, and either source holds 3V3_AUX in regulation. Only which source
+drains depends on history.
+
+**USB to the core directly (Andy's question).** Today USB reaches the core 3V3 only through the
+FT231X's 50 mA regulator and Q2; U6 (TPS797) takes its input from VBAT+ alone. A diode from VUSB
+onto VBAT+ would push current back into the primary cells (Q1, in the pack's negative lead,
+conducts both ways once on). The way to do it is to move the source selection upstream of
+both regulators: one low-quiescent selector makes a system rail from USB (preferred) and the
+battery, with reverse blocking on both inputs, and that rail feeds U6 (core, always on) and
+U8/U7 (aux). U9, U10 and the switchover problem go with it, and the FT231X no longer powers the
+core. Candidates from TI's product pages (2026-11-09), datasheets still to read:
+- TPS2116 power mux: 1.6-5.5 V, 2.5 A, 1.32 µA typical IQ, automatic priority mode (VIN1
+  preferred, switches to VIN2 when VIN1 drops), reverse current blocking when VOUT > VINx.
+  Its IQ is about equal to Margay's whole published sleep current (1.68 µA), so it would roughly
+  double it.
+- Two LM66100 ideal diodes: 1.5-5.5 V, 1.5 A, 150 nA typical IQ each, reverse blocking, and
+  "Two LM66100 devices can be used in an ORing configuration". Plain ORing lets the higher
+  source win (a fresh 5.4 V lithium pack over 5 V USB); USB priority uses the parts' CE pins,
+  to be checked against the datasheet.
+Both top out at 5.5 V, the README's battery maximum, and a USB source at 5.25 V. The switchover
+time and the bulk capacitance on the new rail come from whichever datasheet is chosen.
