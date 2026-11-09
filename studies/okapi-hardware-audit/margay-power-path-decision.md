@@ -91,11 +91,11 @@ clears the battery, U_A's ST holds U_B off, and U_B takes over when U_A lets go.
 3V3_AUX on and off through U7's EN (3V3_AUX_CTRL) as now; U8 only gates the battery-sense
 divider.
 
-**The Vs output.** JP2 picks Vs's source for U11 (MIC94094): pin 1 is VMAIN today, pin 3 is
+**The Vs output.** JP2 picks Vs's source for U11 (MIC94090): pin 1 is VMAIN today, pin 3 is
 3V3_AUX. Pin 1 moves to VSYS. U11 is enabled by the MCU, as now. Unlike VMAIN, VSYS is live in
 sleep, so U7 and U11 now sit on a powered rail while off: U7's shutdown current is 100 nA
 typical, 300 nA maximum at 25 °C (TPS7A05, SBVS254D); U11's is 0.01 µA typical, 1 µA maximum
-(MIC94094, DS20006706B). The sleep budget becomes about 0.46 µA typical (0.35 µA for the pair
+(MIC94090, from the MIC94090-MIC94095 datasheet DS20006706B). The sleep budget becomes about 0.46 µA typical (0.35 µA for the pair
 plus 0.11 µA), under 0.6 % of the typical 5-minute deployment.
 
 **The VSYS capacitor, -40 to +85 °C.** The gap is U_B's turn-on: about 41 µs at -40 °C with
