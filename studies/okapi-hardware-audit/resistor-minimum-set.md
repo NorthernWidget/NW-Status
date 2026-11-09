@@ -83,3 +83,19 @@ leaves those positions alone, but a cut below 16 needs that constraint first.
 
 For Andy: (1) whether 4.210 V float stands or R16 goes to 88.7k; (2) which point on the table;
 (3) R14 at 220 Ω and R15 at 1 kΩ, which ride with the 18-value option and below.
+
+## Run 3 and Andy's review of the 16-value option (2026-11-09)
+
+Run 3 widened every LED position to 100 Ω-10 kΩ (`ledwide`): with the float at 4.200 V the
+changed-position count is identical to run 2 at every cap from 10 to 22
+(`sources/2026-11-09-resistor-minimum-set-run3-ledwide-float4200.txt`), so LED brightness was
+never what set the minimum. Andy: the LEDs must be visible outdoors. The rule going forward
+(proposal): each LED position keeps its current value or goes lower, never dimmer.
+
+Andy on the 16-value option:
+- R21 470k to 1M: approved.
+- R13 182k to 180k: approved.
+- R15 2k to 1k: uncertain, leaning no; held at 2k and kept open (proposal D).
+- R22/R69 (MPPT) and R71/R70 (SHDN start): set from the solar panels Okapi is likely to use,
+  not from the value count. An agent surveys the panels:
+  `sources/2026-11-09-solar-panels-agent-report.md`.

@@ -16,6 +16,7 @@ def rng(lo,hi): return [v for v in V if lo*(1-1e-9)<=v<=hi*(1+1e-9)]
 k=1e3; M=1e6
 # ---- positions: (group, lo, hi, src, [(board, ref, current)]) ----
 O='Okapi'; G='Margay'
+LED=(100,10*k) if 'ledwide' in sys.argv else None  # run 3: LED brightness free (Andy), 100 R-10 k (P)
 SINGLE=[
  ('BQ2980 RVDD',100,300,'D+P',[(O,'R9',220)]),
  ('BQ2980 RBAT',10,47,'P',[(O,'R11',27)]),
@@ -24,9 +25,9 @@ SINGLE=[
  ('CTR pull-down',1000,100*k,'P',[(O,'R12',1*k)]),
  ('USB series',22,33,'P',[(O,'R34',27),(O,'R35',27),(G,'R3',27),(G,'R4',27)]),
  ('UART series',100,1000,'P',[(O,'R38',330),(O,'R40',330),(G,'R7',330),(G,'R9',330)]),
- ('Status RGB LEDs',220,680,'P',[(O,r,330) for r in ('R36','R37','R39','R42','R43','R44')]+[(G,r,330) for r in ('R5','R6','R8','R11','R12','R13')]),
- ('LED grid D10-D17',150,470,'P',[(O,r,220) for r in ('R53','R60','R64','R76','R77','R78','R79','R80')]),
- ('B-SoM RGB LED',3*k,10*k,'P',[(O,r,5.1*k) for r in ('R81','R82','R83')]),
+ ('Status RGB LEDs',*(LED or (220,680)),'P',[(O,r,330) for r in ('R36','R37','R39','R42','R43','R44')]+[(G,r,330) for r in ('R5','R6','R8','R11','R12','R13')]),
+ ('LED grid D10-D17',*(LED or (150,470)),'P',[(O,r,220) for r in ('R53','R60','R64','R76','R77','R78','R79','R80')]),
+ ('B-SoM RGB LED',*(LED or (3*k,10*k)),'P',[(O,r,5.1*k) for r in ('R81','R82','R83')]),
  ('USB-C CC Rd (held 5.1 k)',5.1*k,5.1*k,'P',[(O,'R84',5.1*k),(O,'R85',5.1*k),(G,'R31',5.1*k),(G,'R32',5.1*k)]),
  ('Logic pull-ups/downs 3.3 V',10*k,100*k,'P',[(O,r,10*k) for r in ('R24','R25','R41','R45','R46','R47','R86','R87','R54')]+[(O,r,100*k) for r in ('R18','R19','R57','R61')]+[(G,r,10*k) for r in ('R1','R14','R19','R20','R21')]),
  ('Reset pull-up',4.7*k,10*k,'D+P',[(O,'R52',10*k),(G,'R2',10*k)]),
@@ -48,7 +49,7 @@ DIVIDERS=[ # (name, t/b lo, hi, top range, bottom range, src, top pos, bottom po
  ('LT3652 SHDN: 1.2(1+t/b) in 6.8-7.5 V',4.667,5.25,(100*k,4.7*M),(20*k,1*M),'D+P',[(O,'R71',1*M)],[(O,'R70',200*k)]),
  ('ILIM: 230/R26 in 0.9-1.1 A; R26||R30 in 154-160',None,None,(209,256),(154,10*k),'D+P',[(O,r,232) for r in ('R26','R27','R28','R29')],[(O,r,464) for r in ('R30','R31','R32','R33')]),
 ]
-FW=float(sys.argv[2]) if len(sys.argv)>2 else 4.200
+FW=float(sys.argv[2]) if len(sys.argv)>2 and sys.argv[2]!='ledwide' else 4.200
 FLOAT=('LT3652 float: 3.3(1+t/b) in 4.178-%.3f V; R13 + t||b in 225-275 k'%FW,4.178/3.3-1,FW/3.3-1,(30*k,300*k),(100*k,1*M),(225*k,275*k),[(O,'R16',91*k)],[(O,'R17',330*k)],[(O,'R13',182*k)])
 
 def solve(Nmax=None, churn=True):
