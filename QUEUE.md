@@ -89,6 +89,12 @@ critical path".
    battery power, and the failures stopped when he powered it through the USB cable spliced
    to the same batteries. On USB the core runs from the FT231X's regulator through Q2 and the
    aux rail through U9's IN2, bypassing Q1, U6 (TPS797), U8 (TPS22916) and U9's IN1.
+   The emails (Jonas Eschenfelder, SFU, thread "Hello from the field", 2024-07-24 to 08-03):
+   in the field at about 0 °C and windy, some of the clocks failed and worked again after
+   the coin cell was replaced with a warmer one; he asked about wiring the clock to the D
+   cells instead, and Andy replied the RTC takes 2.3-5.5 V, so two or three D cells would do.
+   A post-deployment check was planned for late August 2024; no email records it, and none
+   mentions the USB-cable workaround (in person, or elsewhere).
 
 15. **Margay's power path: USB supply against sleep current** (Andy, 2026-11-09: a topic to
    think about). Whether to add a low-quiescent selector (two LM66100s, about +0.3 µA; or a
