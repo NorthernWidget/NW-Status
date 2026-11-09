@@ -95,7 +95,7 @@ critical path".
    cells instead, and Andy replied the RTC takes 2.3-5.5 V, so two or three D cells would do.
    A post-deployment check was planned for late August 2024; no email records it, and none
    mentions the USB-cable workaround (in person, or elsewhere).
-   **Hypothesis (2026-11-09, not measured):** a floating 3V3_AUX on battery. In sleep the
+   **Hypothesis (2026-11-09; its I2C path refuted the same day, see studies/okapi-hardware-audit/margay-rtc-cold.md, which has the SPI path, the bench test and the fix):** a floating 3V3_AUX on battery. In sleep the
    2024 library calls powerAux(OFF) and powerOB(OFF) (Margay.cpp), so on battery U8 cuts VMAIN
    and the TPS7A05 (U7) sits with no input; its 120 Ω active discharge needs VIN (SBVS254D
    §7.3.2), so 3V3_AUX floats. Anything high on SCL/SDA can back-feed it: R16 (10 kΩ) ties SCL,
