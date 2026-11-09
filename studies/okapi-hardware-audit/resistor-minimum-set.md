@@ -169,6 +169,8 @@ full cell nearly always, so STAT mostly repeats R68; the PAC1934's V_LI and V_BE
 show which source is supplying, when the PAC is read. For keeping it: STAT is the one signal
 that says the cell is not supplying without powering and reading the PAC (a missing, dead or
 disconnected cell while on USB), it is free in current off USB, and U41's GPA2 is unconnected.
-To read it, R21 moves from V_BETA to 3V3_CORE (V_BETA reaches about 4.7 V, above the expander's
-supply) and STAT routes to GPA2; at 1 MΩ the 10 µA sink pulls it fully low. Andy expects to
+To read it, STAT routes to GPA2 and R21 stays on V_BETA: the MCP23018's GPIO pins are rated
+-0.6 to 5.5 V whatever its supply (absolute maximum ratings), which is how R68 already brings
+VUSB_POWER into GPA0. (Superseded: an earlier line here moved R21 to 3V3_CORE; not needed.) At
+1 MΩ the 10 µA sink pulls the pin fully low. Andy expects to
 want it: Proposal A (remove R21) is withdrawn, and the read is a v0.8.0 candidate.
