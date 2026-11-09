@@ -124,3 +124,16 @@ MPPT R22/R69 = 1M/200k (16.2 V) and start R71/R70 = 1M/100k (13.2 V), for 10-20 
 panels (DECISIONS.md, Okapi design item 5). Against run 4's 20 values, 143k leaves the board
 (R22 was its only position) and 200k and 100k trade places, so the v0.8.0 set is 19 values
 with five changed positions: R21, R13, R22, R69, R70.
+
+## Run 5: run 4 with the #46 dividers held
+
+Confirms 19 values for five changes (R21, R13, R22, R69, R70) with the float as built; holding
+4.200 V adds R16 88.7k for six. Outputs: `sources/2026-11-09-resistor-minimum-set-run5-*.txt`.
+
+| Values | Changed (4.210 V) | The next value removed costs |
+|---|---|---|
+| 19 | 5 | – |
+| 18 | 6 | R14 100 to 220 Ω |
+| 17 | 9 | R3 330k to 374k, R16/R17 to 100k/374k: LBI 2.95 to 2.67 V, float 4.182 V |
+| 16 | 17 | ILIM 232/464 to 220/560 Ω: 0.99 to 1.045 A, jumper 1.49 to 1.46 A |
+| 15 | 33 | status LEDs 330 to 220 Ω and UART series, on both boards |

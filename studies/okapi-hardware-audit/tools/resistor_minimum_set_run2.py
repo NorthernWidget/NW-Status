@@ -17,7 +17,8 @@ k=1e3; M=1e6
 # ---- positions: (group, lo, hi, src, [(board, ref, current)]) ----
 O='Okapi'; G='Margay'
 LED=(100,10*k) if 'ledwide' in sys.argv else None  # run 3: LED brightness free (Andy), 100 R-10 k (P)
-R4='run4' in sys.argv  # run 4: Andy 2026-11-09: R21 1M, R13 180k; R15 held; MPPT/SHDN held pending the panel survey; LEDs no dimmer than now (P)
+R5='run5' in sys.argv  # run 5: run 4 plus the v0.8.0 charger dividers of Project-Okapi #46
+R4='run4' in sys.argv or R5  # run 4: Andy 2026-11-09: R21 1M, R13 180k; R15 held; MPPT/SHDN held pending the panel survey; LEDs no dimmer than now (P)
 SINGLE=[
  ('BQ2980 RVDD',100,300,'D+P',[(O,'R9',220)]),
  ('BQ2980 RBAT',10,47,'P',[(O,'R11',27)]),
@@ -46,11 +47,11 @@ DIVIDERS=[ # (name, t/b lo, hi, top range, bottom range, src, top pos, bottom po
  ('TLV61220 5V_LP: 0.5(1+t/b)=5.0 V +/-2 %',8.8,9.2,(100*k,4.7*M),(50*k,500*k),'D+P',[(O,'R4',1.62*M)],[(O,'R5',180*k)]),
  ('TPS62822 3V3_AUX: 0.6(1+t/b)=3.3 V +/-3 %, R7 held 180 k',4.33,4.67,(200*k,1*M),(180*k,180*k),'D+P',[(O,'R6',820*k)],[(O,'R7',180*k)]),
  ('TPS61032 LBI: 0.5(1+t/b) in 2.6-3.0 V',4.2,5.0,(100*k,4.7*M),(100*k,1*M),'D+P',[(O,'R2',1.62*M)],[(O,'R3',330*k)]),
- ('LT3652 VIN_REG (MPPT): 2.7(1+t/b) in 6.4-6.7 V',6.4/2.7-1,6.7/2.7-1,*(((143*k,143*k),(100*k,100*k)) if R4 else ((10*k,1*M),(10*k,1*M))),'D+P',[(O,'R22',143*k)],[(O,'R69',100*k)]),
- ('LT3652 SHDN: 1.2(1+t/b) in 6.8-7.5 V',4.667,5.25,*(((1*M,1*M),(200*k,200*k)) if R4 else ((100*k,4.7*M),(20*k,1*M))),'D+P',[(O,'R71',1*M)],[(O,'R70',200*k)]),
+ ('LT3652 VIN_REG (MPPT): 2.7(1+t/b) in 6.4-6.7 V (run 5: 16.2 V, #46)',*((5,5) if R5 else (6.4/2.7-1,6.7/2.7-1)),*(((1*M,1*M),(200*k,200*k)) if R5 else ((143*k,143*k),(100*k,100*k)) if R4 else ((10*k,1*M),(10*k,1*M))),'D+P',[(O,'R22',143*k)],[(O,'R69',100*k)]),
+ ('LT3652 SHDN: 1.2(1+t/b) in 6.8-7.5 V (run 5: 13.2 V, #46)',*((10,10) if R5 else (4.667,5.25)),*(((1*M,1*M),(100*k,100*k)) if R5 else ((1*M,1*M),(200*k,200*k)) if R4 else ((100*k,4.7*M),(20*k,1*M))),'D+P',[(O,'R71',1*M)],[(O,'R70',200*k)]),
  ('ILIM: 230/R26 in 0.9-1.1 A; R26||R30 in 154-160',None,None,(209,256),(154,10*k),'D+P',[(O,r,232) for r in ('R26','R27','R28','R29')],[(O,r,464) for r in ('R30','R31','R32','R33')]),
 ]
-FW=float(sys.argv[2]) if len(sys.argv)>2 and sys.argv[2] not in ('ledwide','run4') else 4.200
+FW=float(sys.argv[2]) if len(sys.argv)>2 and sys.argv[2] not in ('ledwide','run4','run5') else 4.200
 FLOAT=('LT3652 float: 3.3(1+t/b) in 4.178-%.3f V; R13 + t||b in 225-275 k'%FW,4.178/3.3-1,FW/3.3-1,(30*k,300*k),(100*k,1*M),(225*k,275*k),[(O,'R16',91*k)],[(O,'R17',330*k)],[(O,'R13',182*k)])
 
 def solve(Nmax=None, churn=True):

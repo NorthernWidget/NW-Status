@@ -1,0 +1,11 @@
+# Run 5 (tools/resistor_minimum_set_run2.py 15,...,19 4.4210 run5), 2026-11-09. Run 4 holds plus #46 dividers (1M/200k, 1M/100k).
+status Optimal | values 15: 27, 220, 560, 1k, 2k, 5.1k, 10k, 100k, 130k, 180k, 200k, 374k*, 820k, 1M, 1.62M* | changed positions 33
+  changes: Okapi R14 100->220, Okapi R38 330->560, Okapi R40 330->1k, Margay R7 330->560, Margay R9 330->560, Okapi R36 330->220, Okapi R37 330->220, Okapi R39 330->220, Okapi R42 330->220, Okapi R43 330->220, Okapi R44 330->220, Margay R5 330->220, Margay R6 330->220, Margay R8 330->220, Margay R11 330->220, Margay R12 330->220, Margay R13 330->220, Okapi R21 470k->1M, Okapi R3 330k->374k, Okapi R22 143k->1M, Okapi R69 100k->200k, Okapi R70 200k->100k, Okapi R26 232->220, Okapi R27 232->220, Okapi R28 232->220, Okapi R29 232->220, Okapi R30 464->560, Okapi R31 464->560, Okapi R32 464->560, Okapi R33 464->560, Okapi R16 91k->100k, Okapi R17 330k->374k, Okapi R13 182k->180k
+status Optimal | values 16: 27, 220, 330, 560, 1k, 2k, 5.1k, 10k, 100k, 130k, 180k, 200k, 365k*, 820k, 1M, 1.62M* | changed positions 17
+  changes: Okapi R14 100->220, Okapi R21 470k->1M, Okapi R3 330k->365k, Okapi R22 143k->1M, Okapi R69 100k->200k, Okapi R70 200k->100k, Okapi R26 232->220, Okapi R27 232->220, Okapi R28 232->220, Okapi R29 232->220, Okapi R30 464->560, Okapi R31 464->560, Okapi R32 464->560, Okapi R33 464->560, Okapi R16 91k->100k, Okapi R17 330k->365k, Okapi R13 182k->180k
+status Optimal | values 17: 27, 220, 232*, 330, 464*, 1k, 2k, 5.1k, 10k, 100k, 130k, 180k, 200k, 374k*, 820k, 1M, 1.62M* | changed positions 9
+  changes: Okapi R14 100->220, Okapi R21 470k->1M, Okapi R3 330k->374k, Okapi R22 143k->1M, Okapi R69 100k->200k, Okapi R70 200k->100k, Okapi R16 91k->100k, Okapi R17 330k->374k, Okapi R13 182k->180k
+status Optimal | values 18: 27, 220, 232*, 330, 464*, 1k, 2k, 5.1k, 10k, 91k, 100k, 130k, 180k, 200k, 330k, 820k, 1M, 1.62M* | changed positions 6
+  changes: Okapi R14 100->220, Okapi R21 470k->1M, Okapi R22 143k->1M, Okapi R69 100k->200k, Okapi R70 200k->100k, Okapi R13 182k->180k
+status Optimal | values 19: 27, 100, 220, 232*, 330, 464*, 1k, 2k, 5.1k, 10k, 91k, 100k, 130k, 180k, 200k, 330k, 820k, 1M, 1.62M* | changed positions 5
+  changes: Okapi R21 470k->1M, Okapi R22 143k->1M, Okapi R69 100k->200k, Okapi R70 200k->100k, Okapi R13 182k->180k
