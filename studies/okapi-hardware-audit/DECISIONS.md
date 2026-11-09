@@ -498,6 +498,17 @@ merges.
    overlap, reports the net complete (unconnected 0, with every Eagle wire present
    per the comparison). Nothing to route; the audit's "never routed" was Eagle's
    bookkeeping. Was: a layout change for the laptop.
+5. **DECIDED 2026-11-09, Andy: v0.8.0's default charger dividers are for 12 V panels.**
+   MPPT R22/R69 = 1M/200k, VIN_REG 2.7 V × (1 + 1000/200) = 16.2 V; start R71/R70 =
+   1M/100k, 1.2 V × (1 + 1000/100) = 13.2 V. The panels are 10-20 W, 36-cell (Voltaic
+   P108/P152, Renogy RNG-10D-SS, Ameresco 10M/20J, Campbell SP10/SP20), on Andy's rule
+   that a field panel is 10-20 times the required power. Their -40 C Voc (23.6-27.4 V)
+   needs v0.8.0's 50 V input capacitors (#44), so v0.7.0 keeps 143k/100k and 1M/200k,
+   which suit the Voltaic P126. Source: `sources/2026-11-09-solar-panels-agent-report.md`.
+   Falling start threshold about 11.9 V, below the 16.2 V MPPT point, so the charger does
+   not cycle off in low light. A 6 V panel will not start at 13.2 V; its values go in the
+   README's per-panel table (#20). The Campbell panels' 60 C Vmp (about 14 V) sits below
+   16.2 V. Open: a winter power budget to confirm 10 W gives 10-20 times the draw.
 
 ### ERC residue (accept, or exclude in the GUI)
 

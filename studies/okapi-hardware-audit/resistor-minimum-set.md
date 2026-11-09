@@ -117,3 +117,10 @@ Outputs: `sources/2026-11-09-resistor-minimum-set-run4-*.txt`.
 
 The approved changes alone take the boards from 22 values to 20. The 18-value step undoes the
 LBI threshold set this morning (R3 330k, 2.95 V).
+
+## v0.8.0 charger dividers (Andy, 2026-11-09)
+
+MPPT R22/R69 = 1M/200k (16.2 V) and start R71/R70 = 1M/100k (13.2 V), for 10-20 W 12 V
+panels (DECISIONS.md, Okapi design item 5). Against run 4's 20 values, 143k leaves the board
+(R22 was its only position) and 200k and 100k trade places, so the v0.8.0 set is 19 values
+with five changed positions: R21, R13, R22, R69, R70.
