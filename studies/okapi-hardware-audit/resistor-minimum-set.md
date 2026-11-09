@@ -174,3 +174,13 @@ To read it, STAT routes to GPA2 and R21 stays on V_BETA: the MCP23018's GPIO pin
 VUSB_POWER into GPA0. (Superseded: an earlier line here moved R21 to 3V3_CORE; not needed.) At
 1 MΩ the 10 µA sink pulls the pin fully low. Andy expects to
 want it: Proposal A (remove R21) is withdrawn, and the read is a v0.8.0 candidate.
+
+**Precision 10 kΩ, part and first alternate (Andy, 2026-11-09).** Primary: Panasonic
+ERA-3AEB103V. First alternate: Bourns CRT0603-BY-1002ELF, the same 0.1 % and ±25 ppm/°C in
+0603 thin film. Digi-Key US the same day: the Bourns at 66,794 in stock, 20-week factory lead
+(CRT0603-BY-1002ELFCT-ND, $0.10 at 1, $0.0644 at 100); the Panasonic at 0, 55-week lead
+(P10KDBCT-ND). Digi-Key's own substitute list adds Vishay TNPW060310K0BEEA at 199,404 and
+$0.28. Neither board's fields carry an alternate yet.
+
+**R15 1 kΩ (Andy: change if safe).** Done, Project-Okapi 7c393c9; 2k leaves the board, and the
+set is 18 values.
