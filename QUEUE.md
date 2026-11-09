@@ -89,7 +89,9 @@ critical path".
 15. **Margay's power path: USB supply against sleep current** (Andy, 2026-11-09: a topic to
    think about). Whether to add a low-quiescent selector (two LM66100s, about +0.3 µA; or a
    TPS2116, +1.32 µA, against the published 1.68 µA) so USB powers the whole board, or keep
-   the core on the battery and only re-point U10. → studies/okapi-hardware-audit/margay-power-path-topic.md
+   the core on the battery and only re-point U10. **Decided 2026-11-09 (Andy): the LM66100
+   pair**; alkaline packs (4.68-4.95 V fresh) sit below 5 V USB. Milestone and the voltage
+   rating open. → studies/okapi-hardware-audit/margay-power-path-decision.md
 
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
