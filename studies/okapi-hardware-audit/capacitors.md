@@ -259,3 +259,6 @@ Fourteen lines, from ten. Candidates to bring it back down (proposals, each to c
 3. **Okapi C5 (220 µF tantalum on 5V_AUX) as 100 µF 1206 ceramics**, retiring the AVX line and the
    board's last MnO2 tantalum: a copper change for v0.8.0, with the 5V_AUX bulk need to size.
 With all three, twelve lines.
+
+Filed for consideration as the boards are completed (Andy, 2026-11-09): merge 1 as Project-Okapi
+#49 (v0.8.0), merge 2 as Project-Margay #68 (v3.1.0), merge 3 as Project-Okapi #50 (v0.8.0).
