@@ -74,6 +74,10 @@ pulldown also holds 3V3_AUX at 0 V on battery.
    (`margay-vmain-switchover.md`), so 3V3_AUX, the clock's VCC, drops out at the unplug. The
    clock falls back to VBAT at that moment, and a cold CR1220 may not carry it. The spliced-USB
    loggers never see an unplug. This fits the cold, the warm-cell cure and the USB cure.
+   **Superseded 2026-11-10** (blind adjudication, `sources/2026-11-10-jonas-cold-adjudication.md`):
+   the firmware turns 3V3_AUX off at every sleep (`powerAux(OFF)`, Margay.cpp line 1006 in the
+   2024 library, verified), so the clock hands over to VBAT every cycle in both power modes. An
+   unplug adds one handover to thousands, and the spliced loggers were also set over USB.
 2. **The holder's contact.** "Replacing the pin battery" also reseats it.
 3. **Conversion pulses on a cold cell.** These explain the warm-cell cure, not the USB cure.
 4. **3V3_AUX slow to rise on wake on battery** (U8, U9, U7 in turn, with a 6 ms settle), against
@@ -141,3 +145,48 @@ Fresh cell, VBAT at or above 2.3 V through the pulse:
 - The agent's proposal, unchecked against the schematic: drop D5 and feed the cell through 1 kΩ
   alone, recovering the diode's 0.12-0.27 V, at the cost of the capacitor's leakage drawing on
   the cell while main power is present, and of losing D5's block against reverse current.
+
+## Unbiased agents and blind adjudication (2026-11-10)
+
+Four agents (circuit, firmware, physics, field practice) worked without these notes; a fifth ranked
+their lists and ours blind. Reports: `sources/2026-11-10-jonas-cold-*`. The ranking:
+
+1. A cold or worn CR1220 sags under the 575-650 µA, 10 ms conversion pulses (all five lists).
+   Explains the cold and the warm-cell cure, not the USB cure.
+2. The "warm cell" cure was a new cell, a reseat, a full clock reset and a laptop session.
+3. The "USB" recollection may be Jonas's proposed D-cell-to-VBAT rewire (29 July email).
+4. The TPS7A05 below-15 °C ramp-down caution, which only the battery path triggers.
+5. Pack sag, two cells, or the 1.8 V brown-out setting at wake.
+6. U10 selects the dead USB input because 3V3_FTDI is back-fed.
+7. Then terminal wiring, a wedged I2C bus, a spurious serial time-set, the 300 µs VCC fall,
+   a floating 3V3_AUX, the unplug handover, BBSQW, cold oscillator start, condensation.
+
+Andy, 2026-11-10: the clock reset to 2000 on battery and never after the USB hack. The date
+separates two causes: 2000-01-01 is the DS3231M's power-on reset (both supplies lost); 2000/00/00
+is `begin()` setting the clock from serial garbage (Margay.cpp lines 225-234, verified). To ask.
+
+### The TPS7A05 caution (SBVS254D §8.1.3, read)
+
+Below 15 °C, IN must ramp down over at least 10 ms and EN over at least 100 µs. Faster, and the next
+start is either partial, off and then normal (IN) or delayed up to 130 ms (EN). The 2024 firmware
+drops EN on a GPIO edge every sleep in both modes, then turns U8 off (line 1007), which takes
+U7's input down on battery only; on USB, VMAIN stays up from VUSB. At wake it allows 6 + 10 ms
+(lines 1037-1050). How fast VMAIN falls on battery is not measured: the TPS2104 has no body
+diode, but its IN1 switch is on in battery mode and conducts back towards U8's 150 Ω discharge
+until its gate drive fails. The chain from a late or glitching 3V3_AUX to a clock reset is
+inference. Tests: freezer scope of 3V3_AUX and VMAIN at wake on J3 and on USB; a firmware variant
+holding `powerOB(ON)` through sleep. The v3.1.0 VSYS design removes the IN half; the EN half needs
+an RC on EN or a longer settle.
+
+### Test order (adjudication)
+
+- T0, free: ask Jonas the failure's appearance (LED, serial text, timestamp form), when it
+  showed, whether a laptop re-set each swapped unit and whether it failed again, the cell count,
+  what the "USB" wiring was (photo), and whether he kept the cells and SD cards.
+- T1, free: his SD data and ours for hourly new log files (the watchdog waking, not the alarm).
+- T2, under an hour: on J3 awake, meter 3V3_FTDI, U9 EN, VMAIN; RTC pin 2 in sleep; scope
+  RTC_INT across an alarm.
+- T3-T5, half a day each: coin-cell emulator with an OSF-reading sketch; a real CR1220 pulsed at
+  +20, 0 and -20 °C; freezer scope, J3 against the USB splice.
+- T6: inspect failed units as received (register dump, holder, leakage at VCOIN+).
+
