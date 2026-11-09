@@ -71,6 +71,14 @@ Waiting on the bench rather than on him: the four battery readings, the cycle
 duration, Okapi's unfed watchdog, and the older list under "The bench is now the
 critical path".
 
+14. **Margay RTC losing time when power drops, and D4** (Andy, 2026-11-09: hold for a
+   deeper conversation soon). D4 (BAT43WS, b82f7d8) feeds BT1+ and the DS3231M's VBAT from 3V3
+   while the RTC's VCC sits on the switched 3V3_AUX; it holds BT1+ near 3.0 V, so a CR1220
+   below that takes current. The DS3231M's own VBAT pin is "UL recognized to ensure against
+   reverse charging" (19-5312 Rev 5 p7), a protection D4 bypasses. Related: VMAIN carries 1 µF
+   (C13) where the TPS2104 recommends 220 µF for 100 mA loads across the IN2-to-IN1
+   switchover (SLVS235A p12, Figure 11). → studies/okapi-hardware-audit/capacitors.md
+
 ## Merge DS3231_Logger into DS3231 (Andy, 2026-10-07)
 
 Decided: the two libraries become one, and `DS3231` is the survivor. The study
