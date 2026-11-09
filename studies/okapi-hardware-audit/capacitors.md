@@ -219,3 +219,5 @@ C22; (C) the two 1 µF lines, copper either way.
   Taiyo TMK107B7105KA line then retires and a 2.2 µF line arrives: the count stays 10.
 - **Margay C19 + C20** stay as they are until the RTC conversation (QUEUE, "ON ANDY'S DESK"
   14): Andy added C20 to keep the clock's time through power drops.
+- **Margay C10 as an 0603** (Andy, 2026-11-09: one 1 µF part on Margay): Project-Margay #65
+  (v3.1.0), which also weighs it against the dual-land plan above.
