@@ -66,3 +66,47 @@ timekeeping current moves from the coin cell to the main battery (about +3 % of 
 5-minute deployment's 87.7 µA average); the coin's backup voltage falls by the diode's drop
 (the DS3231M runs on VBAT down to 2.3 V). With #66, VSYS stays live in sleep, so the TPS7A05's
 pulldown also holds 3V3_AUX at 0 V on battery.
+
+## More broadly: candidate causes (2026-11-09), tracked with the bench test as Project-Margay #69
+
+1. **The USB unplug at deployment, plus a cold cell (the best fit).** The clock is set over USB,
+   then USB is pulled. U9 hands over only after VUSB has fallen to about 2 V
+   (`margay-vmain-switchover.md`), so 3V3_AUX, the clock's VCC, drops out at the unplug. The
+   clock falls back to VBAT at that moment, and a cold CR1220 may not carry it. The spliced-USB
+   loggers never see an unplug. This fits the cold, the warm-cell cure and the USB cure.
+2. **The holder's contact.** "Replacing the pin battery" also reseats it.
+3. **Conversion pulses on a cold cell.** These explain the warm-cell cure, not the USB cure.
+4. **3V3_AUX slow to rise on wake on battery** (U8, U9, U7 in turn, with a 6 ms settle), against
+   the first I2C read. On USB, VMAIN is already live.
+5. **The SPI back-feed in sleep.**
+6. **Brown-out at 1.8 V** while the ATmega needs 2.7 V at 8 MHz.
+7. **Moisture** at the holder or the RTC.
+
+## Keeping the coin cell useful in the cold (Andy: it should still work when it is the last resort)
+
+Each temperature conversion takes 575 µA for 10 ms, 5.75 µC, from VBAT (19-5312). C19 and C20
+(about 1 µF) cannot carry it, so the cell supplies every pulse; a cold cell's rising resistance is
+what sags. Buffering the pulse at VBAT (droop = 5.75 µC / C_eff):
+
+| VBAT capacitance | Droop per conversion |
+|---|---|
+| C19 + C20 today (about 1 µF) | the cell carries it |
+| 22 µF 0805 (11.5 µF effective at 3.3 V) | 0.50 V |
+| two 22 µF 0805 | 0.25 V |
+| 100 µF 1206 (about 50 µF effective near 3 V) | 0.115 V |
+
+Proposal: **1 kΩ in series from the cell, and one 100 µF 1206 (the shared C43/VSYS line) at
+VBAT.** The capacitor supplies each pulse. The cell refills it through 1 kΩ, at a 50 ms time
+constant against the clock's 2-3 µA (a 3 mV drop), and never sees the 575 µA step. The resistor
+also limits any current D4 could push into the cell. Two points to weigh:
+- **The DS3231M recommends 0.1-1.0 µF on VBAT** when VBAT is the primary source (19-5312, pin
+  description). It gives no reason, so this exceeds a recommendation without a known limit.
+- **The ceramic's leakage adds to the cell's load.** Murata's guaranteed insulation resistance
+  for this class is from memory and to check, and the typical leakage is far lower.
+
+**A supercapacitor is not recommended.** Its leakage of a few µA matches the clock's own
+current, and its resistance rises in the cold too.
+
+**Cell chemistry stays the simplest cold fix**: the README already names the BR1220 (to -30 °C)
+and the BR1225A (to -40 °C). A larger holder (CR2032 class, lower resistance and about six times
+the capacity) is a v3.1 copper option.
