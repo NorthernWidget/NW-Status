@@ -195,3 +195,25 @@ UNVERIFIED here); worth a check before the part is fixed.
 
 Battery fitted at plug-in: VSYS only rises from the battery to USB, slowly. No battery: VSYS
 ramps from 0 V over about 40 ms, and the core starts when VSYS clears about 3.4 V.
+
+## 9. U7's enable edge below 15 °C (proposal, 2026-11-10)
+
+TPS7A05 (SBVS254D §8.1.3): below 15 °C, IN needs at least 10 ms and EN at least 100 µs to ramp down,
+or the next start is partial, off and then normal (IN) or delayed by up to 130 ms (EN). With #66,
+U7's IN is VSYS, which stays up in sleep, so the IN rule is met. EN is still a GPIO edge (PC6,
+3V3_AUX_CTRL) at every sleep.
+
+Proposal: an RC at U7's EN, 10 kΩ in series from PC6 and 0.1 µF to ground, both lines already on the
+board. Computed, with VEN(LO) at most 0.4 V and VEN(HI) at least 0.9 V (SBVS254D):
+- τ = 1.0 ms; the fall from 3.3 to 0.4 V takes 2.1 ms, 21 times the 100 µs minimum.
+- The rise to 0.9 V takes 0.32 ms, inside the firmware's 6 ms settle.
+- Cost: 1.1 nA average at one cycle every 5 min; 0.33 mA peak from the pin; IEN (10 nA max) drops
+  0.1 mV across the 10 kΩ.
+- The 100k / 10 nF pair gives the same timing at a tenth the charge, but needs a 10 nF line.
+
+Firmware alternative: a 150 ms settle at wake, about 4.3 µA average (8.6 mA awake, every 5 min). It
+waits out the delay rather than preventing it.
+
+The rule also asks that VEN not exceed VIN. In the 2024 firmware on v3.0, `powerAux(ON)` raises EN
+about 1.5 ms before U8 brings VMAIN up; with VSYS always up in #66, that goes too. Only Margay uses a
+TPS7A05; Okapi does not.
