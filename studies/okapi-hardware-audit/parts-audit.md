@@ -6,7 +6,69 @@ with a manufacturer number) read against `Hardware/Okapi.sch`'s nets; Margay,
 `Production/Margay_BoM_3v0_-_2026-11-04.csv`. Every number below is pasted from
 those files. A merge is a proposal; nothing here is changed.
 
+## Both boards from the KiCad export (2026-11-10): the current lines
+
+Read from fresh `kicad-cli sch export netlist` runs on Project-Okapi 3a981d2
+(`Hardware/KiCAD-10import`) and Project-Margay 5b5d358 (`Hardware/KiCAD`, v3.1).
+These supersede the resistor tables below, which are kept as the record of how
+the lines got here. Every position carries a part number.
+
+| | Okapi | Margay | Both boards |
+|---|---|---|---|
+| Resistor positions | 87 | 26 | 113 |
+| Resistor part numbers | 26 | 6 | 26 (Margay's six are all on Okapi's list) |
+| Resistor values | 23 | 5 | 23 |
+| Capacitor positions | 50 | 20 | 70 |
+| Capacitor part numbers | 9 | 5 | 10 |
+| Capacitor values | 8 | 4 | 9 |
+
+The 23 resistor values are 19 standard values, 0 Ω and three shunts; #46 retires
+143 kΩ in v0.8.0, leaving 18 standard values. The export counts 24 values across
+both boards only because Margay spells 5.1 kΩ "5.1K" and Okapi "5.1k"; it is one
+part number. Capacitors go to 14 part numbers with every proposal in
+`capacitors.md` and to 12 with the merges filed (Okapi #49, #50; Margay #68).
+
+Resistors, one row per part number and package. "0402 0603" is the dual land
+(nw-cold-silicon R0402_0603); the fitted part is the primary's size. The shunts
+(R10, R72 to R75) and R22 have no secondary yet (C10: the shunts' land check; R22
+retires with #46).
+
+| Value | Package | Okapi | Margay | Primary | Digi-Key | Secondary | Digi-Key |
+|---|---|---|---|---|---|---|---|
+| 0 | 0402 | R51 | – | ERJ-2GE0R00X (Panasonic) | P0.0JCT-ND | RC0402JR-070RP (Yageo) | YAG1279CT-ND |
+| 3m | 0805 | R10 | – | PMR10EZPFV3L00 (Rohm) | RHM.003AJCT-ND | – | – |
+| 20m | 0805 | R72, R73, R75 | – | ERJ-6BWFR020V (Panasonic) | P.02AQCT-ND | – | – |
+| 50m | 0805 | R74 | – | ERJ-6BWFR050V (Panasonic) | P17581CT-ND | – | – |
+| 5.1K | 0402 | – | R31, R32 | RC0402FR-075K1L (Yageo) | 311-5.10KLRCT-ND | ERJ-2RKF5101X (Panasonic) | P5.10KLCT-ND |
+| 27 | 0402 | R11, R34, R35 | R3, R4 | RC0402FR-0727RL (Yageo) | YAG3086CT-ND | ERJ-2RKF27R0X (Panasonic) | P27.0LCT-ND |
+| 100R | 0402 | R14 | – | RC0402FR-07100RL (Yageo) | 311-100LRCT-ND | RMCF0402FT100R (Stackpole) | RMCF0402FT100RCT-ND |
+| 220R | 0402 | R9, R53, R60, R64, R76 to R80 | – | CRGCQ0402F220R (TE) | A129619CT-ND | RC0402FR-07220RL (Yageo) | 311-220LRCT-ND |
+| 232 | 0402 | R26 to R29 | – | RC0402FR-07232RL (Yageo) | YAG3063CT-ND | RMCF0402FT232R (Stackpole) | RMCF0402FT232RCT-ND |
+| 330 | 0402 | R36 to R40, R42 to R44 | R5 to R9, R11 to R13 | RC0402FR-07330RL (Yageo) | 311-330LRCT-ND | ERJ-2RKF3300X (Panasonic) | P330LCT-ND |
+| 464 | 0402 | R30 to R33 | – | RC0402FR-07464RL (Yageo) | 311-464LRCT-ND | ERJ-2RKF4640X (Panasonic) | P464LCT-ND |
+| 1k | 0402 | R12, R15 | – | RC0402FR-071KL (Yageo) | 311-1.00KLRCT-ND | ERJ-2RKF1001X (Panasonic) | P1.00KLCT-ND |
+| 1k | 0402 0603 | R48 | – | RC0402FR-071KL (Yageo) | 311-1.00KLRCT-ND | ERJ-2RKF1001X (Panasonic) | P1.00KLCT-ND |
+| 5.1k | 0402 | R81 to R85 | – | RC0402FR-075K1L (Yageo) | 311-5.10KLRCT-ND | ERJ-2RKF5101X (Panasonic) | P5.10KLCT-ND |
+| 10k | 0402 | R24, R25, R41, R45 to R47, R52, R54, R67, R86, R87 | R1, R2, R14 to R21 | RC0402FR-0710KL (Yageo) | 311-10.0KLRCT-ND | ERJ-2RKF1002X (Panasonic) | P10.0KLCT-ND |
+| 10k | 0603 | R49, R50 | R22 to R24 | CRT0603-BY-1002ELF (Bourns) | CRT0603-BY-1002ELFCT-ND | RG1608P-103-B-T5 (Susumu) | RG16P10.0KBCT-ND |
+| 91k | 0603 | R16 | – | ERJ-3EKF9102V (Panasonic) | P91.0KHCT-ND | RC0603FR-0791KL (Yageo) | 311-91.0KHRCT-ND |
+| 100k | 0402 | R18, R19, R23, R57, R58, R61, R63 | – | RC0402FR-07100KL (Yageo) | 311-100KLRCT-ND | ERJ-2RKF1003X (Panasonic) | P100KLCT-ND |
+| 100k | 0402 0603 | R69 | – | RC0402FR-07100KL (Yageo) | 311-100KLRCT-ND | ERJ-2RKF1003X (Panasonic) | P100KLCT-ND |
+| 130k | 0603 | R20 | R10 | ERJ-3EKF1303V (Panasonic) | P130KHCT-ND | RMCF0603FT130K (Stackpole) | RMCF0603FT130KCT-ND |
+| 143k | 0402 0603 | R22 | – | RC0603FR-07143KL (Yageo) | 311-143KHRCT-ND | – | – |
+| 180k | 0402 | R5, R7, R65, R66 | – | RC0402FR-07180KL (Yageo) | 311-180KLRCT-ND | ERJ-2RKF1803X (Panasonic) | P180KLCT-ND |
+| 180k | 0603 | R1, R8, R13 | – | ERJ-3EKF1803V (Panasonic) | P180KHCT-ND | RMCF0603FT180K (Stackpole) | RMCF0603FT180KCT-ND |
+| 200k | 0402 0603 | R70 | – | ERJ-2RKF2003X (Panasonic) | P200KLCT-ND | RC0402FR-07200KL (Yageo) | 311-200KLRCT-ND |
+| 330k | 0603 | R3, R17, R62 | – | ERJ-3EKF3303V (Panasonic) | P330KHCT-ND | RMCF0603FT330K (Stackpole) | RMCF0603FT330KCT-ND |
+| 820k | 0603 | R6 | – | RC0603FR-07820KL (Yageo) | 311-820KHRCT-ND | ERJ-3EKF8203V (Panasonic) | P820KHCT-ND |
+| 1M | 0402 | R55, R56, R59, R68 | – | RC0402FR-071ML (Yageo) | 311-1.00MLRCT-ND | ERJ-2RKF1004X (Panasonic) | P1.00MLCT-ND |
+| 1M | 0402 0603 | R71 | – | RC0402FR-071ML (Yageo) | 311-1.00MLRCT-ND | ERJ-2RKF1004X (Panasonic) | P1.00MLCT-ND |
+| 1M | 0603 | R21 | – | ERJ-3EKF1004V (Panasonic) | P1.00MHCT-ND | RC0603FR-071ML (Yageo) | 311-1.00MHRCT-ND |
+| 1.62M | 0603 | R2, R4 | – | CRCW06031M62FKEA (Vishay) | 541-1.62MHCT-ND | RC0603FR-071M62L (Yageo) | 13-RC0603FR-071M62LCT-ND |
+
 ## Okapi resistors: value against the number ordered
+
+*Superseded by the 2026-11-10 export table above; kept as the record.*
 
 The 2024 build ordered what the number says, not what the schematic says, as
 Margay's R7/R9 and R19 did. Rows where the two differ:
@@ -26,6 +88,8 @@ Only the 287R rows are a question of which value is right; the rest are a
 value field to fill from the number, or a number to choose (R51, R72 to R75).
 
 ## Okapi resistors: the lines, and what could merge
+
+*Superseded by the 2026-11-10 export table above; kept as the record.*
 
 Thirty-five lines on the 2024 partlist. Grouped by value, with the package and
 the role from the nets:
@@ -55,6 +119,8 @@ and R62 to 130 k remove two more for nothing. Floor about 27 lines without
 touching the dividers.
 
 ## Okapi resistors, planned for v0.7.0 (2026-11-06)
+
+*Superseded by the 2026-11-10 export table above; kept as the record.*
 
 The 2024 partlist with every decision through A5 applied (DECISIONS A2 to A4,
 #20, #32 to #35). Pending items are marked; everything else is a B1 field edit
@@ -135,5 +201,7 @@ merge. The only thing that could move is the pair of crystal values, 12 pF
 them.
 
 ## Margay resistors
+
+*Superseded by the 2026-11-10 export table above; kept as the record.*
 
 Done 2026-11-04: six lines, floor five (DECISIONS Margay 13).
