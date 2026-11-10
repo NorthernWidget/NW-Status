@@ -157,6 +157,14 @@ merge in a library with outside contributors and a minted DOI.
    the caller. Either contribute a formatter or keep it logger-side, which is a
    question of whether a general-purpose RTC library should own a Northern
    Widget column format. Probably not: it belongs in the adapter.
+4. **BBSQW for the alarm on VBAT (2026-11-10).** `turnOnAlarm()` sets INTCN and
+   A1IE or A2IE but leaves BBSQW at its power-on 0, and `enableOscillator()`,
+   the only call that sets it, also clears INTCN (a square wave) or stops the
+   oscillator. Maxim errata 19-5311: on DS3231M revision A1 the alarm asserts on
+   VBAT only with BBSQW = 1. A logger switches the clock's VCC off in sleep, so
+   it needs that bit. Either `turnOnAlarm()` sets BBSQW, or a small public call
+   does (`readControlByte`/`writeControlByte` are protected). DS3231_Logger has
+   it since 4179b06. A proposal for Andy's edits; nothing in `DS3231` touched.
 
 Not needed: `readTime()` and `getValue(n)`. `RTClib::now()` returning a
 `DateTime` is the better shape, and the adapter changes rather than the library.
