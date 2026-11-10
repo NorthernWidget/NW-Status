@@ -242,6 +242,23 @@ its quiescent current matters only within a session.
 
 If N7's 3.9 V buck-boost is fitted, every candidate sees a fixed 3.9 V and the
 LDO's 600 mV of headroom removes its only weakness.
+
+### The telemetry supply chain (2026-11-10/11)
+
+- **Source decided (Andy 2026-11-11): the Li-ion cell, V_LI**, through U10, "seeing
+  as we do not have any other power source currently available". The module's
+  supply does not come from V_HP or the main rails.
+- **Separate from the main rails (recommended, 2026-11-10).** U3 (TPS61032, 5V_AUX)
+  is rated 1000 mA at 5 V from 1.8 V in, with a 3.6 A minimum switch limit
+  (SLUS534G); about 1.5 to 2 A at ordinary battery voltages by my estimate from
+  the switch limit, shared by the 5 V sensor switches, the ADS1115, the DAC and
+  U2. A Cat 1 B-SoM's 2 A peaks do not fit beside them, and sharing would tie the
+  module to the sensor rail again.
+- **One buck-boost, not boost-then-buck (recommended).** The cell (about 3.0 to
+  4.2 V) straddles the module's 3.9 V, which is a buck-boost's job in one stage;
+  boost-then-buck would convert twice for the same result.
+- The chain, if N7 is taken: V_LI -> U10 -> 3.9 V buck-boost -> PARTICLE_VCC ->
+  3.3 V regulator -> PARTICLE_3V3. N7 itself and the 3.3 V part are still open.
 - **N7**: a 3.9 V buck-boost after U10 (Particle's PM-BAT uses a TPS63020 with
   220 µF), serving both modules and the bottom of the cell, or accept the 3.6 V
   floor. Candidates: TPS63020, TPS63802.
