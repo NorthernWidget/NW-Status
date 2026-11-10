@@ -240,3 +240,18 @@ charges a primary lithium cell.
 sleep costs about 450 µA in the R22/R23 and R17/R18 dividers. A longer settle at wake (about 150 ms,
 about 4.3 µA average at 8.6 mA awake every 5 min) covers the 130 ms EN delay for I2C and the SD card
 but not the clock's handovers. The hardware fix there is a D4 + D5 rework.
+
+## Decision: the clock runs from main power; the coin cell is the backup (Andy, 2026-11-10)
+
+"I think we need to define the purpose of the clock battery. In the past, it was the main battery
+for keeping the clock going. This seems more precarious now. Switching to main power is necessary,
+I think." Purpose, as now defined: **while a main pack is connected, the clock runs from main power
+(D4 from 3V3 to VBAT); the coin cell keeps time only while the pack is disconnected**, which is
+routine in deployment. In v3.0 and earlier the coin cell was the clock's supply through every sleep,
+by design: on VCC the DS3231M draws up to 130 µA (ICCS at 3.63 V) against 2-3 µA on VBAT (19-5312).
+Parts: D4, D5, R_BAT 1 kΩ, C_BUF 100 µF; C20 out.
+
+Old-design cell life from the arithmetic (clock on VBAT nearly all the time, IBATT 2 µA typical and
+3 µA maximum at 3.63 V): 35 mAh lasts 1.3-2.0 years at 3-2 µA and 2.7 years at 1.5 µA; 40 mAh lasts
+1.5-2.3 years at 3-2 µA. Loggers that kept time for years are inside this range; the cold failures
+needed the cold-only handover behavior on top.
