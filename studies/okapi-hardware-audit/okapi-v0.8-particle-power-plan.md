@@ -149,16 +149,39 @@ exists it should say that on a Feather build the module is also powered from
 5V_AUX through the USB pin; after v0.8 the switched path is the only one and the
 text stands.
 
-## 7. Decisions for Andy
+## 7. Decisions
 
 1. N1 and N2: no-connect the Feather's USB pin and lift F2 (recommended), or a
-   second load switch on the USB path.
+   second load switch on the USB path. **To decide in this conversation (Andy
+   2026-11-10), once the Boron/B-SoM report is in**
+   (sources/2026-11-10-particle-boron-bsom-agent-report.md).
 2. N3: **decided (Andy 2026-11-10): the B-SoM gets its own 3.3 V regulator, fed
    from the switched PARTICLE_VCC**, not a main-board rail. 3V3_CORE (U9, TPS797;
    rated about 10 mA, from memory, UNVERIFIED) cannot carry 150 to 500 mA, and
-   3V3_AUX would tie the module to the sensor rail again. Still open: whether the
-   B-SoM build is wanted at all.
-3. N5: a buffer with output enable, or series resistors.
-4. N7: accept the modem's 3.6 V floor on a B-SoM build, or boost VCC.
-5. RST_TRIG: may the module reset the logger.
-6. The firmware API names.
+   3V3_AUX would tie the module to the sensor rail again. **The B-SoM build is
+   wanted, and is the new standard (Andy 2026-11-10)**; the Feather socket stays
+   as the alternative. One power design and one logger-side interface for both
+   is the goal.
+
+Items 3 to 6 are mine to bring as recommendations (Andy 2026-11-10: they need the
+firmware and the board in mind, which is this work's job, not his):
+
+3. N5, recommended: a TXS0104 (the part already used three times, U27, U29, U42)
+   on TX, RX, PARTICLE_RTS and PARTICLE_CTS, A side 3V3_CORE, B side and OE on
+   PARTICLE_3V3 as U34 does for I2C, so the lines open when the module is off;
+   PARTICLE_GPIO, RST_TRIG and WD_DONE checked one by one (RST_TRIG and WD_DONE are
+   driven by the module, not into it). Series resistors are the fallback if board
+   space forbids it. To confirm against the agent's pin mapping (directions and
+   any open-drain lines) before it is drawn.
+4. N7: wait for the agent's B-SoM VCC range and peak current; the choice is
+   between accepting the modem's floor (no parts) and a boost.
+5. RST_TRIG, recommended: keep it. Okapi has no hardware watchdog for its MCU
+   (Okapi.cpp comment, 2026-10-30), so the module resetting a logger that has
+   gone silent is the board's only recovery path short of a site visit. The
+   policy belongs in the Particle sketch: reset only when the logger has missed
+   its backhaul for a set number of intervals or on a remote command, never on a
+   fixed timer after start-up as the 2019 sketch does (Boron_Test.ino 91-97,
+   unconfirmed against the deployed binary).
+6. API names, proposed, in Okapi_Library's camelCase: `particlePower()` (the
+   pulse), `particleHold(bool)` (hold on, release), `particlePowered()` (reads
+   PARTICLE_PG). Settled when B7 touches the code.
