@@ -149,6 +149,41 @@ exists it should say that on a Feather build the module is also powered from
 5V_AUX through the USB pin; after v0.8 the switched path is the only one and the
 text stands.
 
+## 6a. The module resets and reprograms the logger (Andy 2026-11-10)
+
+Requirement: the Particle module can reset the logger and reprogram it, whether
+the logger is hung or running normally (reset, then program).
+
+From the netlist (bcfb2e8):
+- **Reset**: RST_TRIG (MS1 GPIO9, J9 PWM0) drives Q4 (2N7002, R54 10 k gate
+  pull-down), whose drain is on RST (IC1 RESET, also ISP1, S4, C39 0.1 µF, R52
+  10 k pull-up, U41's ~RESET). The module can pulse or hold the logger in reset.
+- **Program over the bootloader**: TX/RX are the MCU's UART0, which is where the
+  NW1284p bootloader listens (Arduino_Boards boards.txt: upload.protocol=arduino,
+  i.e. STK500v1, 57600 baud, maximum sketch 130048 bytes). Reset through RST_TRIG,
+  then speak STK500v1 on Serial1 within the bootloader's post-reset window. This
+  path exists on today's board; it needs only Particle-side firmware (an STK500v1
+  client, the hex stored on the module, a cloud trigger) and a bench check of the
+  reset-to-bootloader timing. Caveat: U23 (FT231X) shares the lines through
+  R38/R40 330 Ω; with a USB cable attached the two can contend.
+- **Program over ISP** (the only recovery for a damaged bootloader or fuses): not
+  possible today. The module's SCK and MOSI (MS1 11/12, J9 54/52) are on
+  SCK_BUF/MOSI_BUF, the output side of U25 (SN74AUP3G34, a one-way buffer from the
+  MCU to the SD card, powered from 3V3_AUX, no output enable). MISO is direct.
+  The module can therefore not drive the MCU's SCK and MOSI.
+
+Netlist change, proposed:
+
+| # | Change | Why | Check |
+|---|---|---|---|
+| N9 | A path from the module's SCK and MOSI to the MCU's SCK and MOSI that is enabled only while the module holds the logger in reset (a two-channel tristate buffer, output enable from RST_TRIG), and U25 kept from fighting it (a buffer with output enable in its place, disabled by the same signal) | ISP from the module, for a logger whose bootloader or fuses are damaged | the SD card's CS stays deasserted during ISP (SD_CS_BUF through U25 today); MISO shared by SD1, U27 and the MCU; part choices from datasheets |
+
+Firmware, Particle side (a new sketch, replacing the 2019 Boron_Test.ino): reset
+policy (section 7, item 5), the STK500v1 client, an ISP programmer once N9
+exists, and the hex delivered by the Particle cloud. The research report
+(sources/2026-11-10-particle-boron-bsom-agent-report.md) covers SPI pins, storage
+and existing libraries for both modules.
+
 ## 7. Decisions
 
 1. N1 and N2: no-connect the Feather's USB pin and lift F2 (recommended), or a
