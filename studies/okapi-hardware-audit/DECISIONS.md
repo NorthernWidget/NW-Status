@@ -304,10 +304,10 @@ says so rather than starting on the KiCad files.
 | Step | Item | State |
 |---|---|---|
 | 1 | B3 issue sort | done |
-| 2 | B2 pre-build checklist | written; stale since 2026-11-09 (C2 below) |
+| 2 | B2 pre-build checklist | written; refreshed 2026-11-10 (C2) |
 | 3 | B1 BoM port | done; every resistor now also carries a secondary part (ALT_MPN, ALT_MF, ALT_DIGIKEY; Project-Okapi 4adc304) |
 | 4 | B4 capacitor edits | done, widened into the two-board capacitor review (`capacitors.md`) |
-| 5 | Unique-parts recount | ready to close (C1) |
+| 5 | Unique-parts recount | done (C1, C3) |
 | 6 | B8 copper edits | not started; also #43 (C43 land) and #17 (last) |
 | 7 | B5 ERC/DRC residue | not started |
 | 8 | B7 firmware | not started; C6 adds to it |
@@ -318,9 +318,9 @@ order.** It runs beside the B list; the B list's order stands.
 
 | Item | What | State, and where |
 |---|---|---|
-| C1 | Close Step 5 with the recount from fresh netlists: resistor part numbers Okapi 26, Margay 6, both boards 26 (Margay's all on Okapi's list); resistor values 23 on both (19 standard, plus 0 Ω and three shunts; 18 standard after #46 retires 143k); capacitor part numbers Okapi 9, Margay 5, both 10 (14 with every proposal, 12 with the merges #49, #50, Margay #68) | to record in `parts-audit.md` with C3 |
-| C2 | Refresh B2's checklist for the part changes since it was written: Okapi R15 1k, R21 1M, R13 180k, R20, R2/R4, R49/R50, R51, R70 primaries, C30 22 µF; Margay C10 1 µF, R10 | to do |
-| C3 | `parts-audit.md`: its resistor table is stale; rewrite it from the export, with primary and secondary parts | to do |
+| C1 | Close Step 5 with the recount from fresh netlists: resistor part numbers Okapi 26, Margay 6, both boards 26 (Margay's all on Okapi's list); resistor values 23 on both (19 standard, plus 0 Ω and three shunts; 18 standard after #46 retires 143k); capacitor part numbers Okapi 9, Margay 5, both 10 (14 with every proposal, 12 with the merges #49, #50, Margay #68) | done 2026-11-10: recount from fresh netlists confirmed and recorded in `parts-audit.md` (Okapi 3a981d2, Margay 5b5d358) |
+| C2 | Refresh B2's checklist for the part changes since it was written: Okapi R15 1k, R21 1M, R13 180k, R20, R2/R4, R49/R50, R51, R70 primaries, C30 22 µF; Margay C10 1 µF, R10 | done 2026-11-10: Project-Okapi 0b0bcd5 (netlist diff against a5b9409); Margay's as-built checks cover v3.0 boards, which the v3.1 KiCad changes do not reach |
+| C3 | `parts-audit.md`: its resistor table is stale; rewrite it from the export, with primary and secondary parts | done 2026-11-10: export table with primary and secondary parts at the head of `parts-audit.md`; older tables marked superseded |
 | C4 | Jonas's cold clock failures: four unbiased agents (circuit, firmware, physics, field), then a blind adjudicator over their reports and our list; then #69 updated | diagnosed (cold TPS7A05 restart handing the clock to a cold coin cell; Andy agrees 2026-11-10); clock on main power with a buffered coin-cell backup: Margay #70 (v3.1.0), Okapi #52 (v0.8.0); #69 updated. VBAT leakage measurement punted (Andy); v3.0 boards accepted as built (Andy); README after the board change (on #70) |
 | C13 | Margay brown-out at 2.7 V (efuse 0xFD; Arduino_Boards 96e6d42); boards burned from now on, existing boards left at 1.8 V | decided (Andy 2026-11-10); tarball and index rebuild is a release step |
 | C14 | DS3231_Logger sets BBSQW = 1 (A1 erratum hedge) | done (Andy 2026-11-10): DS3231_Logger 3 commits to the BBSQW one; also fixed setTime/setAlarm/clearAlarm falling off the end; not pushed |
