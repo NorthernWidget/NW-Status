@@ -196,7 +196,7 @@ UNVERIFIED here); worth a check before the part is fixed.
 Battery fitted at plug-in: VSYS only rises from the battery to USB, slowly. No battery: VSYS
 ramps from 0 V over about 40 ms, and the core starts when VSYS clears about 3.4 V.
 
-## 9. U7's enable edge below 15 °C (proposal, 2026-11-10)
+## 9. U7's enable edge below 15 °C (decided, Andy 2026-11-10; Project-Margay #71, v3.1.0)
 
 TPS7A05 (SBVS254D §8.1.3): below 15 °C, IN needs at least 10 ms and EN at least 100 µs to ramp down,
 or the next start is partial, off and then normal (IN) or delayed by up to 130 ms (EN). With #66,
