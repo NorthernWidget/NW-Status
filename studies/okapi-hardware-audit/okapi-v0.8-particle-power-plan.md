@@ -80,7 +80,9 @@ PARTICLE_3V3 ── MS1 pin 2 "3V" (the Feather's regulator OUTPUT)
    U34 (its EN is PARTICLE_3V3); the UART and GPIO lines are not.
 7. **U10's CT pin is unconnected**, so the switch turns on at its fastest slew
    into the module's input capacitance. TPS22917: 2 A continuous, 2.5 A pulsed
-   (< 300 µs, 2 %), full-time reverse current blocking (-1 µA max). The Boron's and
+   (< 300 µs, 2 %), and reverse current blocking that trips only at IRCB = -0.5 A
+   typical (-1 A max) while the switch is on; -1 µA is the leakage once blocked
+   (corrected 2026-11-10: first read as -1 µA throughout). The Boron's and
    the B-SoM's peak currents during cellular transmit are not yet checked against
    2 A (UNVERIFIED; Particle datasheets to read).
 8. **The UART is shared** among the MCU, the module and U23 (FT231X, through R38

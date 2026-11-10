@@ -224,7 +224,7 @@ Proposal: an RC at U7's EN, 10 kΩ in series from PC6 and 0.1 µF to ground, bot
 board. Computed, with VEN(LO) at most 0.4 V and VEN(HI) at least 0.9 V (SBVS254D):
 - τ = 1.0 ms; the fall from 3.3 to 0.4 V takes 2.1 ms, 21 times the 100 µs minimum.
 - The rise to 0.9 V takes 0.32 ms, inside the firmware's 6 ms settle.
-- Cost: 1.1 nA average at one cycle every 5 min; 0.33 mA peak from the pin; IEN (10 nA max) drops
+- Cost: 1.1 nA average at one cycle every 5 min; 0.33 mA peak from the pin; IEN (10 nA typical; corrected 2026-11-10, first written as a maximum, and SBVS254D gives none) drops
   0.1 mV across the 10 kΩ.
 - The 100k / 10 nF pair gives the same timing at a tenth the charge, but needs a 10 nF line.
 
