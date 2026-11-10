@@ -228,6 +228,10 @@ charges a primary lithium cell.
 - C_BUF 100 µF: no longer load-bearing. It serves only when the pack is out (a cold pack swap, a dead
   pack). Its leakage risk mostly goes, because while the pack is in, D4 feeds the leakage and D5
   blocks the cell. It exceeds the DS3231M's 0.1-1.0 µF recommendation. Optional.
+  **Superseded the same day: required.** Andy, 2026-11-10: "I want a backup battery for the clock:
+  batteries are frequently unplugged in deployment." The pack-out case is routine, and C19 + C20
+  (about 1 µF) carry a fresh cell only to about -5 to -25 °C by cell maker; the buffer extends it to
+  about -34 °C (Maxell) and below -40 °C (Panasonic-type), per the CR1220 table above.
 - C20 out: unchanged.
 - Option, unchecked: ground the clock's VCC (Maxim's VBAT-only configuration, Figure 5) so that no
   handover happens at all. Needs the alarm output's behavior in VBAT-only mode checked (BBSQW).
