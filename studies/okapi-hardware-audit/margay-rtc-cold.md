@@ -53,7 +53,14 @@ I2C pins before 3V3_AUX goes off, so nothing on the core side drives the 3V3_AUX
   pinMode(7, INPUT);  // SCK
 ```
 
-`SPI.begin()` restores them on wake; SD_CS stays low. To check on the bench: sleep current before
+`SPI.begin()` restores them on wake; SD_CS stays low.
+
+**Superseded 2026-11-10, not applied.** Two facts defeat this fix. (1) On v3.0, MOSI, SCK and SD_CS
+reach the card only through U5 (SN74AUP3G34, VCC on 3V3_AUX), which "supports partial-power-down
+mode" with Ioff at most 0.6 µA per pin at VCC = 0 (its datasheet); MISO is an input. There is no
+back-feed path to stop. (2) `SPI.begin()` sets the pins only while its `initialized` count is zero
+(NorthernWidget core 0.3.1, SPI.cpp), and SdFat never calls `SPI.end()`, so after the first wake
+the pins would stay inputs and the SD card would stop working. To check on the bench: sleep current before
 and after, and that the card still mounts on every wake.
 
 **v3.1 hardware, the ALog approach:** feed the clock's VBAT from main power and keep the coin
