@@ -44,6 +44,8 @@ PARTICLE_3V3 ── MS1 pin 2 "3V" (the Feather's regulator OUTPUT)
 | SDA_PARTICLE / SCL_PARTICLE | U34 TXS0102 B side; A side SDA_OB/SCL; VA 3V3_CORE, VB = EN = PARTICLE_3V3 | 17 / 18 | 22 / 20 |
 | RST_TRIG | Q4 2N7002 gate (R54 10 k to GND); drain on RST (the MCU's reset) | 21 GPIO9 | 66 PWM0 |
 | WD_DONE | U8 TPL5111 DONE | 8 A3 | 37 ADC3 |
+| SCK_BUF, MOSI_BUF | U25 SN74AUP3G34 outputs (one-way from IC1 SCK/MOSI; also SD1) | 11 SCK / 12 MOSI | 54 / 52 |
+| MISO | IC1 PB6 direct (also SD1, ISP1, U27) | 13 MISO | 50 |
 | /Cell_Module/~{RST}, ~{MODE} | R86/R87 10 k to PARTICLE_3V3, buttons S7/S6 | – | 34 / 32 |
 | PD+ / PD- | USB2 micro-USB | – | 11 / 13 |
 
@@ -186,6 +188,43 @@ exists, and the hex delivered by the Particle cloud. The research report
 (sources/2026-11-10-particle-boron-bsom-agent-report.md) covers SPI pins, storage
 and existing libraries for both modules.
 
+## 6b. From the Boron/B-SoM report (2026-11-10)
+
+Source: sources/2026-11-10-particle-boron-bsom-agent-report.md (Particle docs,
+cited per fact; Particle's eval-board, PM-BAT and Boron schematics traced). Verified
+by me: the NW1284p bootloader is Optiboot 8.0, UART0, 57600 baud, BIGBOOT (strings
+in Arduino_Boards bootloaders/NW/NW1284p.hex).
+
+- **Power**: Boron runs from Li+ 3.6 to 4.2 V; its 3V3 pin is an output (1000 mA)
+  that "CANNOT be used to power the Boron"; VUSB is its charger input. B404X and
+  B524 take VCC 3.6 to 4.2 V and a 3V3 input of 3.0 to 3.6 V (150 mA minimum, 500
+  mA recommended); VBUS is USB detect only. Peaks: Boron Li+ 490 mA; B404X 600 mA
+  (2 A supply recommended); B524 and B504e "at least 2 A". No EN pin on the
+  B-SoM; the Boron's EN still leaves 70 µA flowing.
+- **One sketch for both**: every logger-facing line has the same Device OS name on
+  both sockets (Serial1 TX/RX, RTS D2, CTS D3, PARTICLE_GPIO A5, WD_DONE A3,
+  RST_TRIG D4, Wire D0/D1, SPI). Exceptions: on an M-SoM, J9 pin 43 is SWCLK with
+  a boot-time pull-down; a B-SoM sketch leaves PMIC detection off.
+- **Reprogramming**: both modules have a 2 MB file system (a full 130048-byte
+  sketch is about 6 %); Asset OTA needs Device OS 5.5.0 or later; Particle's
+  "Arduino Uno Asset OTA" example drives an STK500v1 upload (no license, no
+  verify, 328P only: a reference, not a dependency). Both can be SPI master.
+- **Lifecycle**: BRN404X, B404X, B524 and B504e listed GA; the Axion datasheet's
+  comparison marks Boron 404X deprecated, which contradicts the Boron's ordering
+  table (unresolved).
+
+Revisions proposed by the report (not yet decided):
+- **N3, revised**: fit one 3.3 V regulator from PARTICLE_VCC to PARTICLE_3V3 on
+  every board and leave the Boron's 3V pin (MS1 pin 2) unconnected. The regulator
+  then never meets the Boron's own buck, so no jumper; PARTICLE_3V3 still feeds
+  U34, D7 and the pull-ups on a Boron build. Candidates (datasheets to confirm):
+  TLV755P, TPS631011.
+- **N7**: a 3.9 V buck-boost after U10 (Particle's PM-BAT uses a TPS63020 with
+  220 µF), serving both modules and the bottom of the cell, or accept the 3.6 V
+  floor. Candidates: TPS63020, TPS63802.
+- **U10's margin**: Cat M1 modules sit well inside 2 A; Cat 1 modules (B524,
+  B504e) reach it.
+
 ## 7. Decisions
 
 1. N1 and N2: no-connect the Feather's USB pin and lift F2 (recommended), or a
@@ -222,3 +261,8 @@ firmware and the board in mind, which is this work's job, not his):
 6. API names, proposed, in Okapi_Library's camelCase: `particlePower()` (the
    pulse), `particleHold(bool)` (hold on, release), `particlePowered()` (reads
    PARTICLE_PG). Settled when B7 touches the code.
+7. From the module report: N3 as revised (always-fitted regulator, Boron 3V pin
+   unconnected) in place of the jumper; N7 buck-boost or not; the target B-SoM
+   (B404X Cat M1, or a Cat 1 part at 2 A); whether J9 supports the M-SoM (moves
+   PARTICLE_GPIO off pin 43); ISP (N9) or the UART bootloader only; bulk
+   capacitance on PARTICLE_VCC with N4.
