@@ -153,8 +153,11 @@ text stands.
 
 1. N1 and N2: no-connect the Feather's USB pin and lift F2 (recommended), or a
    second load switch on the USB path.
-2. N3: a regulator for the B-SoM (needed for J9 to work at all), and whether the
-   B-SoM build is still wanted.
+2. N3: **decided (Andy 2026-11-10): the B-SoM gets its own 3.3 V regulator, fed
+   from the switched PARTICLE_VCC**, not a main-board rail. 3V3_CORE (U9, TPS797;
+   rated about 10 mA, from memory, UNVERIFIED) cannot carry 150 to 500 mA, and
+   3V3_AUX would tie the module to the sensor rail again. Still open: whether the
+   B-SoM build is wanted at all.
 3. N5: a buffer with output enable, or series resistors.
 4. N7: accept the modem's 3.6 V floor on a B-SoM build, or boost VCC.
 5. RST_TRIG: may the module reset the logger.
