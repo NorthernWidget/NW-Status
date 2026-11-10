@@ -262,3 +262,18 @@ Old-design cell life from the arithmetic (clock on VBAT nearly all the time, IBA
 3 µA maximum at 3.63 V): 35 mAh lasts 1.3-2.0 years at 3-2 µA and 2.7 years at 1.5 µA; 40 mAh lasts
 1.5-2.3 years at 3-2 µA. Loggers that kept time for years are inside this range; the cold failures
 needed the cold-only handover behavior on top.
+
+## Does the alarm wake the logger while the clock is on VBAT? (2026-11-10)
+
+Yes. Maxim's errata sheet 19-5311 (DS3231M revision A1, 6/10; text read from the PDF in
+`sources/2026-11-10-ds3231m-bbsqw-agent-report.md`'s download) lists as an A1 fault: "DS3231M BBSQW
+bit (if = 1) enables SQW and RTC alarm interrupt when operating on VBAT supply. Workaround: Write
+BBSQW = 1 if user desires an RTC alarm interrupt during battery operation." So on other revisions the
+alarm asserts on VBAT whatever BBSQW is; the datasheet's "high impedance" sentence belongs to the
+square wave. The firmware holds RTC_INT high with the MCU's internal pull-up and wakes on a FALLING
+edge on INT2, a documented power-down wake source on the ATmega1284P. The TPL5010 resets the MCU
+(about every 64 min on v3.0) and cannot produce rows at the set interval.
+
+Proposal: the driver sets BBSQW = 1 in its three control writes (DS3231_Logger.cpp: `begin()` 0x24
+to 0x64, Alarm 1 0x05 to 0x45, Alarm 2 0x06 to 0x46), covering any A1 part. With INTCN = 1 there is no
+square wave for the bit to enable. #70 does not change this: VCC stays on the switched rail.
