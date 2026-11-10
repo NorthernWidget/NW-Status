@@ -217,8 +217,31 @@ Revisions proposed by the report (not yet decided):
 - **N3, revised**: fit one 3.3 V regulator from PARTICLE_VCC to PARTICLE_3V3 on
   every board and leave the Boron's 3V pin (MS1 pin 2) unconnected. The regulator
   then never meets the Boron's own buck, so no jumper; PARTICLE_3V3 still feeds
-  U34, D7 and the pull-ups on a Boron build. Candidates (datasheets to confirm):
-  TLV755P, TPS631011.
+  U34, D7 and the pull-ups on a Boron build. Candidates below; no decision.
+
+### The 3.3 V regulator: candidates (no decision; Andy 2026-11-10)
+
+The load: the B-SoM's 3V3 input, 3.0 to 3.6 V, 150 mA minimum, 500 mA recommended
+(Particle B404X datasheet, via the report), plus U34, D7 and the pull-ups. The
+input: PARTICLE_VCC, the cell through U10 (about 3.0 to 4.2 V), or a fixed 3.9 V
+if N7's buck-boost is fitted. The regulator is powered only while U10 is on, so
+its quiescent current matters only within a session.
+
+| | TPS62822DLCT (buck) | TLV755P (LDO) | TPS631011 (buck-boost) |
+|---|---|---|---|
+| On Okapi's BoM | **yes: U2** (makes 3V3_AUX), with L3 1 µH Würth 74404032010, C8/C9 22 µF GRM219R61C226ME15L, R6 820 k / R7 180 k (0.6 V × (1 + 820/180) = 3.33 V), C6 68 pF; every support part already stocked | no | no; Particle's choice for 3V3 on PM-BAT |
+| Source read | SLVSDV6C, TI, read 2026-11-10 | SBVS320D, via the report | SLVSGO6B, via the report |
+| Input | 2.4 to 5.5 V | 1.45 to 5.5 V | 1.6 to 5.5 V |
+| Output current | 2 A (Recommended Operating Conditions); high-side limit 2.7 A min | 500 mA | 2 A for VIN ≥ 3 V at 3.3 V |
+| Low cell | 100 % mode: regulates down to VIN(min) = 3.3 V + I × (35 mΩ + L3's DCR) (Equation 3), about 3.35 V at 500 mA with L3's DCR taken as tens of mΩ (UNVERIFIED, Würth datasheet to read); below that the output follows VIN less that drop, still inside the B-SoM's 3.0 V floor down to a cell of about 3.05 V | 238 mV max dropout at 500 mA: regulates down to about 3.54 V, then follows VIN less the dropout | regulates 3.3 V across the whole cell range |
+| Efficiency | switching, high | 3.3/VIN: 79 % at 4.2 V | switching |
+| IQ | 4 µA typ, 10 µA max; shutdown 0.05 µA typ | 25 µA typ | 8 µA typ |
+| Start-up | EN thresholds 0.9 V rising / 0.7 V falling, "do not leave EN floating" (tie EN to its VIN, so it starts when U10 does); soft start about 1 ms after a 250 µs delay; starts into a pre-biased output | (report) | (report) |
+| Off | active output discharge, which needs VIN present, so with U10 off the output decays through its load | active output discharge | active output discharge, load disconnect |
+| Other | 2.2 MHz switching beside the cellular module (layout and EMI to watch); QFN-8 2 × 1.5 mm; power-good output available | quiet; simplest; "excessive reverse current potentially damages this device" (no back-feed with the Boron's 3V pin unconnected) | WCSP package |
+
+If N7's 3.9 V buck-boost is fitted, every candidate sees a fixed 3.9 V and the
+LDO's 600 mV of headroom removes its only weakness.
 - **N7**: a 3.9 V buck-boost after U10 (Particle's PM-BAT uses a TPS63020 with
   220 µF), serving both modules and the bottom of the cell, or accept the 3.6 V
   floor. Candidates: TPS63020, TPS63802.
