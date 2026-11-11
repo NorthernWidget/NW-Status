@@ -8,7 +8,7 @@ Andy's criteria, in his order (2026-11-11):
 
 Standing preferences: Digi-Key first, and Würth Elektronik as a preferred brand.
 
-Four agent reports sit beside this file, each with every fact cited and a log of the sources checked:
+Four survey reports sit beside this file, with a verification of the part table (`2026-11-11-part-problems-verification-agent-report.md`) and a USB-UART bridge survey (`2026-11-11-usb-uart-bridge-agent-report.md`), each with every fact cited and a log of the sources checked:
 - `2026-11-11-passives-agent-report.md`
 - `2026-11-11-semiconductors-agent-report.md`
 - `2026-11-11-connectors-agent-report.md`
@@ -20,16 +20,16 @@ Numbers below are the agents' unless marked "checked", meaning I confirmed them 
 
 | Board | Part | Problem | Fix | Source |
 |---|---|---|---|---|
-| Okapi | U38 MLX90393**S**LW (checked) | rated −20 °C | E grade: same package and address, −40 °C | semiconductors |
-| Okapi | U44 VEML6030 (checked) | rated −25 °C | no cold grade; a different sensor if it matters | semiconductors |
-| Okapi | U4 LT3652**E**DD (checked) | guaranteed from 0 °C; −40 °C "assured by design" | I grade, tested to −40 °C | semiconductors |
+| Okapi | U38 MLX90393**S**LW (checked) | rated −20 °C | E grade MLX90393ELW-ABA-011-RE: same package and address, −40 °C | semiconductors, verification |
+| Okapi | U44 VEML6030 (checked) | rated −25 °C, storage also −25 °C | no cold grade; Vishay VEML6031X00 (−40 °C) needs a new footprint | semiconductors, verification |
+| Okapi | U4 LT3652**E**DD (checked) | guaranteed from 0 °C; −40 °C "assured by design" | I grade LT3652IDD#PBF, guaranteed to −40 °C, same package | semiconductors, verification |
 | Okapi, Margay | BT1 Linx BAT-HLD-012-SMT (checked in both KiCad files) | obsolete; the active -TR twin is rated −30 °C | the -TR version now; a −40 °C holder to find | connectors |
 | Okapi | C&K PCM12SMTR (checked in the KiCad files) | obsolete (2,726 left); rated −20 °C | a −40 °C switch to find | connectors |
-| Okapi | JST PH battery connector | rated −25 °C, tin-plated | to decide | connectors |
+| Okapi | J8 JST S2B-PH-SM4-TB | **corrected:** JST's datasheet says −40 to +105 °C; −25 °C is Digi-Key's listing | none needed | connectors, verification |
 | Okapi, Margay | On Shore screw terminals | drawing says −40 °C, Digi-Key −30 °C; maker publishes no plant or quality certificate | ask On Shore, or a documented second source | connectors |
 | Margay | Würth 693063010911 SD holder | rated −25 °C | **kept** (Andy, 2026-11-11): used in deployments at −40 °C | SD survey |
-| Okapi | FTDI FT231X (both boards use FTDI) | single source; UK forced-sale order on its owner since November 2024 | to watch; a second-source USB-UART to identify | semiconductors |
-| Okapi | 2021 BoM rows | MCP23018 listed as TI (it is Microchip, checked); some rows' MPN disagrees with package or value | correct with the v0.8 BoM | semiconductors, passives |
+| Okapi, Margay | FTDI FT231XQ-R (U23, U2) | single source; 0 in stock at Digi-Key (2026-11-11); UK order of November 2024 followed by one approving a sale to Willow Vision (in force 1 July 2026, completion unverified) | CP2102N proposed as second source (board change) | semiconductors, verification, bridge survey |
+| Okapi | 2021 BoM rows | MCP23018 listed as TI (it is Microchip, checked), still so in the v0.8 KiCad files; 12 other rows fixed in v0.8 | U41's manufacturer field | semiconductors, passives, verification |
 
 Already fixed: the TXC crystal (−20 °C, obsolete) was replaced by ECS in Project-Okapi 47a944d.
 
