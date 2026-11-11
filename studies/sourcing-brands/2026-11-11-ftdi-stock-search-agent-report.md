@@ -144,3 +144,7 @@ FTDI's USB bridges are among the most counterfeited parts in the trade, and FTDI
 5. FTDI sales directly for factory stock or allocation (not contacted).
 
 FT231XS-R (SSOP-20) is no better: 0 at every authorized seller read; Digi-Key "2,000 expected in stock on 16-Mar-2027".
+
+## Confirmed by Andy on Newark's own page (2026-11-11, 01:42 local, screenshot)
+
+FT231XQ-R, Newark 83T7088 (cut tape, min 1) and 83T7088RL (re-reel, min 100): "2,533 In Stock", "43,463 more incoming. You can reserve stock now", "Delivery in 4-6 Business Days (UK stock)", manufacturer standard lead time 44 weeks. Cut-tape prices, duties and tariffs included: 1+ $4.340, 10+ $4.280, 25+ $4.190, 50+ $4.130, 100+ $4.070, 250+ $3.700, 500+ $3.380, 1000+ $3.330. The aggregator figures above (4,533 and 108) are superseded by this reading.
