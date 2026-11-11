@@ -213,3 +213,5 @@ Facts that cut across the table (not interpretation):
 ## Decision (Andy, 2026-11-11, added by the parent session)
 
 Margay keeps a **full-size SD** card ("to not lose the card and be able to move it with gloves on") in a **push-pull** holder ("to be more stable"). Of the parts above, only the current Würth 693063010911 and the obsolete TE 2041021-4 meet both, and both are rated to −25 °C. No full-size push-pull holder rated to −40 °C was found (search not exhaustive, line 182). Open: a narrower search for one, or the Würth with its −25 °C rating accepted.
+
+Field evidence (Andy, 2026-11-11): the holders "have been used in past deployments at −40C". On that record the Würth 693063010911 stays, with its −25 °C datasheet rating noted. The narrower search for a full-size push-pull holder rated to −40 °C is optional.
