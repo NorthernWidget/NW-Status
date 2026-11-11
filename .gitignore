@@ -2,3 +2,8 @@
 *_icons.pdf
 *_icons.html
 __pycache__/
+
+# manufacturers' datasheets kept beside the studies: local only, not redistributed (Andy, 2026-11-11)
+studies/**/*.pdf
+# private correspondence quoted verbatim: local only (Andy, 2026-11-11)
+studies/**/*-evidence-pack.md
