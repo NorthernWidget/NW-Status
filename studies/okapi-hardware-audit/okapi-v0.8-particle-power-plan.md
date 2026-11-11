@@ -132,7 +132,7 @@ the logger's FT231X; USB2 (vertical micro-USB, Molex 105133) stays on the B-SoM.
 
 | # | Change | Why | Check |
 |---|---|---|---|
-| N12 | USB2 as a right-angle USB-C at the right board edge where USB2 is now (option A; 27 mm straight line from J9's USB pads; the strip beside the module is about 5 mm deep, fit unchecked), not beside J10 (option B: that edge holds U4, D1, J7, J8, J6 and J5; 78 mm from J9's pads; figures/okapi-v08-particle-plan.png), with 5.1 kΩ pull-downs on CC1 and CC2 as J10 has (R84, R85); Andy places the board in the box and designs the mounting plates (2026-11-11), so each port can face a drilled wall | one cable for both ports; a C-to-C cable supplies VBUS only when CC sees the pull-downs | proposal, not decided; footprint on top; enclosure openings are drilled in-house (Andy 2026-11-11), so a second port is not a constraint |
+| N12 | **USB-C for both ports, decided (Andy 2026-11-11).** USB2 stays where Bobby placed it (vertical, beside J9; 7dc65e8, 2024-10-30) and becomes a vertical USB-C with 5.1 kΩ pull-downs on CC1 and CC2; J10 stays a horizontal USB-C. The connector part for both is open: J10's GCT USB4105-GF-A was a convenient footprint, not a chosen part (Andy), and its footprint is named for a CUI CUSB31-CFM2AX, which is to be checked against the GCT part. Superseded: an edge-mounted USB2 (the J10 edge holds U4, D1, J7, J8, J6 and J5; the right-edge strip is about 5 mm deep; figures/okapi-v08-particle-plan.png) | one cable for both; a C-to-C cable supplies VBUS only when CC sees the pull-downs | part survey: sources/2026-11-11-usb-c-connector-agent-report.md; footprint on top |
 
 ## 3. Netlist changes for v0.8
 
