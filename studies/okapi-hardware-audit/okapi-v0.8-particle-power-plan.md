@@ -126,6 +126,14 @@ What this adds to section 3 (proposals):
 | N10 | Reverse blocking on PARTICLE_VCC that holds at any current (a switch with true reverse blocking in U10's place, or an ideal diode after it) | the Boron's charger must not charge the logger's cell through U10 | part from its datasheet; or accept U10's -0.5 A trip and disable charging in the Particle sketch, which does not cover a user's own Boron firmware |
 | N11 | USB2's VBUS ORed into the Particle supply through a diode or ideal-diode switch, ahead of the regulation that serves VCC and 3V3 | a B-SoM programs over USB2 with the logger off, as on Particle's evaluation board (EV2) | needs regulation to the SoM's VCC 3.6 to 4.2 V from 5 V, which ties N11 to N7; a computer port gives 500 mA where the evaluation board asks 2000 mA without a battery (EV1); the alternative with no parts is that the logger holds the module on (`particleHold(true)`) while programming |
 
+USB connectors (Andy 2026-11-11): **two connectors, decided**, for using both
+at once and no switch position to get wrong. J10 (USB-C, GCT USB4105) stays on
+the logger's FT231X; USB2 (vertical micro-USB, Molex 105133) stays on the B-SoM.
+
+| # | Change | Why | Check |
+|---|---|---|---|
+| N12 | USB2 as USB-C, with 5.1 kΩ pull-downs on CC1 and CC2 as J10 has (R84, R85) | one cable for both ports; a C-to-C cable supplies VBUS only when CC sees the pull-downs | proposal, not decided; footprint on top; enclosure access |
+
 ## 3. Netlist changes for v0.8
 
 Each is one schematic change with the usual gates (Eagle-net check retired for
@@ -182,6 +190,8 @@ pair.
    USB2 leaves 5V_AUX at 0 V with the board unpowered.
 
 ## 6. Documentation
+
+The README's hardware list says the logger connects by micro-USB; J10 is USB-C.
 
 The README's "The 66-minute timer" describes the switched path only. Until v0.8
 exists it should say that on a Feather build the module is also powered from
