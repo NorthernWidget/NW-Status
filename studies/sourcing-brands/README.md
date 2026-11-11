@@ -14,7 +14,7 @@ Four agent reports sit beside this file, each with every fact cited and a log of
 - `2026-11-11-connectors-agent-report.md`
 - `2026-11-11-geopolitics-labor-agent-report.md`
 
-Numbers below are the agents' unless marked "checked", meaning I confirmed them against the BoM or the KiCad files in this session. Everything under "Proposed" is a proposal for Andy.
+Numbers below are the agents' unless marked "checked", meaning I confirmed them against the BoM or the KiCad files in this session. The six standing rules were adopted by Andy on 2026-11-11.
 
 ## Part problems on the boards (act on these first)
 
@@ -71,10 +71,10 @@ Exposure on the boards:
 - **Labor:** not an RBA member, but it follows the RBA Code and runs a legal reporting channel.
 - **Field record:** the SD holder has wintered at −40 °C in Andy's deployments, which no survey can supply.
 
-## Proposed standing rules (for Andy)
+## Standing rules (adopted, Andy 2026-11-11)
 
 1. Approve two sources for each part that matters, assembled in different countries.
-2. Hold buffer stock of the single-source and long-lead parts only. How many months of builds to hold is Andy's number.
+2. Hold buffer stock of the single-source and long-lead parts only. How many months of builds to hold is still Andy's number to set.
 3. Require −40 °C ratings on every part for field boards, and use automotive (AEC-Q) grades where they exist at Digi-Key.
 4. Keep obsolete parts off the BoM. Enable Digi-Key's end-of-life alerts, which fire only for parts bought through the account.
 5. Record country of origin from the Digi-Key packing slip for each lot. Digi-Key shows it per lot, not on the product page.
