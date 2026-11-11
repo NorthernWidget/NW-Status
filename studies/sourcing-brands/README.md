@@ -26,12 +26,22 @@ Numbers below are the agents' unless marked "checked", meaning I confirmed them 
 | Okapi, Margay | BT1 Linx BAT-HLD-012-SMT (checked in both KiCad files) | obsolete; the active -TR twin is rated −30 °C | the -TR version now; a −40 °C holder to find | connectors |
 | Okapi | C&K PCM12SMTR (checked in the KiCad files) | obsolete (2,726 left); rated −20 °C | a −40 °C switch to find | connectors |
 | Okapi | J8 JST S2B-PH-SM4-TB | **corrected:** JST's datasheet says −40 to +105 °C; −25 °C is Digi-Key's listing | none needed | connectors, verification |
-| Okapi, Margay | On Shore screw terminals | drawing says −40 °C, Digi-Key −30 °C; maker publishes no plant or quality certificate | ask On Shore, or a documented second source | connectors |
+| Okapi, Margay | On Shore screw terminals (OSTVN) | drawing says −40 °C, Digi-Key −30 °C; On Shore publishes no plant or quality certificate | Amphenol Anytek is the original maker (see below); GCT TBC05 is the same design | connectors, screw-terminal reports |
 | Margay | Würth 693063010911 SD holder | rated −25 °C | **kept** (Andy, 2026-11-11): used in deployments at −40 °C | SD survey |
 | Okapi, Margay | FTDI FT231XQ-R (U23, U2) | single source; 0 in stock at Digi-Key (2026-11-11); UK order of November 2024 followed by one approving a sale to Willow Vision (in force 1 July 2026, completion unverified) | stay on FTDI for now (Andy, 2026-11-11); replacement planned in Project-Okapi#76 and Project-Margay#76, CP2102N under study | semiconductors, verification, bridge survey |
 | Okapi | 2021 BoM rows | MCP23018 listed as TI (it is Microchip, checked), still so in the v0.8 KiCad files; 12 other rows fixed in v0.8 | U41's manufacturer field | semiconductors, passives, verification |
 
 Already fixed: the TXC crystal (−20 °C, obsolete) was replaced by ECS in Project-Okapi 47a944d.
+
+## Original makers behind brand names
+
+Recorded so that a second source is never the same factory under another label.
+
+| Brand on the BoM | Original maker | Evidence | Date |
+|---|---|---|---|
+| On Shore Technology, OSTVN..A150 screw terminals (every field terminal on Margay and Okapi) | Amphenol Anytek, Taipei, Taiwan (VN..A150 series; FCI took a majority stake in 2011, later part of Amphenol) | Anytek's drawing (2008, rev E) matches On Shore's (2016, rev A) in every dimension, rating and material, in the set and placement of views, in a nearly identical section view, and in the part-number pattern (`2026-11-11-screw-terminals-onshore-agent-report.md`). Recorded as the original source by Andy, 2026-11-11. | 2026-11-11 |
+
+GCT's TBC05 shares the same key dimensions and the same 0.90 x 0.40 mm pin, on GCT's own drawing; GCT makes its parts in mainland China. Phoenix Contact's MPT 0,5 is a different design: its 0.5 x 0.9 mm pin does not pass Margay's 1.016 mm hole (`2026-11-11-screw-terminals-phoenix-agent-report.md`).
 
 ## What the boards depend on
 
