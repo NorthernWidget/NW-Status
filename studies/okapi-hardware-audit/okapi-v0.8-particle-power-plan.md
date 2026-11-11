@@ -132,7 +132,7 @@ the logger's FT231X; USB2 (vertical micro-USB, Molex 105133) stays on the B-SoM.
 
 | # | Change | Why | Check |
 |---|---|---|---|
-| N12 | USB2 as USB-C, with 5.1 kΩ pull-downs on CC1 and CC2 as J10 has (R84, R85) | one cable for both ports; a C-to-C cable supplies VBUS only when CC sees the pull-downs | proposal, not decided; footprint on top; enclosure openings are drilled in-house (Andy 2026-11-11), so a second port is not a constraint |
+| N12 | USB2 as a right-angle USB-C at the board edge beside J10, with 5.1 kΩ pull-downs on CC1 and CC2 as J10 has (R84, R85); Andy places the board in the box and designs the mounting plates (2026-11-11), so both ports can face one drilled wall | one cable for both ports; a C-to-C cable supplies VBUS only when CC sees the pull-downs | proposal, not decided; footprint on top; enclosure openings are drilled in-house (Andy 2026-11-11), so a second port is not a constraint |
 
 ## 3. Netlist changes for v0.8
 
