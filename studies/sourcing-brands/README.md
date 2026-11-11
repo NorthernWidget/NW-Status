@@ -28,7 +28,7 @@ Numbers below are the agents' unless marked "checked", meaning I confirmed them 
 | Okapi | J8 JST S2B-PH-SM4-TB | **corrected:** JST's datasheet says −40 to +105 °C; −25 °C is Digi-Key's listing | none needed | connectors, verification |
 | Okapi, Margay | On Shore screw terminals | drawing says −40 °C, Digi-Key −30 °C; maker publishes no plant or quality certificate | ask On Shore, or a documented second source | connectors |
 | Margay | Würth 693063010911 SD holder | rated −25 °C | **kept** (Andy, 2026-11-11): used in deployments at −40 °C | SD survey |
-| Okapi, Margay | FTDI FT231XQ-R (U23, U2) | single source; 0 in stock at Digi-Key (2026-11-11); UK order of November 2024 followed by one approving a sale to Willow Vision (in force 1 July 2026, completion unverified) | CP2102N proposed as second source (board change) | semiconductors, verification, bridge survey |
+| Okapi, Margay | FTDI FT231XQ-R (U23, U2) | single source; 0 in stock at Digi-Key (2026-11-11); UK order of November 2024 followed by one approving a sale to Willow Vision (in force 1 July 2026, completion unverified) | stay on FTDI for now (Andy, 2026-11-11); replacement planned in Project-Okapi#76 and Project-Margay#76, CP2102N under study | semiconductors, verification, bridge survey |
 | Okapi | 2021 BoM rows | MCP23018 listed as TI (it is Microchip, checked), still so in the v0.8 KiCad files; 12 other rows fixed in v0.8 | U41's manufacturer field | semiconductors, passives, verification |
 
 Already fixed: the TXC crystal (−20 °C, obsolete) was replaced by ECS in Project-Okapi 47a944d.
