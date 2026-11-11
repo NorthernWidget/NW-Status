@@ -126,6 +126,13 @@ What this adds to section 3 (proposals):
 | N10 | Reverse blocking on PARTICLE_VCC that holds at any current (a switch with true reverse blocking in U10's place, or an ideal diode after it) | the Boron's charger must not charge the logger's cell through U10 | part from its datasheet; or accept U10's -0.5 A trip and disable charging in the Particle sketch, which does not cover a user's own Boron firmware |
 | N11 | USB2's VBUS ORed into the Particle supply through a diode or ideal-diode switch, ahead of the regulation that serves VCC and 3V3 | a B-SoM programs over USB2 with the logger off, as on Particle's evaluation board (EV2) | needs regulation to the SoM's VCC 3.6 to 4.2 V from 5 V, which ties N11 to N7; a computer port gives 500 mA where the evaluation board asks 2000 mA without a battery (EV1); the alternative with no parts is that the logger holds the module on (`particleHold(true)`) while programming |
 
+Board shape (verified in Project-Okapi git): before 7dc65e8 (Bobby Schulz,
+2024-10-30, "Design updates toward v1.0") Okapi was a 64.75 x 100 mm rectangle.
+That commit added J9, USB2 and F2 and extended the board by a 39.75 x 35 mm tab
+at x 25 to 64.75 (Eagle coordinates) to hold the B-SoM. The 25 x 35 mm "notch"
+is the part of the corner that was not extended. J9 sits in the tab, 4.6 mm
+from its inner edge and 5.2 mm from the board's right edge.
+
 USB connectors (Andy 2026-11-11): **two connectors, decided**, for using both
 at once and no switch position to get wrong. J10 (USB-C, GCT USB4105) stays on
 the logger's FT231X; USB2 (vertical micro-USB, Molex 105133) stays on the B-SoM.
