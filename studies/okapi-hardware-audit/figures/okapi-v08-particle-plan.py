@@ -1,0 +1,72 @@
+import sys, math
+from PIL import Image, ImageDraw, ImageFont
+S=sys.argv[1]
+im=Image.open(f'{S}/board450.png').convert('RGB')
+im=Image.blend(im, Image.new('RGB',im.size,'white'), 0.45)
+W,H=im.size; k=W/64.7446; X0,Y0=116.1261,37.5036
+pad=60; top=120; side=1060
+cv=Image.new('RGB',(W+side+2*pad,H+2*pad+top),'white'); cv.paste(im,(pad,pad+top))
+d=ImageDraw.Draw(cv)
+F=lambda s,b=False: ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf'%('-Bold' if b else ''),s)
+Q=lambda x,y: ((x-X0)*k+pad,(y-Y0)*k+pad+top)
+BLUE=(20,70,200); GREEN=(0,140,60); ORANGE=(230,110,0); PURPLE=(130,40,160); GRAY=(90,90,90); RED=(200,30,30)
+def box(x0,y0,x1,y1,c,w=6): d.rectangle([Q(x0,y0),Q(x1,y1)],outline=c,width=w)
+def tag(x,y,t,c,s=32): d.text(Q(x,y),t,font=F(s,True),fill=c,stroke_width=5,stroke_fill='white')
+d.text((pad,30),'Okapi v0.7 top side, with the v0.8 Particle plan',font=F(44,True),fill='black')
+# existing (centroids and pad extents from Okapi.kicad_pcb, Project-Okapi a29ca5e)
+box(132.5,74.5,174.5,98.5,GRAY,4); tag(133.5,99.5,'MS1 Feather (Boron)',GRAY,28)
+box(146.0,40.5,175.5,90.5,BLUE); tag(152,42,'J9 B-SoM (M.2)',BLUE)
+box(177.0,64.6,180.9,72.1,ORANGE); tag(162.0,75.6,'USB2 today',ORANGE,28)
+box(141.8,67.0,145.4,72.6,PURPLE); tag(146.0,67.8,'F2',PURPLE,28)
+box(138.6,73.0,142.9,77.5,PURPLE); tag(127.5,73.6,'U10',PURPLE,28)
+box(138.3,82.0,142.7,86.0,PURPLE); tag(130.5,82.4,'U8',PURPLE,26)
+box(138.0,86.8,141.0,89.8,PURPLE); tag(130.5,86.9,'Q3',PURPLE,26)
+box(136.5,141.0,146.5,151.0,PURPLE); tag(147.0,143.0,'U3 boost (5V_AUX)',PURPLE,28)
+box(117.6,165.8,127.4,172.5,BLUE); tag(117.5,161.0,'J10 logger USB-C',BLUE,28)
+# J9's USB pads
+ux,uy=167.57,89.88
+a=Q(ux,uy); d.ellipse([a[0]-12,a[1]-12,a[0]+12,a[1]+12],fill=GREEN)
+tag(158.5,91.0,'J9 USB pads 11/13',GREEN,26)
+# option A: the right-edge strip beside the module, around today's USB2
+box(175.6,56.0,180.9,74.0,GREEN,7); tag(160.0,52.0,'N12 option A',GREEN,30)
+# option B: bottom edge beside J10, occupied
+box(129.0,163.0,180.9,172.5,RED,5); tag(150.0,158.5,'option B edge: occupied',RED,28)
+for (x,y) in [(178.25,65.0),(163.0,168.0)]:
+    d.line([a,Q(x,y)],fill=GREEN,width=5)
+dA=math.hypot(178.25-ux,65.0-uy); dB=math.hypot(163.0-ux,168.0-uy)
+print('straight-line mm: A %.1f  B %.1f'%(dA,dB))
+lx=W+2*pad; y=150
+def L(t,c='black',s=30,b=False,g=10):
+    global y; d.text((lx,y),t,font=F(s,b),fill=c); y+=s+g
+L('Existing (v0.7)',BLUE,36,True)
+L('J9: B-SoM socket, the new standard',BLUE)
+L('MS1: Feather socket (shares J9\'s area)',GRAY)
+L('J10: logger USB-C (FT231X), stays',BLUE)
+L('USB2: B-SoM micro-USB, vertical;',ORANGE)
+L('   reachable only with the lid off',ORANGE,g=30)
+L('Particle power parts (v0.7)',PURPLE,36,True)
+L('U10: load switch, cell to PARTICLE_VCC',PURPLE)
+L('U8: TPL5111 timer; Q3: PARTICLE_EN',PURPLE)
+L('F2: polyfuse, 5V_AUX to B-SoM VBUS;',PURPLE)
+L('   removed by N2',PURPLE)
+L('U3: 5V_AUX boost; N1 takes the',PURPLE)
+L('   Feather USB pin off its output',PURPLE,g=30)
+L('USB2 as edge USB-C (N12, proposal)',GREEN,36,True)
+L('A: right edge, where USB2 is now.',GREEN)
+L('   %.0f mm straight line from J9\'s pads.'%dA,GREEN)
+L('   The strip beside the module is',GREEN)
+L('   about 5 mm deep; whether a',GREEN)
+L('   right-angle USB-C fits is unchecked.',GREEN)
+L('B: bottom edge, beside J10.',RED)
+L('   %.0f mm straight line from J9\'s pads.'%dB,RED)
+L('   Edge holds U4 (solar charger), D1,',RED)
+L('   J7, J8, J6, J5: no free spot.',RED,g=30)
+L('New power parts (no place yet)','black',36,True)
+L('N3: 3.3 V regulator for the B-SoM')
+L('N7: buck-boost, VCC 3.6-4.2 V')
+L('N10: reverse block (Boron charger)')
+L('N11: USB2 5 V ORed into N7\'s input')
+L('Single-sided board; space to find.',GRAY,g=30)
+L('Boxes: pad extents or approximate',GRAY,26)
+L('outlines around part centroids.',GRAY,26)
+cv.save(f'{S}/okapi-v08-particle-plan.png'); print(cv.size)
