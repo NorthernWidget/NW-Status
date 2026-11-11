@@ -85,7 +85,7 @@ Exposure on the boards:
 
 1. Approve two sources for each part that matters, assembled in different countries.
 2. Hold buffer stock of the single-source and long-lead parts only. How many months of builds to hold is still Andy's number to set.
-3. Require −40 °C ratings on every part for field boards, and use automotive (AEC-Q) grades where they exist at Digi-Key.
+3. Require −40 °C ratings on every part for field boards, and use automotive (AEC-Q) grades where Digi-Key normally stocks them (Andy, 2026-11-11: "normally stocking"; stock on the day of purchase matters in practice).
 4. Keep obsolete parts off the BoM. Enable Digi-Key's end-of-life alerts, which fire only for parts bought through the account.
 5. Record country of origin from the Digi-Key packing slip for each lot. Digi-Key shows it per lot, not on the product page.
 6. On labor: where two parts are otherwise equal, prefer a maker with an RBA Regular or Full membership.
