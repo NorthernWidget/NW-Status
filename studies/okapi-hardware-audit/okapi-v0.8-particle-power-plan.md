@@ -145,7 +145,8 @@ the logger's FT231X; USB2 (vertical micro-USB, Molex 105133) stays on the B-SoM.
 
 GitHub issues (Project-Okapi, milestone v0.8.0, filed 2026-11-11): tracking list
 #67; N1 #55, N2 #56, N3 #38, N4 #61, N5 #62, N6 #63, N7 #57, N8 #64, N9 #65,
-N10 #58, N11 #59, N12 #60, USB2 ESD #19, README #66.
+N10 #58, N11 #59, N12 #60, USB2 ESD #19, README #66, right-edge widening for a
+horizontal USB2 #68.
 
 Each is one schematic change with the usual gates (Eagle-net check retired for
 v0.8 work; netlist diff, round trip, ERC, DRC, pad-net table), committed alone.
