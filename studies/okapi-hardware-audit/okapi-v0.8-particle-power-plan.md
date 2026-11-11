@@ -91,6 +91,40 @@ PARTICLE_3V3 ── MS1 pin 2 "3V" (the Feather's regulator OUTPUT)
    and R40). Not a v0.8 defect by itself; noted because item 6's fix sits on the
    same lines.
 
+## 2a. USB power may be applied (Andy 2026-11-11)
+
+Requirement: a user may program the Particle module over USB while it is
+attached to the logger, so a USB cable is a supported condition, not a fault.
+USB2 stays on the board.
+
+Where USB power goes, by socket (source report:
+sources/2026-11-10-particle-boron-bsom-agent-report.md):
+
+- **Boron.** Its VUSB pin is "internally connected to the VBUS of the USB port"
+  (BR3), with no diode named. A cable in the Boron's own jack therefore puts the
+  computer's 5 V on MS1 pin 26, which is 5V_AUX as built. N1 opens that path.
+  The Boron's bq24195 charger also runs from USB and "will charge and power the
+  device when USB source is plugged in" (BR3). Its battery pin is Li+, which on
+  Okapi is PARTICLE_VCC, which U10 joins to the logger's cell. With U10 on, the
+  Boron's charger can push current backwards through U10 into the cell until
+  U10's reverse-current blocking trips at -0.5 A typical (-1 A max); with U10 off
+  the switch blocks (-1 µA). The cell then has two chargers. The Boron's default
+  charge current under Device OS: UNVERIFIED.
+- **B-SoM.** VBUS (J9 pin 16) is USB detect for the nRF52840 (BX4), 4.35 to 5.5
+  V. Particle's evaluation board feeds pin 16 from its USB connector and powers
+  the SoM's VCC and 3V3 from the same USB node through a Schottky into its PMIC
+  (EV2). On Okapi the SoM's VCC and 3V3 come only from PARTICLE_VCC, so with the
+  logger not holding U10 on, a cable in USB2 tells the SoM that USB is present
+  while nothing powers it. With N2, USB2's 5 V stops at J9 pin 16 and cannot
+  reach 5V_AUX.
+
+What this adds to section 3 (proposals):
+
+| # | Change | Why | Check |
+|---|---|---|---|
+| N10 | Reverse blocking on PARTICLE_VCC that holds at any current (a switch with true reverse blocking in U10's place, or an ideal diode after it) | the Boron's charger must not charge the logger's cell through U10 | part from its datasheet; or accept U10's -0.5 A trip and disable charging in the Particle sketch, which does not cover a user's own Boron firmware |
+| N11 | USB2's VBUS ORed into the Particle supply through a diode or ideal-diode switch, ahead of the regulation that serves VCC and 3V3 | a B-SoM programs over USB2 with the logger off, as on Particle's evaluation board (EV2) | needs regulation to the SoM's VCC 3.6 to 4.2 V from 5 V, which ties N11 to N7; a computer port gives 500 mA where the evaluation board asks 2000 mA without a battery (EV1); the alternative with no parts is that the logger holds the module on (`particleHold(true)`) while programming |
+
 ## 3. Netlist changes for v0.8
 
 Each is one schematic change with the usual gates (Eagle-net check retired for
@@ -270,7 +304,9 @@ LDO's 600 mV of headroom removes its only weakness.
 1. N1 and N2: no-connect the Feather's USB pin and lift F2 (recommended), or a
    second load switch on the USB path. **To decide in this conversation (Andy
    2026-11-10), once the Boron/B-SoM report is in**
-   (sources/2026-11-10-particle-boron-bsom-agent-report.md).
+   (sources/2026-11-10-particle-boron-bsom-agent-report.md). **Direction set
+   (Andy 2026-11-11): USB power may be applied while the module is attached, and
+   USB2 stays (section 2a).** N1 and N2 follow from it; N10 and N11 are open.
 2. N3: **decided (Andy 2026-11-10): the B-SoM gets its own 3.3 V regulator, fed
    from the switched PARTICLE_VCC**, not a main-board rail. 3V3_CORE (U9, TPS797;
    rated about 10 mA, from memory, UNVERIFIED) cannot carry 150 to 500 mA, and
