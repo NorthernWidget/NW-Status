@@ -60,3 +60,11 @@ Restricts that came through correctly: LGA-12_2X2 (Okapi U43, tRestrict 1), MICR
 **C3. Margay text on layer 122 `_bsilk` dropped** (Margay.brd line 228): one "J2" label, mirrored, on a layer hidden in Eagle. Whether it reached the fab silkscreen: UNVERIFIED.
 
 **C4. Silkscreen and fab drawings** match in count per layer in every package. Remaining area differences in `geometry.py` are method (text and a tNames circle are counted on the KiCad side; arc polygonization), not losses.
+
+## Fixes applied (coordinator, 2026-11-11, after Andy: "conversion-audit fixes, first on Margay and then on Okapi")
+
+- **Library (nw-cold-silicon 4e7e507, a69d849, dd472f7):** B2, layer 43 is kept as the converter wrote it (via-only keepout); B3, SIM_SF72's wire-drawn vRestrict becomes the keepout it encloses. Four library-only footprints change; SWITCH_2.6X1.6 (Okapi S5) is byte-identical.
+- **New finding D1, found while checking C3: the printed docu labels.** Both fabs' silkscreen Gerbers carry Eagle layers 51 (top) and 52 (bottom): pin labels, jumper and port-limit notes, the credit blocks. The import put them on F.Fab and B.Fab, which do not print. C3's layer-122 "J2" was not printed (rendered, 33 lit pixels in its window, none of them its text). Moved to F.SilkS and B.SilkS: Margay 33 items (Project-Margay 151562f), Okapi 116 (Project-Okapi 0cd727b). Renders of the KiCad silkscreen now match the fab's for these labels.
+- **B1 (Project-Okapi 651735b):** the two bottom keepouts restored as B.Cu rule areas, 27.50 and 60.51 mm2; refilling changes no copper.
+- **A2:** already done before this audit (Project-Okapi cb8bdce, 2026-11-10).
+- **Open for Andy:** A1 (vias stay tented unless Andy says otherwise); the GCT slot length (1.2 mm as fabricated, 1.4 mm per GCT); package-level docu that Eagle printed and KiCad does not (part outlines such as IC1's pins, the jumper schematic glyphs on Okapi's and Margay's bottoms); reference designators, which KiCad prints on Margay where Eagle did not (Okapi's fab printed them). A3, C1, C2: no action proposed.
