@@ -209,3 +209,7 @@ Facts that cut across the table (not interpretation):
 - Digi-Key listing pages: "SD push push" (313 results, 19 read), "microSD hinge" (32 results, 19 read); product result pages for 693063010911, 2041021-4, 10067847-001RLF, 0472192001, DM3CS-SF, 0473092651, SD-RSMT-2-MQ-WF.
 - KiCad: GitLab API tree of kicad-footprints master Connector_Card.pretty; local /usr/share/kicad/footprints (KiCad 10.0.8) for courtyard sizes.
 - Field evidence: enDAQ support article; SparkFun OpenLog forum thread; comp.arch.embedded 2007 thread; Same Sky/Digi-Key 2025 article; Cave Pearl (search summaries only, posts not opened); wildlabs.net/comment/6745 (403, dead end); PurpleAir and Siemens LOGO! pages (search snippets only, not used as evidence).
+
+## Decision (Andy, 2026-11-11, added by the parent session)
+
+Margay keeps a **full-size SD** card ("to not lose the card and be able to move it with gloves on") in a **push-pull** holder ("to be more stable"). Of the parts above, only the current Würth 693063010911 and the obsolete TE 2041021-4 meet both, and both are rated to −25 °C. No full-size push-pull holder rated to −40 °C was found (search not exhaustive, line 182). Open: a narrower search for one, or the Würth with its −25 °C rating accepted.
