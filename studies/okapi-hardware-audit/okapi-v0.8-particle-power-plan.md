@@ -306,7 +306,22 @@ LDO's 600 mV of headroom removes its only weakness.
    2026-11-10), once the Boron/B-SoM report is in**
    (sources/2026-11-10-particle-boron-bsom-agent-report.md). **Direction set
    (Andy 2026-11-11): USB power may be applied while the module is attached, and
-   USB2 stays (section 2a).** N1 and N2 follow from it; N10 and N11 are open.
+   USB2 stays (section 2a).** N1 and N2 follow from it. **N10 decided (Andy
+   2026-11-11): reverse blocking in hardware.** **N11 direction set (Andy
+   2026-11-11): USB2 powers the B-SoM, so it programs over USB with the logger
+   off.** This makes N7's buck-boost required: the OR of USB 5 V and the switched
+   cell feeds it, and it holds VCC at 3.6 to 4.2 V. Where N10 sits relative to
+   N7, and the OR part, are worked out when drawn.
+
+   How a B-SoM is programmed (B404X datasheet, docs.particle.io, read
+   2026-11-11): the module "supports a USB interface for programming the device
+   and for USB serial (CDC) communications" and has no USB connector of its own,
+   so the base board supplies one (USB2: D+ pin 11, D- pin 13, VBUS detect pin
+   16); the bootloader updates the user application "via several different
+   methods, USB, OTA, Serial Y-Modem"; and the SWD interface is "4 pads at the
+   bottom" of the module, out of reach in a socket. The datasheet recommends a
+   battery or power on Li+ when bringing up a board, because the default USB
+   input current limit can cause brownouts.
 2. N3: **decided (Andy 2026-11-10): the B-SoM gets its own 3.3 V regulator, fed
    from the switched PARTICLE_VCC**, not a main-board rail. 3V3_CORE (U9, TPS797;
    rated about 10 mA, from memory, UNVERIFIED) cannot carry 150 to 500 mA, and
