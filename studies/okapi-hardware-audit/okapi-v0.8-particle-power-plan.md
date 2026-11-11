@@ -69,7 +69,8 @@ PARTICLE_3V3 ── MS1 pin 2 "3V" (the Feather's regulator OUTPUT)
    power in, supply a fixed 3.0-3.6v power", at least 150 mA, 500 mA recommended.
    On Okapi PARTICLE_3V3 is fed only by MS1's "3V" pin, which is the Feather's
    regulator output. With a B-SoM and no Feather, nothing powers the SoM's
-   processor. Has a B-SoM ever run on an Okapi? (Question for Andy.)
+   processor. Has a B-SoM ever run on an Okapi? No (Andy 2026-11-11): the
+   B-SoM socket has never been used, which agrees with the netlist.
 4. **The B-SoM's VCC wants 3.6 to 4.2 V** (B404X datasheet) and is fed from V_LI
    through U10. A Li-ion cell spends part of its discharge below 3.6 V.
 5. **The firmware never drives PARTICLE_EN** (README "The 66-minute timer",
