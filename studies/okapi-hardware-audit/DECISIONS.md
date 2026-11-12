@@ -531,6 +531,8 @@ merges.
    Margay's R10 (Project-Margay #61, 9056e98)**, in place of the 130 kΩ chosen
    2026-11-06. Recorded in Project-Okapi #35 (body and comment). R20, the
    TPL5111's 130 kΩ (item 3), does not change.
+   **Milestone, Andy 2026-11-12: v0.8.0**, not v0.7.0: v0.7.0 is the Eagle design
+   ported and corrected, and a new watchdog circuit is an upgrade (#35 moved).
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
