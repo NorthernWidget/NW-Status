@@ -1,0 +1,88 @@
+=== PARTS=parts2.json cu FB
+#70    C_VBAT   C1206            NO PLACE within 14 mm | 100 uF anywhere on VBAT (BT1 spri
+#70    D_BT     SOD323-R         side F rot  90 at  155.10  113.80 dist 5.75 | BAT43WS, co
+#70    R_BT     R0402            NO PLACE within 6 mm | 1 k in series with the coin cell
+#71    R_EN     R0402            NO PLACE within 5 mm | 10 k, PC6 to U7 EN (pin 3)
+#71    C_EN     C0402            NO PLACE within 5 mm | 0.1 uF, U7 EN to GND
+#73    R_PD     R0402            NO PLACE within 5 mm | 100 k, U7 EN to GND
+#48    R_INT    R0402            NO PLACE within 5 mm | 10 k pull-up on RTC_INT at U1 pin 
+#52    C_ADC    C0402            NO PLACE within 4 mm | 0.1 uF at U14 VDD (pin 5) to GND (
+#53    C_SD     C0603            NO PLACE within 5 mm | 4.7 uF at J1 VDD (pin 4)
+#53    C_SDHF   C0402            side B rot   0 at  142.40  118.80 dist 3.20 | 0.1 uF at J
+#72-1  U_USB    SOT143B          side B rot   0 at  162.30   91.70 dist 3.09 | SP0503BAHTG
+#72-2  U_TVS    DRV0006A         NO PLACE within 7 mm | TVS0500 VBAT+ to GND after Q1
+#72-3  R_TX     R0402            NO PLACE within 4 mm | 330 TX_EXT at U1 pin 12
+#72-3  R_RX     R0402            NO PLACE within 4 mm | 330 RX_EXT at U1 pin 11
+#72-3  R_ADC    R0402            NO PLACE within 4 mm | 330 ADC_EXT_A0 at U1 pin 37
+#72-3  R_GPIO   R0402            NO PLACE within 4 mm | 330 GPIO_EXT_D0 at U1 pin 43
+#72-3  R_SDA    R0402            side F rot  90 at  131.20  115.30 dist 3.98 | 330 in seri
+#72-3  R_SCL    R0402            side B rot  90 at  128.90  117.90 dist 3.75 | 330 in seri
+#72-4  U_CL1    DCK_R-PDSO-G6    NO PLACE within 10 mm | 4-line clamp, TX RX ADC GPIO
+#72-4  U_CL2    DCK_R-PDSO-G6    NO PLACE within 7 mm | clamp, SDA SCL
+#72-4  U_CL3    DCK_R-PDSO-G6    side B rot   0 at  169.60  100.40 dist 5.80 | clamp, AX V
+=== PARTS=parts2.json crt FB
+#70    C_VBAT   C1206            side B rot   0 at  145.00  117.80 dist 0.80 | 100 uF anyw
+#70    D_BT     SOD323-R         side F rot  90 at  155.10  113.80 dist 5.75 | BAT43WS, co
+#70    R_BT     R0402            side F rot   0 at  152.10  111.10 dist 3.23 | 1 k in seri
+#71    R_EN     R0402            side F rot  90 at  154.40  110.40 dist 4.05 | 10 k, PC6 t
+#71    C_EN     C0402            side B rot  90 at  158.60  110.60 dist 1.17 | 0.1 uF, U7 
+#73    R_PD     R0402            side B rot   0 at  160.90  111.50 dist 3.09 | 100 k, U7 E
+#48    R_INT    R0402            side F rot  90 at  134.55  101.30 dist 1.48 | 10 k pull-u
+#52    C_ADC    C0402            side B rot   0 at  164.20  104.30 dist 1.40 | 0.1 uF at U
+#53    C_SD     C0603            side B rot   0 at  140.70  117.80 dist 2.78 | 4.7 uF at J
+#53    C_SDHF   C0402            NO PLACE within 5 mm | 0.1 uF at J1 VDD (pin 4)
+#72-1  U_USB    SOT143B          side B rot   0 at  162.30   91.70 dist 3.09 | SP0503BAHTG
+#72-2  U_TVS    DRV0006A         side B rot  90 at  161.30  102.80 dist 5.74 | TVS0500 VBA
+#72-3  R_TX     R0402            NO PLACE within 4 mm | 330 TX_EXT at U1 pin 12
+#72-3  R_RX     R0402            NO PLACE within 4 mm | 330 RX_EXT at U1 pin 11
+#72-3  R_ADC    R0402            side F rot  90 at  133.25  100.90 dist 2.95 | 330 ADC_EXT
+#72-3  R_GPIO   R0402            NO PLACE within 4 mm | 330 GPIO_EXT_D0 at U1 pin 43
+#72-3  R_SDA    R0402            side F rot  90 at  131.10  115.30 dist 3.94 | 330 in seri
+#72-3  R_SCL    R0402            side B rot   0 at  129.50  117.30 dist 3.10 | 330 in seri
+#72-4  U_CL1    DCK_R-PDSO-G6    NO PLACE within 10 mm | 4-line clamp, TX RX ADC GPIO
+#72-4  U_CL2    DCK_R-PDSO-G6    side B rot  90 at  132.90  118.40 dist 5.72 | clamp, SDA 
+#72-4  U_CL3    DCK_R-PDSO-G6    side B rot  90 at  166.50  102.30 dist 3.00 | clamp, AX V
+=== PARTS=parts2.json LENIENT=1 MOVE_CREDIT=1 NOLOGO=1 cu FB
+#70    C_VBAT   C1206            NO PLACE within 14 mm | 100 uF anywhere on VBAT (BT1 spri
+#70    D_BT     SOD323-R         side F rot  90 at  155.10  113.80 dist 5.75 | BAT43WS, co
+#70    R_BT     R0402            NO PLACE within 6 mm | 1 k in series with the coin cell
+#71    R_EN     R0402            side B rot  90 at  160.60  105.70 dist 4.08 | 10 k, PC6 t
+#71    C_EN     C0402            side B rot  90 at  162.40  109.50 dist 4.20 | 0.1 uF, U7 
+#73    R_PD     R0402            NO PLACE within 5 mm | 100 k, U7 EN to GND
+#48    R_INT    R0402            NO PLACE within 5 mm | 10 k pull-up on RTC_INT at U1 pin 
+#52    C_ADC    C0402            side B rot   0 at  164.20  106.40 dist 0.70 | 0.1 uF at U
+#53    C_SD     C0603            NO PLACE within 5 mm | 4.7 uF at J1 VDD (pin 4)
+#53    C_SDHF   C0402            side B rot   0 at  142.40  118.80 dist 3.20 | 0.1 uF at J
+#72-1  U_USB    SOT143B          side B rot  90 at  162.80   94.50 dist 1.80 | SP0503BAHTG
+#72-2  U_TVS    DRV0006A         side B rot  90 at  164.70  108.60 dist 2.70 | TVS0500 VBA
+#72-3  R_TX     R0402            NO PLACE within 4 mm | 330 TX_EXT at U1 pin 12
+#72-3  R_RX     R0402            NO PLACE within 4 mm | 330 RX_EXT at U1 pin 11
+#72-3  R_ADC    R0402            NO PLACE within 4 mm | 330 ADC_EXT_A0 at U1 pin 37
+#72-3  R_GPIO   R0402            NO PLACE within 4 mm | 330 GPIO_EXT_D0 at U1 pin 43
+#72-3  R_SDA    R0402            side F rot  90 at  131.20  115.30 dist 3.98 | 330 in seri
+#72-3  R_SCL    R0402            side B rot  90 at  128.90  117.90 dist 3.75 | 330 in seri
+#72-4  U_CL1    DCK_R-PDSO-G6    NO PLACE within 10 mm | 4-line clamp, TX RX ADC GPIO
+#72-4  U_CL2    DCK_R-PDSO-G6    NO PLACE within 7 mm | clamp, SDA SCL
+#72-4  U_CL3    DCK_R-PDSO-G6    side B rot   0 at  169.60  100.40 dist 5.80 | clamp, AX V
+=== PARTS=parts2.json LENIENT=1 MOVE_CREDIT=1 NOLOGO=1 crt FB
+#70    C_VBAT   C1206            side B rot   0 at  145.00  117.80 dist 0.80 | 100 uF anyw
+#70    D_BT     SOD323-R         side F rot  90 at  153.90  110.30 dist 4.92 | BAT43WS, co
+#70    R_BT     R0402            side B rot   0 at  149.30  117.30 dist 5.31 | 1 k in seri
+#71    R_EN     R0402            side B rot  90 at  159.40  109.00 dist 1.20 | 10 k, PC6 t
+#71    C_EN     C0402            side B rot   0 at  159.60  111.30 dist 2.28 | 0.1 uF, U7 
+#73    R_PD     R0402            side F rot  90 at  155.60  113.90 dist 4.69 | 100 k, U7 E
+#48    R_INT    R0402            side F rot  90 at  134.25  101.20 dist 1.79 | 10 k pull-u
+#52    C_ADC    C0402            side B rot   0 at  164.20  105.70 dist 0.00 | 0.1 uF at U
+#53    C_SD     C0603            side B rot   0 at  140.70  117.80 dist 2.78 | 4.7 uF at J
+#53    C_SDHF   C0402            NO PLACE within 5 mm | 0.1 uF at J1 VDD (pin 4)
+#72-1  U_USB    SOT143B          side B rot  90 at  162.80   94.50 dist 1.80 | SP0503BAHTG
+#72-2  U_TVS    DRV0006A         side B rot   0 at  162.00  108.50 dist 0.00 | TVS0500 VBA
+#72-3  R_TX     R0402            NO PLACE within 4 mm | 330 TX_EXT at U1 pin 12
+#72-3  R_RX     R0402            NO PLACE within 4 mm | 330 RX_EXT at U1 pin 11
+#72-3  R_ADC    R0402            side F rot  90 at  132.95  100.90 dist 3.22 | 330 ADC_EXT
+#72-3  R_GPIO   R0402            NO PLACE within 4 mm | 330 GPIO_EXT_D0 at U1 pin 43
+#72-3  R_SDA    R0402            side F rot  90 at  131.10  115.30 dist 3.94 | 330 in seri
+#72-3  R_SCL    R0402            side B rot   0 at  129.50  117.30 dist 3.10 | 330 in seri
+#72-4  U_CL1    DCK_R-PDSO-G6    NO PLACE within 10 mm | 4-line clamp, TX RX ADC GPIO
+#72-4  U_CL2    DCK_R-PDSO-G6    side B rot  90 at  132.90  118.40 dist 5.72 | clamp, SDA 
+#72-4  U_CL3    DCK_R-PDSO-G6    side B rot  90 at  166.50  103.70 dist 1.60 | clamp, AX V
