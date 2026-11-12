@@ -1,0 +1,703 @@
+[
+ {
+  "name": "S0_today",
+  "outline": "50.145 x 30.404",
+  "moved": [],
+  "clash": [],
+  "free_top": 261.4,
+  "free_bot": 546.1,
+  "stretched": [],
+  "stretch_sum": 0,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    42.5,
+    91.2
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    100.4,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    90.7,
+    355.9
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    10.7,
+    163.9
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    27.2,
+    137.9
+   ],
+   "RTC1, 6 mm (clock)": [
+    82.3,
+    0.6
+   ]
+  }
+ },
+ {
+  "name": "A0_taller_strip",
+  "outline": "50.800 x 40.640",
+  "moved": [],
+  "clash": [],
+  "free_top": 778.8,
+  "free_bot": 1069.2,
+  "stretched": [],
+  "stretch_sum": 0,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    55.2,
+    103.9
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    100.4,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    104.0,
+    372.0
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    40.5,
+    196.3
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    29.1,
+    140.2
+   ],
+   "RTC1, 6 mm (clock)": [
+    82.3,
+    0.6
+   ]
+  }
+ },
+ {
+  "name": "A1_taller_lower_row_down",
+  "outline": "50.800 x 40.640",
+  "moved": [
+   "BT1",
+   "C12",
+   "C19",
+   "D4",
+   "ISP1",
+   "J3",
+   "JP2",
+   "Q1",
+   "R1",
+   "R10",
+   "R2",
+   "U11",
+   "U3",
+   "U6"
+  ],
+  "clash": [
+   "ISP1 past edge",
+   "U3 past edge"
+  ],
+  "free_top": 772.4,
+  "free_bot": 1065.8,
+  "stretched": [
+   [
+    "3V3_AUX",
+    10.24,
+    178.4
+   ],
+   [
+    "3V3",
+    10.24,
+    128.6
+   ],
+   [
+    "RST",
+    10.24,
+    84.1
+   ],
+   [
+    "VREF",
+    10.24,
+    52.9
+   ],
+   [
+    "MISO",
+    10.24,
+    49.1
+   ],
+   [
+    "SCK",
+    10.24,
+    43.8
+   ],
+   [
+    "WD_HOLD",
+    10.24,
+    43.3
+   ],
+   [
+    "MOSI",
+    10.24,
+    42.3
+   ],
+   [
+    "/Digital_Core/SD_CD",
+    10.24,
+    41.7
+   ],
+   [
+    "VSWITCH_CTRL",
+    10.24,
+    31.0
+   ],
+   [
+    "PG",
+    10.24,
+    26.4
+   ],
+   [
+    "/Power_Sensors/VMAIN",
+    10.24,
+    21.8
+   ],
+   [
+    "VBAT+",
+    10.24,
+    21.0
+   ],
+   [
+    "Net-(BT1-+)",
+    10.24,
+    19.9
+   ],
+   [
+    "AX",
+    10.24,
+    6.1
+   ]
+  ],
+  "stretch_sum": 153.5,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    78.6,
+    103.9
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    108.2,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    204.8,
+    460.5
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    67.4,
+    175.5
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    29.1,
+    140.2
+   ],
+   "RTC1, 6 mm (clock)": [
+    124.3,
+    0.6
+   ]
+  }
+ },
+ {
+  "name": "B1_longer_right_column_out",
+  "outline": "68.580 x 30.404",
+  "moved": [
+   "C16",
+   "C17",
+   "C18",
+   "C5",
+   "C6",
+   "J3",
+   "U13"
+  ],
+  "clash": [],
+  "free_top": 801.4,
+  "free_bot": 1088.6,
+  "stretched": [
+   [
+    "3V3_AUX",
+    18.43,
+    178.4
+   ],
+   [
+    "VUSB",
+    18.43,
+    55.4
+   ],
+   [
+    "VREF",
+    18.43,
+    52.9
+   ],
+   [
+    "VBAT+",
+    18.43,
+    21.0
+   ],
+   [
+    "AX",
+    18.43,
+    6.1
+   ],
+   [
+    "VSWITCH",
+    18.43,
+    5.2
+   ],
+   [
+    "VBAT-",
+    18.43,
+    4.4
+   ]
+  ],
+  "stretch_sum": 129.0,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    42.5,
+    91.2
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    100.4,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    248.7,
+    492.0
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    54.1,
+    172.1
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    59.2,
+    140.7
+   ],
+   "RTC1, 6 mm (clock)": [
+    82.3,
+    0.6
+   ]
+  }
+ },
+ {
+  "name": "B2_longer_J2_out_left",
+  "outline": "68.580 x 30.404",
+  "moved": [
+   "J2"
+  ],
+  "clash": [
+   "J2 past edge"
+  ],
+  "free_top": 803.1,
+  "free_bot": 1088.9,
+  "stretched": [
+   [
+    "3V3_AUX",
+    18.43,
+    178.4
+   ],
+   [
+    "SCL",
+    18.43,
+    77.9
+   ],
+   [
+    "/Control_Connectors/SDA_EXT",
+    18.43,
+    45.0
+   ],
+   [
+    "TX_EXT",
+    18.43,
+    27.4
+   ],
+   [
+    "RX_EXT",
+    18.43,
+    23.3
+   ],
+   [
+    "ADC_EXT_A0",
+    18.43,
+    10.0
+   ],
+   [
+    "GPIO_EXT_D0",
+    18.43,
+    9.8
+   ]
+  ],
+  "stretch_sum": 129.0,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    150.6,
+    280.5
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    16.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    105.8,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    90.7,
+    355.2
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    11.0,
+    162.7
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    27.3,
+    138.3
+   ],
+   "RTC1, 6 mm (clock)": [
+    80.9,
+    0.7
+   ]
+  }
+ },
+ {
+  "name": "B3_longer_split_x157.9",
+  "outline": "68.580 x 30.404",
+  "moved": [
+   "C10",
+   "C12",
+   "C13",
+   "C16",
+   "C17",
+   "C18",
+   "C5",
+   "C6",
+   "ISP1",
+   "J3",
+   "J4",
+   "JP2",
+   "JP3",
+   "Q1",
+   "Q2",
+   "Q3",
+   "R10",
+   "R19",
+   "R21",
+   "R24",
+   "R31",
+   "R32",
+   "U11",
+   "U13",
+   "U14",
+   "U3",
+   "U6"
+  ],
+  "clash": [
+   "J4 past edge",
+   "ISP1 past edge",
+   "U3 past edge"
+  ],
+  "free_top": 802.7,
+  "free_bot": 1085.7,
+  "stretched": [
+   [
+    "3V3_AUX",
+    18.43,
+    178.4
+   ],
+   [
+    "3V3",
+    18.43,
+    128.6
+   ],
+   [
+    "RST",
+    18.43,
+    84.1
+   ],
+   [
+    "SCL",
+    18.43,
+    77.9
+   ],
+   [
+    "VUSB",
+    18.43,
+    55.4
+   ],
+   [
+    "VREF",
+    18.43,
+    52.9
+   ],
+   [
+    "MISO",
+    18.43,
+    49.1
+   ],
+   [
+    "SCK",
+    18.43,
+    43.8
+   ],
+   [
+    "WD_HOLD",
+    18.43,
+    43.3
+   ],
+   [
+    "MOSI",
+    18.43,
+    42.3
+   ],
+   [
+    "SDA_OB",
+    18.43,
+    38.9
+   ],
+   [
+    "/Power_Sensors/VBAT_SW",
+    18.43,
+    37.5
+   ],
+   [
+    "3V3_FTDI",
+    18.43,
+    32.6
+   ],
+   [
+    "VSWITCH_CTRL",
+    18.43,
+    31.0
+   ],
+   [
+    "PG",
+    18.43,
+    26.4
+   ],
+   [
+    "/Power_Sensors/VMAIN",
+    18.43,
+    21.8
+   ],
+   [
+    "VBAT+",
+    18.43,
+    21.0
+   ],
+   [
+    "/Digital_Core/D-",
+    18.43,
+    13.6
+   ],
+   [
+    "/Digital_Core/D+",
+    18.43,
+    12.9
+   ]
+  ],
+  "stretch_sum": 350.3,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    42.5,
+    91.2
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    100.4,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    250.9,
+    516.6
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    11.0,
+    162.7
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    76.8,
+    190.6
+   ],
+   "RTC1, 6 mm (clock)": [
+    83.3,
+    0.6
+   ]
+  }
+ },
+ {
+  "name": "C1_both_lower_row_down_right_column_out",
+  "outline": "58.420 x 35.560",
+  "moved": [
+   "BT1",
+   "C12",
+   "C16",
+   "C17",
+   "C18",
+   "C19",
+   "C5",
+   "C6",
+   "D4",
+   "ISP1",
+   "J3",
+   "JP2",
+   "Q1",
+   "R1",
+   "R10",
+   "R2",
+   "U11",
+   "U13",
+   "U3",
+   "U6"
+  ],
+  "clash": [
+   "ISP1 past edge",
+   "U3 past edge"
+  ],
+  "free_top": 782.3,
+  "free_bot": 1077.6,
+  "stretched": [
+   [
+    "3V3_AUX",
+    13.43,
+    178.4
+   ],
+   [
+    "3V3",
+    5.16,
+    128.6
+   ],
+   [
+    "RST",
+    5.16,
+    84.1
+   ],
+   [
+    "VUSB",
+    8.27,
+    55.4
+   ],
+   [
+    "VREF",
+    13.43,
+    52.9
+   ],
+   [
+    "MISO",
+    5.16,
+    49.1
+   ],
+   [
+    "SCK",
+    5.16,
+    43.8
+   ],
+   [
+    "WD_HOLD",
+    5.16,
+    43.3
+   ],
+   [
+    "MOSI",
+    5.16,
+    42.3
+   ],
+   [
+    "/Digital_Core/SD_CD",
+    5.16,
+    41.7
+   ],
+   [
+    "VSWITCH_CTRL",
+    5.16,
+    31.0
+   ],
+   [
+    "PG",
+    5.16,
+    26.4
+   ],
+   [
+    "/Power_Sensors/VMAIN",
+    5.16,
+    21.8
+   ],
+   [
+    "VBAT+",
+    13.43,
+    21.0
+   ],
+   [
+    "Net-(BT1-+)",
+    5.16,
+    19.9
+   ],
+   [
+    "AX",
+    13.43,
+    6.1
+   ],
+   [
+    "VSWITCH",
+    8.27,
+    5.2
+   ],
+   [
+    "VBAT-",
+    8.27,
+    4.4
+   ]
+  ],
+  "stretch_sum": 135.3,
+  "need": {
+   "J2 pins, 8 mm (J2 ESD and series R)": [
+    69.3,
+    103.9
+   ],
+   "U1 pins 7, 8 (crystal), 5 mm": [
+    17.9,
+    0.0
+   ],
+   "U1 center, 10 mm": [
+    108.2,
+    0.0
+   ],
+   "power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)": [
+    313.7,
+    544.6
+   ],
+   "J3 pins, 6 mm (J3 ESD)": [
+    79.5,
+    173.9
+   ],
+   "J4 pins, 6 mm (USB ESD)": [
+    59.2,
+    140.7
+   ],
+   "RTC1, 6 mm (clock)": [
+    120.5,
+    0.6
+   ]
+  }
+ }
+]

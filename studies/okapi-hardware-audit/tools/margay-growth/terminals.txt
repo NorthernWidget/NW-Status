@@ -1,0 +1,17 @@
+today 50.145 x 30.404: left edge above H1                      y   89.75- 115.86  26.11 mm -> 10 positions  (calibrated: today's J2 body, which overlaps the H1 screw-head circle by 0.59 mm)
+today 50.145 x 30.404: right edge                              y   96.96- 119.81  22.85 mm ->  8 positions  (below J4 courtyard (H2 keepout ends 94.79))
+taller 50.8 x 40.64: left edge above H1                        y   89.75- 115.86  26.11 mm -> 10 positions  (calibrated: today's J2 body, which overlaps the H1 screw-head circle by 0.59 mm)
+taller 50.8 x 40.64: left edge below H1                        y  120.98- 130.04   9.06 mm ->  3 positions  (second block, holes kept)
+taller 50.8 x 40.64: right edge                                y   96.96- 130.04  33.08 mm -> 12 positions  (below J4 courtyard (H2 keepout ends 94.79))
+taller 50.8 x 40.64: left edge, H1 moved to the new corner     y   89.75- 126.09  36.34 mm -> 14 positions  (breaks the diagonal pair; same 0.59 mm overlap as today)
+longer 68.58 x 30.404 (right column out): left edge above H1   y   89.75- 115.86  26.11 mm -> 10 positions  (calibrated: today's J2 body, which overlaps the H1 screw-head circle by 0.59 mm)
+longer 68.58 x 30.404 (right column out): right edge           y   90.20- 119.81  29.60 mm -> 11 positions  (J4 and H2 no longer on this edge)
+both 58.42 x 35.56 (right column out): left edge above H1      y   89.75- 115.86  26.11 mm -> 10 positions  (calibrated: today's J2 body, which overlaps the H1 screw-head circle by 0.59 mm)
+both 58.42 x 35.56 (right column out): left edge below H1      y  120.98- 124.96   3.98 mm ->  1 positions  (second block, holes kept)
+both 58.42 x 35.56 (right column out): right edge              y   90.20- 124.96  34.76 mm -> 13 positions  (J4 and H2 no longer on this edge)
+both 58.42 x 35.56 (right column out): left edge, H1 moved to the new corner y   89.75- 121.01  31.26 mm -> 12 positions  (breaks the diagonal pair; same 0.59 mm overlap as today)
+
+bottom long edge, taller: strip under H1 keepout to the J3 column: x 123.83-166.21 -> 16 positions (uses 6.75 mm of the 10.24 mm added height)
+bottom long edge, longer (right column out 18.435): new band x 166.21-185.05 -> 7 positions
+top long edge, longer: band right of H2 keepout x 174.36-185.05 -> 3 positions
+bottom long edge, both (right column out 8.275): x 166.21-176.89 -> 3 positions

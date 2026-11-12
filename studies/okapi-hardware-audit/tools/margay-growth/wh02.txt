@@ -1,0 +1,14 @@
+today 50.145 x 30.404                                                  rot   0: plate x   2.12- 52.27 y  11.17- 41.58  smallest margin   2.12 mm FITS
+today 50.145 x 30.404                                                  rot 180: plate x   2.14- 52.29 y  11.12- 41.53  smallest margin   2.12 mm FITS
+taller 50.8 x 40.64 (bottom edge down 10.236, right edge out 0.655)    rot   0: plate x   2.12- 52.92 y   0.93- 41.58  smallest margin   0.93 mm FITS
+taller 50.8 x 40.64 (bottom edge down 10.236, right edge out 0.655)    rot 180: plate x   1.49- 52.29 y  11.12- 51.77  smallest margin   1.49 mm FITS
+taller limit: 50.8 x 41.57                                             rot   0: plate x   2.12- 52.92 y   0.00- 41.58  smallest margin   0.00 mm FITS
+taller limit: 50.8 x 41.57                                             rot 180: plate x   1.49- 52.29 y  11.12- 52.70  smallest margin   1.49 mm FITS
+longer 68.58 x 30.404, right edge out                                  rot   0: plate x   2.12- 70.70 y  11.17- 41.58  smallest margin -16.29 mm OVERHANGS
+longer 68.58 x 30.404, right edge out                                  rot 180: plate x -16.29- 52.29 y  11.12- 41.53  smallest margin -16.29 mm OVERHANGS
+longer 68.58 x 30.404, left edge out (J2 moves)                        rot   0: plate x -16.31- 52.27 y  11.17- 41.58  smallest margin -16.31 mm OVERHANGS
+longer 68.58 x 30.404, left edge out (J2 moves)                        rot 180: plate x   2.14- 70.72 y  11.12- 41.53  smallest margin -16.31 mm OVERHANGS
+both 58.42 x 35.56 (bottom down 5.156, right out 8.275)                rot   0: plate x   2.12- 60.54 y   6.01- 41.58  smallest margin  -6.13 mm OVERHANGS
+both 58.42 x 35.56 (bottom down 5.156, right out 8.275)                rot 180: plate x  -6.13- 52.29 y  11.12- 46.68  smallest margin  -6.13 mm OVERHANGS
+both, within the plate: 52.29 x 41.57                                  rot   0: plate x   2.12- 54.41 y   0.00- 41.58  smallest margin  -0.00 mm FITS
+both, within the plate: 52.29 x 41.57                                  rot 180: plate x  -0.00- 52.29 y  11.12- 52.70  smallest margin  -0.00 mm FITS

@@ -45,3 +45,29 @@ Usable area for each convenient outline, with the holes kept as today (an approx
 2. Is WH-02 still a target enclosure? It is the one that caps the board's size.
 3. Which reflow tool should a lab be assumed to have? A 100 x 100 mm hot plate takes every candidate; a 50 x 50 mm mini plate does not take today's board.
 4. The README puts the CR1220 on the back. The board files and the photo put it on top. Fix the README?
+
+## Direction: grow the short axis (2026-11-12)
+
+Two further reports: `sources/2026-11-12-margay-growth-direction-agent-report.md` (tools in `tools/margay-growth/`, board copied from ca24e31) and `sources/2026-11-12-margay-v4-esd-agent-report.md` (scripts in `tools/margay-v4-esd/`). Andy asked for relief, about 80 % of today's packing density.
+
+**Recommendation: taller only, 50.8 x 40.64 mm.** The bottom edge moves down 10.236 mm and the right edge out 0.655 mm. The top edge (SD entry, USB-C, H2, J2's first pin) and both holes stay, so every mount still works. On the WH-02 lid plate the board fits with 0.93 mm to spare, or 1.49 mm turned 180° (`wh02.txt`); every longer option overhangs it by about 16 mm. BT1 (with C19 and D4) moves into the new strip, and J3 with Q1, U11 and C12 slides down the right edge.
+
+Free top area, today against the recommended layout (scenario A1, rigid block moves, `scenarios.txt`):
+
+| Region | Today (mm²) | Taller, BT1 moved (mm²) |
+|---|---|---|
+| Under U1, where the crystal would go (#59) | 21.0 | 87.0 |
+| Beside J2's pins | 42.5 | 78.6 |
+| At RTC1 | 82.3 | 124.3 |
+| At the #66 power nets | 90.7 | 204.8 |
+| Beside J3 | 10.7 | 67.4 |
+
+The BME280 (#57) takes the new bottom-left corner, about 41.5 mm from U2 and 35–39 mm from U6 (today 10.12 and 15.24 mm). The gain near U1 depends on moving BT1: if it stays, the crystal band stays at 21.0 mm². USB at J4 gains nothing in any option.
+
+**Andy's hypotheses** (2026-11-12, offered as "not necessarily good ideas"):
+1. Grow the long axis for more terminals: mostly wrong. J2 and J3 run along the short edges. The taller board allows 12 positions on the right edge, J2's 10 plus a 3-position block below H1, and 16 on the new bottom edge.
+2. Grow the short axis and keep the holes: right. H1 ends up beside J2's column, a 24.3 mm² keepout, and stops J2 growing past 10 in one block.
+
+**ESD for v4** (the ESD report): one TPD4E1U06DBVR (SOT-23-6) on every signal line, with the ST USBLC6-4SC6 on the same pads as the second source (but not on AX, where its 150 nA maximum is a 48 LSB offset at the MCP3421 against 3.2 LSB for the TI part). Clamp at the pin, then the 330 Ω, on J2's six signal lines. Clamp only on J3's AX, VREF and VSWITCH. The TVS0500 on VBAT+ on the GND side of Q1. A TPD4E1U06 on USB in place of the SP0503BAHTG. At most 45 nA of sleep current at the guaranteed maxima. The board has no ground pour today, and v4 should have a B.Cu plane with stitching vias at each clamp. Room needed, courtyard divided by today's density: 64 mm² at J2, 56 at J3, 23 at J4. The recommended taller layout holds all of it on top.
+
+**Decisions for Andy:** whether BT1 moves; what J3 does (slides down, grows to 12, or stays); whether more terminal positions are wanted; the WH-02 margin (0.93 mm, or 1.49 mm turned 180°); the height (40.64 mm, up to 41.57 mm on the WH-02 plate); a plated H1 as an earth lug (the ESD agent's proposal). For v3.1, the ESD report keeps only the USB clamp, the SDA/SCL resistors and the earth label and README text, and moves the rest of #72 to v4.

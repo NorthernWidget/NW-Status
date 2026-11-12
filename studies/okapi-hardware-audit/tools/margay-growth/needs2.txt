@@ -1,0 +1,172 @@
+====================================================================================================
+S0_today outline 50.145 x 30.404 mm
+  moved: (none)
+  clashes: none
+  free top 261.4 mm2, free bottom 546.1 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 0, sum of minimum added length 0 mm
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 42.5    91.2
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   100.4     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)        90.7   355.9
+     J3 pins, 6 mm (J3 ESD)                              10.7   163.9
+     J4 pins, 6 mm (USB ESD)                             27.2   137.9
+     RTC1, 6 mm (clock)                                  82.3     0.6
+====================================================================================================
+A0_taller_strip outline 50.800 x 40.640 mm
+  moved: (none)
+  clashes: none
+  free top 778.8 mm2, free bottom 1069.2 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 0, sum of minimum added length 0 mm
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 55.2   103.9
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   100.4     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)       104.0   372.0
+     J3 pins, 6 mm (J3 ESD)                              40.5   196.3
+     J4 pins, 6 mm (USB ESD)                             29.1   140.2
+     RTC1, 6 mm (clock)                                  82.3     0.6
+====================================================================================================
+A1_taller_lower_row_down outline 50.800 x 40.640 mm
+  moved: BT1 C12 C19 D4 ISP1 J3 JP2 Q1 R1 R10 R2 U11 U3 U6
+  clashes: ['ISP1 past edge', 'U3 past edge']
+  free top 772.4 mm2, free bottom 1065.8 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 15, sum of minimum added length 153.5 mm
+     3V3_AUX                          +10.24 mm  (routed today 178.4 mm)
+     3V3                              +10.24 mm  (routed today 128.6 mm)
+     RST                              +10.24 mm  (routed today 84.1 mm)
+     VREF                             +10.24 mm  (routed today 52.9 mm)
+     MISO                             +10.24 mm  (routed today 49.1 mm)
+     SCK                              +10.24 mm  (routed today 43.8 mm)
+     WD_HOLD                          +10.24 mm  (routed today 43.3 mm)
+     MOSI                             +10.24 mm  (routed today 42.3 mm)
+     /Digital_Core/SD_CD              +10.24 mm  (routed today 41.7 mm)
+     VSWITCH_CTRL                     +10.24 mm  (routed today 31.0 mm)
+     PG                               +10.24 mm  (routed today 26.4 mm)
+     /Power_Sensors/VMAIN             +10.24 mm  (routed today 21.8 mm)
+     VBAT+                            +10.24 mm  (routed today 21.0 mm)
+     Net-(BT1-+)                      +10.24 mm  (routed today 19.9 mm)
+     AX                               +10.24 mm  (routed today 6.1 mm)
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 78.6   103.9
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   108.2     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)       204.8   460.5
+     J3 pins, 6 mm (J3 ESD)                              67.4   175.5
+     J4 pins, 6 mm (USB ESD)                             29.1   140.2
+     RTC1, 6 mm (clock)                                 124.3     0.6
+====================================================================================================
+B1_longer_right_column_out outline 68.580 x 30.404 mm
+  moved: C16 C17 C18 C5 C6 J3 U13
+  clashes: none
+  free top 801.4 mm2, free bottom 1088.6 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 7, sum of minimum added length 129.0 mm
+     3V3_AUX                          +18.43 mm  (routed today 178.4 mm)
+     VUSB                             +18.43 mm  (routed today 55.4 mm)
+     VREF                             +18.43 mm  (routed today 52.9 mm)
+     VBAT+                            +18.43 mm  (routed today 21.0 mm)
+     AX                               +18.43 mm  (routed today 6.1 mm)
+     VSWITCH                          +18.43 mm  (routed today 5.2 mm)
+     VBAT-                            +18.43 mm  (routed today 4.4 mm)
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 42.5    91.2
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   100.4     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)       248.7   492.0
+     J3 pins, 6 mm (J3 ESD)                              54.1   172.1
+     J4 pins, 6 mm (USB ESD)                             59.2   140.7
+     RTC1, 6 mm (clock)                                  82.3     0.6
+====================================================================================================
+B2_longer_J2_out_left outline 68.580 x 30.404 mm
+  moved: J2
+  clashes: ['J2 past edge']
+  free top 803.1 mm2, free bottom 1088.9 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 7, sum of minimum added length 129.0 mm
+     3V3_AUX                          +18.43 mm  (routed today 178.4 mm)
+     SCL                              +18.43 mm  (routed today 77.9 mm)
+     /Control_Connectors/SDA_EXT      +18.43 mm  (routed today 45.0 mm)
+     TX_EXT                           +18.43 mm  (routed today 27.4 mm)
+     RX_EXT                           +18.43 mm  (routed today 23.3 mm)
+     ADC_EXT_A0                       +18.43 mm  (routed today 10.0 mm)
+     GPIO_EXT_D0                      +18.43 mm  (routed today 9.8 mm)
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                150.6   280.5
+     U1 pins 7, 8 (crystal), 5 mm                        16.9     0.0
+     U1 center, 10 mm                                   105.8     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)        90.7   355.2
+     J3 pins, 6 mm (J3 ESD)                              11.0   162.7
+     J4 pins, 6 mm (USB ESD)                             27.3   138.3
+     RTC1, 6 mm (clock)                                  80.9     0.7
+====================================================================================================
+B3_longer_split_x157.9 outline 68.580 x 30.404 mm
+  moved: C10 C12 C13 C16 C17 C18 C5 C6 ISP1 J3 J4 JP2 JP3 Q1 Q2 Q3 R10 R19 R21 R24 R31 R32 U11 U13 U14 U3 U6
+  clashes: ['J4 past edge', 'ISP1 past edge', 'U3 past edge']
+  free top 802.7 mm2, free bottom 1085.7 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 19, sum of minimum added length 350.3 mm
+     3V3_AUX                          +18.43 mm  (routed today 178.4 mm)
+     3V3                              +18.43 mm  (routed today 128.6 mm)
+     RST                              +18.43 mm  (routed today 84.1 mm)
+     SCL                              +18.43 mm  (routed today 77.9 mm)
+     VUSB                             +18.43 mm  (routed today 55.4 mm)
+     VREF                             +18.43 mm  (routed today 52.9 mm)
+     MISO                             +18.43 mm  (routed today 49.1 mm)
+     SCK                              +18.43 mm  (routed today 43.8 mm)
+     WD_HOLD                          +18.43 mm  (routed today 43.3 mm)
+     MOSI                             +18.43 mm  (routed today 42.3 mm)
+     SDA_OB                           +18.43 mm  (routed today 38.9 mm)
+     /Power_Sensors/VBAT_SW           +18.43 mm  (routed today 37.5 mm)
+     3V3_FTDI                         +18.43 mm  (routed today 32.6 mm)
+     VSWITCH_CTRL                     +18.43 mm  (routed today 31.0 mm)
+     PG                               +18.43 mm  (routed today 26.4 mm)
+     /Power_Sensors/VMAIN             +18.43 mm  (routed today 21.8 mm)
+     VBAT+                            +18.43 mm  (routed today 21.0 mm)
+     /Digital_Core/D-                 +18.43 mm  (routed today 13.6 mm)
+     /Digital_Core/D+                 +18.43 mm  (routed today 12.9 mm)
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 42.5    91.2
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   100.4     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)       250.9   516.6
+     J3 pins, 6 mm (J3 ESD)                              11.0   162.7
+     J4 pins, 6 mm (USB ESD)                             76.8   190.6
+     RTC1, 6 mm (clock)                                  83.3     0.6
+====================================================================================================
+C1_both_lower_row_down_right_column_out outline 58.420 x 35.560 mm
+  moved: BT1 C12 C16 C17 C18 C19 C5 C6 D4 ISP1 J3 JP2 Q1 R1 R10 R2 U11 U13 U3 U6
+  clashes: ['ISP1 past edge', 'U3 past edge']
+  free top 782.3 mm2, free bottom 1077.6 mm2 (removed parts excluded; silkscreen not counted)
+  stretched nets (excl. GND): 18, sum of minimum added length 135.3 mm
+     3V3_AUX                          +13.43 mm  (routed today 178.4 mm)
+     3V3                              + 5.16 mm  (routed today 128.6 mm)
+     RST                              + 5.16 mm  (routed today 84.1 mm)
+     VUSB                             + 8.27 mm  (routed today 55.4 mm)
+     VREF                             +13.43 mm  (routed today 52.9 mm)
+     MISO                             + 5.16 mm  (routed today 49.1 mm)
+     SCK                              + 5.16 mm  (routed today 43.8 mm)
+     WD_HOLD                          + 5.16 mm  (routed today 43.3 mm)
+     MOSI                             + 5.16 mm  (routed today 42.3 mm)
+     /Digital_Core/SD_CD              + 5.16 mm  (routed today 41.7 mm)
+     VSWITCH_CTRL                     + 5.16 mm  (routed today 31.0 mm)
+     PG                               + 5.16 mm  (routed today 26.4 mm)
+     /Power_Sensors/VMAIN             + 5.16 mm  (routed today 21.8 mm)
+     VBAT+                            +13.43 mm  (routed today 21.0 mm)
+     Net-(BT1-+)                      + 5.16 mm  (routed today 19.9 mm)
+     AX                               +13.43 mm  (routed today 6.1 mm)
+     VSWITCH                          + 8.27 mm  (routed today 5.2 mm)
+     VBAT-                            + 8.27 mm  (routed today 4.4 mm)
+  free area near needs (top, bottom) mm2:
+     J2 pins, 8 mm (J2 ESD and series R)                 69.3   103.9
+     U1 pins 7, 8 (crystal), 5 mm                        17.9     0.0
+     U1 center, 10 mm                                   108.2     0.0
+     power nets VUSB/VBAT+/VMAIN pads, 6 mm (#66)       313.7   544.6
+     J3 pins, 6 mm (J3 ESD)                              79.5   173.9
+     J4 pins, 6 mm (USB ESD)                             59.2   140.7
+     RTC1, 6 mm (clock)                                 120.5     0.6
+S0_today                                   #59 free top under U1   21.0 mm2 | #57 best BME spot ( 132.0, 101.7) to U2  18.6 U6  29.2 U7  25.6 nearest SCL pad  10.7 mm | free bottom 546.1
+A0_taller_strip                            #59 free top under U1   21.0 mm2 | #57 best BME spot ( 125.4, 128.7) to U2  41.5 U6  39.0 U7  38.8 nearest SCL pad  14.5 mm | free bottom 1069.2
+A1_taller_lower_row_down                   #59 free top under U1   87.0 mm2 | #57 best BME spot ( 125.4, 128.7) to U2  41.5 U6  35.4 U7  38.8 nearest SCL pad  14.5 mm | free bottom 1065.8
+B1_longer_right_column_out                 #59 free top under U1   21.0 mm2 | #57 best BME spot ( 190.0,  91.5) to U2  40.8 U6  35.6 U7  36.1 nearest SCL pad  27.9 mm | free bottom 1088.6
+B2_longer_J2_out_left                      #59 free top under U1   20.5 mm2 | #57 best BME spot ( 107.0, 118.5) to U2  48.5 U6  53.5 U7  51.6 nearest SCL pad   4.5 mm | free bottom 1088.9
+B3_longer_split_x157.9                     #59 free top under U1   21.0 mm2 | #57 best BME spot ( 155.6, 118.5) to U2  24.5 U6  24.1 U7  12.1 nearest SCL pad  16.4 mm | free bottom 1085.7
+C1_both_lower_row_down_right_column_out    #59 free top under U1   82.2 mm2 | #57 best BME spot ( 125.4, 123.7) to U2  37.5 U6  35.4 U7  36.1 nearest SCL pad   9.6 mm | free bottom 1077.6
+today U12 at (145.91, 104.33) to U2 10.12 U6 15.24

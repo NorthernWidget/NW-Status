@@ -1,0 +1,13 @@
+J2 (10-pos terminal)                                               x 123.40-130.16  y  89.75-115.86  (1 parts)
+MCU (U1, crystal, buttons, LEDs, SD buffer U5, battery divider)    x 130.40-145.29  y  90.17-110.61  (15 parts)
+USB/FT231X (J4, U2, Q2/Q3, VBUS caps)                              x 143.25-173.10  y  88.29-104.13  (24 parts)
+Power (U6, U7, U8, U9, Q1, U11, caps)                              x 153.51-168.11  y  96.97-115.71  (16 parts)
+Clock (RTC1, BT1, C19, C20, D4)                                    x 132.07-153.83  y 103.22-119.70  (5 parts)
+ADC/reference (U14, U13)                                           x 160.66-173.11  y  98.24-109.42  (7 parts)
+I2C switch (U4, R15, R16, JP1)                                     x 148.81-158.56  y  99.13-106.29  (4 parts)
+BME280 U12                                                         x 144.01-147.22  y 103.02-105.64  (1 parts)
+Watchdog/reset (U3, R10, R2)                                       x 150.88-166.22  y 114.68-120.07  (3 parts)
+ISP1                                                               x 156.51-161.72  y 112.27-120.02  (1 parts)
+SD (J1 bottom, R1)                                                 x 128.13-157.68  y  89.13-119.34  (2 parts)
+J3 (6-pos terminal)                                                x 166.36-173.11  y 102.45-118.40  (1 parts)
+not in a block: ['H1', 'H2', 'LOGO1', 'U$1']
