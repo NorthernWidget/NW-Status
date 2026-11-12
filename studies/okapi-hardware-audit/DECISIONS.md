@@ -527,6 +527,10 @@ merges.
    reads the expander's INTF to tell an expander event from a watchdog wake. One
    transistor, no new pins; RTS/CTS cannot do this because flow control is a held
    level and a wake is an edge, and two push-pull drivers on one net would short.
+   **DELAY resistor, Andy 2026-11-12: 57.6 kΩ, a 10-minute heartbeat (604 s), as
+   Margay's R10 (Project-Margay #61, 9056e98)**, in place of the 130 kΩ chosen
+   2026-11-06. Recorded in Project-Okapi #35 (body and comment). R20, the
+   TPL5111's 130 kΩ (item 3), does not change.
 3. **DONE 2026-11-05: R62 and JP8 go; R20's 66 minutes stays** (Project-Okapi #34).
    The timer's hourly wake is the module's receive window and the session bound;
    the logger's own cadence is firmware through FEATHER_EN. Was: R62 330 k on JP8's
