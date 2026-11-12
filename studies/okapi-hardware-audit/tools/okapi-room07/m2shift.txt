@@ -1,0 +1,11 @@
+card outline (F.Fab) +0.25 mm: x 145.39-176.02, y 43.83-86.46
+socket and standoff pads +0.25 mm: x 149.87-172.27, y 40.64-90.90
+dx    0.0  card x 145.39-176.02  lands on  3: H1 R20 R81
+dx   -3.0  card x 142.39-173.02  lands on 11: F2 R20 R54 R81 R82 R83 R86 R87 S6 S7 U10
+dx   -5.0  card x 140.39-171.02  lands on 14: D7 F2 Q4 R20 R54 R81 R82 R83 R86 R87 S6 S7 U10 U8
+dx   -7.0  card x 138.39-169.02  lands on 15: D7 F2 H3 Q4 R20 R54 R81 R82 R83 R86 R87 S6 S7 U10 U8
+dx  -10.0  card x 135.39-166.02  lands on 17: D7 F2 H3 Q3 Q4 R19 R20 R54 R81 R82 R83 R86 R87 S6 S7 U10 U8
+dx  -12.2  card x 133.19-163.82  lands on 17: D7 F2 H3 Q3 Q4 R19 R20 R54 R81 R82 R83 R86 R87 S6 S7 U10 U8
+dx  -15.0  card x 130.39-161.02  lands on 18: D7 F2 H3 Q3 Q4 R19 R20 R54 R81 R82 R83 R86 R87 S6 S7 SD1 U10 U8
+dx  -20.0  card x 125.39-156.02  lands on 19: D7 F2 H3 Q3 Q4 R19 R20 R41 R54 R81 R82 R83 R86 R87 S6 S7 SD1 U10 U8
+dx  -25.0  card x 120.39-151.02  lands on 19: D7 F2 H3 Q3 Q4 R19 R20 R41 R54 R81 R82 R83 R86 R87 S6 S7 SD1 U10 U8

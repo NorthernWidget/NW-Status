@@ -1,0 +1,28 @@
+== lenient cu
+#17    C_VCC5   C0402            NO PLACE within 4 mm | 100 nF at IC1 VCC 5 / GND 6
+#17    C_VCC17  C0402            NO PLACE within 4 mm | 100 nF at IC1 VCC 17 / GND 18
+#17    C_VCC38  C0402            side F rot   0 at  150.80   97.60 dist 3.49 | 100 nF at IC1 VCC 38 / GND 39
+#15    C_AREF   C0402            side F rot   0 at  154.70  101.50 dist 3.22 | 100 nF at IC1 AREF (29) to GND (28)
+#28-2  FB_AVCC  R0603            side F rot  90 at  154.50  110.30 dist 3.80 | ferrite, 3V3_CORE to AVCC (27); 0603 body as stand-in (ESTIMATE)
+#28-2  C_AVCC1  C0402            NO PLACE within 4 mm | 100 nF at IC1 AVCC (27)
+#28-2  C_AVCC2  C0402            NO PLACE within 5 mm | 10 nF at IC1 AVCC (27)
+#32    R_SNS    R0805            side F rot   0 at  156.10  162.50 dist 7.86 | 50 mOhm 0805, L4 output to V_LI, SENSE on the inductor side
+#37    R_SLOW   R0402            side F rot   0 at  153.67  141.21 dist 0.59 | 100 k, SLOW (net CSA_~{ALERT}) to 3V3_CORE, anywhere along the net
+#53    R_S1P    R0402            NO PLACE within 3 mm | 100 k, S1 common (Net-(S1-P)) to GND
+#53    R_S2P    R0402            side F rot  90 at  134.79  115.05 dist 1.91 | 100 k, S2 common (Net-(S2-P)) to GND
+#54    R_C0     R0402            side F rot   0 at  154.41  143.56 dist 0.95 | 100 k, C0 to GND, anywhere along C0
+#54    R_C1     R0402            side F rot   0 at  155.56  145.66 dist 1.75 | 100 k, C1 to GND, anywhere along C1
+== lenient crt
+#17    C_VCC5   C0402            side F rot  90 at  144.60  102.10 dist 2.63 | 100 nF at IC1 VCC 5 / GND 6
+#17    C_VCC17  C0402            NO PLACE within 4 mm | 100 nF at IC1 VCC 17 / GND 18
+#17    C_VCC38  C0402            side F rot   0 at  149.40  100.30 dist 0.50 | 100 nF at IC1 VCC 38 / GND 39
+#15    C_AREF   C0402            side F rot   0 at  154.70  103.40 dist 1.72 | 100 nF at IC1 AREF (29) to GND (28)
+#28-2  FB_AVCC  R0603            side F rot   0 at  154.70  106.90 dist 0.45 | ferrite, 3V3_CORE to AVCC (27); 0603 body as stand-in (ESTIMATE)
+#28-2  C_AVCC1  C0402            side F rot   0 at  154.70  108.70 dist 3.40 | 100 nF at IC1 AVCC (27)
+#28-2  C_AVCC2  C0402            side F rot  90 at  157.00  105.90 dist 3.70 | 10 nF at IC1 AVCC (27)
+#32    R_SNS    R0805            side F rot  90 at  155.10  163.00 dist 6.82 | 50 mOhm 0805, L4 output to V_LI, SENSE on the inductor side
+#37    R_SLOW   R0402            side F rot  90 at  147.97  120.21 dist 0.01 | 100 k, SLOW (net CSA_~{ALERT}) to 3V3_CORE, anywhere along the net
+#53    R_S1P    R0402            side F rot  90 at  165.52  123.44 dist 0.63 | 100 k, S1 common (Net-(S1-P)) to GND
+#53    R_S2P    R0402            side F rot  90 at  134.59  115.05 dist 1.72 | 100 k, S2 common (Net-(S2-P)) to GND
+#54    R_C0     R0402            side F rot  90 at  151.21  151.96 dist 0.01 | 100 k, C0 to GND, anywhere along C0
+#54    R_C1     R0402            side F rot   0 at  154.56  117.86 dist 0.02 | 100 k, C1 to GND, anywhere along C1
