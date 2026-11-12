@@ -39,7 +39,7 @@ for f in b.GetFootprints():
 top|=padT; bot|=padB
 _io=pcbnew.PCB_IO_KICAD_SEXPR()
 def fpgeom(name,rot):
-    f=_io.FootprintLoad(LIB if not name.startswith('RARRAY') else 'scratch.pretty',name); f.SetOrientationDegrees(rot)
+    f=_io.FootprintLoad(LIB if not name.startswith(('RARRAY','USON10','DFN1006')) else 'scratch.pretty',name); f.SetOrientationDegrees(rot)
     cy=f.GetCourtyard(pcbnew.F_CrtYd)
     c=cy.BBox() if cy.OutlineCount() else f.GetBoundingBox(False)
     body=[pcbnew.ToMM(v) for v in (c.GetX(),c.GetY(),c.GetRight(),c.GetBottom())]

@@ -52,3 +52,19 @@ A second case gives parts without a courtyard their pads plus 0.25 mm (an estima
 `tools/margay-room31/`: `occ.py` builds the occupancy grid at 0.1 mm per side (courtyards with 0.15 mm spacing, through-hole pads on both sides, board-level silkscreen, 0.4 mm edge, since the board asks 0.381 mm copper to edge). `place31.py <cu|crt> FB` searches each part, top first, then the bottom, at 0° and 90°, nearest to its target. Mode `cu` also keeps new pads 0.15 mm clear of every existing track, via and pad. Mode `crt` keeps them clear of pads only. Targets and radii are in `parts2.json` (the J2 resistors and the RTC_INT pull-up target the ATmega pins, and the 100 µF anywhere along VBAT). `parts3.json` replaces the four J2 resistors with the array, whose footprint in `scratch.pretty` is an estimate (4 x 0402 convex, 2.4 x 1.9 mm courtyard).
 
 Reproduce: copy the board from ca24e31 to `Margay.kicad_pcb` beside the scripts, then run `PARTS=parts2.json python3 place31.py crt FB`.
+
+## Completion pass (2026-11-12): a place for every part
+
+![The placement plan, top and bottom](figures/margay-v3.1-room-plan.png)
+
+The plan is `tools/margay-room31/placed_parts4D.json` (`PARTS=parts4D.json python3 place31.py crt FB`). It places all 19 parts, and KiCad's DRC on the scratch board reports no courtyard overlap with any of them (only the 2 at C10 that the board already has). Three changes from the first pass:
+
+1. **The 0.1 µF at the SD card now fits**, 1.7 mm from J1 pin 4 on the bottom, by placing it before the 100 µF. The 100 µF moves 1.9 mm along VBAT and stays on the bottom.
+2. **C19 moves to the clock**, as #70 asks: on top, 4.1 mm from RTC1 pin 6. Today it sits 23 mm away at BT1's far spring.
+3. **The J2 signal-line clamp sits behind the resistor array, at the ATmega**, which is the order #72 asks for. Neither end of the J2 lines has room beside it: a single-line 0402-size TVS fits near U1 pins 11 and 12 (TX, RX) and not within 6 mm of pins 37 and 43 (ADC, GPIO). A 4-line clamp fits on top 7–8 mm from U1, in USON-10 (`placed_parts4D.json`) or SC-70-6 (`placed_parts4E.json`). ADC and GPIO then run around U1 to reach it, and that routing is not tested.
+
+Still open before the plan is a layout:
+- Part choices for #72: the USB array, the clamp parts, and a 4 x 0402 resistor array. The array and USON-10 footprints here are estimates, and none of the three is in nw-cold-silicon yet.
+- #73's value (100 kΩ or 1 MΩ), and #48 on 3V3 rather than 3V3_AUX.
+- Moving the tracks listed above. That is Andy's layout pass, and the study does not show that every reroute closes.
+- J1's courtyard in nw-cold-silicon, which stops 0.4 mm short of its pads.

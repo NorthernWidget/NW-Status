@@ -1,5 +1,5 @@
 import subprocess, json, pcbnew
-P=json.load(open('res_PARTS_parts2.json_crt.json'))
+P=json.load(open('placed_parts4D.json'))
 NEW={p[1]:p[0] for p in P if p[3]}
 def run(c): subprocess.run(c,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 def rend(pcb,side,png):
@@ -12,7 +12,7 @@ b=pcbnew.LoadBoard('KiCAD/Margay_room.kicad_pcb')
 bb=b.GetBoardEdgesBoundingBox(); X0,Y0,W=pcbnew.ToMM(bb.GetX()),pcbnew.ToMM(bb.GetY()),pcbnew.ToMM(bb.GetWidth())
 items=[]
 for f in b.GetFootprints():
-    if f.GetReference() in NEW:
+    if f.GetReference() in NEW and not (f.GetReference()=='C19' and pcbnew.ToMM(f.GetPosition().x)<140):   # the old C19 stays unlabeled
         c=f.GetBoundingBox(False); items.append((f.GetReference(),NEW[f.GetReference()],'B' if f.IsFlipped() else 'F',[pcbnew.ToMM(v) for v in (c.GetX(),c.GetY(),c.GetRight(),c.GetBottom())]))
 c20=b.FindFootprintByReference('C20')
 for side,tag,title in (('F','top','Top: blue = proposed parts (placement only, tracks not rerouted); orange = C20, removed by #70'),('B','bot','Bottom, viewed from below (mirrored): blue = proposed parts')):
@@ -28,4 +28,4 @@ for side,tag,title in (('F','top','Top: blue = proposed parts (placement only, t
         draw+=['-stroke',col,'-strokewidth','6','-fill','none','-draw','rectangle %d,%d %d,%d'%tuple(px),
                '-stroke','none','-fill',col,'-pointsize','34','-draw','text %d,%d "%s %s"'%(px[0],max(30,px[1]-8),iss,ref)]
     run(['convert',png]+draw+['-gravity','north','-background','white','-splice','0x70','-fill','black','-pointsize','40','-annotate','+0+12',title,f'r/{tag}_l.png'])
-run(['convert','r/top_l.png','r/bot_l.png','-background','white','-splice','0x30','-append','+repage','-resize','50%','room31.png'])
+run(['convert','r/top_l.png','r/bot_l.png','-background','white','-splice','0x30','-append','+repage','-resize','50%','room31_plan.png'])

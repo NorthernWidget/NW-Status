@@ -6,7 +6,7 @@ b.RemoveNative(b.FindFootprintByReference('C20'))
 io=pcbnew.PCB_IO_KICAD_SEXPR()
 for issue,ref,fp,side,rot,x,y,d,why in plan:
     if side is None: continue
-    f=io.FootprintLoad(LIB,fp); f.SetReference(ref); f.SetValue(issue)
+    f=io.FootprintLoad(LIB if not fp.startswith(('RARRAY','USON10','DFN1006')) else 'scratch.pretty',fp); f.SetReference(ref); f.SetValue(issue)
     f.SetFPID(pcbnew.LIB_ID('nw-cold-silicon',fp)); b.Add(f)
     f.SetOrientationDegrees(rot)
     if side=='B': f.SetLayerAndFlip(pcbnew.B_Cu)

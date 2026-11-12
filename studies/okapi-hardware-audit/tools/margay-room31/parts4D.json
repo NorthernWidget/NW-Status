@@ -1,0 +1,211 @@
+[
+ [
+  "#53",
+  "C_SDHF",
+  "C0402",
+  [
+   142.4,
+   115.6
+  ],
+  5,
+  "0.1 uF at J1 VDD (pin 4), placed before the 100 uF"
+ ],
+ [
+  "#70",
+  "C19",
+  "C0402",
+  [
+   150.86,
+   103.82
+  ],
+  8,
+  "C19 moved to RTC1 VBAT (pin 6), as #70 asks"
+ ],
+ [
+  "#70",
+  "C_VBAT",
+  "C1206",
+  [
+   145.0,
+   117.0
+  ],
+  14,
+  "100 uF anywhere on VBAT (BT1 springs to RTC1)"
+ ],
+ [
+  "#70",
+  "D_BT",
+  "SOD323-R",
+  [
+   149.5,
+   112.5
+  ],
+  6,
+  "BAT43WS, coin cell to VBAT"
+ ],
+ [
+  "#70",
+  "R_BT",
+  "R0402",
+  [
+   149.0,
+   112.0
+  ],
+  6,
+  "1 k in series with the coin cell"
+ ],
+ [
+  "#71",
+  "R_EN",
+  "R0402",
+  [
+   158.2,
+   109.0
+  ],
+  5,
+  "10 k, PC6 to U7 EN (pin 3)"
+ ],
+ [
+  "#71",
+  "C_EN",
+  "C0402",
+  [
+   158.2,
+   109.5
+  ],
+  5,
+  "0.1 uF, U7 EN to GND"
+ ],
+ [
+  "#73",
+  "R_PD",
+  "R0402",
+  [
+   158.2,
+   110.0
+  ],
+  5,
+  "100 k, U7 EN to GND"
+ ],
+ [
+  "#48",
+  "R_INT",
+  "R0402",
+  [
+   135.85,
+   102.0
+  ],
+  5,
+  "10 k pull-up on RTC_INT at U1 pin 42"
+ ],
+ [
+  "#52",
+  "C_ADC",
+  "C0402",
+  [
+   164.2,
+   105.7
+  ],
+  4,
+  "0.1 uF at U14 VDD (pin 5) to GND (pin 2)"
+ ],
+ [
+  "#53",
+  "C_SD",
+  "C0603",
+  [
+   142.4,
+   115.6
+  ],
+  5,
+  "4.7 uF at J1 VDD (pin 4)"
+ ],
+ [
+  "#72-1",
+  "U_USB",
+  "SOT143B",
+  [
+   161.0,
+   94.5
+  ],
+  7,
+  "SP0503BAHTG on D+, D-, VBUS at J4"
+ ],
+ [
+  "#72-2",
+  "U_TVS",
+  "DRV0006A",
+  [
+   162.0,
+   108.5
+  ],
+  7,
+  "TVS0500 VBAT+ to GND after Q1"
+ ],
+ [
+  "#72-3",
+  "RN_J2",
+  "RARRAY4_0402",
+  [
+   136.5,
+   101.5
+  ],
+  6,
+  "4 x 330 array, TX RX ADC GPIO, near U1 west/south pins"
+ ],
+ [
+  "#72-3",
+  "R_SDA",
+  "R0402",
+  [
+   129.5,
+   111.7
+  ],
+  5,
+  "330 in series, SDA_EXT (J2.9)"
+ ],
+ [
+  "#72-3",
+  "R_SCL",
+  "R0402",
+  [
+   129.5,
+   114.2
+  ],
+  5,
+  "330 in series, SCL (J2.10)"
+ ],
+ [
+  "#72-4",
+  "U_CL2",
+  "DCK_R-PDSO-G6",
+  [
+   131.0,
+   113.0
+  ],
+  7,
+  "clamp, SDA SCL"
+ ],
+ [
+  "#72-4",
+  "U_CL3",
+  "DCK_R-PDSO-G6",
+  [
+   166.5,
+   105.3
+  ],
+  7,
+  "clamp, AX VREF at J3"
+ ],
+ [
+  "#72-4",
+  "U_CL1",
+  "USON10_2.5X1",
+  [
+   139.0,
+   102.0
+  ],
+  8,
+  "4-line clamp in USON-10, behind the array near U1"
+ ]
+]
