@@ -68,3 +68,9 @@ Still open before the plan is a layout:
 - #73's value (100 kΩ or 1 MΩ), and #48 on 3V3 rather than 3V3_AUX.
 - Moving the tracks listed above. That is Andy's layout pass, and the study does not show that every reroute closes.
 - J1's courtyard in nw-cold-silicon, which stops 0.4 mm short of its pads.
+
+## Which existing parts could move to the bottom
+
+J1 covers the bottom from x 128.3 to 157.7 and y 89.1 to 116.4, so no top part above it can flip: 47 of the 79 top footprints sit there, including U1, J2, RTC1, BT1, U7 and everything around them. That is the crowded half, where the J2 clamp and resistors and the RTC_INT pull-up compete for room, and flipping cannot help it.
+
+The other 32 sit clear of J1, at the J3 and USB end and along the lower edge: C5, C6, C10, C12, C13 and C16–C19, R1, R17–R19, R21, R31 and R32, Q1–Q3, U3, U6, U10, U11, U13 and U14, plus R10 and R24 (0603). These could move to the bottom. The new parts at that end (#52, #71, #73, the TVS and the J3 clamp) already have bottom spots, so flipping an existing part there trades places rather than adding room. It earns its place where a new part should sit on top beside its pin, such as #52's capacitor under U14. R10 sets the watchdog period and stays on top, where it can be swapped and read.
