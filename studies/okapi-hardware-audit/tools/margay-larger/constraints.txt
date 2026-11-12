@@ -1,0 +1,10 @@
+U12-U2 center distance 10.12 mm
+U12-U6 center distance 15.24 mm
+U12-U7 center distance 11.51 mm
+U12-U9 center distance 12.82 mm
+U1 pad 7 Net-(U1-XTAL2) 139.68 103.85
+U1 pad 8 Net-(U1-XTAL1) 140.18 103.85
+XTAL1 pad OSC1 Net-(U1-XTAL1) 141.79 107.38
+XTAL1 pad OSC2 Net-(U1-XTAL2) 138.09 107.38
+C2 (136.1286, 107.5056)
+C3 (143.7486, 107.5056)

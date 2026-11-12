@@ -1,0 +1,16 @@
+C0402            courtyard                                 3.04 x  1.06    2.807 mm2
+R0402            courtyard                                 3.04 x  1.06    2.807 mm2
+C0603            courtyard                                 3.04 x  2.06    5.743 mm2
+R0603            courtyard                                 3.04 x  2.06    5.743 mm2
+C0805            courtyard                                 4.04 x  2.06    7.699 mm2
+C1206            courtyard                                 5.04 x  2.06    9.655 mm2
+SOD323-R         pads+0.25                                 3.30 x  1.10    3.630 mm2
+SOT143B          pads+0.25                                 3.00 x  2.50    7.500 mm2
+DRV0006A         pads+0.25                                 2.90 x  2.10    6.090 mm2
+DCK_R-PDSO-G6    pads+0.25                                 2.20 x  3.60    7.920 mm2
+DBV_R-PDSO-G6    pads+0.25                                 3.00 x  4.25   12.750 mm2
+SC-70_6          pads+0.25                                 2.27 x  3.30    7.491 mm2
+SOT23-6L         pads+0.25                                 2.95 x  4.30   12.685 mm2
+RARRAY4_0402     courtyard (scratch ESTIMATE footprint)    2.49 x  1.99    4.517 mm2
+USON10_2.5X1     courtyard (scratch ESTIMATE footprint)    3.09 x  1.59    4.455 mm2
+DFN1006_TVS      courtyard (scratch ESTIMATE footprint)    1.59 x  1.19    1.624 mm2

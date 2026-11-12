@@ -1,0 +1,98 @@
+{
+ "C0402": {
+  "area": 2.807,
+  "w": 3.04,
+  "h": 1.06,
+  "src": "courtyard"
+ },
+ "R0402": {
+  "area": 2.807,
+  "w": 3.04,
+  "h": 1.06,
+  "src": "courtyard"
+ },
+ "C0603": {
+  "area": 5.743,
+  "w": 3.04,
+  "h": 2.06,
+  "src": "courtyard"
+ },
+ "R0603": {
+  "area": 5.743,
+  "w": 3.04,
+  "h": 2.06,
+  "src": "courtyard"
+ },
+ "C0805": {
+  "area": 7.699,
+  "w": 4.04,
+  "h": 2.06,
+  "src": "courtyard"
+ },
+ "C1206": {
+  "area": 9.655,
+  "w": 5.04,
+  "h": 2.06,
+  "src": "courtyard"
+ },
+ "SOD323-R": {
+  "area": 3.63,
+  "w": 3.3,
+  "h": 1.1,
+  "src": "pads+0.25"
+ },
+ "SOT143B": {
+  "area": 7.5,
+  "w": 3.0,
+  "h": 2.5,
+  "src": "pads+0.25"
+ },
+ "DRV0006A": {
+  "area": 6.09,
+  "w": 2.9,
+  "h": 2.1,
+  "src": "pads+0.25"
+ },
+ "DCK_R-PDSO-G6": {
+  "area": 7.92,
+  "w": 2.2,
+  "h": 3.6,
+  "src": "pads+0.25"
+ },
+ "DBV_R-PDSO-G6": {
+  "area": 12.75,
+  "w": 3.0,
+  "h": 4.25,
+  "src": "pads+0.25"
+ },
+ "SC-70_6": {
+  "area": 7.491,
+  "w": 2.27,
+  "h": 3.3,
+  "src": "pads+0.25"
+ },
+ "SOT23-6L": {
+  "area": 12.685,
+  "w": 2.95,
+  "h": 4.3,
+  "src": "pads+0.25"
+ },
+ "RARRAY4_0402": {
+  "area": 4.517,
+  "w": 2.49,
+  "h": 1.99,
+  "src": "courtyard (scratch ESTIMATE footprint)"
+ },
+ "USON10_2.5X1": {
+  "area": 4.455,
+  "w": 3.09,
+  "h": 1.59,
+  "src": "courtyard (scratch ESTIMATE footprint)"
+ },
+ "DFN1006_TVS": {
+  "area": 1.624,
+  "w": 1.59,
+  "h": 1.19,
+  "src": "courtyard (scratch ESTIMATE footprint)"
+ }
+}

@@ -1,0 +1,47 @@
+== PROXY=pads: today top sum 918.5 mm2, usable 1423.6 mm2, density 0.645
+   removed 29.2 mm2 (C20 5.74, U9 12.39, U10 2.61, R17 2.81, R18 2.81, C11 2.81)
+   added base 141.8 mm2 (27 parts), options 25.4 mm2 (8 parts); bottom-eligible within base 90.3 mm2
+   A all new on top, base               S=1031.1 | d=0.645 (100% of today): usable 1598 mm2 (x1.123) | d=0.581 (90% of today): usable 1776 mm2 (x1.247) | d=0.516 (80% of today): usable 1998 mm2 (x1.403)
+   B all new on top, base+options       S=1056.5 | d=0.645 (100% of today): usable 1638 mm2 (x1.150) | d=0.581 (90% of today): usable 1819 mm2 (x1.278) | d=0.516 (80% of today): usable 2047 mm2 (x1.438)
+   C base, eligible parts on bottom     S=940.9 | d=0.645 (100% of today): usable 1458 mm2 (x1.024) | d=0.581 (90% of today): usable 1620 mm2 (x1.138) | d=0.516 (80% of today): usable 1823 mm2 (x1.280)
+== PROXY=body: today top sum 1141.0 mm2, usable 1423.6 mm2, density 0.802
+   removed 29.2 mm2 (C20 5.74, U9 12.39, U10 2.61, R17 2.81, R18 2.81, C11 2.81)
+   added base 141.8 mm2 (27 parts), options 25.4 mm2 (8 parts); bottom-eligible within base 90.3 mm2
+   A all new on top, base               S=1253.7 | d=0.802 (100% of today): usable 1564 mm2 (x1.099) | d=0.721 (90% of today): usable 1738 mm2 (x1.221) | d=0.641 (80% of today): usable 1955 mm2 (x1.373)
+   B all new on top, base+options       S=1279.1 | d=0.802 (100% of today): usable 1596 mm2 (x1.121) | d=0.721 (90% of today): usable 1773 mm2 (x1.246) | d=0.641 (80% of today): usable 1995 mm2 (x1.401)
+   C base, eligible parts on bottom     S=1163.4 | d=0.802 (100% of today): usable 1452 mm2 (x1.020) | d=0.721 (90% of today): usable 1613 mm2 (x1.133) | d=0.641 (80% of today): usable 1814 mm2 (x1.275)
+#53       C_SDHF    C0402              2.807 courtyard                            base   no: 0402 | 0.1 uF at J1 VDD
+#70       C_VBAT    C1206              9.655 courtyard                            base   yes: 1206 | 100 uF on VBAT
+#70       D_BT      SOD323-R           3.630 pads+0.25                            base   yes: SOD-323 | BAT43WS, coin cell to VBAT
+#70       R_BT      R0402              2.807 courtyard                            base   no: 0402 | 1 k, coin cell series
+#71       R_EN      R0402              2.807 courtyard                            base   no: 0402 | 10 k, PC6 to U7 EN
+#71       C_EN      C0402              2.807 courtyard                            base   no: 0402 | 0.1 uF, U7 EN to GND
+#73       R_PD      R0402              2.807 courtyard                            base   no: 0402 | 100 k, U7 EN to GND
+#48       R_INT     R0402              2.807 courtyard                            base   no: 0402 | 10 k pull-up, RTC_INT (on 3V3)
+#52       C_ADC     C0402              2.807 courtyard                            base   no: 0402 | 0.1 uF at U14 VDD
+#53       C_SD      C0603              5.743 courtyard                            base   yes: 0603 | 4.7 uF at J1 VDD
+#72-1     U_USB     SOT143B            7.500 pads+0.25                            base   yes: SOT-143 | SP0503BAHTG, USB D+ D- VBUS
+#72-2     U_TVS     DRV0006A           6.090 pads+0.25                            base   no: WSON-6 (leadless) | TVS0500, VBAT+
+#72-3     RN_J2     RARRAY4_0402       4.517 courtyard (scratch ESTIMATE footprint) base   no: 4 x 0402 array (ESTIMATE footprint) | 4 x 330 array, TX RX ADC GPIO
+#72-3     R_SDA     R0402              2.807 courtyard                            base   no: 0402 | 330, SDA_EXT
+#72-3     R_SCL     R0402              2.807 courtyard                            base   no: 0402 | 330, SCL
+#72-4     U_CL2     DCK_R-PDSO-G6      7.920 pads+0.25                            base   yes: SC-70-6 | clamp, SDA SCL
+#72-4     U_CL3     DCK_R-PDSO-G6      7.920 pads+0.25                            base   yes: SC-70-6 | clamp, AX VREF at J3
+#72-4     U_CL1     USON10_2.5X1       4.455 courtyard (scratch ESTIMATE footprint) base   no: USON-10 (leadless, ESTIMATE footprint) | 4-line clamp, TX RX ADC GPIO
+#66       U_A       DCK_R-PDSO-G6      7.920 pads+0.25                            base   yes: SC-70-6 | LM66100, USB
+#66       U_B       DCK_R-PDSO-G6      7.920 pads+0.25                            base   yes: SC-70-6 | LM66100, battery
+#66       U_SS      DBV_R-PDSO-G6     12.750 pads+0.25                            base   yes: SOT-23-6 | TPS22917 soft-start
+#66       C_CT      C0402              2.807 courtyard                            base   no: 0402 | 0.1 uF, U_SS CT
+#66       R_CEA     R0402              2.807 courtyard                            base   no: 0402 | 10 k, U_A CE
+#66       R_CEB     R0402              2.807 courtyard                            base   no: 0402 | 10 k, U_B CE
+#66       R_PU      R0402              2.807 courtyard                            base   no: 0402 | 10 k, U_A ST pull-up
+#66       C_VSYS1   C1206              9.655 courtyard                            base   yes: 1206 | 100 uF, VSYS bulk
+#66       C_VSYS2   C1206              9.655 courtyard                            base   yes: 1206 | 100 uF, VSYS bulk
+#66 open  C_3V3OUT  C0402              2.807 courtyard                            option no: 0402 | FT231X 3V3OUT own capacitor (0.1 uF assumed)
+#66 open  C_FTVCC1  C0402              2.807 courtyard                            option no: 0402 | FT231X VCC 100 nF (FTDI reference)
+#66 open  C_FTVCC2  C0603              5.743 courtyard                            option yes: 0603 | FT231X VCC 4.7 uF (FTDI reference; 0603 assumed)
+#51       FB_AVCC   R0402              2.807 courtyard                            option no: 0402 | ferrite bead 3V3 to AVCC (BLM15AG601SN1D)
+#51       C_AVCC    C0402              2.807 courtyard                            option no: 0402 | 10 uF at AVCC (GRM155R60J106ME47D)
+#51       R_AREF    R0402              2.807 courtyard                            option no: 0402 | 100 ohm AVCC to AREF
+#51       C_AREF    C0402              2.807 courtyard                            option no: 0402 | 1 uF at AREF
+#57       R_SDO     R0402              2.807 courtyard                            option no: 0402 | 1 MOhm SDO pull-down (issue's item 3)
