@@ -2,6 +2,8 @@
 
 Board: Project-Okapi `Hardware/KiCAD-10import/Okapi.kicad_pcb` at cdb1a9f (2026-11-12), 64.75 x 135 mm. Top side only: Okapi is single-sided. Placement only: nothing here is routed, and Andy does the layout. The second half asks the v0.8.0 question: a rectangular outline (#69), and the M.2 socket J9 moved toward the interior.
 
+**Decided after this study (Andy, 2026-11-12):** v0.7.0 is schematic-only. Its board copper is not changed, and every part below is placed once, in the v0.8.0 layout pass (Project-Okapi #78), as on Margay. This study is therefore evidence that the parts fit on the top side, not a placement plan.
+
 ![The placement plan, top side](figures/okapi-v0.7-room-plan.png)
 
 ## Result
