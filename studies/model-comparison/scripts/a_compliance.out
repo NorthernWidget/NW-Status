@@ -1,0 +1,34 @@
+## model
+fable-5.1 {'n': 1204, 'files_med': 1.0, 'files_gt5': 6.8, 'session': 100.0, 'testnum': 3.2, 'brit_per10k': 7.35, 'em_per10k_prose_msg': 5.81, 'em_per10k_code': 3.04, 'words': 344444}
+opus-5 {'n': 510, 'files_med': 1.0, 'files_gt5': 3.5, 'session': 98.6, 'testnum': 4.3, 'brit_per10k': 9.46, 'em_per10k_prose_msg': 5.37, 'em_per10k_code': 0.16, 'words': 248455}
+opus-5.5 {'n': 261, 'files_med': 1, 'files_gt5': 2.3, 'session': 98.1, 'testnum': 23.8, 'brit_per10k': 0.9, 'em_per10k_prose_msg': 0.12, 'em_per10k_code': 0.0, 'words': 89019}
+## model x month
+('fable-5.1', '2026-09') {'n': 658, 'files_med': 1.0, 'files_gt5': 5.2, 'session': 100.0, 'testnum': 2.4, 'brit_per10k': 6.99, 'em_per10k_prose_msg': 10.46, 'em_per10k_code': 4.74, 'words': 196014}
+('fable-5.1', '2026-10') {'n': 117, 'files_med': 1, 'files_gt5': 7.7, 'session': 100.0, 'testnum': 11.1, 'brit_per10k': 26.36, 'em_per10k_prose_msg': 1.34, 'em_per10k_code': 1.51, 'words': 43251}
+('fable-5.1', '2026-11') {'n': 429, 'files_med': 1, 'files_gt5': 9.1, 'session': 100.0, 'testnum': 2.1, 'brit_per10k': 0.19, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 105179}
+('opus-5', '2026-09') {'n': 192, 'files_med': 1.0, 'files_gt5': 2.1, 'session': 99.0, 'testnum': 2.6, 'brit_per10k': 10.45, 'em_per10k_prose_msg': 8.67, 'em_per10k_code': 0.0, 'words': 84246}
+('opus-5', '2026-10') {'n': 318, 'files_med': 1.0, 'files_gt5': 4.4, 'session': 98.4, 'testnum': 5.3, 'brit_per10k': 8.95, 'em_per10k_prose_msg': 3.79, 'em_per10k_code': 0.25, 'words': 164209}
+('opus-5.5', '2026-11') {'n': 261, 'files_med': 1, 'files_gt5': 2.3, 'session': 98.1, 'testnum': 23.8, 'brit_per10k': 0.9, 'em_per10k_prose_msg': 0.12, 'em_per10k_code': 0.0, 'words': 89019}
+## model x kind
+('docs/status', 'fable-5.1') {'n': 352, 'files_med': 1.0, 'files_gt5': 2.6, 'session': 100.0, 'testnum': 2.3, 'brit_per10k': 7.77, 'em_per10k_prose_msg': 8.96, 'em_per10k_code': 10.87, 'words': 123544}
+('docs/status', 'opus-5') {'n': 159, 'files_med': 1, 'files_gt5': 0.0, 'session': 96.2, 'testnum': 3.1, 'brit_per10k': 15.15, 'em_per10k_prose_msg': 8.74, 'em_per10k_code': 2.41, 'words': 73921}
+('docs/status', 'opus-5.5') {'n': 122, 'files_med': 1.0, 'files_gt5': 0.8, 'session': 100.0, 'testnum': 0.8, 'brit_per10k': 1.13, 'em_per10k_prose_msg': 0.14, 'em_per10k_code': 0.0, 'words': 70998}
+('firmware', 'fable-5.1') {'n': 412, 'files_med': 1.0, 'files_gt5': 5.8, 'session': 100.0, 'testnum': 4.6, 'brit_per10k': 10.35, 'em_per10k_prose_msg': 1.0, 'em_per10k_code': 1.4, 'words': 101462}
+('firmware', 'opus-5') {'n': 216, 'files_med': 2.0, 'files_gt5': 5.1, 'session': 100.0, 'testnum': 4.2, 'brit_per10k': 4.43, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.13, 'words': 110515}
+('firmware', 'opus-5.5') {'n': 8, 'files_med': 1.0, 'files_gt5': 0.0, 'session': 100.0, 'testnum': 0.0, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 532}
+('hardware', 'fable-5.1') {'n': 332, 'files_med': 1.0, 'files_gt5': 10.8, 'session': 100.0, 'testnum': 1.8, 'brit_per10k': 5.29, 'em_per10k_prose_msg': 5.04, 'em_per10k_code': 0.0, 'words': 60544}
+('hardware', 'opus-5') {'n': 2, 'files_med': 1.0, 'files_gt5': 0.0, 'session': 100.0, 'testnum': 0.0, 'brit_per10k': 12.3, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 813}
+('hardware', 'opus-5.5') {'n': 112, 'files_med': 2.0, 'files_gt5': 1.8, 'session': 95.5, 'testnum': 52.7, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 8513}
+('sim/tests', 'fable-5.1') {'n': 108, 'files_med': 2.0, 'files_gt5': 12.0, 'session': 100.0, 'testnum': 4.6, 'brit_per10k': 3.4, 'em_per10k_prose_msg': 0.81, 'em_per10k_code': 1.46, 'words': 58894}
+('sim/tests', 'opus-5') {'n': 133, 'files_med': 2, 'files_gt5': 5.3, 'session': 99.2, 'testnum': 6.0, 'brit_per10k': 11.55, 'em_per10k_prose_msg': 2.63, 'em_per10k_code': 0.0, 'words': 63206}
+('sim/tests', 'opus-5.5') {'n': 19, 'files_med': 2, 'files_gt5': 15.8, 'session': 100.0, 'testnum': 10.5, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 8976}
+## overlap days 09-24,10-20,11-04,11-06
+('2026-09-24', 'fable-5.1') {'n': 5, 'files_med': 1, 'files_gt5': 0.0, 'session': 100.0, 'testnum': 0.0, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 411}
+('2026-09-24', 'opus-5') {'n': 86, 'files_med': 2.0, 'files_gt5': 3.5, 'session': 97.7, 'testnum': 2.3, 'brit_per10k': 10.39, 'em_per10k_prose_msg': 6.55, 'em_per10k_code': 0.0, 'words': 42367}
+('2026-10-20', 'fable-5.1') {'n': 36, 'files_med': 1.0, 'files_gt5': 5.6, 'session': 100.0, 'testnum': 2.8, 'brit_per10k': 36.14, 'em_per10k_prose_msg': 4.95, 'em_per10k_code': 0.0, 'words': 10791}
+('2026-10-20', 'opus-5') {'n': 8, 'files_med': 1.0, 'files_gt5': 0.0, 'session': 100.0, 'testnum': 12.5, 'brit_per10k': 28.84, 'em_per10k_prose_msg': 63.13, 'em_per10k_code': 0.0, 'words': 4854}
+('2026-11-04', 'fable-5.1') {'n': 78, 'files_med': 1.0, 'files_gt5': 6.4, 'session': 100.0, 'testnum': 3.8, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 13805}
+('2026-11-04', 'opus-5.5') {'n': 39, 'files_med': 1, 'files_gt5': 0.0, 'session': 87.2, 'testnum': 0.0, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 2859}
+('2026-11-06', 'fable-5.1') {'n': 9, 'files_med': 1, 'files_gt5': 0.0, 'session': 100.0, 'testnum': 11.1, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 1247}
+('2026-11-06', 'opus-5.5') {'n': 37, 'files_med': 2, 'files_gt5': 2.7, 'session': 100.0, 'testnum': 64.9, 'brit_per10k': 0.0, 'em_per10k_prose_msg': 0.0, 'em_per10k_code': 0.0, 'words': 3705}
+('zz',) {'n': 1677, 'files_med': 1, 'files_gt5': 5.7, 'session': 99.7, 'testnum': 5.4, 'brit_per10k': 6.63, 'em_per10k_prose_msg': 4.12, 'em_per10k_code': 1.95, 'words': 601879}

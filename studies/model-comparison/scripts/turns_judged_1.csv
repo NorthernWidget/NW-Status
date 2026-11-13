@@ -1,0 +1,182 @@
+id,label,type,reason
+# COMPLETE
+00a60412,NOT,-,new analysis request
+02477dd9,NOT,-,question about compacting
+026c5ff0,NOT,-,approval of order
+02d3318a,NOT,-,new summary request
+03bb9234,NOT,-,praise and approval
+03d712ce,NOT,-,save request and clarifying question
+05210c52,UNCLEAR,other,raises prior concern and keep 0-ohm may imply overreach
+05373ea0,NOT,-,new explanation request
+067bab23,NOT,-,thanks and steering
+06f8cb47,NOT,-,follow-up questions
+093b49ae,NOT,-,praise and questions
+09a57f73,NOT,-,clarifying question
+09a9fd38,NOT,-,new idea
+09c9abe2,CORRECTION,other,explanation of two models failed to land
+0c10cf4a,NOT,-,questions about permanence
+0c2e8dd6,NOT,-,show request
+0ca50c34,NOT,-,question about model suitability
+0cbbfc7a,NOT,-,decision on part size
+0d769388,NOT,-,praise and next step
+0ebfd293,NOT,-,approval with refinement of categories
+10632364,CORRECTION,report-form,asks to return to ending summaries
+11a39ad3,NOT,-,new setup request
+1307f6c9,NOT,-,go-ahead on recommendation
+1332f56e,CORRECTION,report-form,asks for short answer instead of long one
+13c87110,UNCLEAR,other,praise with gentle attribution correction
+1599dc42,NOT,-,request to file issue
+15ce0195,NOT,-,approval and decision
+16966806,NOT,-,next-step request
+1788b5e8,NOT,-,decision on design goal
+1955d6f0,NOT,-,decisions and question
+1956a5a8,NOT,-,go-ahead
+19aec939,NOT,-,clarifying question
+19f9f6e2,NOT,-,check question
+1b5f81f0,CORRECTION,report-form,summary not a summary restore prior form
+1b84a8cb,NOT,-,follow-up question
+1d2b8457,NOT,-,new investigation request
+1dff6d65,NOT,-,capability question
+1e3c66f5,NOT,-,confirmation question
+1f1e87fb,NOT,-,reminder and show requests
+1f83408f,NOT,-,acknowledgment
+234e53bf,NOT,-,follow-up question
+23b25730,NOT,-,question about plan
+23bbcef7,NOT,-,steering and question
+2489bcd9,NOT,-,naming preference on requested call
+24c42681,NOT,-,request to print code
+24d74fb5,NOT,-,design suggestions
+253834a9,NOT,-,question with conditional steering
+25647dad,NOT,-,new evaluation request
+271f68a5,NOT,-,design suggestion question
+273b5afb,NOT,-,decisions on proposals
+27fa9dc3,NOT,-,new information request
+298ab93e,NOT,-,new question
+29ca6477,NOT,-,decisions and new info
+2a607307,NOT,-,approval with instruction
+2a779489,NOT,-,question
+2d6866d9,NOT,-,question about certainty
+2db2a422,NOT,-,clarifying question
+2f91ce22,UNCLEAR,overreach,says carrying everything forward is too heavy
+307a4202,NOT,-,go-ahead
+30eac304,NOT,-,summary request
+30ee3975,NOT,-,praise and new question
+31fb13c0,CORRECTION,ignored-instruction,pulled work into incompatible format and refused to leave
+321fda8b,NOT,-,states cannot check reasoning
+326b52ab,NOT,-,approval and steering
+32733a98,NOT,-,steering request
+3344c072,NOT,-,new task request
+33a8fef9,NOT,-,decisions and question
+33c1a599,NOT,-,new requests
+33de83e3,NOT,-,question and authorization
+34028fbb,NOT,-,question
+34844b00,NOT,-,approval and filing request
+353bc397,CORRECTION,wrong,rejects jump to v1 assistant called settled
+35ef1b12,CORRECTION,wrong,table mischaracterized the chirp
+35f26553,UNCLEAR,other,defends original designer implies hasty dismissal
+3672ed61,NOT,-,new request
+3672ed61,NOT,-,new request (duplicate item)
+36f0a233,NOT,-,new research request
+3b2e77e3,NOT,-,design decision
+3b9c65f8,NOT,-,answer and new question
+3d739e94,NOT,-,preference and question
+3e31c3b8,CORRECTION,wrong,suggests awkward ordering to preserve table
+3fa57d53,NOT,-,question
+4366ca01,UNCLEAR,report-form,asks to keep answers short after long reply
+4526dc21,NOT,-,request for permanent solution
+4785ba75,NOT,-,new workflow request
+4890778d,NOT,-,approval and delegation
+48e6d6f1,UNCLEAR,wrong,asks whether datasheet was read implying doubt
+4922ccbd,NOT,-,approvals and question
+492453bb,NOT,-,questions
+4943a9f1,NOT,-,go-ahead
+49be75e5,NOT,-,question
+49cd17a9,NOT,-,new requests
+4b520932,NOT,-,question seeking plan
+4cddc06c,CORRECTION,other,restates goal options missed it
+4d5ccdfb,NOT,-,question about existing issue
+4ddc2de9,NOT,-,new requests
+4de2ac83,NOT,-,go-ahead
+4dfcef69,CORRECTION,ignored-instruction,name differs from earlier discussed term
+4e49be3f,NOT,-,question
+4ea75f38,NOT,-,praise and request
+4eea9278,NOT,-,question
+4f223b5a,NOT,-,instruction to comment
+4febc54c,NOT,-,documentation request and question
+50c4d74b,NOT,-,steering
+529219f0,NOT,-,new question
+52e2d7af,NOT,-,layout instructions and praise
+54b441f8,NOT,-,compact command
+5584e8ce,NOT,-,praise and question
+55a81bcd,NOT,-,aside question
+567ae59a,NOT,-,documentation request
+5731076b,NOT,-,question about origin
+57d4c48b,NOT,-,steering to move on
+58bdbe1b,NOT,-,fix request on found defects
+5a636d5d,NOT,-,praise and question
+5ad39cb8,NOT,-,approval and new ideas
+5ad39cb8,NOT,-,approval and new ideas (duplicate item)
+5b98698b,UNCLEAR,wrong,skeptical whether Passive is right answer
+5bd27619,NOT,-,praise
+5c873254,NOT,-,goal statement
+5d4e460b,NOT,-,clarifying question
+5dc47627,NOT,-,go-ahead
+5df77723,NOT,-,question
+5e3e7fee,NOT,-,request and push authorization
+5e6cee3c,NOT,-,asks for explanation of ERC
+5ea8b643,NOT,-,new list request
+5f8e5766,NOT,-,new request
+5fc840e7,NOT,-,question and preference
+5fda5892,NOT,-,user acknowledges own misconception and decides
+5ffd2bad,NOT,-,acknowledgment and next step
+60022d85,NOT,-,go-ahead
+6041e0a0,NOT,-,clarifying question
+61b8316a,NOT,-,show request
+61e33c13,NOT,-,new session start
+62332c32,NOT,-,confirmation request
+626c9ff8,NOT,-,release decision and instruction
+62b0816c,NOT,-,question
+6456e600,NOT,-,show request
+65faaa20,NOT,-,praise and new edit request
+666d7ddf,NOT,-,praise and question
+66893ff0,NOT,-,decision
+67f00edb,NOT,-,push authorization
+6822305e,NOT,-,go-ahead
+686d4cea,NOT,-,new info and steering
+68a7d949,NOT,-,question
+68cb3160,UNCLEAR,wrong,questions whether three headers is cleaner
+6a0ccd38,NOT,-,acknowledgment
+6b5d1ce5,NOT,-,table request
+6c1ca59e,CORRECTION,other,wording makes correct result sound like an error
+6cd56c13,NOT,-,praise and question
+6d3e3c85,NOT,-,new info and questions
+6d5721b0,NOT,-,praise and record request
+6d5f41d7,NOT,-,agreement and new info
+6d700648,NOT,-,approval
+6dbd2e00,NOT,-,push authorization
+6dc60815,NOT,-,new agent request
+6ecdfda1,NOT,-,defers library decision
+727bbcdf,NOT,-,questions
+730acc21,NOT,-,praise and next step
+73215b59,NOT,-,alternative test design suggestion
+734eeb60,NOT,-,sourcing preference and new request
+74163644,UNCLEAR,report-form,having trouble following explanation
+75325bd9,NOT,-,autonomy go-ahead
+75a4e17d,UNCLEAR,other,questions design change citing original designer intent
+7623587e,NOT,-,acknowledgment and go-ahead
+767c8e78,NOT,-,question
+769cb3d3,NOT,-,new issue request
+77d1a2c7,NOT,-,record request
+7838df2b,NOT,-,research request
+7bd46713,NOT,-,go-ahead to file
+7bd9396d,NOT,-,question
+7cbf72ae,UNCLEAR,other,request interrupted without content
+7eb27ba1,CORRECTION,redo,praise but layout visually confusing respace resistors
+7ec86fe4,NOT,-,approval to close
+7f974ea3,NOT,-,push and close authorization
+81c2b1a2,NOT,-,follow-up question
+82887608,NOT,-,new plan requests
+82e765ad,NOT,-,comparison request
+83652717,NOT,-,agent request
+8575b953,NOT,-,brief question
+863ef3eb,NOT,-,chooses safer option

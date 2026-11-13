@@ -4,7 +4,7 @@
 # mode crt: courtyards only (fits if Andy reroutes the tracks under it)
 import pcbnew, numpy as np, json, sys, math
 from occ import occupancy
-LIB='/home/awickert/Dropbox/NorthernWidget/github/nw-cold-silicon/nw-cold-silicon.pretty'
+LIB='/home/awickert/Dropbox/NorthernWidget/github/NW-Cold-Silicon/nw-cold-silicon.pretty'
 CU_CLR=0.15
 REMOVE=set()
 b=pcbnew.LoadBoard('Okapi.kicad_pcb')

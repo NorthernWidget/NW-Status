@@ -1,0 +1,25 @@
+fable-5.1 commits 1204 referenced-by-correction 8 (0.66 per 100) git reverts 0
+opus-5 commits 510 referenced-by-correction 7 (1.37 per 100) git reverts 4
+opus-5.5 commits 261 referenced-by-correction 6 (2.30 per 100) git reverts 3
+21
+opus-5 <- opus-5 Apis_Library 5e6115fe Fix two more printf format mismatches in the harness, and re-record
+fable-5.1 <- fable-5.1 Apis_Library 6ed951f0 Apis.h: restore "burst power draw" in the class description
+fable-5.1 <- fable-5.1 DS3231_Logger 36259194 README: restore the full front page and add the concept DOI badge
+fable-5.1 <- fable-5.1 DS3231_Logger 36259194 README: restore the full front page and add the concept DOI badge
+fable-5.1 <- fable-5.1 MCP23018 6458737c src/: Bobby's 2-space indentation, his version line and comment forms, and his open FIX no
+fable-5.1 <- opus-5 Margay_Library 8bbed27a Restore the note on the trailing-comma convention, beside the code it explains
+fable-5.1 <- fable-5.1 MaxBotix_Library 58e9a6c8 README: restore the Citation section and the class description as written
+opus-5 <- opus-5 NW-Tests 0697248b The sketch template calls begin() before getHeader(), for all eighteen
+opus-5 <- none Project-Apis 58467bc7 Revert "Firmware: start a LiDAR measurement with 0x04, as the manual specifies"
+opus-5 <- none Project-Apis fe148d6b Revert "Firmware: stop forcing the auto-increment bit on every single-byte read"
+opus-5 <- none Project-Apis 06904cdf Revert "Firmware: stop forcing the auto-increment bit on writes as well"
+fable-5.1 <- fable-5.1 Project-Apis 18a688bd Firmware: restore Bobby's dropped notes and wording; new lines in his form
+opus-5.5 <- fable-5.1 Project-Margay b6e127a5 KiCad: C13, C14, C20 manufacturer Taiyo Yuden (was "Yaiyo Yuden")
+opus-5.5 <- fable-5.1 Project-Margay fc29ee4a KiCad: R19 is the 100 kΩ RC0402FR-07100KL (311-100KLRCT-ND), not the 100 Ω part
+opus-5.5 <- none Project-Okapi b6038641 Revert "KiCad: R48 1 mm right, clear of C31, with a 'VREF bias' silk label (#36)"
+opus-5.5 <- none Project-Okapi 65ccd971 Revert "README: where R48 is on the board (silk 'VREF bias'), for the reference-current sw
+opus-5.5 <- none Project-Okapi f4efe5ea Revert "docs: before/after figure for #36 (R48 clear of C31)"
+fable-5.1 <- fable-5.1 Project-Okapi c9581dea KiCAD-10import: the fifteen stage-6 commits undone, back to the sixteen-page state of e3f0
+opus-5 <- none Project-Walrus 994b9081 Revert "All six MS5803 variants, from one table, checked against the datasheets"
+opus-5 <- opus-5 Project-Walrus 2b274581 The staged reading buffer must cover every register a reading writes
+opus-5.5 <- opus-5.5 nw-cold-silicon f567502d build: the board pass skips native footprints, which have no Eagle origin

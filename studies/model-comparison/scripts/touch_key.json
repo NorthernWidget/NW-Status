@@ -1,0 +1,1002 @@
+{
+ "51bc658c": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "da44f930a6823ed091dc615bf2491962be1a8be5",
+  "later": "d723fcb1b176157421e9d8e85c7ccaf9054b8f61",
+  "repo": "Project-Margay",
+  "fixword": false
+ },
+ "99addd90": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "c20284e707ec1316d51f79b30926c535c4ebd3ee",
+  "later": "e899593a22789f9793765945be3d8a856676fd13",
+  "repo": "Libelle_Library",
+  "fixword": false
+ },
+ "adcecdbf": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "12d4f76e8a446d93a3c70ee10319e721d994809b",
+  "later": "ef4eef86daf66a3d7bfaed72884d59e1142ba958",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "f738cdc0": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d959f0ca945331835dff36523cc4922a7a6ca793",
+  "later": "2867ddfab2361006a31d447356021a736005cf49",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "0075e1b3": {
+  "author": "fable-5.1",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "ecdc33cf93362a796e744ab525cbde64756ad370",
+  "later": "6b5105582b34ad0e11e4f688b08a2eba5b3dfbf4",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "5552a729": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "81a96099f58f68933a1f54393c6bf845712dec2d",
+  "later": "5ff8de1667a17b7f8185ddab3742921bdc545213",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "065ace6d": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "fe535919fa1ec5c1db2d7f36cb7a088615ff454b",
+  "later": "dc8680a43953a9af0501323b3f4f408ed8d0413b",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "88099f85": {
+  "author": "fable-5.1",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "2e1e79b3b924852ace3d9268bade82d35d1e132a",
+  "later": "3ff57bdebb2a7eca4c33044952777825795cbbdb",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "3f46f59f": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "dc8adb81afab5cb4290066a1c895424b4710c8b9",
+  "later": "fb6857a7e9019f8c8c7c0442b96ea71fcef9a528",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "4b140432": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "4e8c369c6b4b36aacf557edb9f86ba6dc4a567cb",
+  "later": "20aca5b8e60558df6935f1525facb9e8decbcf11",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "f573fa2e": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "e50ae226cecbe939a07008959dde6e5016c9ff0c",
+  "later": "6911cdf7e27f4db3ab434f27390c0cc39a22bccb",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "04afe803": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "9b3d36082bcb1ac48b5839a5bdef84653a380dcb",
+  "later": "c060fe5eb59e45b8bfedaf2b266f1ad3d27bb879",
+  "repo": "Haar_Library",
+  "fixword": false
+ },
+ "0dce9e4f": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d959f0ca945331835dff36523cc4922a7a6ca793",
+  "later": "026fb268ceb8b6d0b83e0101cd4a4babd9b4fe38",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "d9bc582e": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "2ccd0d03f4f0a0a4c2160c36112303971d29e40d",
+  "later": "7793127abe7e5089a6944c251ea3f1c640ff569f",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "cf0352d7": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "bf976519f52fc8f1f2bfd8900234e04315aa4753",
+  "later": "00cdab0d51e988f24d2cf20aeea5203cb5cf09fb",
+  "repo": "Project-Margay",
+  "fixword": false
+ },
+ "0ccbf366": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "bf976519f52fc8f1f2bfd8900234e04315aa4753",
+  "later": "bb6468742fd6d16352aa37bfd17ca004ed8fc86e",
+  "repo": "Project-Margay",
+  "fixword": false
+ },
+ "4cdca080": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "75b051f1503e7c6f01dd2aacfce482be7d829c6d",
+  "later": "8af7dd8af349343d5f42b38ede3860f82949fa6e",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "391c9f77": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "fff5ec5dd953caddeb4398e9b1f808ef62bfbf09",
+  "later": "e2ede92b6f269ef66ca8bbbbce7b7afbf9b109db",
+  "repo": "NW_Logger",
+  "fixword": false
+ },
+ "cb4b8547": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "dc8680a43953a9af0501323b3f4f408ed8d0413b",
+  "later": "0b95fba6f95f6bec72238dc6a0f37ce43a741e75",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "77cf334f": {
+  "author": "fable-5.1",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "df2e888eae74c09d909691b50c8ece31e447f398",
+  "later": "14ca9795cf9f90949d6977ab8f50f2b794f0b8d2",
+  "repo": "NW-Provision",
+  "fixword": false
+ },
+ "435c31c9": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "bf976519f52fc8f1f2bfd8900234e04315aa4753",
+  "later": "a36dced59b2332cec48fc372576943b13568ce01",
+  "repo": "Project-Margay",
+  "fixword": false
+ },
+ "cce8241e": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d26aaeac6a97d87484f12bba226b6388e3798174",
+  "later": "8af7dd8af349343d5f42b38ede3860f82949fa6e",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "8d83ee20": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "b24cd31f86705d7cea000e8b6d77ecaec4358298",
+  "later": "dc8adb81afab5cb4290066a1c895424b4710c8b9",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "845078bc": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-11",
+  "orig": "80e4f1f540a447e9176d538578f6217ba3cfa0dd",
+  "later": "34f2f4b69e2e50da4fc955b7f10b1bcc62394e0c",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "8b79d090": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "4d8d525957473455d2600eab866ca2123e7b9bcb",
+  "later": "17656f158f03fba2fecb613e873d65d2a0dfaeb8",
+  "repo": "NW_Logger",
+  "fixword": false
+ },
+ "aa8dc86a": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-11",
+  "orig": "46a4285cf7c1f95dc0edf4231ace91fb63580c60",
+  "later": "d606db5491f8d89a573c073ec5471c81628cb588",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "fb133be7": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-11",
+  "orig": "3b2e51b2416e55aedbaffbe11106eaf48ccc6c48",
+  "later": "184cc8f43f5c4caa57e7c89608ae8d09e6fcb683",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "116a5a8a": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d26aaeac6a97d87484f12bba226b6388e3798174",
+  "later": "dea67635870c9802523d87ad60a6b6578ea4d16b",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "fa993c7d": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "b7a37afdb1663ed45f3de8b471653ebad76ce9fb",
+  "later": "a37c977ec327694feec07114abffcbdfb1828b5e",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "af2a3778": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "37345c43b08bd5f129f57ac463ee22b7a63ad7de",
+  "later": "b7a37afdb1663ed45f3de8b471653ebad76ce9fb",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "7a423a09": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "12d4f76e8a446d93a3c70ee10319e721d994809b",
+  "later": "2d681077c5b00b419d0dbe120a0bacd57477b4a6",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "11d38c54": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d959f0ca945331835dff36523cc4922a7a6ca793",
+  "later": "27ee86fca45983af4196bcbebc36aa67e3da8f6f",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "19b9e603": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "b8d872c1b11bf77c3a11275f5f158b5c75928960",
+  "later": "ebb375084440de817cabf21d862d8f6ec20e35a4",
+  "repo": "Margay_Library",
+  "fixword": false
+ },
+ "f6d11752": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d959f0ca945331835dff36523cc4922a7a6ca793",
+  "later": "40b3fb8aedb46e7deccb38149335cb56eac52ece",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "1470e095": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "5516038b68bb075ea1db36fe064bd462a1295333",
+  "later": "bde51b6eb8b4ece894b2b88d0c8d94dc2d1b7eae",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "89a92f8c": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-11",
+  "orig": "5f6868beb3839b36c49c2bd387eb6e838168a97e",
+  "later": "353f441183470351112abe8b746717eea0d42010",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "193b5309": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-10",
+  "orig": "8627182825b12eeb7ef43a5b24ead9269f098a32",
+  "later": "492011d7094a247afdf8b6000a2cac0847873c7d",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "1f87e8c1": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "c20284e707ec1316d51f79b30926c535c4ebd3ee",
+  "later": "b13ad44811f0712f69423fc9b2a36bb7735ee2e6",
+  "repo": "Libelle_Library",
+  "fixword": false
+ },
+ "e45005e5": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "118612eb617ad2dcd00ccd598eb59b3dfc1e5572",
+  "later": "af770a6fafc10a35c7e00ca84884a63c71ad9ac6",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "f29115ca": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-11",
+  "orig": "11db6043e1dc0f6763151a77292a300d6e9a20f6",
+  "later": "0c6a7efa802c7b143fe7e3354584c135b2954436",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "eec7b4fb": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "44ca66353be35109b15bd29e898d8de178a29b49",
+  "later": "8b5133b35f25e6ceaebf294d0d5e0ecaf55c911e",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "82e9ec2d": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "hardware",
+  "month": "2026-10",
+  "orig": "e661dbcbbd0233896cbf3ddad9d4bd5737663b6a",
+  "later": "971e9000ea52eaea476f264f78f71dd3661b8f15",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "ab2b9509": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "2b9a84f20fdd15c7c6520987816f2f7e007b5f21",
+  "later": "395ed37f9f8c3f0091604e6bee66f54d24365ff8",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "0c8627f6": {
+  "author": "fable-5.1",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "b8f1c3bebffc46c66d2a828a811b4e790455710d",
+  "later": "376b6aaa99a3704241fc9fe15a775e884df8ac3f",
+  "repo": "Project-Apis",
+  "fixword": false
+ },
+ "af43e3f4": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "a52206fbb3d6cd25e333ee1f92908531d41360cf",
+  "later": "ac519aef5a058176d0b4f892302747bbfd015dbb",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "090d52f3": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "b7a37afdb1663ed45f3de8b471653ebad76ce9fb",
+  "later": "02f66019a60d037b0ecb03abf0678d44deabc835",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "2af38d14": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "sim/tests",
+  "month": "2026-11",
+  "orig": "92b2ea01422921a468c7fd3494e4bbf7ae370057",
+  "later": "303a4631638a5dc194808cf6a8916e1e238ed7f5",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "41d929b3": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "b8f1c3bebffc46c66d2a828a811b4e790455710d",
+  "later": "7eb067730641d91caaab3361cff600d94617ecb8",
+  "repo": "Project-Apis",
+  "fixword": false
+ },
+ "eaef527b": {
+  "author": "fable-5.1",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "2e1e79b3b924852ace3d9268bade82d35d1e132a",
+  "later": "097ccf58ba0f7ab128e140e4ed4d35977e466ca8",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "74c39ba8": {
+  "author": "fable-5.1",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "6634dca1570c2b2b215743fe259cfeb834d3efc4",
+  "later": "ec388751bde2b07eb315d982c859a72051019531",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "77ae9ce9": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "000995551adee4f49f15b8b0cf771881b0fec344",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "4dbab9a9": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "02eeb763e25441282c2382715c0a6a364ac7fb3c",
+  "later": "81dc9a19bc9d6c1914306364b616fea3c4dca6ef",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "5104d65b": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "554485fc38632f5bd8977ccd5de783b3a3def97d",
+  "later": "634fcebab8d10554cf87058d00f7b23bfa9d4db1",
+  "repo": "NW-Device-Specification",
+  "fixword": true
+ },
+ "a5a95464": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "45c9274f996a811a13dceb1f0f27e254b10e94f4",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "1911c09c": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "ad05d06a855ffbaffd266be6e06728ba0f27a8f4",
+  "later": "9764404af17f2f9f305356cc3e580ebde6d840db",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "cf851363": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "2154602bf2b93071fd5c4f044e718cd9029761eb",
+  "later": "589a05fc26ab99838ca8b1b5d52e2de4bded9f7f",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "4e9d0bdd": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "4537be7dd5cf023d2a7e2d02cafc1717bff5e21b",
+  "later": "0d1bc561fe7cb7b42eea6df7e57e2dbbbb3b4a89",
+  "repo": "NW_Core",
+  "fixword": false
+ },
+ "d5c1ebab": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "64f9896dd553d9ed2d00590138584da6ede4fec4",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "b2ad795e": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "2896d1bb6cc566c9959cf03426cb187e66ce57ad",
+  "later": "fee23e9f96323172deed006514c370f70167fc0d",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "805f2dbc": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "47a944d1bc2b9e147049d0629c5f3b49d6511030",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "b14b8eed": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "afc160920d7b6a72be73d6b0328b7f1773b98574",
+  "later": "6b15bd5be98521677209e08f06aa2b1505705fad",
+  "repo": "Project-Margay",
+  "fixword": true
+ },
+ "495f16ec": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "280901bf17af189b5993f24c1b0669fe79ec2cbd",
+  "later": "21fb209a9ecdf0f904bc2417e23af23c344f9214",
+  "repo": "Margay_Library",
+  "fixword": false
+ },
+ "cc290088": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "a8c16a84d6034c5a381601df7fd07ab40ce731a8",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "efd29916": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "a660e79195db5d02fd542eda112e4fc8d0713b5c",
+  "later": "7223f4f418c81fd04fc1f7763b123162a1fa6afb",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "60f19257": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "3a981d2772fd2d8ff53485bdb170cb24ce09453b",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "9e334393": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "be58f1b85e7ac20beb3c594f63406aaa32776ac8",
+  "later": "bcec8781ecdcd3b62a2e68e37e85ee57c1703f2c",
+  "repo": "NW_Core",
+  "fixword": false
+ },
+ "51d45e38": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "b2658715d43f19059ad99e3d02cd17146f9059e9",
+  "later": "899a9a19a36d1c88635712cefe2ba23e81679555",
+  "repo": "NW_Logger",
+  "fixword": false
+ },
+ "43197685": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "d87486f0b69ebb4eaec13d290624aa1edcf6a3aa",
+  "later": "5355febdddc7204447dd6f6ede6e1f2c21f4a317",
+  "repo": "NW_Core",
+  "fixword": false
+ },
+ "39234c58": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "618b97b3e4dac3e5a9a6e575cb97edf6046bf0ad",
+  "later": "d14ec987080fe74019c4c53e26846e2b00e2b56b",
+  "repo": "Project-Walrus",
+  "fixword": false
+ },
+ "8a175a65": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "cb167b2152e7d9f086b22889c48e1d39375347c4",
+  "later": "8ef51a19627b0e2ecfc4815237dbe5f042b9a252",
+  "repo": "MS5803",
+  "fixword": false
+ },
+ "f70de7f7": {
+  "author": "opus-5",
+  "toucher": "fable-5.1",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "130b0c0fb2f23c2cc1fa2ab853befe1b92b28a08",
+  "later": "737c92aad6c5c172287641bd4aab1c94c1006225",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "8167f613": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "a660e79195db5d02fd542eda112e4fc8d0713b5c",
+  "later": "62e7aa853a29fab21bd19ce1bf118c94f0d4e157",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "1753afe5": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "sim/tests",
+  "month": "2026-11",
+  "orig": "f105a14a68f9c73ce8ad5ae120ef3909c6903274",
+  "later": "c472b7a650f1bd5e9f6e8a090958cb5476fb0b69",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "bb6fce46": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "d7504ee279746460a428578c545fc244f5f7bacc",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "b7ac8483": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "7a689f17ddc67017e342c2b0dc2cd58b5f23240a",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "f0702c65": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "b6caedf78ff6ef6327eb3a55736448178daf21d6",
+  "later": "3a5d54b323809310813d30d772dbca859520cca0",
+  "repo": "Apis_Library",
+  "fixword": false
+ },
+ "03b8f629": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "701f7e765cefd68d99b71d2f85178c90e0964fb3",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "86ac6924": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "2fa9943271ab872fef483ce15e9e60e7a5640e39",
+  "later": "1534faca4303bc115dbaab1f90f4661ee3e9b0ab",
+  "repo": "Apis_Library",
+  "fixword": false
+ },
+ "f9311e16": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "2154602bf2b93071fd5c4f044e718cd9029761eb",
+  "later": "1a812bb5d56af01598589f8f437940992ef95d2a",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "413a3331": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "b1b48a4c1c411b81121474a14ec3310eb07820ed",
+  "later": "c4d0b786924220ead4fce9502cefd87d1e01abe9",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "db40b1e6": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "docs/status",
+  "month": "2026-11",
+  "orig": "d106587432737b40f30514c37b8fd562ffa1d093",
+  "later": "3121ef5fac3b9346733cb98bbd8d128988488d64",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "f377dd86": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "cff1189272cfea53d90b521e953e5aceb8a9f2ad",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "4222cde7": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "16e5d9b91ef1c3bf6dc57a732bc39521dd0705ab",
+  "later": "18a0209b705e19021997db4a282d9bb13be837d2",
+  "repo": "Project-Walrus",
+  "fixword": false
+ },
+ "acee91c8": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-09",
+  "orig": "a13dcfa0a2fdaa22ef2262c86f05fb40e410ffae",
+  "later": "fca3a96920e84ab2b7d44b7b0b36b7019e117eea",
+  "repo": "Walrus_Library",
+  "fixword": false
+ },
+ "34d048e4": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "9a8c6b93edd57d7154e59e66e9d1e861c0a85fd5",
+  "later": "74d4c5538949e89557f60894f4f69a4f32275df7",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "0a5292b6": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "docs/status",
+  "month": "2026-11",
+  "orig": "cb86cdd54c1b507e65b2b4298e34aca514e6f3c0",
+  "later": "d106587432737b40f30514c37b8fd562ffa1d093",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "7ae3f47b": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "f5b071d48f9f81a5e4a0730192e93d30a8cbf7d8",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "ec08340c": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "52eecde89e5daa720caf2fc6a9e8458018542a57",
+  "later": "e2fe433771dc8661661da8333e4c68fb251755a4",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "5d53e90f": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-09",
+  "orig": "d93cd2ab053b56620722c9e4b93d646fe63ed1e2",
+  "later": "7e2c860005b0e7e2ec7471e8d54115ee5a01be46",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "62352019": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "5633ac21e228ee46940fd659026543f70f4c0261",
+  "later": "d727a8e537aeca4c2cb35e726926b172400c2e1b",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "20cf4640": {
+  "author": "opus-5.5",
+  "toucher": "opus-5.5",
+  "kind": "hardware",
+  "month": "2026-11",
+  "orig": "dc76d0420cceede3328c2c83cd2bce416cef472f",
+  "later": "7031f10373b2be57d7c7e24d2836e517e9bb7c1b",
+  "repo": "Project-Okapi",
+  "fixword": false
+ },
+ "836519e1": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "61428cf95a780f4d7d6df36a34e9dd73c6cc3618",
+  "later": "62e7aa853a29fab21bd19ce1bf118c94f0d4e157",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "ebcdee54": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "fee23e9f96323172deed006514c370f70167fc0d",
+  "later": "04e3d5c67fe14acad18c13c95e0b0d277311bc4e",
+  "repo": "NW-Sim",
+  "fixword": true
+ },
+ "b0f78032": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-09",
+  "orig": "2154602bf2b93071fd5c4f044e718cd9029761eb",
+  "later": "4603b17dddc864999e24d3e00d066cc33d5db83e",
+  "repo": "NW-Sim",
+  "fixword": false
+ },
+ "eb9262a7": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "b6caedf78ff6ef6327eb3a55736448178daf21d6",
+  "later": "4eef3c1a84032bedf766fb63015e76c9a155b9ac",
+  "repo": "Apis_Library",
+  "fixword": false
+ },
+ "4851cb41": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "02eeb763e25441282c2382715c0a6a364ac7fb3c",
+  "later": "efdccc1dde5b5c56e5653715d8068fff1202dd6a",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "ef1cebf3": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "sim/tests",
+  "month": "2026-10",
+  "orig": "ed0524181a1aa83b60522e8b37d55f2c8be966e9",
+  "later": "81dc9a19bc9d6c1914306364b616fea3c4dca6ef",
+  "repo": "NW-Tests",
+  "fixword": false
+ },
+ "7615a0aa": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "554485fc38632f5bd8977ccd5de783b3a3def97d",
+  "later": "bcda21c4f2a542412cc97031599c68224831753e",
+  "repo": "NW-Device-Specification",
+  "fixword": false
+ },
+ "d7d1134f": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "docs/status",
+  "month": "2026-10",
+  "orig": "5d9262a94c27189a64a7ccdeb236db5e9fe0bda9",
+  "later": "3345a6b41d9cf578b0113e1f43087fae746886de",
+  "repo": "NW-Status",
+  "fixword": false
+ },
+ "9eaa1ac2": {
+  "author": "opus-5",
+  "toucher": "opus-5",
+  "kind": "firmware",
+  "month": "2026-10",
+  "orig": "16fa8d55cadd9eaab786fd930900eeb08a252c8a",
+  "later": "1cc62af6a6724aa06cf3b82f30aa26f883e27024",
+  "repo": "MS5803",
+  "fixword": false
+ }
+}

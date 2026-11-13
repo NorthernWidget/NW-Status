@@ -1,5 +1,5 @@
 import pcbnew, json, sys
-LIB='/home/awickert/Dropbox/NorthernWidget/github/nw-cold-silicon/nw-cold-silicon.pretty'
+LIB='/home/awickert/Dropbox/NorthernWidget/github/NW-Cold-Silicon/nw-cold-silicon.pretty'
 plan=json.load(open(sys.argv[1])); out=sys.argv[2]
 b=pcbnew.LoadBoard('KiCAD/Margay.kicad_pcb')
 b.RemoveNative(b.FindFootprintByReference('C20'))

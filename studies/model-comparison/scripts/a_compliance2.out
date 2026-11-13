@@ -1,0 +1,30 @@
+kind month model n files_median pct_files>5 pct_testnum
+docs/status 2026-09 fable-5.1 186 1.0 2.2 0.0
+docs/status 2026-09 opus-5 73 1 0.0 0.0
+docs/status 2026-10 fable-5.1 52 1.0 9.6 7.7
+docs/status 2026-10 opus-5 86 1.0 0.0 5.8
+docs/status 2026-11 fable-5.1 114 1.0 0.0 3.5
+docs/status 2026-11 opus-5.5 122 1.0 0.8 0.8
+firmware 2026-09 fable-5.1 361 1 6.6 3.6
+firmware 2026-09 opus-5 46 1.0 2.2 2.2
+firmware 2026-10 fable-5.1 47 2 0.0 12.8
+firmware 2026-10 opus-5 170 2.0 5.9 4.7
+firmware 2026-11 fable-5.1 4 1.5 0.0 0.0
+firmware 2026-11 opus-5.5 8 1.0 0.0 0.0
+hardware 2026-09 fable-5.1 61 1 1.6 1.6
+hardware 2026-09 opus-5 2 1.0 0.0 0.0
+hardware 2026-10 fable-5.1 4 1.0 0.0 0.0
+hardware 2026-11 fable-5.1 267 1 13.1 1.9
+hardware 2026-11 opus-5.5 112 2.0 1.8 52.7
+sim/tests 2026-09 fable-5.1 50 2.0 10.0 4.0
+sim/tests 2026-09 opus-5 71 2 4.2 5.6
+sim/tests 2026-10 fable-5.1 14 4.0 28.6 21.4
+sim/tests 2026-10 opus-5 62 2.0 6.5 6.5
+sim/tests 2026-11 fable-5.1 44 2.0 9.1 0.0
+sim/tests 2026-11 opus-5.5 19 2 15.8 10.5
+
+spelling and em-dash per 10k clean words, split at 2026-10-27 (spelling_check.py created) 
+fable-5.1 post-10-27 n 482 words 128970 brit/10k 4.03 commits_with_brit 22 em/10k prose+msg 0.0 msg_em_commits 0
+fable-5.1 pre-10-27 n 722 words 215474 brit/10k 9.33 commits_with_brit 90 em/10k prose+msg 9.62 msg_em_commits 3
+opus-5 pre-10-27 n 510 words 248455 brit/10k 9.46 commits_with_brit 122 em/10k prose+msg 5.37 msg_em_commits 0
+opus-5.5 post-10-27 n 261 words 89019 brit/10k 0.9 commits_with_brit 2 em/10k prose+msg 0.12 msg_em_commits 0

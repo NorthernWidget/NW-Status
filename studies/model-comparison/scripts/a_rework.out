@@ -1,0 +1,41 @@
+## family
+fable n 240 HEAD lw 0.368 med 0.875 | 3d n 240 lw 0.391 med 0.971 | 2d n 240 touched 52.5% fixword 1.7% | 7d n 210 touched 62.4% fixword 1.9%
+opus n 237 HEAD lw 0.896 med 1.000 | 3d n 173 lw 0.929 med 1.000 | 2d n 178 touched 43.3% fixword 7.9% | 7d n 135 touched 59.3% fixword 8.9%
+## model
+fable-5.1 n 240 HEAD lw 0.368 med 0.875 | 3d n 240 lw 0.391 med 0.971 | 2d n 240 touched 52.5% fixword 1.7% | 7d n 210 touched 62.4% fixword 1.9%
+opus-5 n 135 HEAD lw 0.824 med 0.923 | 3d n 135 lw 0.865 med 0.987 | 2d n 135 touched 53.3% fixword 8.9% | 7d n 135 touched 59.3% fixword 8.9%
+opus-5.5 n 102 HEAD lw 0.939 med 1.000 | 3d n 38 lw 0.987 med 1.000 | 2d n 43 touched 11.6% fixword 4.7% | 7d n 0
+## kind x family
+('docs/status', 'fable') n 60 HEAD lw 0.770 med 0.875 | 3d n 60 lw 0.831 med 0.934 | 2d n 60 touched 53.3% fixword 3.3% | 7d n 47 touched 59.6% fixword 4.3%
+('docs/status', 'opus') n 60 HEAD lw 0.942 med 0.988 | 3d n 41 lw 0.932 med 1.000 | 2d n 42 touched 45.2% fixword 9.5% | 7d n 40 touched 50.0% fixword 10.0%
+('firmware', 'fable') n 60 HEAD lw 0.689 med 0.792 | 3d n 60 lw 0.886 med 0.951 | 2d n 60 touched 48.3% fixword 0.0% | 7d n 56 touched 58.9% fixword 0.0%
+('firmware', 'opus') n 60 HEAD lw 0.741 med 0.785 | 3d n 56 lw 0.787 med 1.000 | 2d n 56 touched 53.6% fixword 3.6% | 7d n 52 touched 67.3% fixword 3.8%
+('hardware', 'fable') n 60 HEAD lw 0.334 med 0.871 | 3d n 60 lw 0.347 med 0.948 | 2d n 60 touched 58.3% fixword 0.0% | 7d n 52 touched 71.2% fixword 0.0%
+('hardware', 'opus') n 57 HEAD lw 0.982 med 1.000 | 3d n 32 lw 0.987 med 1.000 | 2d n 36 touched 13.9% fixword 5.6% | 7d n 2 touched 0.0% fixword 0.0%
+('sim/tests', 'fable') n 60 HEAD lw 0.721 med 0.969 | 3d n 60 lw 0.839 med 0.999 | 2d n 60 touched 50.0% fixword 3.3% | 7d n 55 touched 60.0% fixword 3.6%
+('sim/tests', 'opus') n 60 HEAD lw 0.808 med 0.977 | 3d n 44 lw 0.916 med 0.977 | 2d n 44 touched 52.3% fixword 13.6% | 7d n 41 touched 61.0% fixword 14.6%
+## kind x month x model
+('docs/status', '2026-09', 'fable-5.1') n 20 HEAD lw 0.602 med 0.333 | 3d n 20 lw 0.603 med 0.333 | 2d n 20 touched 65.0% fixword 10.0% | 7d n 20 touched 70.0% fixword 10.0%
+('docs/status', '2026-09', 'opus-5') n 20 HEAD lw 0.803 med 0.982 | 3d n 20 lw 0.803 med 0.982 | 2d n 20 touched 50.0% fixword 15.0% | 7d n 20 touched 50.0% fixword 15.0%
+('docs/status', '2026-10', 'fable-5.1') n 20 HEAD lw 0.862 med 0.981 | 3d n 20 lw 0.971 med 1.000 | 2d n 20 touched 35.0% fixword 0.0% | 7d n 20 touched 45.0% fixword 0.0%
+('docs/status', '2026-10', 'opus-5') n 20 HEAD lw 0.973 med 0.993 | 3d n 20 lw 0.978 med 1.000 | 2d n 20 touched 45.0% fixword 5.0% | 7d n 20 touched 50.0% fixword 5.0%
+('docs/status', '2026-11', 'fable-5.1') n 20 HEAD lw 0.781 med 0.929 | 3d n 20 lw 0.781 med 0.929 | 2d n 20 touched 60.0% fixword 0.0% | 7d n 7 touched 71.4% fixword 0.0%
+('docs/status', '2026-11', 'opus-5.5') n 20 HEAD lw 0.975 med 0.960 | 3d n 1 lw 1.000 med 1.000 | 2d n 2 touched 0.0% fixword 0.0% | 7d n 0
+('firmware', '2026-09', 'fable-5.1') n 34 HEAD lw 0.664 med 0.450 | 3d n 34 lw 0.893 med 0.864 | 2d n 34 touched 58.8% fixword 0.0% | 7d n 34 touched 61.8% fixword 0.0%
+('firmware', '2026-09', 'opus-5') n 21 HEAD lw 0.293 med 0.250 | 3d n 21 lw 0.473 med 0.920 | 2d n 21 touched 52.4% fixword 9.5% | 7d n 21 touched 76.2% fixword 9.5%
+('firmware', '2026-10', 'fable-5.1') n 22 HEAD lw 0.795 med 0.887 | 3d n 22 lw 0.846 med 0.978 | 2d n 22 touched 40.9% fixword 0.0% | 7d n 22 touched 54.5% fixword 0.0%
+('firmware', '2026-10', 'opus-5') n 31 HEAD lw 0.883 med 0.833 | 3d n 31 lw 0.887 med 1.000 | 2d n 31 touched 61.3% fixword 0.0% | 7d n 31 touched 61.3% fixword 0.0%
+('firmware', '2026-11', 'fable-5.1') n 4 HEAD lw 1.000 med 1.000 | 3d n 4 lw 1.000 med 1.000 | 2d n 4 touched 0.0% fixword 0.0% | 7d n 0
+('firmware', '2026-11', 'opus-5.5') n 8 HEAD lw 0.968 med 1.000 | 3d n 4 lw 1.000 med 1.000 | 2d n 4 touched 0.0% fixword 0.0% | 7d n 0
+('hardware', '2026-09', 'fable-5.1') n 21 HEAD lw 0.986 med 1.000 | 3d n 21 lw 0.986 med 1.000 | 2d n 21 touched 28.6% fixword 0.0% | 7d n 21 touched 38.1% fixword 0.0%
+('hardware', '2026-09', 'opus-5') n 2 HEAD lw 1.000 med 1.000 | 3d n 2 lw 1.000 med 1.000 | 2d n 2 touched 0.0% fixword 0.0% | 7d n 2 touched 0.0% fixword 0.0%
+('hardware', '2026-10', 'fable-5.1') n 4 HEAD lw 0.000 med 0.000 | 3d n 4 lw 0.971 med 0.885 | 2d n 4 touched 75.0% fixword 0.0% | 7d n 4 touched 100.0% fixword 0.0%
+('hardware', '2026-11', 'fable-5.1') n 35 HEAD lw 0.330 med 0.474 | 3d n 35 lw 0.331 med 0.474 | 2d n 35 touched 74.3% fixword 0.0% | 7d n 27 touched 92.6% fixword 0.0%
+('hardware', '2026-11', 'opus-5.5') n 55 HEAD lw 0.982 med 1.000 | 3d n 30 lw 0.987 med 1.000 | 2d n 34 touched 14.7% fixword 5.9% | 7d n 0
+('sim/tests', '2026-09', 'fable-5.1') n 22 HEAD lw 0.836 med 0.874 | 3d n 22 lw 0.889 med 0.989 | 2d n 22 touched 63.6% fixword 0.0% | 7d n 22 touched 68.2% fixword 0.0%
+('sim/tests', '2026-09', 'opus-5') n 20 HEAD lw 0.881 med 0.967 | 3d n 20 lw 0.940 med 0.977 | 2d n 20 touched 55.0% fixword 15.0% | 7d n 20 touched 60.0% fixword 15.0%
+('sim/tests', '2026-10', 'fable-5.1') n 14 HEAD lw 0.157 med 0.000 | 3d n 14 lw 0.827 med 0.944 | 2d n 14 touched 57.1% fixword 0.0% | 7d n 14 touched 64.3% fixword 0.0%
+('sim/tests', '2026-10', 'opus-5') n 21 HEAD lw 0.743 med 0.636 | 3d n 21 lw 0.801 med 0.929 | 2d n 21 touched 57.1% fixword 14.3% | 7d n 21 touched 61.9% fixword 14.3%
+('sim/tests', '2026-11', 'fable-5.1') n 24 HEAD lw 0.765 med 1.000 | 3d n 24 lw 0.804 med 1.000 | 2d n 24 touched 33.3% fixword 8.3% | 7d n 19 touched 47.4% fixword 10.5%
+('sim/tests', '2026-11', 'opus-5.5') n 19 HEAD lw 0.755 med 1.000 | 3d n 3 lw 1.000 med 1.000 | 2d n 3 touched 0.0% fixword 0.0% | 7d n 0
+## fix-word touches within 7d: (author model, toucher) {('fable-5.1', 'fable-5.1'): 4, ('opus-5', 'opus-5'): 10, ('opus-5.5', 'opus-5.5'): 4, ('opus-5', 'human/none'): 2, ('opus-5.5', 'human/none'): 1}

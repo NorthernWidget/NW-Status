@@ -2,7 +2,7 @@
 # Re-run the whole audit, read-only. usage: run.sh <workspace dir> <scratch dir>
 # Writes JSON, text reports, Gerber/drill exports and PNG diffs into the scratch dir; prints the summary lines.
 W=${1:-/home/awickert/Dropbox/NorthernWidget/github}; S=${2:-/tmp/eagle-audit}; D=$(cd "$(dirname "$0")" && pwd); mkdir -p $S/fab/okapi $S/fab/margay $S/kicad/okapi $S/kicad/margay $S/render
-OK=$W/Project-Okapi/Hardware; MG=$W/Project-Margay/Hardware; LIB=$W/nw-cold-silicon/nw-cold-silicon.pretty
+OK=$W/Project-Okapi/Hardware; MG=$W/Project-Margay/Hardware; LIB=$W/NW-Cold-Silicon/nw-cold-silicon.pretty
 OKP=$OK/KiCAD-10import/Okapi.kicad_pcb; MGP=$MG/KiCAD/Margay.kicad_pcb
 ODX=116.1261; ODY=-172.5036; MDX=123.4286; MDY=-120.2056   # KiCad minus Eagle, from the element positions (249 and 80 elements agree)
 q() { grep -v 'Debug\|assert'; }

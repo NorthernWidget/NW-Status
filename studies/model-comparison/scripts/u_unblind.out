@@ -1,0 +1,11 @@
+duplicate human-turn uuids in turns.json 36
+turn judgments 354 keyed 354
+claude-fable-5-1 n 114 {'NOT': 100, 'CORRECTION': 7, 'UNCLEAR': 7} correction 6.1% [3.0-12.1] incl unclear 12.3% [7.5-19.6] types {'wrong': 3, 'other': 2, 'redo': 1, 'report-form': 1}
+claude-opus-5 n 120 {'NOT': 95, 'CORRECTION': 13, 'UNCLEAR': 12} correction 10.8% [6.4-17.7] incl unclear 20.8% [14.5-28.9] types {'other': 1, 'report-form': 3, 'ignored-instruction': 4, 'wrong': 4, 'overreach': 1}
+claude-opus-5-5 n 120 {'NOT': 110, 'UNCLEAR': 6, 'CORRECTION': 4} correction 3.3% [1.3-8.3] incl unclear 8.3% [4.6-14.7] types {'report-form': 1, 'other': 2, 'wrong': 1}
+touch fable {'SUPERSEDE': 42, 'FIX': 7, 'UNCLEAR': 1}
+touch fable-5.1 {'SUPERSEDE': 42, 'FIX': 7, 'UNCLEAR': 1}
+touch opus {'SUPERSEDE': 40, 'FIX': 10}
+touch opus-5 {'FIX': 9, 'SUPERSEDE': 25}
+touch opus-5.5 {'SUPERSEDE': 15, 'FIX': 1}
+fixword x judged {(False, 'SUPERSEDE'): 81, (False, 'FIX'): 15, (False, 'UNCLEAR'): 1, (True, 'FIX'): 2, (True, 'SUPERSEDE'): 1}

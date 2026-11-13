@@ -1,0 +1,137 @@
+id,label,message_quality,reason
+# COMPLETE
+009acbd8,MULTI,2,Candidate causes list and separate VBAT buffer proposal bundled
+0545e3f3,MULTI,3,New defaultAddress method plus separate wake signature change
+08b28030,ONE,3,Adds zenodo metadata file with resource type
+08bee5d7,ONE,2,Single changelog entry
+0a00422f,ONE,2,Records one decision session on resistors
+0a93687d,ONE,3,Settles message list and LED vocabulary as one design
+0b414371,ONE,3,Layout tweak for sixteen sheets
+0c765fa6,ONE,3,Single DRC rule for J10
+0cf95262,ONE,3,Return values for three int functions one fix
+0f9ed13e,ONE,3,Single part substitution in schematic and board
+142c98ad,ONE,3,Type change of libVersion
+17767a4e,MULTI,2,Closes decision 18 and rechecks stock separately
+179ad8fc,ONE,3,Adds workflow permission with reason
+18c11cdd,ONE,2,One queue entry rule
+1be03b07,ONE,3,One doc convention recorded
+1dae4158,UNCLEAR,1,Diff truncated subject vague about change
+1e9586f2,ONE,3,Rename follow-through in queue
+1ea8090d,ONE,3,Header check generator plus regenerated sketches
+2094c50a,ONE,3,Adds zenodo metadata file
+20a64a0d,MULTI,2,Apis blocker record and unrelated ACQ_COMMAND finding bundled
+20ef97d4,ONE,3,Rename members to underscore camelCase
+2112d6d0,ONE,2,Regenerated results record
+2157a598,ONE,3,New field-setting script
+21bbcc34,ONE,3,Re-recorded results with reason
+2224f390,MULTI,2,Page 1 write docs plus separate Margay layout table
+2492a402,ONE,2,One queue status update on USI route
+2770bf8d,ONE,3,Records diagnosis state for one bug
+2775c4a7,ONE,2,Adds issue reference
+2787b558,ONE,3,Adds zenodo metadata file
+2d3cf6db,ONE,3,Two pins converted to no-connects one ERC item
+2dd5c4ff,ONE,2,Queue item trimmed
+2f467b8e,ONE,3,New BME280 simulation part
+349adf98,ONE,2,One naming decision with its consequences
+35a01d3e,ONE,2,Chirp gains warning form via one new method
+3621fcdb,MULTI,2,Closes C4 and adds unrelated C12 row
+37f9d288,MULTI,2,Two separate harness cases notice and boot report
+38a3aa5d,ONE,3,One plan section for adaptive logging
+3af59d7e,ONE,3,New baseline set for one hardware version
+3afe93d0,ONE,3,Adds per-repo notes file
+3b6f4bd2,ONE,3,Single standard-name rename with rationale
+3bc99fe3,ONE,2,New notes file documenting provenance
+3c404224,ONE,3,One resistor part substitution
+3ce5f54a,MULTI,3,Pin spread and mask rule plus unrelated QFN collision entry
+3d3f378e,ONE,2,Adds circuit labels to one sheet
+3d55309a,ONE,3,Header comment updated to match cases
+3e0e2afc,ONE,3,Version table for Margay board model
+40291fac,ONE,2,One diagnosis log of measurements
+412d70d8,ONE,3,One decision reversal recorded
+43db91ef,ONE,3,Adds DS3231M conformance checks
+4729adf6,ONE,2,New notes file backing a plan
+4aae9b1f,ONE,3,Single indent-span bug fix with rationale
+4fd3f849,ONE,3,Streaming interface for Haar with wrappers
+504f709f,ONE,3,Records one open design question
+50d9e56d,ONE,3,Rebuilt BoM with README pointer to it
+5dcdcdbb,ONE,3,Errata fix with regenerated baseline
+5e0e444b,MULTI,2,PAC1934 readings plus chirp color plus backup-power message
+61e74214,ONE,3,Mechanical reformat with committed config
+62dd45d7,ONE,3,Carries one footprint flag
+634a3fbf,ONE,3,Restores one displaced comment
+6410ada6,ONE,2,Agent report and its summary table
+64cd55d3,ONE,3,Adds per-repo notes file
+69cbd558,ONE,3,Fixes insertion position of link block
+6c9b120f,ONE,2,New MCP3421 simulation part
+710e202e,MULTI,3,Page 1 EEPROM load and zero-padding past end separable
+73bf4455,ONE,3,One resistor value change with reason
+766b51e8,MULTI,2,GRLP extract move and separate CV reliability note
+76926665,ONE,3,Records one placement decision
+79a0f078,ONE,3,Adds zenodo metadata file
+7d2b414d,ONE,3,Include generated header with usage note
+7da20b9d,ONE,3,Fixes link insertion position with byte test
+7f6fd500,MULTI,3,Stale marker cleanup and setModel deduplication refactor
+82cb636f,ONE,2,One decision closed
+832c5480,ONE,2,README catch-up for recent simulator features
+8555fe29,ONE,2,Regenerated results record
+8859af0a,ONE,2,Adds one decision row
+8932d854,ONE,3,Splits own multi-statement lines
+8a17f69c,ONE,3,Removes obsolete docs script with reason
+8b83782f,ONE,1,Marks one design section built; subject terse
+905ed81d,ONE,2,One decision row updated
+908e5b85,ONE,3,Header comment corrected and model limit noted
+92890954,ONE,3,Walrus adopts NW_Sensor interface
+937fde8b,ONE,2,Status rescan regenerated tables
+93e221e7,ONE,3,Single fuse change with rationale
+954941f8,ONE,3,New compile script
+968783c1,ONE,3,Adds one boundary test case
+969556ae,ONE,3,Value field corrected to part number
+9806a231,ONE,2,Adds circuit labels to one sheet
+9c623b27,ONE,3,Field update fix in link script
+9c7076c0,ONE,3,One resistor value consolidation
+9cde21fd,ONE,1,Two wording edits; subject vague
+9d045309,ONE,3,Coefficients grouped into one struct
+9ecf6826,ONE,3,Board relinked to new hierarchy
+9f4d4707,MULTI,2,Global label conversion and unrelated note wrap
+a04fa05b,ONE,3,Model fixed to serve real firmware identity
+a411ea2e,ONE,3,New generic sensor simulation part
+a58ab451,ONE,2,Adds demo example
+a69ab1d1,ONE,3,Records commit files for baselines
+a7aa1545,ONE,3,Documents one timer circuit
+ab65992a,MULTI,2,Three distinct script and doc changes bundled
+accb5687,ONE,3,Pin type corrections for switch nodes
+aebe6501,MULTI,2,Three unrelated queue topics in one commit
+b08c1b18,ONE,3,Adds per-repo notes file
+b2fbdc2c,ONE,2,Adds one harness observation
+b4eae905,MULTI,2,Item 9 closed and B4 rescoped together
+b52bd129,ONE,3,One checklist line updated
+b5d8e678,ONE,2,Carries attr in rebody mirrored
+b6a8cacd,ONE,3,Regenerated header with marker
+b93b91f8,ONE,2,Status update to one decision row
+ba2548ef,ONE,3,Removes version bumps from design steps
+bacd408c,ONE,3,New study doc with its source reports
+bccefa3b,MULTI,2,Stub additions bundled with broad String stub rewrite
+bcf56889,ONE,3,README board-preparation map
+c81344da,ONE,3,One resistor change with reason
+c9101205,MULTI,3,README keywords doxygen notes and code move bundled
+cb87496e,MULTI,3,Page 0 serving and default address change bundled
+cd2a6382,ONE,3,Status change for all names one decision
+ce1618bd,ONE,3,Adds VBAT behavior to clock model
+d211d92c,ONE,3,Citation type change with reason
+d30b72ab,ONE,2,README brought current
+d523ecce,ONE,3,Register map docs for one patch
+dcc3d930,ONE,3,Initial plugin creation
+e44fd054,ONE,3,One sentence README note
+e79444ea,ONE,3,Records simavr location and restore steps
+e8565d7c,MULTI,3,As-built update plus Haar note plus heading dedup fix
+e8748841,ONE,2,One decision item rewritten
+eb1d324f,ONE,3,Adds zenodo metadata file
+ed18eec2,ONE,3,One capacitor part substitution
+eee3acf5,ONE,2,Regenerated results record
+f2da315e,ONE,3,INT pin made no-connect with reason
+f359add3,ONE,3,One transistor part substitution
+f64f6d70,ONE,3,Single style checker fix
+faa53a6e,ONE,3,Adds setCoefficients method
+fabc4fce,MULTI,3,Batch term plus two independent spec rules
+fcdb59a2,ONE,3,Inrush rule and the soft-start fix it implies
+fe5e2912,ONE,3,Corrects one doc example

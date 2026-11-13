@@ -1,0 +1,102 @@
+id,label,reason
+# COMPLETE
+0075e1b3,SUPERSEDE,status rescan regenerated with new repositories
+03b8f629,SUPERSEDE,JP8 and R62 removed by later design decision
+04afe803,SUPERSEDE,note words renamed to follow spec change
+065ace6d,SUPERSEDE,BATTERY_LOW removed by later decision
+090d52f3,SUPERSEDE,baselines re-recorded after firmware behavior change
+0a5292b6,SUPERSEDE,decisions log status update
+0c8627f6,FIX,corrects I2C reads that ACKed the last byte
+0ccbf366,SUPERSEDE,footprints re-bodied from updated library
+0dce9e4f,SUPERSEDE,Margay appendix defined and report kinds extended
+116a5a8a,SUPERSEDE,status rescan update
+11d38c54,SUPERSEDE,reserved bytes repurposed by new decision
+1470e095,SUPERSEDE,results file updated with next library
+1753afe5,SUPERSEDE,baselines moved into per-board directories
+1911c09c,FIX,Walrus pressure unit corrected in place ubar to mbar
+193b5309,FIX,resistor spacing fixes ambiguous reference placement left by original
+19b9e603,SUPERSEDE,new temporary battery color feature
+1f87e8c1,SUPERSEDE,note words renamed to follow spec change
+20cf4640,SUPERSEDE,R48 value changed by design decision
+2af38d14,SUPERSEDE,link_paths extended with more fields
+34d048e4,FIX,model wrongly refused acquisition on 0x01
+391c9f77,SUPERSEDE,chirp pattern redesigned
+39234c58,SUPERSEDE,whitespace-only reformat to spaces by decision
+3f46f59f,SUPERSEDE,baselines re-recorded for new hook jitter
+413a3331,FIX,removes redundant fourth step from planned item
+41d929b3,SUPERSEDE,LiDAR readiness polling replaces delay as improvement
+4222cde7,SUPERSEDE,include changed after library became one header
+43197685,SUPERSEDE,host stubs extended for a new library
+435c31c9,SUPERSEDE,sheets moved to US Letter paper by decision
+4851cb41,SUPERSEDE,results re-recorded after later migration
+495f16ec,SUPERSEDE,Arduino clang-format reformat by new decision
+4b140432,UNCLEAR,further punctuation fixes may correct original or new rule
+4cdca080,SUPERSEDE,status update
+4dbab9a9,SUPERSEDE,results re-recorded after later work
+4e9d0bdd,SUPERSEDE,generated header regenerated from renamed vocabulary
+5104d65b,FIX,withdraws Okapi exception the original wrongly granted
+51bc658c,FIX,keepouts mispositioned by rebody script defect corrected
+51d45e38,SUPERSEDE,Arduino clang-format reformat by new decision
+5552a729,SUPERSEDE,results updated after MCP23018 rewrite
+5d53e90f,FIX,corrects misframing of extensions as registry shortfall
+60f19257,SUPERSEDE,C30 value changed by design decision
+62352019,SUPERSEDE,queue progress update
+74c39ba8,SUPERSEDE,queue progress update
+7615a0aa,SUPERSEDE,section updated with completed results
+77ae9ce9,FIX,manufacturer misspelling Yaiyo corrected
+77cf334f,SUPERSEDE,extends provisioning to Walrus Page 1
+7a423a09,SUPERSEDE,tool-driven label collision cleanup across many pages
+7ae3f47b,SUPERSEDE,R3 value changed by design decision
+805f2dbc,SUPERSEDE,obsolete crystal replaced by available part
+8167f613,FIX,removes forbidden slave terminology
+82e9ec2d,SUPERSEDE,sheet hierarchy restructured by decision
+836519e1,FIX,removes forbidden slave terminology
+845078bc,SUPERSEDE,later tidy stage refines layout
+86ac6924,SUPERSEDE,override added after base class declares methods
+88099f85,SUPERSEDE,R51 value set by later decision
+89a92f8c,SUPERSEDE,decisions file reorganized
+8a175a65,SUPERSEDE,Arduino clang-format reformat by new decision
+8b79d090,SUPERSEDE,BATTERY_LOW removed by later decision
+8d83ee20,SUPERSEDE,baselines re-recorded for new hook jitter
+99addd90,FIX,fixes race between capture and data read
+9e334393,SUPERSEDE,Arduino clang-format reformat by new decision
+9eaa1ac2,SUPERSEDE,library restructured into three headers by request
+a5a95464,SUPERSEDE,resistor value changed by design decision
+aa8dc86a,SUPERSEDE,more tools and README rows added
+ab2b9509,SUPERSEDE,results updated after later sketch change
+acee91c8,SUPERSEDE,columns relabeled for new Page 1 model feature
+adcecdbf,SUPERSEDE,later layout stage applies edge rule
+af2a3778,SUPERSEDE,LED traces added as new tested artifact
+af43e3f4,SUPERSEDE,queue update with new issue
+b0f78032,SUPERSEDE,simulator extended with card wiring
+b14b8eed,SUPERSEDE,production plan moved to KiCad design
+b2ad795e,SUPERSEDE,later investigation identifies cause
+b7ac8483,SUPERSEDE,R11 value changed by design decision
+bb6fce46,SUPERSEDE,R6 tolerance tightened by request
+cb4b8547,SUPERSEDE,chirp forms redesigned
+cc290088,SUPERSEDE,primary part swapped for stock availability
+cce8241e,SUPERSEDE,status update
+cf0352d7,SUPERSEDE,logo added as schematic part
+cf851363,SUPERSEDE,simulator extended with DS3231
+d5c1ebab,SUPERSEDE,resistor value consolidated by decision
+d7d1134f,SUPERSEDE,thermistor placement resolved by decision
+d9bc582e,SUPERSEDE,queue update with new hardware finding
+db40b1e6,SUPERSEDE,decision recorded on single-sided board
+e45005e5,SUPERSEDE,results re-recorded after renumbering
+eaef527b,FIX,wrong 0603 part numbers on 0402 pads corrected
+eb9262a7,SUPERSEDE,headers moved to generated standard names
+ebcdee54,FIX,corrects too-crude diagnosis with register evidence
+ec08340c,SUPERSEDE,test extended to diff both ways
+eec7b4fb,SUPERSEDE,baselines re-recorded after battery fit change
+ef1cebf3,SUPERSEDE,results re-recorded after later work
+efd29916,SUPERSEDE,emulator restructured onto USI by decision
+f0702c65,SUPERSEDE,Arduino clang-format reformat by new decision
+f29115ca,SUPERSEDE,decisions progress update
+f377dd86,SUPERSEDE,inherited design value changed by later review decision
+f573fa2e,SUPERSEDE,via pads grown to match Eagle by decision
+f6d11752,FIX,em-dashes replaced per dash rule
+f70de7f7,SUPERSEDE,queue progress update
+f738cdc0,FIX,prose rewritten to meet voice and dash rules
+f9311e16,FIX,missing build dependency on simavr library fixed
+fa993c7d,SUPERSEDE,baselines re-recorded after chirp change
+fb133be7,SUPERSEDE,tool gains stretch option

@@ -1,0 +1,182 @@
+id,label,type,reason
+# COMPLETE
+864b12f2,NOT,-,new request to organize lists
+8676883e,NOT,-,new request for table
+8689b465,NOT,-,choice and follow-up question
+885d638e,NOT,-,itemized feedback and new requests
+886e691d,CORRECTION,other,challenges gratuitous use of A/B/C labels
+88d46bae,CORRECTION,wrong,disputes accelerometer raw-counts precedent reasoning
+890d7ac0,CORRECTION,wrong,contradicts claim firmware never powered module
+89838ebe,UNCLEAR,-,questions plus pushback on full minute guard choice
+8a7a55bd,NOT,-,new info on chirp behavior and go-ahead
+8a85ccaf,NOT,-,praise and follow-up question
+8b69261f,NOT,-,asks for recommendation
+8ce9783c,NOT,-,asks about resistor
+8d328255,NOT,-,new task for agent
+8dc039a3,NOT,-,go-ahead and steering
+919bc86b,NOT,-,clarifying question
+91b00659,NOT,-,clarifying question
+92c9add2,UNCLEAR,-,notes docs already warn against lithium plus new tasks
+92dc8058,NOT,-,request for decision table
+92dc8058,NOT,-,request for decision table
+931bc681,UNCLEAR,-,concern about scope of changes then questions
+931c2eba,CORRECTION,other,rejects bottom-side placement assistant proposed
+9326bfe0,NOT,-,new request
+93ac80f2,NOT,-,approval and new request
+9450dac1,NOT,-,agreement and instruction to document
+948b6537,NOT,-,new review request
+952282da,UNCLEAR,-,skeptical whether ground pour proposal has real value
+99bb28c1,NOT,-,new request for task list
+9a21bd40,NOT,-,new info on Margay dimensions
+9b3ee100,NOT,-,question about usage cost
+9ba37e43,NOT,-,go-ahead to implement check
+9bde3422,NOT,-,question about remaining work
+9c251494,NOT,-,go-ahead with deferral
+9c37be02,UNCLEAR,-,believes progress went further asks double check
+9d100cc9,NOT,-,thanks and new question
+9da15656,NOT,-,acknowledgment and clarifying questions
+9ea56747,NOT,-,approval and asks next
+9ef917ca,NOT,-,new request to file issue
+9f079cdf,NOT,-,go-ahead to continue
+9f80b25a,UNCLEAR,-,questions framing about wire and address
+9f896378,NOT,-,steering to inspect stubs
+9fb52cc0,NOT,-,itemized feedback on findings
+9fc77a7e,NOT,-,decision and request
+9fd6e54b,NOT,-,new design preference to record
+9ff78cc2,NOT,-,asks opinion on versioning
+a04aaf48,NOT,-,follow-up questions
+a17906cb,NOT,-,clarifying question
+a1873167,NOT,-,clarifying question
+a2492eb8,NOT,-,clarifying question
+a36416ae,NOT,-,follow-up questions on capacitors
+a400c597,NOT,-,agreement with assessment
+a4f14333,UNCLEAR,-,questions attribution of removed labels
+a4ffe67c,NOT,-,confirms purpose and asks plan
+a559b926,NOT,-,design question about struct
+a5f52688,NOT,-,positive reaction
+a68bcfae,NOT,-,asks for explanation
+a8958d96,NOT,-,go-ahead with issue handling
+a9115f7c,NOT,-,asks more general question
+a97eed25,NOT,-,compact command
+a9de4d31,NOT,-,itemized questions and approval
+aa4c1627,NOT,-,thanks
+aae51afa,NOT,-,question about switching model
+ab52ca35,NOT,-,new instruction to link issues
+abdd5c1d,NOT,-,question about library changes
+ac58b613,NOT,-,itemized prioritization
+af2270de,NOT,-,provides datasheet link
+afb36cbc,NOT,-,new question
+b0ca2138,NOT,-,clarifying question
+b1074e1b,NOT,-,question about repo location
+b16eee14,UNCLEAR,-,restates question asking brief answer after long reply
+b1a7268c,NOT,-,command output only
+b1d47935,UNCLEAR,-,prefers CSDMS over assistant CF leaning with reasons
+b22fd48d,NOT,-,asks to recall earlier discussion
+b2d65026,NOT,-,go-ahead for fix
+b3e34b96,NOT,-,decisions on naming
+b3f23427,NOT,-,clarifying question on R62
+b40d31fb,NOT,-,user insight on placeholders
+b45b4046,NOT,-,steering toward holistic view
+b62bfe92,NOT,-,go-ahead to launch agent
+b73296a0,NOT,-,compact command
+b7f226cc,NOT,-,praise and new directions
+b855fc53,NOT,-,steering on reroute timing
+b873f7f9,NOT,-,go-ahead and new agent task
+b91885b1,NOT,-,new info on standard batteries
+ba104367,NOT,-,clarifying reaction
+bba8e188,UNCLEAR,-,new spec with hint prior approach overcomplicated
+bc06cccc,NOT,-,new request for agent
+bc476a2c,NOT,-,go-ahead on README
+bc6206f5,NOT,-,compact command
+bceef055,NOT,-,new request for agent
+bd22d6f7,UNCLEAR,-,asks to recheck patches without stating error
+bd3eaec3,NOT,-,new request to file issue
+be69bd6b,NOT,-,itemized feedback and requests
+be6aea8c,NOT,-,requirement info agreement and questions
+be93069c,NOT,-,asks about issue
+c02968b3,NOT,-,provides notes to apply
+c03d79b2,NOT,-,clarifying question
+c0d24da0,NOT,-,approval and questions
+c383e5c7,NOT,-,bash input only
+c3eb4d51,CORRECTION,report-form,asks short answer no story after long replies
+c468f0ec,UNCLEAR,-,asks clarity about nets plus new issue
+c4f45590,UNCLEAR,-,asks brief answers going forward
+c50ced87,NOT,-,thanks and new request
+c57747c9,CORRECTION,wrong,questions origin of wake-on-shake idea
+c5ea8d45,NOT,-,retry after reconnect
+c6f80489,NOT,-,asks summary after break
+c765d18b,NOT,-,clarifying question
+c77ac721,NOT,-,steering to check leakage
+c852b374,NOT,-,future feature question
+c8652180,NOT,-,new request to record test
+c9f514c7,CORRECTION,overreach,versions not incremented at this step
+ca5bf6db,NOT,-,question about IEC
+cc90d8db,NOT,-,go-ahead with thanks
+cddac4d3,NOT,-,thanks
+ce42e8cf,NOT,-,new request for plans
+d110e68a,NOT,-,question about redesign
+d133d492,NOT,-,clarifying question
+d193e163,NOT,-,brief question
+d1ef897f,NOT,-,praise and question
+d28037d2,NOT,-,new table request
+d282d3b7,NOT,-,decision with invitation to disagree
+d2ccf352,NOT,-,reminder request and status question
+d2de12fd,NOT,-,steering to zoom out
+d41d2d49,NOT,-,question about flash cost
+d45c4412,NOT,-,new info and design suggestion
+d45c4412,NOT,-,new info and design suggestion
+d5161133,NOT,-,go-ahead to sync scripts
+d68972d3,NOT,-,clarifies sensor roles
+d846029f,NOT,-,clarifying question
+d969e4b4,NOT,-,approval
+dae49e75,NOT,-,new note request
+dd8f41a0,NOT,-,asks recommendation and new issue
+dde031ae,NOT,-,directs to file
+ddebadaa,NOT,-,choice
+ddebadaa,NOT,-,choice
+de66d766,NOT,-,approval with preference
+de8f3c4b,NOT,-,push authorization
+dec076ee,NOT,-,thanks and new direction
+dee10b25,NOT,-,asks what is next
+deec3813,NOT,-,new info and questions
+def92896,NOT,-,question about power draw
+e0b63645,NOT,-,request for pattern and precedent
+e210f2ac,NOT,-,go-ahead
+e232a4ca,CORRECTION,ignored-instruction,restates own simple proposal over assistant option C
+e27e213e,NOT,-,question about issue value
+e305fb11,NOT,-,go-ahead to fix
+e38c717e,NOT,-,new request for agents
+e38c717e,NOT,-,new request for agents
+e426281e,NOT,-,question about capacitor
+e483334f,NOT,-,acknowledgment and push authorization
+e4966b14,NOT,-,lays out design options
+e4e21000,UNCLEAR,-,alarm at growing scope asks long-term plan
+e505cf14,NOT,-,reflection on clock battery purpose
+e8155086,NOT,-,agreement with naming suggestion
+e885f453,NOT,-,new to-dos and design decision
+e8f9165d,NOT,-,asks explanation
+e95bc584,NOT,-,new design question
+ea6ca68d,NOT,-,asks summary again
+eb31bc60,NOT,-,asks which crystal better
+eb59927a,NOT,-,interruption with no content
+ed39c42d,NOT,-,acknowledgment and next item
+ed5b25fc,NOT,-,new design question
+efaa51d3,CORRECTION,ignored-instruction,used banned slave terminology
+f0379e73,NOT,-,decision and question
+f0f8f13d,NOT,-,new request for agents
+f127cbe1,NOT,-,clarifying question
+f24274bf,NOT,-,instruction to remember to-dos
+f25a61f4,NOT,-,specifies alternative pattern design choice
+f3069e24,NOT,-,decision on freeing bytes
+f62b1850,NOT,-,praise and status question
+f63c79d9,NOT,-,question about IEC
+f6742462,NOT,-,preference reflection
+f8e4b178,NOT,-,instruction to record in issue
+fdd15025,NOT,-,instruction to save locally
+fe281df3,CORRECTION,wrong,notes shifting conclusions asks double check
+fe327469,NOT,-,request to write handoff file
+fe434f01,CORRECTION,wrong,change went to wrong library
+fe4b0c20,NOT,-,clarifying question
+fe66d220,NOT,-,decision
+ff49c7ba,NOT,-,status check question
+ff74d530,CORRECTION,report-form,asks to apply standard summary form

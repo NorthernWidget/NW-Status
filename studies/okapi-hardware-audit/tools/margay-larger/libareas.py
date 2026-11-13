@@ -1,6 +1,6 @@
 # Courtyard area of library footprints (nw-cold-silicon; scratch.pretty estimates marked). No courtyard -> pads bbox + 0.25 mm per side.
 import pcbnew, json
-LIB='/home/awickert/Dropbox/NorthernWidget/github/nw-cold-silicon/nw-cold-silicon.pretty'
+LIB='/home/awickert/Dropbox/NorthernWidget/github/NW-Cold-Silicon/nw-cold-silicon.pretty'
 io=pcbnew.PCB_IO_KICAD_SEXPR(); mm=pcbnew.ToMM
 names=['C0402','R0402','C0603','R0603','C0805','C1206','SOD323-R','SOT143B','DRV0006A','DCK_R-PDSO-G6','DBV_R-PDSO-G6','SC-70_6','SOT23-6L','RARRAY4_0402','USON10_2.5X1','DFN1006_TVS']
 out={}

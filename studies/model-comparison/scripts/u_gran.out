@@ -1,0 +1,16 @@
+judged 135
+fable-5.1 n 45 {'ONE': 31, 'UNCLEAR': 1, 'MULTI': 13} MULTI 28.9% quality 2.38
+opus-5 n 45 {'MULTI': 5, 'ONE': 40} MULTI 11.1% quality 2.82
+opus-5.5 n 45 {'MULTI': 3, 'ONE': 42} MULTI 6.7% quality 2.73
+('fable-5.1', 'docs/status') n 12 {'ONE': 7, 'UNCLEAR': 1, 'MULTI': 4} MULTI 33.3% quality 1.92
+('fable-5.1', 'firmware') n 11 {'ONE': 6, 'MULTI': 5} MULTI 45.5% quality 2.55
+('fable-5.1', 'hardware') n 11 {'ONE': 9, 'MULTI': 2} MULTI 18.2% quality 2.64
+('fable-5.1', 'sim/tests') n 11 {'ONE': 9, 'MULTI': 2} MULTI 18.2% quality 2.45
+('opus-5', 'docs/status') n 15 {'ONE': 13, 'MULTI': 2} MULTI 13.3% quality 2.73
+('opus-5', 'firmware') n 14 {'MULTI': 3, 'ONE': 11} MULTI 21.4% quality 3.00
+('opus-5', 'hardware') n 2 {'ONE': 2} MULTI 0.0% quality 3.00
+('opus-5', 'sim/tests') n 14 {'ONE': 14} MULTI 0.0% quality 2.71
+('opus-5.5', 'docs/status') n 13 {'MULTI': 3, 'ONE': 10} MULTI 23.1% quality 2.23
+('opus-5.5', 'firmware') n 8 {'ONE': 8} MULTI 0.0% quality 2.88
+('opus-5.5', 'hardware') n 12 {'ONE': 12} MULTI 0.0% quality 3.00
+('opus-5.5', 'sim/tests') n 12 {'ONE': 12} MULTI 0.0% quality 2.92
