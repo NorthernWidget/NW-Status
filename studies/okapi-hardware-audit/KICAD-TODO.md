@@ -286,8 +286,9 @@ renamed and ten typed. (11) TPS61032 FB open is TI's own fixed-5 V circuit (SLUS
 19); PAC1934 channel 2 reads charge positive and discharge negative, which the bipolar setting
 A3 plans for handles once the firmware reads current; LT3652 NTC open is what secondary copies
 of the datasheet say, the ADI PDF itself not read (download refused here). (12) Fixed in both
-copies. Open: the credit block's line pitch (KiCad 10.0.8 ignores line_spacing on board text,
-so only splitting the text into lines would match Eagle's 1.5); XTAL1's value; Margay's board
+copies. Done since (Andy, 2026-11-13): the three multi-line bottom texts split one line per text at
+Eagle's 1.5x pitch (Project-Okapi 1491625; Eagle-only bottom ink 8.09 to 3.72 mm2); XTAL1 shows 8 MHz
+(6e07658). Open: Margay's board
 re-bodied from the same library (10 footprints differ from it now, each by its newly printed
 documentation).
 
