@@ -291,6 +291,15 @@ so only splitting the text into lines would match Eagle's 1.5); XTAL1's value; M
 re-bodied from the same library (10 footprints differ from it now, each by its newly printed
 documentation).
 
+**v0.7.0 redefined, 2026-11-13 (Andy): the KiCad conversion, schematic and board in agreement.**
+The seven schematic-only commits (#15, #17, #32, #37, #53, #54 and a note move) are reverted on
+master, 59cfaf7 to dbeced5, and come back at the start of v0.8.0 by reverting each revert (the list
+is on Project-Okapi #78); those six issues and #28 are on the v0.8.0 milestone. At dbeced5: Eagle
+nets 204 of 209 (JP8 and R62, BT1's one + pin), ERC 5, DRC 0 / 0 / parity 0. Footprints carry
+KiCad's smd or through_hole type (nw-cold-silicon bb46777); `Production/` holds the fab files,
+placement 235 of 235 within 0.011 mm of the 2024 file. Open with Andy: #32, since the v0.7.0
+charger has SENSE on BAT.
+
 From the re-audit of 2026-11-13 (Project-Okapi c7d8c71; report in the session scratch
 directory, its findings repeated here). Andy, 2026-11-13: the goal is the board as Eagle
 fabricated it, the vias included in v0.7.0, and every mark that printed prints. In order,
