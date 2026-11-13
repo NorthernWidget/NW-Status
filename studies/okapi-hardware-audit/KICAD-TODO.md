@@ -270,6 +270,27 @@ AREF/AVCC filtering, VCC bypass, the solar input route).
 
 ## Finishing the conversion (2026-11-13)
 
+**Status 2026-11-13: items 1 to 12 done or answered**, Project-Okapi 66a4c7a to fab8e41 and
+nw-cold-silicon 8c48e12 to e5f1e83, the gate unchanged at every commit (Eagle nets 197 of 209,
+12 attributed; ERC 5; DRC 0 / 0 / parity 13; round trips identical). (1) The ten vias flash
+0.554 and 0.508 mm as the 2024 Gerbers do, 20 of 20 flashes. (2, 3) Eagle's 6 mil pairs and
+5 mil via ring are rules, each shown to bite. (4) The corner is back at Eagle's point. (5) The
+library copies tDocu and bDocu to the silkscreen (428 footprints); with (7)'s twelve reference
+designators (U2, U11-U16, U27, U29, U42, S1, S2) the Eagle-only ink against the fabricated
+silkscreen fell from 55.15 to 10.52 mm2 on top and 10.80 to 8.09 on the bottom
+(`tools/okapi_silk_vs_fab.sh`); what is left is attributed (lands changed since 2024, JP8 and
+R62 gone, the credit block's line pitch, three text offsets under 0.25 mm2). (6) J8's pair is
+on the bottom silkscreen. (8) Ten values shown; XTAL1 stays hidden, its value being the Eagle
+device name. (9) Q3 and Q5 onsemi; the Bosch MPNs are Bosch's order codes. (10) Seven pins
+renamed and ten typed. (11) TPS61032 FB open is TI's own fixed-5 V circuit (SLUS534G Figure
+19); PAC1934 channel 2 reads charge positive and discharge negative, which the bipolar setting
+A3 plans for handles once the firmware reads current; LT3652 NTC open is what secondary copies
+of the datasheet say, the ADI PDF itself not read (download refused here). (12) Fixed in both
+copies. Open: the credit block's line pitch (KiCad 10.0.8 ignores line_spacing on board text,
+so only splitting the text into lines would match Eagle's 1.5); XTAL1's value; Margay's board
+re-bodied from the same library (10 footprints differ from it now, each by its newly printed
+documentation).
+
 From the re-audit of 2026-11-13 (Project-Okapi c7d8c71; report in the session scratch
 directory, its findings repeated here). Andy, 2026-11-13: the goal is the board as Eagle
 fabricated it, the vias included in v0.7.0, and every mark that printed prints. In order,
