@@ -268,6 +268,44 @@ charger RSENSE, PAC1934 resistor values, the SoM 3.3 V regulator, footprints
 and crystal caps, MOSFET part numbers, !SHDN re-land, TPL5111 interval resistor,
 AREF/AVCC filtering, VCC bypass, the solar input route).
 
+## Finishing the conversion (2026-11-13)
+
+From the re-audit of 2026-11-13 (Project-Okapi c7d8c71; report in the session scratch
+directory, its findings repeated here). Andy, 2026-11-13: the goal is the board as Eagle
+fabricated it, the vias included in v0.7.0, and every mark that printed prints. In order,
+one commit each, the gate after each: Eagle nets 197 of 209 with the 12 attributed,
+round trip identical, ERC 5, DRC 0 / 0 / parity 13 (the ten v0.7.0 parts and three pads).
+
+1. The ten 0.4016 mm vias to their fabricated size: 0.554 mm on the 0.3 mm drill (6),
+   0.508 mm on 0.254 (4), as the 2024 Gerbers flash them (audit 5.1).
+2. Via rules to Eagle's: minimum annular ring 0.127 mm (rlMinViaOuter 5 mil), so DRC
+   would have caught item 1.
+3. Clearances to Eagle's jlcpcb-2layer: 0.1524 mm track-pad, track-via, via-via and
+   pad-via in `Okapi.kicad_dru`, 0.127 mm elsewhere (audit 5.2: 0 violations today).
+4. The GND corner 474288b moved for a footprint that 1a3b25b reverted: back to Eagle's
+   point.
+5. Package documentation that the 2024 fab printed (Eagle layers 51 and 52) onto the
+   silkscreen: a build rule in nw-cold-silicon, then Okapi re-bodied (audit 9.1). The
+   check: the Eagle-only ink against the fabricated silkscreen Gerbers, 50.54 mm2 on top
+   before.
+6. J8's + and - marks, from Resnik 2020 (`archive/resnik-polarity-marks-2020`; audit 9.2).
+   Not on today's Eagle board: Andy asked for it.
+7. The rest of the Eagle-only silkscreen ink (8.55 mm2 top), each cluster identified.
+8. Values Eagle printed and KiCad hides: R51, R54, R72-R75, R84-R87, XTAL1 (audit 7.1).
+9. Q3 and Q5 maker Fairchild to onsemi; U31 and U43 MPNs checked against Bosch's
+   order codes (audit 7.2).
+10. Symbol labels and pin types, as nw-cold-silicon build rules with the datasheet: U43
+    SDO and CSB, U38's N/C pins, U45 SCL/SDA types, the open-drain outputs, IC1 PC0/PC1
+    (SYMBOLS.md).
+11. From the datasheets: TPS61032 FB on the fixed-5 V part (U3 pad 14), LT3652 NTC
+    (U4 pad 8), PAC1934 channel 2's polarity against the firmware's configuration.
+12. `pcb_stats.py` on a keepout with no net (kicad-text skill and NW-Tests).
+13. The record: this file, the nw-kicad skill's numbers, the audit.
+
+Not conversion faults, and not on the list: the 107 footprints without a courtyard
+(Eagle had none), S5's restrict (DECISIONS item 6, Andy's), the BoM rows for H, JP and
+U$ (Margay keeps them, as Eagle's BoM did).
+
 ## Margay, the same program (2026-11-02)
 
 **2026-11-04 (evening): the checks walked as Okapi's were**, `studies/margay-kicad/CHECKS-TODO.md`:
