@@ -301,6 +301,18 @@ KiCad's smd or through_hole type (nw-cold-silicon bb46777); `Production/` holds 
 placement 235 of 235 within 0.011 mm of the 2024 file. #32 decided (Andy, 2026-11-13): v0.7.0 is the
 faithful conversion, marked not to be built, since its charger has SENSE on BAT; R88 comes in v0.8.0.
 
+**Silkscreen as Margay's, 2026-11-13 (Andy).** The board plots with `subtractmaskfromsilk yes`
+and `make_production.sh` passes `--subtract-soldermask`, so the Gerbers carry the silkscreen a fab
+prints (b014b9d, 44dad1d). A silkscreen review found and fixed: the doubled tilde (d224fd8), the
+stale J6, J8 and J9 texts (6dcca7d), a top + at J8's LI+ pad (77c7fb4), IC1's pin-1 dot outside the
+package (95c375f; nw-cold-silicon PIN1_MARK, fb6b31a). R14, R12 and C12's references moved off their
+own pads (43d7b9f), then every reference designator hidden, as Margay's 84 are (7ccdf23: 242
+`(hide yes)` lines and nothing else). Production rebuilt at ea30aec: only the two silkscreen
+Gerbers changed, front 584,386 to 194,491 bytes. Gate at ea30aec: DRC 0 / 0 / parity 0, round trip
+identical. Off-board silk is outlines only (SD1's card, J10's shell) and stays. Shown to Andy, not
+yet decided: the A/B/C by 1/2/3 jumper grid and ISP1's "1", 1.8 mm above pin 1 on SD1's outline.
+Citation authors: Bobby Schulz and Andrew D. Wickert (Andy, 2026-11-15; 2160c0c).
+
 From the re-audit of 2026-11-13 (Project-Okapi c7d8c71; report in the session scratch
 directory, its findings repeated here). Andy, 2026-11-13: the goal is the board as Eagle
 fabricated it, the vias included in v0.7.0, and every mark that printed prints. In order,
